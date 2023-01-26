@@ -21,7 +21,7 @@ import {
   const ERROR = "Error";
 
   // Enquiry GET  ACTIONS
-  const getEnquirys = () => {
+  const getEnquiry = () => {
     dispatch(getEnquiryBeginAction());
     return API.get(hapyCarURL,
       null,
@@ -191,7 +191,7 @@ import {
     addEnquiry,
     updateEnquiry,
     deleteEnquiry,
-    getEnquirys,
+    getEnquiry,
     enquiryById,
   };
 }

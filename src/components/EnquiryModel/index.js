@@ -5,7 +5,7 @@ import { css } from "@emotion/react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
-import { Modal } from 'react-bootstrap';
+import Modal from 'react-bootstrap/Modal';
 
 export default function EnquiryModel({
   onAddEnquiry,
@@ -20,11 +20,14 @@ export default function EnquiryModel({
 }) {
   const [newEnquiry, setNewEnquiry] = useState({
     name: "",
-    mobile:"",
-    email:"",
-    description:"",
-    enquiryTypeId:null
+    mobile: "",
+    email: "",
+    description: "",
+    enquiryTypeId: null,
+    file:null,
   });
+
+  const [fileSelected, setFileSelected] = useState();
 
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
@@ -50,7 +53,14 @@ export default function EnquiryModel({
     });
   };
 
+  const saveFileSelected= (e) => {
+    //in case you wan to print the file selected
+    //console.log(e.target.files[0]);
+    setFileSelected(e.target.files[0]);
+  };
+
   const saveHandler = async () => {
+    newEnquiry.file = fileSelected;
     if (isEdit) {
       const response = await onUpdateEnquiry(id, newEnquiry);
       if (response.payload.title == "Success") {
@@ -102,8 +112,8 @@ export default function EnquiryModel({
     }
   }, []);
 
-  useEffect(() => {             
-      if (isEdit) {
+  useEffect(() => {
+    if (isEdit) {
       setButtonType("Update");
     }
     const isEnable =
@@ -185,12 +195,14 @@ export default function EnquiryModel({
             <Form.Control
               type="text"
               name="enquiryTypeId"
-              placeholder="EnquiryTypeId" 
+              placeholder="EnquiryTypeId"
               value={newEnquiry?.enquiryTypeId}
               onChange={changeHandler}
             />
           </Form.Group>
-
+          <Form.Group>
+          <input type="file" className="custom-file-label" onChange={saveFileSelected} />
+          </Form.Group>
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel
