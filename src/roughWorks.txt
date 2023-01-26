@@ -1,0 +1,33 @@
+App Structure
+-------------
+
+● src
++---● actions
+|   |
+|   |-- discountTypeApi.js (handle all http request)
+|   |-- discountTypeService.js (Redux actions & action creators) 
+|   |-- store.js (configure redux store)
+|
++---● components
+|   |
+|   |--DiscountTypeModel.js (form operations) - child
+|   |--DiscountTypes.js  (list of records) - parent
+|   |--useForm.js (handles common form opearations)
+|
+|---● reducers
+|   |
+|   |--discountTypeService.js
+|   |--index.js
+|
+|-- App.js
+|-- index.js
+|-- index.css
+
+
+redux, react-redux, redux-thunk
+
+actions - create, update, delete etc ,data 
+reducers
+store
+
+cmpnt -> dispatch(action) -> reducer -> cmpnt

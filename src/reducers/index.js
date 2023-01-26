@@ -1,8 +1,6 @@
 import { combineReducers } from "redux";
-import auth from "./auth";
-import message from "./message";
+import { enquiryReducer } from "./enquiryReducer";
 
-export default combineReducers({
-  auth,
-  message,
-});
+export const reducers = combineReducers({
+    enquiryReducer
+})
