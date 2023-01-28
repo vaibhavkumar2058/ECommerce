@@ -2,7 +2,7 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import NavbarComp from "./components/NavbarComp";
 import "./App.css";
-import { store } from "./actions/store";
+
 import { Provider } from "react-redux";
 import { ToastProvider } from "react-toast-notifications";
 import './volt.css';
