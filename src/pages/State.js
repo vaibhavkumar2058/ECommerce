@@ -67,8 +67,8 @@ export default function States() {
   const columns = [
 
     { dataField: 'stateId', text: 'State Id', sort: true, hidden: true },
-    { dataField: 'stateName', text: 'stateName', sort: true },
-    { dataField: 'countryId', text: 'countryId', sort: true },
+    { dataField: 'stateName', text: 'State', sort: true },
+    { dataField: 'countryId', text: 'Country', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
      // columns follow dataField and text structure
     {
@@ -99,7 +99,7 @@ export default function States() {
   ];
 
   useEffect(() => {
-    if (state.length == 0) {
+    if (states.length == 0) {
       getAllStates();
       setLoading(false)
     }
@@ -212,11 +212,11 @@ export default function States() {
     <>
       <div className="m-t-40">
         {loading && <div>A moment please...</div>}
-        {state && (<div>
+        {states && (<div>
           <ToolkitProvider
             bootstrap4
             keyField='enquiryId'
-            data={state}
+            data={states}
             columns={columns}
             search
           >

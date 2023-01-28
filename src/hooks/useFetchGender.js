@@ -75,7 +75,7 @@ import {
           errorMsg = errors;
         }
         dispatch(
-          addgGenderAction({
+          addGenderAction({
             ...gender,
             title: ERROR,
             errorMsg,
@@ -131,7 +131,7 @@ import {
     )
       .then(({ data }) =>
         dispatch(
-          deletegenderAction({
+          deleteGenderAction({
             ...data,
             title: SUCCESS,
           })
@@ -155,7 +155,7 @@ import {
   };
 
   // GENDERBY ID ACTIONS
-  const genderById = (GenderId) => {
+  const genderById = (genderId) => {
     return API.get(`${hapyCarURL}/${genderId}`,
       null,
       { suppressErrors: [400] }

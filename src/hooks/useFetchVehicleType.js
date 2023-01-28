@@ -9,7 +9,7 @@ import {
     getVehicleTypeBeginAction,
     getVehicleTypeSuccessAction,
     getVehicleTypeFailureAction,
-    enquiryAction,
+    vehicleTypeAction,
   } from "../actions/vehicleTypeActions";
 
   export default function useFetchVehicleTypes() {

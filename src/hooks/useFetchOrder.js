@@ -21,7 +21,7 @@ import {
   const ERROR = "Error";
 
   // Order GET  ACTIONS
-  const getOrder = () => {
+  const getOrders = () => {
     dispatch(getOrderBeginAction());
     return API.get(hapyCarURL,
       null,
@@ -191,7 +191,7 @@ import {
     addOrder,
     updateOrder,
     deleteOrder,
-    getOrder,
+    getOrders,
     orderById,
   };
 }

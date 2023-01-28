@@ -26,7 +26,7 @@ const MyExportCSV = (props) => {
 
 export default function VehicleType() {
 
-  const [VehicleType, setVehicleType] = useState([]);
+  const [vehicleType, setVehicleType] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -217,7 +217,7 @@ export default function VehicleType() {
           <ToolkitProvider
             bootstrap4
             keyField='enquiryId'
-            data={vechileType}
+            data={vehicleType}
             columns={columns}
             search
           >

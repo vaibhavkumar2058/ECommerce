@@ -6,31 +6,31 @@ export const UPDATE_ORDERTRACKING = "UPDATE_ORDERTRACKING";
 export const DELETE_ORDERTRACKING = "DELETE_ORDERTRACKING";
 export const ORDERTRACKING = "ORDERTRACKING";
 
-export const getOrdertrackingBeginAction = () => ({
+export const getOrderTrackingBeginAction = () => ({
     type: FETCH_ORDERTRACKING,
 })
-export const getOrdertrackingSuccessAction = (data) => ({
+export const getOrderTrackingSuccessAction = (data) => ({
     type: FETCH_ORDERTRACKING_SUCCESS,
     payload:data,
 })
-export const getOrdertrackingFailureAction = (error) => ({
+export const getOrderTrackingFailureAction = (error) => ({
     type: FETCH_ORDERTRACKING_FAILURE,
     payload:{error},
 })
-export const addOrdertrackingAction = (data) => ({
+export const addOrderTrackingAction = (data) => ({
     type: ADD_ORDERTRACKING,
     payload: data,
 })
-export const ordertrackingAction = (data) => ({
+export const orderTrackingAction = (data) => ({
     type: ORDERTRACKING,
     payload: data,
 })
 
-export const updateOrdertrackingAction = (data) => ({
+export const updateOrderTrackingAction = (data) => ({
     type: UPDATE_ORDERTRACKING,
     payload: data,
 })
-export const deleteOrdertrackingAction = (data) => ({
+export const deleteOrderTrackingAction = (data) => ({
     type: DELETE_ORDERTRACKING,
     payload: data,
 })

@@ -21,7 +21,7 @@ import {
   const ERROR = "Error";
 
   // Notification GET  ACTIONS
-  const getNotification = () => {
+  const getNotifications = () => {
     dispatch(getNotificationBeginAction());
     return API.get(hapyCarURL,
       null,
@@ -191,7 +191,7 @@ import {
     addNotification,
     updateNotification,
     deleteNotification,
-    getNotification,
+    getNotifications,
     notificationById,
   };
 }

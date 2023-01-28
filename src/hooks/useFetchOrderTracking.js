@@ -9,8 +9,8 @@ import {
     getOrderTrackingBeginAction,
     getOrderTrackingSuccessAction,
     getOrderTrackingFailureAction,
-    enquiryAction,
-  } from "../actions/enquiryActions";
+    orderTrackingAction,
+  } from "../actions/orderTrackingAction";
 
   export default function useFetchOrderTrackings() {
     const dispatch = useDispatch();
@@ -165,7 +165,7 @@ import {
       }) =>
 
         dispatch(
-            enquiryAction({
+          orderTrackingAction({
             ...data,
             title: SUCCESS,
           })
@@ -178,7 +178,7 @@ import {
           errorMsg = errors;
         }
         dispatch(
-            enquiryAction({
+          orderTrackingAction({
             ...errorMsg,
             title: ERROR,
             errorMsg,

@@ -98,11 +98,11 @@ export default function MeasurementTypes() {
   ];
 
   useEffect(() => {
-    if (measurements.length == 0) {
+    if (measurementTypes.length == 0) {
       getAllMeasurementTypes();
       setLoading(false)
     }
-  }, [enquirys]);
+  }, [measurementTypes]);
 
 
   const defaultSorted = [{
@@ -177,8 +177,7 @@ export default function MeasurementTypes() {
   };
 
   const getMeasurementTypeById = async (id) => {
-    const response = await measurementType
-    ById(id);
+    const response = await measurementTypeById(id);
     if (response.payload.title == "Success") {
       setMeasurementType(response.payload);
     }
@@ -277,7 +276,7 @@ export default function MeasurementTypes() {
                 isEdit={isEdit}
                 isDelete={isDelete}
                 id={id}
-                MeasurementTypeData={enquiry}
+                MeasurementTypeData={measurementType}
               />
             </Modal.Body>
 

@@ -26,7 +26,7 @@ const MyExportCSV = (props) => {
 
 export default function Country() {
 
-  const [country, setCountry] = useState([]);
+  const [countries, setCountries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -41,7 +41,7 @@ export default function Country() {
   const handleShow = () => setShow(true);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-  const [Country, setcountry] = useState({
+  const [country, setCountry] = useState({
     countryname: "",
     region:null,
     description:"",
@@ -99,11 +99,11 @@ export default function Country() {
   ];
 
   useEffect(() => {
-    if (country.length == 0) {
+    if (countries.length == 0) {
       getAllCountry();
       setLoading(false)
     }
-  }, [country]);
+  }, [countries]);
 
 
   const defaultSorted = [{
@@ -167,7 +167,7 @@ export default function Country() {
         arr.push(response.payload[key]);
       }
 
-      setCountry(arr);
+      setCountries(arr);
     }
     else {
       setMessageStatus({
@@ -212,11 +212,11 @@ export default function Country() {
     <>
       <div className="m-t-40">
         {loading && <div>A moment please...</div>}
-        {country && (<div>
+        {countries && (<div>
           <ToolkitProvider
             bootstrap4
             keyField='countryId'
-            data={Country}
+            data={countries}
             columns={columns}
             search
           >

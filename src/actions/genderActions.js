@@ -21,7 +21,7 @@ export const addGenderAction = (data) => ({
     type: ADD_GENDER,
     payload: data,
 })
-export const GenderAction = (data) => ({
+export const genderAction = (data) => ({
     type: GENDER,
     payload: data,
 })

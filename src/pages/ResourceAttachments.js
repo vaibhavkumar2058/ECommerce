@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
-import useFetchResourceAttachments from "../hooks/useFetchResourceAttachments";
+import useFetchResourceAttachments from "../hooks/useFeatchResourceAttachments";
 import ResourceAttachmentsModel from "../components/ResourceAttachmentsModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
@@ -24,16 +24,16 @@ const MyExportCSV = (props) => {
   );
 };
 
-export default function ResourceAttachmentss() {
+export default function ResourceAttachments() {
 
-  const [resourceAttachmentss, setResourceAttachmentss] = useState([]);
+  const [resourceAttachments, setResourceAttachments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
   const handleClose = () => {
-    getAllResourceAttachmentss();
+    getAllResourceAttachments();
     setIsEdit(false);
     setIsDelete(false);
     setShow(false);
@@ -41,7 +41,7 @@ export default function ResourceAttachmentss() {
   const handleShow = () => setShow(true);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-  const [resourceAttachments, setResourceAttachments] = useState({
+  const [resourceAttachment, setResourceAttachment] = useState({
     resourceId: null,
     fileId: null,
     attachmentTypeId: null,
@@ -62,7 +62,7 @@ export default function ResourceAttachmentss() {
     addResourceAttachments,
     updateResourceAttachments,
     deleteResourceAttachments,
-    getResourceAttachmentss,
+    getResourceAttachments,
     resourceAttachmentsById,
   } = useFetchResourceAttachments();
 
@@ -103,11 +103,11 @@ export default function ResourceAttachmentss() {
   ];
 
   useEffect(() => {
-    if (ResourceAttachmentss.length == 0) {
-      getAllResourceAttachmentss();
+    if (ResourceAttachments.length == 0) {
+      getAllResourceAttachments();
       setLoading(false)
     }
-  }, [ResourceAttachmentss]);
+  }, [ResourceAttachments]);
 
 
   const defaultSorted = [{
@@ -125,8 +125,8 @@ export default function ResourceAttachmentss() {
   };
 
   const handleEdit = (rowId, row) => {
-    setResourceAttachments(row);
-    //getResourceAttachmentssById(rowId);
+    setResourceAttachment(row);
+    //getResourceAttachmentsById(rowId);
     setId(rowId);
     setIsEdit(true);
     setShow(true);
@@ -158,12 +158,12 @@ export default function ResourceAttachmentss() {
   });
 
 
-  const getAllResourceAttachmentss = async () => {
-    const response = await getResourceAttachmentss();
+  const getAllResourceAttachments = async () => {
+    const response = await getResourceAttachments();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',
-        message: 'ResourceAttachmentss Record Fetch Succefully.'
+        message: 'ResourceAttachments Record Fetch Succefully.'
       })
 
       var arr = [];
@@ -171,7 +171,7 @@ export default function ResourceAttachmentss() {
         arr.push(response.payload[key]);
       }
 
-      setResourceAttachmentss(arr);
+      setResourceAttachments(arr);
     }
     else {
       setMessageStatus({
@@ -184,7 +184,7 @@ export default function ResourceAttachmentss() {
   const getResourceAttachmentsById = async (id) => {
     const response = await resourceAttachmentsById(id);
     if (response.payload.title == "Success") {
-      setresourceAttachments(response.payload);
+      setResourceAttachment(response.payload);
     }
     else {
       setMessageStatus({
@@ -216,11 +216,11 @@ export default function ResourceAttachmentss() {
     <>
       <div className="m-t-40">
         {loading && <div>A moment please...</div>}
-        {resourceAttachmentss && (<div>
+        {resourceAttachments && (<div>
           <ToolkitProvider
             bootstrap4
             keyField='resourceAttachmentsId'
-            data={resourceAttachmentss}
+            data={resourceAttachments}
             columns={columns}
             search
           >

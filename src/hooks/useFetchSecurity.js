@@ -114,7 +114,7 @@ import {
         }
         dispatch(
           updateSecurityAction({
-            ...Security,
+            ...security,
             title: ERROR,
             errorMsg,
           })

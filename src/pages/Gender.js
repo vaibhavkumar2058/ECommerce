@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
-import useFeCotchGender from "../hooks/useFetchGender";
+import useFetchGender from "../hooks/useFetchGender";
 import GenderModel from "../components/GenderModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
@@ -66,7 +66,7 @@ export default function Country() {
   const columns = [
 
     { dataField: 'genderId', text: 'Gender Id', sort: true, hidden: true },
-    { dataField: '{ dataFiename', text: ' Name', sort: true },
+    { dataField: '{ name', text: ' Name', sort: true },
       { dataField: 'description', text: 'Description', sort: true },
     
     // columns follow dataField and text structure
@@ -98,11 +98,11 @@ export default function Country() {
   ];
 
   useEffect(() => {
-    if (gender.length == 0) {
+    if (genderr.length == 0) {
       getAllGender();
       setLoading(false)
     }
-  }, [gender]);
+  }, [genderr]);
 
 
   const defaultSorted = [{
@@ -211,11 +211,11 @@ export default function Country() {
     <>
       <div className="m-t-40">
         {loading && <div>A moment please...</div>}
-        {enquirys && (<div>
+        {genderr && (<div>
           <ToolkitProvider
             bootstrap4
             keyField='enquiryId'
-            data={enquirys}
+            data={genderr}
             columns={columns}
             search
           >

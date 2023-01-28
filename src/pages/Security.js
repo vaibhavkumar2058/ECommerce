@@ -272,11 +272,11 @@ export default function Securitys() {
               <Modal.Title>Add Security</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <Securityodel
+              <SecurityModel
                 onAddSecurity={addSecurity}
                 onUpdateSecurity={updateSecurity}
                 onDeleteSecurity={deleteSecurity}
-                onGetSecurity={securityyId}
+                onGetSecurity={securityById}
                 onClose={handleClose}
                 isEdit={isEdit}
                 isDelete={isDelete}

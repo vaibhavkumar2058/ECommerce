@@ -7,7 +7,7 @@ import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
 
-export default function OrderTracking({
+export default function OrderTrackingModel({
   onAddOrderTracking,
   onUpdateOrderTracking,
   onDeleteOrderTracking,

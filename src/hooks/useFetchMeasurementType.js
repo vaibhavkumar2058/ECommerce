@@ -100,7 +100,7 @@ import {
       }) =>
 
         dispatch(
-          updateEnquiryAction({
+          updateMeasurementTypeAction({
             ...data,
             title: SUCCESS,
           })
@@ -113,7 +113,7 @@ import {
           errorMsg = errors;
         }
         dispatch(
-          updateEnquiryAction({
+          updateMeasurementTypeAction({
             ...enquiry,
             title: ERROR,
             errorMsg,
@@ -131,7 +131,7 @@ import {
     )
       .then(({ data }) =>
         dispatch(
-          deleteEnquiryAction({
+          deleteMeasurementTypeAction({
             ...data,
             title: SUCCESS,
           })
@@ -144,7 +144,7 @@ import {
           errorMsg = errors;
         }
         dispatch(
-          deleteEnquiryAction({
+          deleteMeasurementTypeAction({
             ...enquiryId,
             title: ERROR,
             errorMsg,
@@ -155,7 +155,7 @@ import {
   };
 
   // Enquiry BY ID ACTIONS
-  const enquiryById = (enquiryId) => {
+  const measurementById = (enquiryId) => {
     return API.get(`${hapyCarURL}/${enquiryId}`,
       null,
       { suppressErrors: [400] }
@@ -165,7 +165,7 @@ import {
       }) =>
 
         dispatch(
-            enquiryAction({
+            measurementTypeAction({
             ...data,
             title: SUCCESS,
           })
@@ -178,7 +178,7 @@ import {
           errorMsg = errors;
         }
         dispatch(
-            enquiryAction({
+            measurementTypeAction({
             ...errorMsg,
             title: ERROR,
             errorMsg,
@@ -188,10 +188,10 @@ import {
       
   };
   return {
-    addEnquiry,
+    addMeasurementType,
     updateEnquiry,
     deleteEnquiry,
-    getEnquiry,
-    enquiryById,
+    getMeasurementType,
+    measurementById,
   };
 }

@@ -8,7 +8,7 @@ import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
 
 export default function SecurityModel({
-  onAddSecSecurity,
+  onAddSecurity,
   onUpdateSecurity,
   onDeleteSecurity,
   isEdit,

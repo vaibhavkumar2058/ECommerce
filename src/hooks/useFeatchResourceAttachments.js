@@ -12,7 +12,7 @@ import {
     resourceAttachmentsAction,
   } from "../actions/resourceAttachmentsActions";
 
-  export default function useFetchResourceAttachmentss() {
+  export default function useFetchResourceAttachments() {
     const dispatch = useDispatch();
   const hapyCarURL = "https://localhost:7062/resourceAttachments";
 

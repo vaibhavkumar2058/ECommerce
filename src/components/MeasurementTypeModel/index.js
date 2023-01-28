@@ -113,7 +113,7 @@ export default function MeasurementTypeModel({
             setButtonType("Update");
         }
         const isEnable =
-            !newMeasurementType?.name || !newEnquiry?.description;
+            !newMeasurementType?.name || !newMeasurementType?.description;
         setSaveDisabled(isEnable);
     }, [newMeasurementType]);
 

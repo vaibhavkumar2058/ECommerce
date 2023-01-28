@@ -107,7 +107,7 @@ export default function ResourceAttachmentsModel({
 
   useEffect(() => {
     if (isEdit) {
-      setNewResourceAttachments(ResourceAttachmentsData);
+      setNewResourceAttachments(resourceAttachmentsData);
     }
   }, []);
 
@@ -256,7 +256,7 @@ ResourceAttachmentsModel.propTypes = {
   enquiryData: PropTypes.any,
 };
 
-ResourceAttachmentsModelModel.defaultProps = {
+ResourceAttachmentsModel.defaultProps = {
   onAddResourceAttachmentsModel: null,
   onUpdateResourceAttachmentsModel: null,
   onDeleteResourceAttachmentsModel: null,
