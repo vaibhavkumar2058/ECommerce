@@ -90,7 +90,6 @@ import {
 
   // COUNTRY  UPDATE  ACTIONS
   const updateCountry = (countryId, country) => {
-
     return API.put(`${hapyCarURL}/${countryId}`,
       { data: country },
       { suppressErrors: [400] }

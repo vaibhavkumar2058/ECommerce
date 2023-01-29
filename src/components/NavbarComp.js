@@ -28,7 +28,7 @@ import Notification from "../pages/Notification";
 import Order from "../pages/Order";
 import OrderTracking from "../pages/OrderTracking";
 import RecordStatus from "../pages/RecordStatus";
-import ResouceAttachmentType from "../pages/ResouceAttachmentType";
+import ResourceAttachmentType from "../pages/ResouceAttachmentType";
 import ResourceAttachments from "../pages/ResourceAttachments";
 import Role from "../pages/Role";
 
@@ -57,7 +57,7 @@ const NavbarComp = () => {
           <Route exact path="/orders" element={<Order />} />    
           <Route exact path="/orderTracking" element={<OrderTracking />} />    
           <Route exact path="/recordStatus" element={<RecordStatus />} />        
-          <Route exact path="/resouceAttachmentType" element={<ResouceAttachmentType />} />   
+          <Route exact path="/resourceAttachmentType" element={<ResourceAttachmentType />} />   
           <Route exact path="/resourceAttachments" element={<ResourceAttachments />} />     
           <Route exact path="/role" element={<Role />} />   
 

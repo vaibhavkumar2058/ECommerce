@@ -20,12 +20,9 @@ export default function StateModel({
 }) {
   const [newState, setNewState] = useState({
     stateName: "",
-    countryID: null,
+    countryId: null,
     description: "",
-    
   });
-
-  const [fileSelected, setFileSelected] = useState();
 
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
@@ -51,14 +48,7 @@ export default function StateModel({
     });
   };
 
-  const saveFileSelected= (e) => {
-    //in case you wan to print the file selected
-    //console.log(e.target.files[0]);
-    setFileSelected(e.target.files[0]);
-  };
-
   const saveHandler = async () => {
-    newState.file = fileSelected;
     if (isEdit) {
       const response = await onUpdateState(id, newState);
       if (response.payload.title == "Success") {
@@ -115,7 +105,7 @@ export default function StateModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newState?.stateName || !newState?.countryID || !newState?.description;
+      !newState?.stateName || !newState?.countryId || !newState?.description;
     setSaveDisabled(isEnable);
   }, [newState]);
 
@@ -148,19 +138,19 @@ export default function StateModel({
             <Form.Label>StateName</Form.Label>
             <Form.Control
               type="text"
-              name="StateName"
+              name="stateName"
               placeholder="Enter StateName"
               value={newState?.stateName}
               onChange={changeHandler}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="mobile">
-            <Form.Label>countryID</Form.Label>
+            <Form.Label>Country ID</Form.Label>
             <Form.Control
               type="text"
-              name="countryID"
-              placeholder="countryID"
-              value={newState?.countryID}
+              name="countryId"
+              placeholder="Country Id"
+              value={newState?.countryId}
               onChange={changeHandler}
             />
           </Form.Group>
@@ -174,9 +164,6 @@ export default function StateModel({
               value={newState?.description}
               onChange={changeHandler}
             />
-          </Form.Group>
-          <Form.Group>
-          <input type="file" className="custom-file-label" onChange={saveFileSelected} />
           </Form.Group>
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>

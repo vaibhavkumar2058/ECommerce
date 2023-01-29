@@ -46,10 +46,10 @@ export default function Files() {
     resourceId: null,
     fileName: "",
     fileMimeType: "",
-    externalURL: " ",
-    archived:"",
-    azureBlobId:"",
-      });
+    externalURL: "",
+    archived: "",
+    azureBlobId: "",
+  });
 
   const [id, setId] = useState(null);
 
@@ -60,7 +60,7 @@ export default function Files() {
     message: "",
   });
 
-  const { 
+  const {
     addFile,
     updateFile,
     deleteFile,
@@ -239,11 +239,11 @@ export default function Files() {
                       <div className="row">
                         <div className="app-right col-lg-12">
                           <div className="app-float-right p-1">
-                          <MyExportCSV {...props.csvProps} /></div>
+                            <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
-                          <Button variant="primary" onClick={handleShow}>
-                            Add File
-                          </Button>
+                            <Button variant="primary" onClick={handleShow}>
+                              Add File
+                            </Button>
                           </div>
                         </div>
                       </div>

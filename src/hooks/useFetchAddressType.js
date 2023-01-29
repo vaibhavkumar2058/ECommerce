@@ -21,7 +21,7 @@ import {
   const ERROR = "Error";
 
   // AddressType GET  ACTIONS
-  const getAddressType = () => {
+  const getAddressTypes = () => {
     dispatch(getAddressTypeBeginAction());
     return API.get(hapyCarURL,
       null,
@@ -191,7 +191,7 @@ import {
     addAddressType,
     updateAddressType,
     deleteAddressType,
-    getAddressType,
+    getAddressTypes,
     addressTypeById,
   };
 }

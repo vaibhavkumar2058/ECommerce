@@ -112,7 +112,7 @@ export default function Address() {
   ];
 
   useEffect(() => {
-    if (address.length == 0) {
+    if (addresses.length == 0) {
       getAllAddresses();
       setLoading(false)
     }
@@ -225,11 +225,11 @@ export default function Address() {
     <>
       <div className="m-t-40">
         {loading && <div>A moment please...</div>}
-        {address && (<div>
+        {addresses && (<div>
           <ToolkitProvider
             bootstrap4
             keyField='addressId'
-            data={address}
+            data={addresses}
             columns={columns}
             search
           >

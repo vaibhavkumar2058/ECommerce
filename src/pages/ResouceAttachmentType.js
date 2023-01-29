@@ -59,19 +59,19 @@ export default function ResourceAttachmentTypes() {
   });
 
   const { 
-    addResourceAttachmentType,
-    updateResourceAttachmentType,
-    deleteResourceAttachmentType,
-    getResourceAttachmentTypes,
-    resourceAttachmentTypeById,
+    addResouceAttachmentType,
+    updateResouceAttachmentType,
+    deleteResouceAttachmentType,
+    getResouceAttachmentTypes,
+    resouceAttachmentTypeById,
   } = useFetchResourceAttachmentType();
 
   const columns = [
 
     
     { dataField: 'id', text: ' Id', sort: true },
-    { dataField: 'displaytext', text: 'DisplayText', sort: true },
-    { dataField: 'sortorder', text: 'SortOrder', sort: true },
+    { dataField: 'displayText', text: 'DisplayText', sort: true },
+    { dataField: 'sortOrder', text: 'SortOrder', sort: true },
     { dataField: 'IsActive', text: ' IsActive', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
    
@@ -160,7 +160,7 @@ export default function ResourceAttachmentTypes() {
 
 
   const getAllResourceAttachmentTypes = async () => {
-    const response = await getResourceAttachmentTypes();
+    const response = await getResouceAttachmentTypes();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',
@@ -183,7 +183,7 @@ export default function ResourceAttachmentTypes() {
   };
 
   const getResourceAttachmentTypeById = async (id) => {
-    const response = await resourceAttachmentTypeById(id);
+    const response = await resouceAttachmentTypeById(id);
     if (response.payload.title == "Success") {
       setResourceAttachmentType(response.payload);
     }
@@ -274,10 +274,10 @@ export default function ResourceAttachmentTypes() {
             </Modal.Header>
             <Modal.Body>
               <ResourceAttachmentTypeModel
-                onAddResourceAttachmentType={addResourceAttachmentType}
-                onUpdateResourceAttachmentType={updateResourceAttachmentType}
-                onDeleteResourceAttachmentType={deleteResourceAttachmentType}
-                onGetResourceAttachmentType={resourceAttachmentTypeById}
+                onAddResourceAttachmentType={addResouceAttachmentType}
+                onUpdateResourceAttachmentType={updateResouceAttachmentType}
+                onDeleteResourceAttachmentType={deleteResouceAttachmentType}
+                onGetResourceAttachmentType={resouceAttachmentTypeById}
                 onClose={handleClose}
                 isEdit={isEdit}
                 isDelete={isDelete}

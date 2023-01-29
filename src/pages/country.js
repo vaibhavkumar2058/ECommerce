@@ -67,8 +67,8 @@ export default function Country() {
   const columns = [
 
     { dataField: 'countryId', text: 'Country Id', sort: true, hidden: true },
-    { dataField: 'countryname', text: ' CountryName', sort: true },
-    { dataField: 'region', text: 'Region', sort: true },
+    { dataField: 'countryName', text: ' CountryName', sort: true },
+    { dataField: 'regionCode', text: 'Region', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
         // columns follow dataField and text structure
     {

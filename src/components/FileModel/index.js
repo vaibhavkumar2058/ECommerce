@@ -21,9 +21,7 @@ export default function FileModel({
   const [newFile, setNewFile] = useState({
     folderId: null,
     resourceId: null,
-    fileName: "",
-    fileMimeType: "",
-    externalURL: " ",
+    file: null,
     archived:"",
     azureBlobId:"",
   });

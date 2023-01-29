@@ -21,7 +21,7 @@ import {
   const ERROR = "Error";
 
   // ResouceAttachmentType GET  ACTIONS
-  const getResouceAttachmentType = () => {
+  const getResouceAttachmentTypes = () => {
     dispatch(getResouceAttachmentTypeBeginAction());
     return API.get(hapyCarURL,
       null,
@@ -191,7 +191,7 @@ import {
     addResouceAttachmentType,
     updateResouceAttachmentType,
     deleteResouceAttachmentType,
-    getResouceAttachmentType,
+    getResouceAttachmentTypes,
     resouceAttachmentTypeById,
   };
 }

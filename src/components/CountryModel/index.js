@@ -16,15 +16,13 @@ export default function CountryModel({
   onGetCountry,
   id,
   onClose,
-  CountryData,
+  countryData,
 }) {
   const [newCountry, setNewCountry] = useState({
-    Countryname: "",
-    region: null,
+    countryName: "",
+    regionCode: null,
     description: "",
      });
-
-  const [fileSelected, setFileSelected] = useState();
 
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
@@ -50,14 +48,7 @@ export default function CountryModel({
     });
   };
 
-  const saveFileSelected= (e) => {
-    //in case you wan to print the file selected
-    //console.log(e.target.files[0]);
-    setFileSelected(e.target.files[0]);
-  };
-
   const saveHandler = async () => {
-    newCountry.file = fileSelected;
     if (isEdit) {
       const response = await onUpdateCountry(id, newCountry);
       if (response.payload.title == "Success") {
@@ -105,7 +96,7 @@ export default function CountryModel({
 
   useEffect(() => {
     if (isEdit) {
-      setNewCountry(CountryData);
+      setNewCountry(countryData);
     }
   }, []);
 
@@ -114,7 +105,7 @@ export default function CountryModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newCountry?.name || !newCountry?.region || !newCountry?.description ;
+      !newCountry?.countryName || !newCountry?.regionCode || !newCountry?.description ;
     setSaveDisabled(isEnable);
   }, [newCountry]);
 
@@ -147,9 +138,9 @@ export default function CountryModel({
             <Form.Label>Country</Form.Label>
             <Form.Control
               type="text"
-              name="countryname"
+              name="countryName"
               placeholder="Enter Country"
-              value={newCountry?.countryname}
+              value={newCountry?.countryName}
               onChange={changeHandler}
             />
           </Form.Group>
@@ -157,9 +148,9 @@ export default function CountryModel({
             <Form.Label>Region</Form.Label>
             <Form.Control
               type="text"
-              name="region"
+              name="regionCode"
               placeholder="region"
-              value={newCountry?.region}
+              value={newCountry?.regionCode}
               onChange={changeHandler}
             />
           </Form.Group>
@@ -174,11 +165,6 @@ export default function CountryModel({
               value={newCountry?.description}
               onChange={changeHandler}
             />
-          </Form.Group>
-
-                    
-          <Form.Group>
-          <input type="file" className="custom-file-label" onChange={saveFileSelected} />
           </Form.Group>
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
