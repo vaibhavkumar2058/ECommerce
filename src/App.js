@@ -36,7 +36,7 @@ function App() {
             </svg></a></div>
           </div>
           <ul className="nav flex-column pt-3 pt-md-0">
-            <li className="nav-item"><a href="https://demo.themesberg.com/volt-pro/index.html" className="nav-link d-flex align-items-center"><span className="sidebar-icon"><img src="https://demo.themesberg.com/volt-pro/assets/img/brand/light.svg" height={20} width={20} alt="Volt Logo" /> </span><span className="mt-1 sidebar-text">HapyCar Rentals</span></a></li>
+            <li className="nav-item"><a href="https://demo.themesberg.com/volt-pro/index.html" className="nav-link d-flex align-items-center"><span className="sidebar-icon"><img src="https://demo.themesberg.com/volt-pro/assets/img/brand/light.svg" height={20} width={20} alt="Volt Logo" /> </span><span className="mt-1 sidebar-text">Manthra Soaps</span></a></li>
             <li className="nav-item"><span className="nav-link collapsed d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#submenu-dashboard"><span><span className="sidebar-icon"><svg className="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
               <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z" />
               <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z" />
