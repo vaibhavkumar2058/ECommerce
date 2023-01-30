@@ -26,6 +26,7 @@ export default function OrderModel({
     location : "",
     customerNumber : "",
     orderTrackingId : "null",
+    email:"null",
     description : "",
   });
 
@@ -119,7 +120,7 @@ export default function OrderModel({
       setButtonType("Update");
     }
     const isEnable =
-    !newOrder?.categoryId || !newOrder?.productId || !newOrder?.orderDate || !newOrder?.orderPrice || !newOrder?.location  || !newOrder?.customerNumber  || !newOrder?.orderTrackingId  || !newOrder?.description;
+    !newOrder?.categoryId || !newOrder?.productId || !newOrder?.orderDate || !newOrder?.orderPrice || !newOrder?.location  || !newOrder?.customerNumber  || !newOrder?.orderTrackingId  || !newOrder?.description|| !newOrder?.email;
     setSaveDisabled(isEnable);
   }, [newOrder]);
 
@@ -247,6 +248,17 @@ export default function OrderModel({
               name="orderTrackingId"
               placeholder="orderTrackingId"
               value={newOrder?.orderTrackingId}
+              onChange={changeHandler}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="email">
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              type="text"
+              name="email"
+              placeholder="email"
+              value={newOrder?.email}
               onChange={changeHandler}
             />
           </Form.Group>
