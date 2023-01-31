@@ -7,24 +7,26 @@ import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
 
-export default function ResourceAttachmentsModel({
-  onAddResourceAttachments,
-  onUpdateResourceAttachments,
-  onDeleteResourceAttachments,
+export default function FolderModel({
+  onAddFolder,
+  onUpdateFolder,
+  onDeleteFolder,
   isEdit,
   isDelete,
-  onGetResourceAttachments,
+  onGetFolder,
   id,
   onClose,
-  resourceAttachmentsData,
+  folderData,
 }) {
-  const [newResourceAttachments, setNewResourceAttachments] = useState({
+  const [newFolder, setNewFolder] = useState({
     resourceId: null,
-    fileId: null,
-    attachmentTypeId: null,
-    visibleToCustomer: true,
-    description: "",
-      });
+    parentFolderId: null,
+    folderName: "",
+    folderTypeId: null,
+    isSystemGenerated: true,
+    isArchived: true,
+    isDeleted:true,
+  });
 
   const [fileSelected, setFileSelected] = useState();
 
@@ -46,8 +48,8 @@ export default function ResourceAttachmentsModel({
   };
 
   const changeHandler = (e) => {
-    setNewResourceAttachments({
-      ...newResourceAttachments,
+    setNewFolder({
+      ...newFolder,
       [e.target.name]: e.target.value,
     });
   };
@@ -59,9 +61,9 @@ export default function ResourceAttachmentsModel({
   };
 
   const saveHandler = async () => {
-    newResourceAttachments.file = fileSelected;
+    newFolder.file = fileSelected;
     if (isEdit) {
-      const response = await onUpdateResourceAttachments(id, newResourceAttachments);
+      const response = await onUpdateFolder(id, newFolder);
       if (response.payload.title == "Success") {
         onClose(true);
       }
@@ -74,11 +76,11 @@ export default function ResourceAttachmentsModel({
     }
     else {
       debugger;
-      const response = await onAddResourceAttachments(newResourceAttachments);
+      const response = await onAddFolder(newFolder);
       if (response.payload.title == "Success") {
         setMessageStatus({
           mode: 'success',
-          message: 'ResourceAttachments Record Saved Succefully.'
+          message: 'Folder Record Saved Succefully.'
         })
         onClose(true);
         console.log(response.payload);
@@ -86,28 +88,28 @@ export default function ResourceAttachmentsModel({
       else {
         setMessageStatus({
           mode: 'danger',
-          message: 'ResourceAttachments Save Failed.'
+          message: 'Folder Save Failed.'
         })
       }
     }
   };
 
   const deleteHandler = async () => {
-    const response = await onDeleteResourceAttachments(id);
+    const response = await onDeleteFolder(id);
     if (response.payload.title == "Success") {
       onClose(true);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'ResourceAttachments Delete Failed.'
+        message: 'Folder Delete Failed.'
       })
     }
   };
 
   useEffect(() => {
     if (isEdit) {
-      setNewResourceAttachments(resourceAttachmentsData);
+      setNewFolder(folderData);
     }
   }, []);
 
@@ -116,9 +118,9 @@ export default function ResourceAttachmentsModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newResourceAttachments?.resourceId || !newResourceAttachments?.fileId || !newResourceAttachments?.attachmentTypeId || !newResourceAttachments?.description || !newResourceAttachments?.visibleToCustomer;
+    !newFolder?.resourceId ||!newFolder?.parentFolderId || !newFolder?.folderName || !newFolder?.folderTypeId || !newFolder?.isSystemGenerated || !newFolder?.isArchived || !newFolder?.isDeleted;
     setSaveDisabled(isEnable);
-  }, [newResourceAttachments]);
+  }, [newFolder]);
 
   return (
     <>
@@ -144,58 +146,78 @@ export default function ResourceAttachmentsModel({
         <Form>
           <Form.Group
             className={styles.stFormContainer}
-            controlId="formResourceAttachments"
+            controlId="formFolder"
           >
             <Form.Label>ResourceId</Form.Label>
             <Form.Control
               type="text"
               name="resourceId"
               placeholder="Enter ResourceId"
-              value={newResourceAttachments?.resourceId}
+              value={newFolder?.resourceId}
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="file">
-            <Form.Label>FileId</Form.Label>
+          <Form.Group className="mb-3" controlId="ParentFolderId">
+            <Form.Label>ParentFolderId</Form.Label>
             <Form.Control
               type="text"
-              name="fileId"
-              placeholder="FileId"
-              value={newResourceAttachments?.fileId}
+              name="parentFolderId"
+              placeholder="ParentFolderId"
+              value={newFolder?.parentFolderId}
               onChange={changeHandler}
             />
           </Form.Group>
-
-
-          <Form.Group className="mb-3" controlId="description">
-            <Form.Label>Description</Form.Label>
+          <Form.Group className="mb-3" controlId="folderName">
+            <Form.Label>FolderName</Form.Label>
             <Form.Control
               type="text"
-              name="description"
-              placeholder="Description"
-              value={newResourceAttachments?.description}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="attachmentType">
-            <Form.Label>AttachmentTypeId</Form.Label>
-            <Form.Control
-              type="text"
-              name="attachmentTypeId"
-              placeholder="attachmentTypeId"
-              value={newResourceAttachments?.attachmentTypeId}
+              name="folderName"
+              placeholder="FolderName"
+              value={newFolder?.folderName}
               onChange={changeHandler}
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="visibleToCustomer">
-            <Form.Label>VisibleToCustomer</Form.Label>
+
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>FolderTypeId</Form.Label>
             <Form.Control
               type="text"
-              name="visibleToCustomer"
-              placeholder="VisibleToCustomer"
-              value={newResourceAttachments?.VisibleToCustomer}
+              name="folderTypeId"
+              placeholder="FolderTypeId"
+              value={newFolder?.folderTypeId}
+              onChange={changeHandler}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="isSystemGenerated">
+            <Form.Label>IsSystemGenerated</Form.Label>
+            <Form.Control
+              type="text"
+              name="isSystemGenerated"
+              placeholder="IsSystemGenerated"
+              value={newFolder?.isSystemGenerated}
+              onChange={changeHandler}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="isArchived">
+            <Form.Label>IsArchived</Form.Label>
+            <Form.Control
+              type="text"
+              name="isArchived"
+              placeholder="IsArchived"
+              value={newFolder?.isArchived}
+              onChange={changeHandler}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="isArchived">
+            <Form.Label>IsDeleted</Form.Label>
+            <Form.Control
+              type="text"
+              name="isDeleted"
+              placeholder="IsDeleted"
+              value={newFolder?.isDeleted}
               onChange={changeHandler}
             />
           </Form.Group>
@@ -215,23 +237,23 @@ export default function ResourceAttachmentsModel({
   );
 }
 
-ResourceAttachmentsModel.propTypes = {
+FolderModel.propTypes = {
   /**
-   * Callback function for Add Enquiry
+   * Callback function for Add Folder
    */
-  onAddEnquiry: PropTypes.func,
+  onAddFolder: PropTypes.func,
   /**
-   * Callback function for Update Enquiry
+   * Callback function for Update Folder
    */
-  onUpdateEnquiry: PropTypes.func,
+  onUpdateFolder: PropTypes.func,
   /**
-   * Callback function for Delete Enquiry
+   * Callback function for Delete Folder
    */
-  onDeleteEnquiry: PropTypes.func,
+  onDeleteFolder: PropTypes.func,
   /**
-   * Callback function for Get Enquiry
+   * Callback function for Get Folder
    */
-  onGetEnquiry: PropTypes.func,
+  onGetFolder: PropTypes.func,
   /**
    * isEdit for bool type
    */
@@ -241,7 +263,7 @@ ResourceAttachmentsModel.propTypes = {
    */
   isDelete: PropTypes.bool,
   /**
-   * Callback function for Get Enquiry
+   * Callback function for Get Folder
    */
   onClose: PropTypes.func,
   /**
@@ -249,20 +271,20 @@ ResourceAttachmentsModel.propTypes = {
    */
   id: PropTypes.number,
   /**
- * enquiryData for object type
+ * folderData for object type
  */
-  enquiryData: PropTypes.any,
+  folderData: PropTypes.any,
 };
 
-ResourceAttachmentsModel.defaultProps = {
-  onAddResourceAttachmentsModel: null,
-  onUpdateResourceAttachmentsModel: null,
-  onDeleteResourceAttachmentsModel: null,
-  onGetResourceAttachmentsModel: null,
+FolderModel.defaultProps = {
+  onAddFolder: null,
+  onUpdateFolder: null,
+  onDeleteFolder: null,
+  onGetFolder: null,
   isEdit: false,
   isDelete: false,
   onClose: null,
   id: null,
-  eesourceAttachmentsModelData: null,
+  folderData: null,
 };
 

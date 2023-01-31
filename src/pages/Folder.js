@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
-import useFetchResourceAttachments from "../hooks/useFetchResourceAttachments";
-import ResourceAttachmentsModel from "../components/ResourceAttachmentsModel";
+import useFetchFolder from "../hooks/useFetchFolder";
+import FolderModel from "../components/FolderModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
@@ -24,16 +24,16 @@ const MyExportCSV = (props) => {
   );
 };
 
-export default function ResourceAttachments() {
+export default function Folders() {
 
-  const [resourceAttachments, setResourceAttachments] = useState([]);
+  const [folders, setFolders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
   const handleClose = () => {
-    getAllResourceAttachments();
+    getAllFolders();
     setIsEdit(false);
     setIsDelete(false);
     setShow(false);
@@ -41,12 +41,14 @@ export default function ResourceAttachments() {
   const handleShow = () => setShow(true);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-  const [resourceAttachment, setResourceAttachment] = useState({
-    resourceId: null,
-    fileId: null,
-    attachmentTypeId: null,
-    visibleToCustomer: true,
-    description: ""
+  const [folder, setFolder] = useState({
+    resourceId:null, 
+    parentFolderId: null,
+    folderName: "",
+    folderTypeId: null,
+    isSystemGenerated: true,
+    isArchived: true,
+    isDeleted: true
       });
 
   const [id, setId] = useState(null);
@@ -59,59 +61,79 @@ export default function ResourceAttachments() {
   });
 
   const { 
-    addResourceAttachments,
-    updateResourceAttachments,
-    deleteResourceAttachments,
-    getResourceAttachments,
-    resourceAttachmentsById,
-  } = useFetchResourceAttachments();
+    addFolder,
+    updateFolder,
+    deleteFolder,
+    getFolders,
+    folderById,
+  } = useFetchFolder();
 
   const columns = [
-
-    { dataField: 'resourceAttachmentId', text: 'ResourceAttachmentId ', sort: true, hidden: true },
-    { dataField: 'resourceId', text: ' ResourceId', sort: true },
-    { dataField: 'fileId', text: 'FileId', sort: true },
-    { dataField: 'attachmentTypeId', text: 'AttachmentTypeId', sort: true },
-    { dataField: 'description', text: 'Description', sort: true },
-    { dataField: 'visibleToCustomer', text: 'VisibleToCustomer', sort: true },
     // columns follow dataField and text structure
     {
       dataField: "Actions",
       text: "Actions",
+      headerStyle: () => {
+        return { width: "200px" };
+      },
       formatter: (cellContent, row) => {
         return (
           <><button
             className="btn btn-primary btn-xs"
-            onClick={() => handleView(row.resourceAttachmentsId, row.name)}
+            onClick={() => handleView(row.folderId, row.name)}
           >
             View
           </button>
             <button
               className="btn btn-primary btn-xs"
-              onClick={() => handleEdit(row.resourceAttachmentsId, row)}
+              onClick={() => handleEdit(row.folderId, row)}
             >
               Edit
             </button><button
               className="btn btn-danger btn-xs"
-              onClick={() => handleDelete(row.resourceAttachmentsId, row.name)}
+              onClick={() => handleDelete(row.folderId, row.name)}
             >
               Delete
             </button></>
         );
       },
     },
+
+    { dataField: 'folderId', text: 'Folder ', sort: true, hidden: true },
+    { dataField: 'resourceId', text: ' Resource', sort: true, headerStyle: () => {
+      return { width: "150px" };
+    }},
+    { dataField: 'parentFolderId', text: ' ParentFolder', sort: true,headerStyle: () => {
+      return { width: "150px" };
+    } },
+    { dataField: 'folderName', text: 'FolderName', sort: true ,headerStyle: () => {
+      return { width: "150px" };
+    }},
+    { dataField: 'folderTypeId', text: 'FolderType', sort: true ,headerStyle: () => {
+      return { width: "150px" };
+    }},
+    { dataField: 'isSystemGenerated', text: 'IsSystemGenerated', sort: true,headerStyle: () => {
+      return { width: "200px" };
+    } },
+    { dataField: 'isArchived', text: 'IsArchived', sort: true,headerStyle: () => {
+      return { width: "150px" };
+    } },
+    { dataField: 'isDeleted', text: 'IsDeleted', sort: true ,headerStyle: () => {
+      return { width: "100px" };
+    }},
+    
   ];
 
   useEffect(() => {
-    if (ResourceAttachments.length == 0) {
-      getAllResourceAttachments();
+    if (folders.length == 0) {
+      getAllFolders();
       setLoading(false)
     }
-  }, [ResourceAttachments]);
+  }, [folders]);
 
 
   const defaultSorted = [{
-    dataField: 'ResourceAttachmentsId',
+    dataField: 'FolderId',
     order: 'desc'
   }];
 
@@ -125,8 +147,8 @@ export default function ResourceAttachments() {
   };
 
   const handleEdit = (rowId, row) => {
-    setResourceAttachment(row);
-    //getResourceAttachmentsById(rowId);
+    setFolder(row);
+    //getFoldersById(rowId);
     setId(rowId);
     setIsEdit(true);
     setShow(true);
@@ -158,12 +180,12 @@ export default function ResourceAttachments() {
   });
 
 
-  const getAllResourceAttachments = async () => {
-    const response = await getResourceAttachments();
+  const getAllFolders = async () => {
+    const response = await getFolders();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',
-        message: 'ResourceAttachments Record Fetch Succefully.'
+        message: 'Folders Record Fetch Succefully.'
       })
 
       var arr = [];
@@ -171,25 +193,25 @@ export default function ResourceAttachments() {
         arr.push(response.payload[key]);
       }
 
-      setResourceAttachments(arr);
+      setFolders(arr);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'ResourceAttachments Fetch Failed.'
+        message: 'Folder Fetch Failed.'
       })
     }
   };
 
-  const getResourceAttachmentsById = async (id) => {
-    const response = await resourceAttachmentsById(id);
+  const getFolderById = async (id) => {
+    const response = await folderById(id);
     if (response.payload.title == "Success") {
-      setResourceAttachment(response.payload);
+      setFolder(response.payload);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'ResourceAttachments Get Failed.'
+        message: 'Folder Get Failed.'
       })
     }
   };
@@ -216,11 +238,11 @@ export default function ResourceAttachments() {
     <>
       <div className="m-t-40">
         {loading && <div>A moment please...</div>}
-        {resourceAttachments && (<div>
+        {folders && (<div>
           <ToolkitProvider
             bootstrap4
-            keyField='resourceAttachmentsId'
-            data={resourceAttachments}
+            keyField='folderId'
+            data={folders}
             columns={columns}
             search
           >
@@ -238,7 +260,7 @@ export default function ResourceAttachments() {
                           <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
                           <Button variant="primary" onClick={handleShow}>
-                            Add ResourceAttachments
+                            Add Folder
                           </Button>
                           </div>
                         </div>
@@ -269,19 +291,19 @@ export default function ResourceAttachments() {
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Add ResourceAttachments</Modal.Title>
+              <Modal.Title>Add Folder</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <ResourceAttachmentsModel
-                onAddResourceAttachments={addResourceAttachments}
-                onUpdateResourceAttachments={updateResourceAttachments}
-                onDeleteResourceAttachments={deleteResourceAttachments}
-                onGetResourceAttachments={resourceAttachmentsById}
+              <FolderModel
+                onAddFolder={addFolder}
+                onUpdateFolder={updateFolder}
+                onDeleteFolder={deleteFolder}
+                onGetFolder={folderById}
                 onClose={handleClose}
                 isEdit={isEdit}
                 isDelete={isDelete}
                 id={id}
-                resourceAttachmentsData={resourceAttachment}
+                folderData={folder}
               />
             </Modal.Body>
 

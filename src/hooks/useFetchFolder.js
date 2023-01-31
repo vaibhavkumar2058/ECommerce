@@ -3,34 +3,33 @@ import { useSelector, useDispatch } from "react-redux";
 import { useAPI } from "../services";
 
 import {
-    addRecordStatusAction,
-    updateRecordStatusAction,   
-    deleteRecordStatusAction,
-    getRecordStatusBeginAction,
-    getRecordStatusSuccessAction,
-    getRecordStatusFailureAction,
-    recordStatusAction,
-  } from "../actions/recordStatusActions";
+    addFolderAction,
+    updateFolderAction,   
+    deleteFolderAction,
+    getFolderBeginAction,
+    getFolderSuccessAction,
+    getFolderFailureAction,
+    folderAction,
+  } from "../actions/folderActions";
 
-  export default function useFetchRecordStatuss() {
+  export default function useFetchFolders() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/recordStatus";
-
+  const hapyCarURL = "https://localhost:7062/folder";
 
   const API = useAPI();
   const SUCCESS = "Success";
   const ERROR = "Error";
 
-  //RecordStatus GET  ACTIONS
-  const getRecordStatuss = () => {
-    dispatch(getRecordStatusBeginAction());
+  // Folder GET  ACTIONS
+  const getFolders = () => {
+    dispatch(getFolderBeginAction());
     return API.get(hapyCarURL,
       null,
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          getRecordStatusSuccessAction({
+          getFolderSuccessAction({
             ...data,
             title: SUCCESS,
           })
@@ -38,12 +37,12 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.recordStatus) {
-          const [errors] = error.response.data.recordStatus;
+        if (error.response.data.folder) {
+          const [errors] = error.response.data.folder;
           errorMsg = errors;
         }
         dispatch(
-            getRecordStatusFailureAction({
+          getFolderFailureAction({
             ...errorMsg,
             title: ERROR,
             errorMsg,
@@ -53,16 +52,16 @@ import {
 
   };
 
-  // RecordStatus ADD  ACTIONS
-  const addRecordStatus = (recordStatus) => {
+  // Folder ADD  ACTIONS
+  const addFolder = (folder) => {
     return API.post(
       hapyCarURL,
-      { data: recordStatus},
+      { data: folder },
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          addRecordStatusAction({
+          addFolderAction({
             ...data,
             title: SUCCESS,
           })
@@ -71,13 +70,13 @@ import {
 
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.recordStatus) {
-          const [errors] = error.response.data.recordStatus;
+        if (error.response.data.folder) {
+          const [errors] = error.response.data.folder;
           errorMsg = errors;
         }
         dispatch(
-          addRecordStatusAction({
-            ...recordStatus,
+          addFolderAction({
+            ...folder,
             title: ERROR,
             errorMsg,
           })
@@ -89,11 +88,11 @@ import {
 
   };
 
-  // RecordStatus UPDATE  ACTIONS
-  const updateRecordStatus = (recordStatusId, recordStatus) => {
+  // Folder UPDATE  ACTIONS
+  const updateFolder = (folderId, folder) => {
 
-    return API.put(`${hapyCarURL}/${recordStatusId}`,
-      { data: recordStatus },
+    return API.put(`${hapyCarURL}/${folderId}`,
+      { data: folder },
       { suppressErrors: [400] }
     )
       .then(({ data
@@ -101,7 +100,7 @@ import {
       }) =>
 
         dispatch(
-          updateRecordStatusAction({
+          updateFolderAction({
             ...data,
             title: SUCCESS,
           })
@@ -109,13 +108,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.recordStatus) {
-          const [errors] = error.response.data.recordStatus;
+        if (error.response.data.folder) {
+          const [errors] = error.response.data.folder;
           errorMsg = errors;
         }
         dispatch(
-          updateRecordStatusAction({
-            ...recordStatus,
+          updateFolderAction({
+            ...folder,
             title: ERROR,
             errorMsg,
           })
@@ -124,15 +123,15 @@ import {
 
   };
 
-  // RecordStatus DELETE  ACTIONS
-  const deleteRecordStatus = (recordStatusId) => {
-    return API.delete(`${hapyCarURL}/${recordStatusId}`,
+  // Folder DELETE  ACTIONS
+  const deleteFolder = (folderId) => {
+    return API.delete(`${hapyCarURL}/${folderId}`,
       null,
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          deleteRecordStatusAction({
+          deleteFolderAction({
             ...data,
             title: SUCCESS,
           })
@@ -140,13 +139,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.recordStatus) {
-          const [errors] = error.response.data.recordStatus;
+        if (error.response.data.folder) {
+          const [errors] = error.response.data.folder;
           errorMsg = errors;
         }
         dispatch(
-          deleteRecordStatusAction({
-            ...recordStatusId,
+          deleteFolderAction({
+            ...folderId,
             title: ERROR,
             errorMsg,
           })
@@ -155,9 +154,9 @@ import {
 
   };
 
-  // RecordStatus BY ID ACTIONS
-  const recordStatusById = (recordStatusId) => {
-    return API.get(`${hapyCarURL}/${recordStatusId}`,
+  // Folder BY ID ACTIONS
+  const folderById = (folderId) => {
+    return API.get(`${hapyCarURL}/${folderId}`,
       null,
       { suppressErrors: [400] }
     )
@@ -166,7 +165,7 @@ import {
       }) =>
 
         dispatch(
-            recordStatusAction({
+            folderAction({
             ...data,
             title: SUCCESS,
           })
@@ -174,12 +173,12 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.recordStatus) {
-          const [errors] = error.response.data.recordStatus;
+        if (error.response.data.folder) {
+          const [errors] = error.response.data.folder;
           errorMsg = errors;
         }
         dispatch(
-            recordStatusAction({
+            folderAction({
             ...errorMsg,
             title: ERROR,
             errorMsg,
@@ -189,10 +188,10 @@ import {
       
   };
   return {
-    addRecordStatus,
-    updateRecordStatus,
-    deleteRecordStatus,
-    getRecordStatuss,
-    recordStatusById,
+    addFolder,
+    updateFolder,
+    deleteFolder,
+    getFolders,
+    folderById,
   };
 }
