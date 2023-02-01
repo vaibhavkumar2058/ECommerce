@@ -10,7 +10,7 @@ import {
     getOrderTrackingSuccessAction,
     getOrderTrackingFailureAction,
     orderTrackingAction,
-  } from "../actions/ordertrackingAction";
+  } from "../actions/orderTrackingAction";
 
   export default function useFetchOrderTrackings() {
     const dispatch = useDispatch();
