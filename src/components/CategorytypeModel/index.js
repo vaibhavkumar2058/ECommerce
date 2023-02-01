@@ -8,23 +8,22 @@ import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
 
 export default function CategorytypeModel({
-  onAddCategorytype,
-  onUpdateCategorytype,
-  onDeleteCategorytype,
+  onAddCategoryType,
+  onUpdateCategoryType,
+  onDeleteCategoryType,
   isEdit,
   isDelete,
-  onGetCategorytype,
+  onGetCategoryType,
   id,
   onClose,
-  categorytypeData,
+  categoryTypeData,
 }) {
-  const [newCategorytype, setNewCategorytype] = useState({
+  const [newCategoryType, setNewCategoryType] = useState({
     categoryTypeName: "",
     description: "",
    
   });
 
-  const [fileSelected, setFileSelected] = useState();
 
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
@@ -44,22 +43,15 @@ export default function CategorytypeModel({
   };
 
   const changeHandler = (e) => {
-    setNewCategorytype({
-      ...newCategorytype,
+    setNewCategoryType({
+      ...newCategoryType,
       [e.target.name]: e.target.value,
     });
   };
 
-  const saveFileSelected= (e) => {
-    //in case you wan to print the file selected
-    //console.log(e.target.files[0]);
-    setFileSelected(e.target.files[0]);
-  };
-
   const saveHandler = async () => {
-    newCategorytype.file = fileSelected;
     if (isEdit) {
-      const response = await onUpdateCategorytype(id, newCategorytype);
+      const response = await onUpdateCategoryType(id, newCategoryType);
       if (response.payload.title == "Success") {
         onClose(true);
       }
@@ -71,12 +63,12 @@ export default function CategorytypeModel({
       }
     }
     else {
-      debugger;
-      const response = await onAddCategorytype(newCategorytype);
+   
+      const response = await onAddCategoryType(newCategoryType);
       if (response.payload.title == "Success") {
         setMessageStatus({
           mode: 'success',
-          message: 'Categorytype Record Saved Succefully.'
+          message: 'CategoryType Record Saved Succefully.'
         })
         onClose(true);
         console.log(response.payload);
@@ -84,28 +76,28 @@ export default function CategorytypeModel({
       else {
         setMessageStatus({
           mode: 'danger',
-          message: 'Categorytype Save Failed.'
+          message: 'CategoryType Save Failed.'
         })
       }
     }
   };
 
   const deleteHandler = async () => {
-    const response = await onDeleteCategorytype(id);
+    const response = await onDeleteCategoryType(id);
     if (response.payload.title == "Success") {
       onClose(true);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Categorytype Delete Failed.'
+        message: 'CategoryType Delete Failed.'
       })
     }
   };
 
   useEffect(() => {
     if (isEdit) {
-      setNewCategorytype(categorytypeData);
+      setNewCategoryType(categoryTypeData);
     }
   }, []);
 
@@ -114,9 +106,9 @@ export default function CategorytypeModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newCategorytype?.categoryTypeName || !newCategorytype?.description;
+      !newCategoryType?.categoryTypeName|| !newCategoryType?.description;
     setSaveDisabled(isEnable);
-  }, [newCategorytype]);
+  }, [newCategoryType]);
 
   return (
     <>
@@ -142,14 +134,14 @@ export default function CategorytypeModel({
         <Form>
           <Form.Group
             className={styles.stFormContainer}
-            controlId="formCategorytype"
+            controlId="formCategoryType"
           >
-            <Form.Label>Categorytypename</Form.Label>
+            <Form.Label>CategoryTypename</Form.Label>
             <Form.Control
               type="text"
-              name="name"
-              placeholder="Enter Categorytype"
-              value={newCategorytype?.categoryTypeName}
+              name="categoryTypeName"
+              placeholder="Enter CategoryType"
+              value={newCategoryType?.categoryTypeName}
               onChange={changeHandler}
             />
           </Form.Group>
@@ -157,14 +149,15 @@ export default function CategorytypeModel({
             <Form.Label>Discription</Form.Label>
             <Form.Control
               type="text"
-              name="Discription"
+              name="description"
               placeholder="Discription"
-              value={newCategorytype?.description}
+              value={newCategoryType?.description}
               onChange={changeHandler}
             />
           </Form.Group>
           <Form.Group>
-          <input type="file" className="custom-file-label" onChange={saveFileSelected} />
+          
+         
           </Form.Group>
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
@@ -185,19 +178,19 @@ CategorytypeModel.propTypes = {
   /**
    * Callback function for Add Categorytype
    */
-  onAddCategorytype: PropTypes.func,
+  onAddCategoryType: PropTypes.func,
   /**
    * Callback function for Update Categorytype
    */
-  onUpdateCategorytype: PropTypes.func,
+  onUpdateCategoryType: PropTypes.func,
   /**
    * Callback function for Delete Categorytype
    */
-  onDeleteCategorytype: PropTypes.func,
+  onDeleteCategoryType: PropTypes.func,
   /**
    * Callback function for Get Categorytype
    */
-  onGetCategorytype: PropTypes.func,
+  onGetCategoryType: PropTypes.func,
   /**
    * isEdit for bool type
    */
@@ -217,18 +210,18 @@ CategorytypeModel.propTypes = {
   /**
  * categorytypeData for object type
  */
-  categorytypeData: PropTypes.any,
+  CategoryTypeData: PropTypes.any,
 };
 
 CategorytypeModel.defaultProps = {
-  onAddCategorytype: null,
-  onUpdateCategorytype: null,
-  onDeleteCategorytype: null,
-  onGeCategorytype: null,
+  onAddCategoryType: null,
+  onUpdateCategoryType: null,
+  onDeleteCategoryType: null,
+  onGeCategoryType: null,
   isEdit: false,
   isDelete: false,
   onClose: null,
   id: null,
-  categorytypeyData: null,
+  categoryTypeData: null,
 };
 
