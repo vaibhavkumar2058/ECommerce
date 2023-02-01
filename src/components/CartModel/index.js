@@ -21,7 +21,7 @@ export default function CartModel({
   const [newCart, setNewCart] = useState({
     resourceId:null,
     productId:null,
-    ProductName:"",
+    productName:"",
     cost:null,
     quantity:"",
     description:""
@@ -53,11 +53,7 @@ export default function CartModel({
     });
   };
 
-  const saveFileSelected= (e) => {
-    //in case you wan to print the file selected
-    //console.log(e.target.files[0]);
-    setFileSelected(e.target.files[0]);
-  };
+  
 
   const saveHandler = async () => {
     newCart.file = fileSelected;
@@ -117,7 +113,7 @@ export default function CartModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newCart?.resourceId || !newCart?.productId || !newCart?.ProductName || !newCart?.cost || !newCart?.quantity|| !newCart?.description;
+      !newCart?.resourceId || !newCart?.productId || !newCart?.productName || !newCart?.cost || !newCart?.quantity|| !newCart?.description;
     setSaveDisabled(isEnable);
   }, [newCart]);
 
@@ -210,9 +206,7 @@ export default function CartModel({
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group>
-          <input type="file" className="custom-file-label" onChange={saveFileSelected} />
-          </Form.Group>
+          
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel

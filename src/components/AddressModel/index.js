@@ -57,11 +57,7 @@ export default function AddressModel({
     });
   };
 
-  const saveFileSelected= (e) => {
-    //in case you wan to print the file selected
-    //console.log(e.target.files[0]);
-    setFileSelected(e.target.files[0]);
-  };
+  
 
   const saveHandler = async () => {
     newAddress.file = fileSelected;
@@ -249,9 +245,7 @@ export default function AddressModel({
             />
             
           
-          <Form.Group>
-          <input type="file" className="custom-file-label" onChange={saveFileSelected} />
-          </Form.Group>
+          
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel

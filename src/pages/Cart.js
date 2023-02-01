@@ -64,13 +64,13 @@ export default function Carts() {
     addCart,
     updateCart,
     deleteCart,
-    getCarts,
+    getCart,
     cartById,
   } = useFetchCart();
 
   const columns = [
-
-    { dataField: 'resourceId', text: 'Resource Id', sort: true, hidden: true },
+    { dataField: 'cartId', text: 'Cart Id', sort: true, hidden: true },
+    { dataField: 'resourceId', text: 'Resource Id', sort: true  },
     { dataField: 'productId', text: ' Product Id', sort: true },
     { dataField: 'productName', text: 'Product Name', sort: true },
     { dataField: 'cost', text: 'Cost', sort: true },
@@ -161,7 +161,7 @@ export default function Carts() {
 
 
   const getAllCarts = async () => {
-    const response = await getCarts();
+    const response = await getCart();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',
