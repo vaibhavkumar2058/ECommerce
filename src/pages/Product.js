@@ -42,7 +42,7 @@ export default function Products() {
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [product, setProduct] = useState({
-    productname: "",
+    productName: "",
     
     description: "",
       });
@@ -60,14 +60,14 @@ export default function Products() {
     addProduct,
     updateProduct,
     deleteProduct,
-    getProducts,
+    getProduct,
     productById,
   } = useFetchProducts();
 
   const columns = [
 
-    { dataField: 'productId', text: 'Product Id', sort: true, hidden: true },
-    { dataField: 'productname', text: ' Product Name', sort: true }, 
+    { dataField: 'productId', text: 'Product Id', sort: true},
+    { dataField: 'productName', text: ' Product Name', sort: true }, 
     { dataField: 'description', text: 'Description', sort: true },
   
     // columns follow dataField and text structure
@@ -155,7 +155,7 @@ export default function Products() {
 
 
   const getAllProducts = async () => {
-    const response = await getProducts();
+    const response = await getProduct();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',

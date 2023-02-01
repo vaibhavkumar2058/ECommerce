@@ -38,7 +38,6 @@ export default function CategoryTypes() {
         setIsDelete(false);
         setShow(false);
     };
-    debugger;
     const handleShow = () => setShow(true);
     const [isEdit, setIsEdit] = useState(false);
     const [isDelete, setIsDelete] = useState(false);
@@ -55,7 +54,7 @@ export default function CategoryTypes() {
         status: false,
         message: "",
     });
-
+ 
     const {
         addCategoryType,
         updateCategoryType,
@@ -66,8 +65,8 @@ export default function CategoryTypes() {
 
     const columns = [
 
-        { dataField: 'categoryTypeId', text: 'CategoryType Id', sort: true, hidden: true },
-        { dataField: 'categoryTypeName', text: ' Category Type', sort: true },
+        { dataField: 'categoryTypeId', text: 'CategoryType Id', sort: true,},
+        { dataField: 'categoryTypeName', text: ' Category Type Name', sort: true },
         { dataField: 'description', text: 'Description', sort: true },
 
         // columns follow dataField and text structure
