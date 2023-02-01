@@ -13,6 +13,10 @@
   float: right;
 }
 
+.sr-only{
+  display: none;
+}
+
 .m-t-40 {
   margin-top: 40px;
 }

@@ -22,7 +22,7 @@ export default function ResourceAttachmentsModel({
     resourceId: null,
     fileId: null,
     attachmentTypeId: null,
-    visibleToCustomer: "",
+    visibleToCustomer: true,
     description: "",
       });
 
@@ -156,7 +156,7 @@ export default function ResourceAttachmentsModel({
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="file">
-            <Form.Label>File</Form.Label>
+            <Form.Label>FileId</Form.Label>
             <Form.Control
               type="text"
               name="fileId"
@@ -179,7 +179,7 @@ export default function ResourceAttachmentsModel({
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="attachmentType">
-            <Form.Label>AttachmentType</Form.Label>
+            <Form.Label>AttachmentTypeId</Form.Label>
             <Form.Control
               type="text"
               name="attachmentTypeId"
@@ -199,9 +199,7 @@ export default function ResourceAttachmentsModel({
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group>
-          <input type="file" className="custom-file-label" onChange={saveFileSelected} />
-          </Form.Group>
+          
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel
