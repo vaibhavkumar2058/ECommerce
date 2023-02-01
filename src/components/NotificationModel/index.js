@@ -114,7 +114,7 @@ export default function NotificationModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newNotification?.name || !newNotification?.mobile || !newNotification?.email || !newNotification?.description || !newNotification?.notificationId;
+      !newNotification?.notificationName || !newNotification?.notificationDate || !newNotification?.description;
     setSaveDisabled(isEnable);
   }, [newNotification]);
 

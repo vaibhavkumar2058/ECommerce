@@ -7,27 +7,25 @@ import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
 
-export default function OrderModel({
-  onAddOrder,
-  onUpdateOrder,
-  onDeleteOrder,
+export default function FolderModel({
+  onAddFolder,
+  onUpdateFolder,
+  onDeleteFolder,
   isEdit,
   isDelete,
-  onGetOrder,
+  onGetFolder,
   id,
   onClose,
-  orderData,
+  folderData,
 }) {
-  const [newOrder, setNewOrder] = useState({
-    categoryId : "null",
-    productId : "null",
-    orderDate : "",
-    orderPrice : "",
-    location : "",
-    customerNumber : "",
-    orderTrackingId : "null",
-    email:"null",
-    description : "",
+  const [newFolder, setNewFolder] = useState({
+    resourceId: null,
+    parentFolderId: null,
+    folderName: "",
+    folderTypeId: null,
+    isSystemGenerated: true,
+    isArchived: true,
+    isDeleted:true,
   });
 
   const [fileSelected, setFileSelected] = useState();
@@ -50,8 +48,8 @@ export default function OrderModel({
   };
 
   const changeHandler = (e) => {
-    setNewOrder({
-      ...newOrder,
+    setNewFolder({
+      ...newFolder,
       [e.target.name]: e.target.value,
     });
   };
@@ -63,9 +61,9 @@ export default function OrderModel({
   };
 
   const saveHandler = async () => {
-    newOrder.file = fileSelected;
+    newFolder.file = fileSelected;
     if (isEdit) {
-      const response = await onUpdateOrder(id, newOrder);
+      const response = await onUpdateFolder(id, newFolder);
       if (response.payload.title == "Success") {
         onClose(true);
       }
@@ -78,11 +76,11 @@ export default function OrderModel({
     }
     else {
       debugger;
-      const response = await onAddOrder(newOrder);
+      const response = await onAddFolder(newFolder);
       if (response.payload.title == "Success") {
         setMessageStatus({
           mode: 'success',
-          message: 'Order Record Saved Succefully.'
+          message: 'Folder Record Saved Succefully.'
         })
         onClose(true);
         console.log(response.payload);
@@ -90,28 +88,28 @@ export default function OrderModel({
       else {
         setMessageStatus({
           mode: 'danger',
-          message: 'Order Save Failed.'
+          message: 'Folder Save Failed.'
         })
       }
     }
   };
 
   const deleteHandler = async () => {
-    const response = await onDeleteOrder(id);
+    const response = await onDeleteFolder(id);
     if (response.payload.title == "Success") {
       onClose(true);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Order Delete Failed.'
+        message: 'Folder Delete Failed.'
       })
     }
   };
 
   useEffect(() => {
     if (isEdit) {
-      setNewOrder(orderData);
+      setNewFolder(folderData);
     }
   }, []);
 
@@ -120,9 +118,9 @@ export default function OrderModel({
       setButtonType("Update");
     }
     const isEnable =
-    !newOrder?.categoryId || !newOrder?.productId || !newOrder?.orderDate || !newOrder?.orderPrice || !newOrder?.location  || !newOrder?.customerNumber  || !newOrder?.orderTrackingId  || !newOrder?.description|| !newOrder?.email;
+    !newFolder?.resourceId ||!newFolder?.parentFolderId || !newFolder?.folderName || !newFolder?.folderTypeId || !newFolder?.isSystemGenerated || !newFolder?.isArchived || !newFolder?.isDeleted;
     setSaveDisabled(isEnable);
-  }, [newOrder]);
+  }, [newFolder]);
 
   return (
     <>
@@ -148,117 +146,78 @@ export default function OrderModel({
         <Form>
           <Form.Group
             className={styles.stFormContainer}
-            controlId="formOrder"
+            controlId="formFolder"
           >
-            <Form.Label>OrderId</Form.Label>
+            <Form.Label>ResourceId</Form.Label>
             <Form.Control
               type="text"
-              name="orderId"
-              placeholder="orderId"
-              value={newOrder?.orderId}
+              name="resourceId"
+              placeholder="Enter ResourceId"
+              value={newFolder?.resourceId}
               onChange={changeHandler}
             />
           </Form.Group>
-
-          <Form.Group className="mb-3" controlId="categoryId">
-            <Form.Label>CategoryId</Form.Label>
+          <Form.Group className="mb-3" controlId="ParentFolderId">
+            <Form.Label>ParentFolderId</Form.Label>
             <Form.Control
               type="text"
-              name="categoryId"
-              placeholder="categoryId"
-              value={newOrder?.categoryId}
+              name="parentFolderId"
+              placeholder="ParentFolderId"
+              value={newFolder?.parentFolderId}
+              onChange={changeHandler}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="folderName">
+            <Form.Label>FolderName</Form.Label>
+            <Form.Control
+              type="text"
+              name="folderName"
+              placeholder="FolderName"
+              value={newFolder?.folderName}
               onChange={changeHandler}
             />
           </Form.Group>
 
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Description</Form.Label>
+            <Form.Label>FolderTypeId</Form.Label>
             <Form.Control
               type="text"
-              name="description"
-              placeholder="description"
-              value={newOrder?.description}
+              name="folderTypeId"
+              placeholder="FolderTypeId"
+              value={newFolder?.folderTypeId}
               onChange={changeHandler}
             />
           </Form.Group>
 
-
-          <Form.Group className="mb-3" controlId="productId">
-            <Form.Label>ProductId</Form.Label>
+          <Form.Group className="mb-3" controlId="isSystemGenerated">
+            <Form.Label>IsSystemGenerated</Form.Label>
             <Form.Control
               type="text"
-              name="productId"
-              placeholder="productId"
-              value={newOrder?.productId}
+              name="isSystemGenerated"
+              placeholder="IsSystemGenerated"
+              value={newFolder?.isSystemGenerated}
               onChange={changeHandler}
             />
           </Form.Group>
 
-
-          <Form.Group className="mb-3" controlId="orderDate">
-            <Form.Label>OrderDate</Form.Label>
+          <Form.Group className="mb-3" controlId="isArchived">
+            <Form.Label>IsArchived</Form.Label>
             <Form.Control
               type="text"
-              name="orderDate"
-              placeholder="orderDate"
-              value={newOrder?.orderDate}
+              name="isArchived"
+              placeholder="IsArchived"
+              value={newFolder?.isArchived}
               onChange={changeHandler}
             />
           </Form.Group>
-
-
-          <Form.Group className="mb-3" controlId="orderPrice">
-            <Form.Label>OrderPrice</Form.Label>
+          <Form.Group className="mb-3" controlId="isArchived">
+            <Form.Label>IsDeleted</Form.Label>
             <Form.Control
               type="text"
-              name="orderPrice"
-              placeholder="orderPrice"
-              value={newOrder?.orderPrice}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="location">
-            <Form.Label>Location</Form.Label>
-            <Form.Control
-              type="text"
-              name="location"
-              placeholder="location"
-              value={newOrder?.location}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="customerNumber">
-            <Form.Label>CustomerNumber</Form.Label>
-            <Form.Control
-              type="text"
-              name="customerNumber"
-              placeholder="customerNumber"
-              value={newOrder?.customerNumber}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="orderTrackingId">
-            <Form.Label>OrderTrackingId</Form.Label>
-            <Form.Control
-              type="text"
-              name="orderTrackingId"
-              placeholder="orderTrackingId"
-              value={newOrder?.orderTrackingId}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="email">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              type="text"
-              name="email"
-              placeholder="email"
-              value={newOrder?.email}
+              name="isDeleted"
+              placeholder="IsDeleted"
+              value={newFolder?.isDeleted}
               onChange={changeHandler}
             />
           </Form.Group>
@@ -278,23 +237,23 @@ export default function OrderModel({
   );
 }
 
-OrderModel.propTypes = {
+FolderModel.propTypes = {
   /**
-   * Callback function for Add Order
+   * Callback function for Add Folder
    */
-  onAddOrder: PropTypes.func,
+  onAddFolder: PropTypes.func,
   /**
-   * Callback function for Update Order
+   * Callback function for Update Folder
    */
-  onUpdateOrder: PropTypes.func,
+  onUpdateFolder: PropTypes.func,
   /**
-   * Callback function for Delete Order
+   * Callback function for Delete Folder
    */
-  onDeleteOrder: PropTypes.func,
+  onDeleteFolder: PropTypes.func,
   /**
-   * Callback function for Get Order
+   * Callback function for Get Folder
    */
-  onGetOrder: PropTypes.func,
+  onGetFolder: PropTypes.func,
   /**
    * isEdit for bool type
    */
@@ -304,7 +263,7 @@ OrderModel.propTypes = {
    */
   isDelete: PropTypes.bool,
   /**
-   * Callback function for Get Order
+   * Callback function for Get Folder
    */
   onClose: PropTypes.func,
   /**
@@ -312,20 +271,20 @@ OrderModel.propTypes = {
    */
   id: PropTypes.number,
   /**
- * orderData for object type
+ * folderData for object type
  */
-  orderData: PropTypes.any,
+  folderData: PropTypes.any,
 };
 
-OrderModel.defaultProps = {
-  onAddOrder: null,
-  onUpdateOrder: null,
-  onDeleteOrder: null,
-  onGetOrder: null,
+FolderModel.defaultProps = {
+  onAddFolder: null,
+  onUpdateFolder: null,
+  onDeleteFolder: null,
+  onGetFolder: null,
   isEdit: false,
   isDelete: false,
   onClose: null,
   id: null,
-  orderData: null,
+  folderData: null,
 };
 

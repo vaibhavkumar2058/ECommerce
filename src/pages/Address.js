@@ -72,8 +72,8 @@ export default function Address() {
   } = useFetchAddress();
 
   const columns = [
-
-    { dataField: 'countryId', text: 'Country Id', sort: true, hidden: true },
+    { dataField: 'addressId', text: 'address Id', sort: true, hidden: true },
+    { dataField: 'countryId', text: 'Country Id', sort: true,  },
     { dataField: 'stateId', text: 'State Id', sort: true },
     { dataField: 'city', text: 'City', sort: true },
     { dataField: 'town', text: 'Town', sort: true },

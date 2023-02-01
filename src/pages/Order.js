@@ -49,6 +49,7 @@ export default function Orders() {
     location:"",
     customerNumber:"",
     orderTrackingId:"null",
+    email:"null",
     description:"",
       });
 
@@ -79,6 +80,7 @@ export default function Orders() {
     { dataField: 'location', text: 'Location', sort: true },
     { dataField: 'customerNumber', text: 'customerNumber', sort: true },
     { dataField: 'orderTrackingId', text: 'OrderTrackingId', sort: true },
+    { dataField: 'email', text: 'Email', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
     // columns follow dataField and text structure
     {

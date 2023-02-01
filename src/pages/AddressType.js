@@ -65,8 +65,9 @@ export default function AddressTypes() {
   } = useFetchAddressType();
 
   const columns = [
-    { dataField: 'addressTypeId', text: 'AddressType Id', sort: true, },
-    { dataField: 'addressTypeName', text: 'AddressType Name', sort: true,  },
+
+    { dataField: 'addressTypeId', text: 'AddressType Id', sort: true, hidden: true },
+    { dataField: 'addressTypeName', text: 'AddressTypeName', sort: true, },
     { dataField: 'description', text: ' Description', sort: true },
     
     // columns follow dataField and text structure

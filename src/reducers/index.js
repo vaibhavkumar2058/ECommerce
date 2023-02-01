@@ -8,6 +8,7 @@ import { recordStatusReducer } from "./recordStatusReducer";
 import { resourceAttachmentsReducer } from "./resourceAttachmentsReducer";
 import { categoryTypeReducer } from "./categoryTypeReducer";
 import { productReducer } from "./productReducer";
+import{ folderReducer} from "./folderReducer"
 import { fileReducer } from "./fileReducer";
 
 
@@ -16,7 +17,9 @@ export const reducers = combineReducers({
     enquiryReducer,
     recordStatusReducer,
     resourceAttachmentsReducer,
-    productReducer,
-    fileReducer,
+       productReducer,
+       fileReducer,
     categoryTypeReducer,
+    folderReducer
+
 })
