@@ -14,14 +14,14 @@ import {
 
   export default function useFetchOrders() {
     const dispatch = useDispatch();
-  const hapyCarURL = "http://localhost:7062/order";
+  const hapyCarURL = "https://localhost:7062/order";
 
   const API = useAPI();
   const SUCCESS = "Success";
   const ERROR = "Error";
 
   // Order GET  ACTIONS
-  const getOrders = () => {
+  const getOrder = () => {
     dispatch(getOrderBeginAction());
     return API.get(hapyCarURL,
       null,
@@ -192,7 +192,7 @@ import {
     addOrder,
     updateOrder,
     deleteOrder,
-    getOrders,
+    getOrder,
     orderById,
   };
 }
