@@ -20,7 +20,6 @@ export default function NotificationModel({
 }) {
   const [newNotification, setNewNotification] = useState({
     notificationName: "",
-    notificationDate: "",
     description: "",
   });
 
@@ -107,7 +106,7 @@ debugger;
       setButtonType("Update");
     }
     const isEnable =
-      !newNotification?.notificationName || !newNotification?.notificationDate || !newNotification?.description;
+      !newNotification?.notificationName|| !newNotification?.description;
     setSaveDisabled(isEnable);
   }, [newNotification]);
 
@@ -139,7 +138,7 @@ debugger;
           >
             
           </Form.Group>
-          <Form.Group className="mb-3" controlId="notificationName">
+          <Form.Group>
             <Form.Label>NotificationName</Form.Label>
             <Form.Control
               type="text"
@@ -149,7 +148,7 @@ debugger;
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="notificationDate">
+          {/* <Form.Group>
             <Form.Label>NotificationDate</Form.Label>
             <Form.Control
               type="text"
@@ -158,9 +157,9 @@ debugger;
               value={newNotification?.notificationDate}
               onChange={changeHandler}
             />
-          </Form.Group>
+          </Form.Group> */}
 
-          <Form.Group className="mb-3" controlId="description">
+          <Form.Group>
             <Form.Label>Description</Form.Label>
             <Form.Control
               type="text"
