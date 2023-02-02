@@ -14,7 +14,7 @@ import {
 
   export default function useFetchFiles() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/file";
+  const hapyCarURL = "https://localhost:7062/files";
 
   const API = useAPI();
   const SUCCESS = "Success";
