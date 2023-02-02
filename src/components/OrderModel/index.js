@@ -19,18 +19,16 @@ export default function OrderModel({
   orderData,
 }) {
   const [newOrder, setNewOrder] = useState({
-    categoryId : "null",
-    productId : "null",
-    orderDate : "",
-    orderPrice : "",
+    categoryId : null,
+    productId : null,
+    orderDate : null,
+    orderPrice : null,
     location : "",
-    customerNumber : "",
-    orderTrackingId : "null",
-    email:"null",
+    customerNumber : null,
+    orderTrackingId : null,
+    email:"",
     description : "",
   });
-
-  const [fileSelected, setFileSelected] = useState();
 
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
@@ -56,14 +54,7 @@ export default function OrderModel({
     });
   };
 
-  const saveFileSelected= (e) => {
-    //in case you wan to print the file selected
-    //console.log(e.target.files[0]);
-    setFileSelected(e.target.files[0]);
-  };
-
   const saveHandler = async () => {
-    newOrder.file = fileSelected;
     if (isEdit) {
       const response = await onUpdateOrder(id, newOrder);
       if (response.payload.title == "Success") {
@@ -150,14 +141,7 @@ export default function OrderModel({
             className={styles.stFormContainer}
             controlId="formOrder"
           >
-            <Form.Label>OrderId</Form.Label>
-            <Form.Control
-              type="text"
-              name="orderId"
-              placeholder="orderId"
-              value={newOrder?.orderId}
-              onChange={changeHandler}
-            />
+            
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="categoryId">
@@ -165,19 +149,19 @@ export default function OrderModel({
             <Form.Control
               type="text"
               name="categoryId"
-              placeholder="categoryId"
+              placeholder="CategoryId"
               value={newOrder?.categoryId}
               onChange={changeHandler}
             />
           </Form.Group>
 
 
-          <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Group className="mb-3" controlId="description">
             <Form.Label>Description</Form.Label>
             <Form.Control
               type="text"
               name="description"
-              placeholder="description"
+              placeholder="Description"
               value={newOrder?.description}
               onChange={changeHandler}
             />
@@ -189,7 +173,7 @@ export default function OrderModel({
             <Form.Control
               type="text"
               name="productId"
-              placeholder="productId"
+              placeholder="ProductId"
               value={newOrder?.productId}
               onChange={changeHandler}
             />
@@ -201,7 +185,7 @@ export default function OrderModel({
             <Form.Control
               type="text"
               name="orderDate"
-              placeholder="orderDate"
+              placeholder="OrderDate"
               value={newOrder?.orderDate}
               onChange={changeHandler}
             />
@@ -213,7 +197,7 @@ export default function OrderModel({
             <Form.Control
               type="text"
               name="orderPrice"
-              placeholder="orderPrice"
+              placeholder="OrderPrice"
               value={newOrder?.orderPrice}
               onChange={changeHandler}
             />
@@ -224,7 +208,7 @@ export default function OrderModel({
             <Form.Control
               type="text"
               name="location"
-              placeholder="location"
+              placeholder="Location"
               value={newOrder?.location}
               onChange={changeHandler}
             />
@@ -235,7 +219,7 @@ export default function OrderModel({
             <Form.Control
               type="text"
               name="customerNumber"
-              placeholder="customerNumber"
+              placeholder="CustomerNumber"
               value={newOrder?.customerNumber}
               onChange={changeHandler}
             />
@@ -246,7 +230,7 @@ export default function OrderModel({
             <Form.Control
               type="text"
               name="orderTrackingId"
-              placeholder="orderTrackingId"
+              placeholder="OrderTrackingId"
               value={newOrder?.orderTrackingId}
               onChange={changeHandler}
             />
@@ -257,7 +241,7 @@ export default function OrderModel({
             <Form.Control
               type="text"
               name="email"
-              placeholder="email"
+              placeholder="Email"
               value={newOrder?.email}
               onChange={changeHandler}
             />

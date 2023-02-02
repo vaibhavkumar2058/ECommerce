@@ -42,14 +42,14 @@ export default function Orders() {
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [order, setOrder] = useState({
-    categoryId:"null",
-    productId:"null",
-    orderDate:"",
-    orderPrice:"",
+    categoryId:null,
+    productId:null,
+    orderDate:null,
+    orderPrice:null,
     location:"",
-    customerNumber:"",
-    orderTrackingId:"null",
-    email:"null",
+    customerNumber:null,
+    orderTrackingId:null,
+    email:"",
     description:"",
       });
 

@@ -16,7 +16,7 @@ export const reducers = combineReducers({
     enquiryReducer,
     recordStatusReducer,
     resourceAttachmentsReducer,
-       productReducer,
+    productReducer,
     fileReducer,
     categoryTypeReducer
 
