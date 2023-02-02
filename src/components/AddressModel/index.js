@@ -24,7 +24,7 @@ export default function AddressModel({
     city:"",
     town:"",
     locality:"",
-    pinCode:null,
+    pincode:null,
     addressTypeId:null,
     isDefault:"",
     defaultAddressTypeId:null,
@@ -116,8 +116,8 @@ export default function AddressModel({
     if (isEdit) {
       setButtonType("Update");
     }
-    const isEnable =
-      !newAddress?.countryId || !newAddress?.stateId || !newAddress?.city || !newAddress?.town  || !newAddress?.locality|| !newAddress?.pinCode || !newAddress?.addressTypeId || !newAddress?.isDefault|| !newAddress?.defaultAddressTypeId ;
+    debugger;
+    const isEnable = !newAddress?.city || !newAddress?.town  || !newAddress?.locality || !newAddress?.pincode ;
     setSaveDisabled(isEnable);
   }, [newAddress]);
 
@@ -204,9 +204,9 @@ export default function AddressModel({
             <Form.Label>PinCode</Form.Label>
             <Form.Control
               type="text"
-              name="pinCode"
-              placeholder="PinCode"
-              value={newAddress?.pinCode}
+              name="pincode"
+              placeholder="Pincode"
+              value={newAddress?.pincode}
               onChange={changeHandler}
             />
           </Form.Group>
