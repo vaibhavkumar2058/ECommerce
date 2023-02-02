@@ -3,33 +3,33 @@ import { useSelector, useDispatch } from "react-redux";
 import { useAPI } from "../services";
 
 import {
-    addCategoryTypeAction,
-    updateCategoryTypeAction,   
-    deleteCategoryTypeAction,
-    getCategoryTypeBeginAction,
-    getCategoryTypeSuccessAction,
-    getCategoryTypeFailureAction,
-    categoryTypeAction,
-  } from "../actions/categoryTypeActions";
+    addFolderAction,
+    updateFolderAction,   
+    deleteFolderAction,
+    getFolderBeginAction,
+    getFolderSuccessAction,
+    getFolderFailureAction,
+    folderAction,
+  } from "../actions/folderActions";
 
-  export default function useFetchCategorytype() {
+  export default function useFetchFolders() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/categoryType";
+  const hapyCarURL = "https://localhost:7062/folder";
 
   const API = useAPI();
   const SUCCESS = "Success";
   const ERROR = "Error";
 
-  // Categorytype GET  ACTIONS
-  const getCategoryTypes = () => {
-    dispatch(getCategoryTypeBeginAction());
+  // Folder GET  ACTIONS
+  const getFolders = () => {
+    dispatch(getFolderBeginAction());
     return API.get(hapyCarURL,
       null,
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          getCategoryTypeSuccessAction({
+          getFolderSuccessAction({
             ...data,
             title: SUCCESS,
           })
@@ -37,12 +37,12 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.categoryType) {
-          const [errors] = error.response.data.categoryType;
+        if (error.response.data.folder) {
+          const [errors] = error.response.data.folder;
           errorMsg = errors;
         }
         dispatch(
-          getCategoryTypeFailureAction({
+          getFolderFailureAction({
             ...errorMsg,
             title: ERROR,
             errorMsg,
@@ -52,30 +52,31 @@ import {
 
   };
 
-  // Categorytype ADD  ACTIONS
-  const addCategoryType = (categoryType) => {
-    debugger;
-    return API.post( 
+  // Folder ADD  ACTIONS
+  const addFolder = (folder) => {
+    return API.post(
       hapyCarURL,
-      { data: categoryType}
+      { data: folder },
+      { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          addCategoryTypeAction({
+          addFolderAction({
             ...data,
             title: SUCCESS,
           })
         )
       )
+
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.categoryType) {
-          const [errors] = error.response.data.categoryType;
+        if (error.response.data.folder) {
+          const [errors] = error.response.data.folder;
           errorMsg = errors;
         }
         dispatch(
-          addCategoryTypeAction({
-            ...categoryType,
+          addFolderAction({
+            ...folder,
             title: ERROR,
             errorMsg,
           })
@@ -87,11 +88,11 @@ import {
 
   };
 
-  // Categorytype UPDATE  ACTIONS
-  const updateCategoryType = (categoryTypeId, categoryType) => {
+  // Folder UPDATE  ACTIONS
+  const updateFolder = (folderId, folder) => {
 
-    return API.put(`${hapyCarURL}/${categoryTypeId}`,
-      { data: categoryType },
+    return API.put(`${hapyCarURL}/${folderId}`,
+      { data: folder },
       { suppressErrors: [400] }
     )
       .then(({ data
@@ -99,7 +100,7 @@ import {
       }) =>
 
         dispatch(
-          updateCategoryTypeAction({
+          updateFolderAction({
             ...data,
             title: SUCCESS,
           })
@@ -107,13 +108,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.categoryType) {
-          const [errors] = error.response.data.categoryType;
+        if (error.response.data.folder) {
+          const [errors] = error.response.data.folder;
           errorMsg = errors;
         }
         dispatch(
-          updateCategoryTypeAction({
-            ...categoryType,
+          updateFolderAction({
+            ...folder,
             title: ERROR,
             errorMsg,
           })
@@ -122,15 +123,15 @@ import {
 
   };
 
-  // Categorytype DELETE  ACTIONS
-  const deleteCategoryType = (categoryTypeId) => {
-    return API.delete(`${hapyCarURL}/${categoryTypeId}`,
+  // Folder DELETE  ACTIONS
+  const deleteFolder = (folderId) => {
+    return API.delete(`${hapyCarURL}/${folderId}`,
       null,
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          deleteCategoryTypeAction({
+          deleteFolderAction({
             ...data,
             title: SUCCESS,
           })
@@ -138,13 +139,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.categoryType) {
-          const [errors] = error.response.data.categoryType;
+        if (error.response.data.folder) {
+          const [errors] = error.response.data.folder;
           errorMsg = errors;
         }
         dispatch(
-          deleteCategoryTypeAction({
-            ...categoryTypeId,
+          deleteFolderAction({
+            ...folderId,
             title: ERROR,
             errorMsg,
           })
@@ -153,9 +154,9 @@ import {
 
   };
 
-  // Categorytype BY ID ACTIONS
-  const categoryTypeById = (categoryTypeId) => {
-    return API.get(`${hapyCarURL}/${categoryTypeId}`,
+  // Folder BY ID ACTIONS
+  const folderById = (folderId) => {
+    return API.get(`${hapyCarURL}/${folderId}`,
       null,
       { suppressErrors: [400] }
     )
@@ -164,7 +165,7 @@ import {
       }) =>
 
         dispatch(
-            categoryTypeAction({
+            folderAction({
             ...data,
             title: SUCCESS,
           })
@@ -172,12 +173,12 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.categoryType) {
-          const [errors] = error.response.data.categoryType;
+        if (error.response.data.folder) {
+          const [errors] = error.response.data.folder;
           errorMsg = errors;
         }
         dispatch(
-            categoryTypeAction({
+            folderAction({
             ...errorMsg,
             title: ERROR,
             errorMsg,
@@ -187,10 +188,10 @@ import {
       
   };
   return {
-    addCategoryType,
-    updateCategoryType,
-    deleteCategoryType,
-    getCategoryTypes,
-    categoryTypeById ,
+    addFolder,
+    updateFolder,
+    deleteFolder,
+    getFolders,
+    folderById,
   };
 }

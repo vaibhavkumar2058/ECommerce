@@ -47,8 +47,9 @@ export default function Files() {
     fileName: "",
     fileMimeType: "",
     externalURL: "",
-    archived: "",
-    azureBlobId: "",
+    archived:true,
+    azureBlobId: null,
+
   });
 
   const [id, setId] = useState(null);
@@ -64,13 +65,13 @@ export default function Files() {
     addFile,
     updateFile,
     deleteFile,
-    getFiles,
+    getFile,
     fileById,
   } = useFetchFiles();
 
   const columns = [
 
-    { dataField: 'fileId', text: 'File Id', sort: true, hidden: true },
+    { dataField: 'filesId', text: 'Files Id', sort: true, hidden: true },
     { dataField: 'folderId', text: ' FolderId', sort: true },
     { dataField: 'resourceId', text: ' ResourceId', sort: true },
     { dataField: 'fileName', text: 'fileName', sort: true },
@@ -86,18 +87,18 @@ export default function Files() {
         return (
           <><button
             className="btn btn-primary btn-xs"
-            onClick={() => handleView(row.fileId, row.name)}
+            onClick={() => handleView(row.filesId, row.name)}
           >
             View
           </button>
             <button
               className="btn btn-primary btn-xs"
-              onClick={() => handleEdit(row.fileId, row)}
+              onClick={() => handleEdit(row.filesId, row)}
             >
               Edit
             </button><button
               className="btn btn-danger btn-xs"
-              onClick={() => handleDelete(row.fileId, row.name)}
+              onClick={() => handleDelete(row.filesId, row.name)}
             >
               Delete
             </button></>
@@ -163,7 +164,7 @@ export default function Files() {
 
 
   const getAllFiles = async () => {
-    const response = await getFiles();
+    const response = await getFile();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',
