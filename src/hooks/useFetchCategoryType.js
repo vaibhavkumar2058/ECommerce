@@ -3,18 +3,18 @@ import { useSelector, useDispatch } from "react-redux";
 import { useAPI } from "../services";
 
 import {
-    addCategorytypeAction,
-    updateCategorytypeAction,   
-    deleteCategorytypeAction,
-    getCategorytypeBeginAction,
-    getCategorytypeSuccessAction,
-    getCategorytypeFailureAction,
-    categorytypeAction,
+    addCategoryTypeAction,
+    updateCategoryTypeAction,   
+    deleteCategoryTypeAction,
+    getCategoryTypeBeginAction,
+    getCategoryTypeSuccessAction,
+    getCategoryTypeFailureAction,
+    categoryTypeAction,
   } from "../actions/categoryTypeActions";
 
   export default function useFetchCategorytype() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/category";
+  const hapyCarURL = "https://localhost:7062/categoryType";
 
   const API = useAPI();
   const SUCCESS = "Success";
@@ -22,14 +22,14 @@ import {
 
   // Categorytype GET  ACTIONS
   const getCategoryTypes = () => {
-    dispatch(getCategorytypeBeginAction());
+    dispatch(getCategoryTypeBeginAction());
     return API.get(hapyCarURL,
       null,
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          getCategorytypeSuccessAction({
+          getCategoryTypeSuccessAction({
             ...data,
             title: SUCCESS,
           })
@@ -37,12 +37,12 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.categorytype) {
-          const [errors] = error.response.data.categorytype;
+        if (error.response.data.categoryType) {
+          const [errors] = error.response.data.categoryType;
           errorMsg = errors;
         }
         dispatch(
-          getCategorytypeFailureAction({
+          getCategoryTypeFailureAction({
             ...errorMsg,
             title: ERROR,
             errorMsg,
@@ -53,30 +53,29 @@ import {
   };
 
   // Categorytype ADD  ACTIONS
-  const addCategoryType = (categorytype) => {
-    return API.post(
+  const addCategoryType = (categoryType) => {
+    debugger;
+    return API.post( 
       hapyCarURL,
-      { data:categorytype},
-      { suppressErrors: [400] }
+      { data: categoryType}
     )
       .then(({ data }) =>
         dispatch(
-          addCategorytypeAction({
+          addCategoryTypeAction({
             ...data,
             title: SUCCESS,
           })
         )
       )
-
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.Categorytype) {
-          const [errors] = error.response.data.categorytype;
+        if (error.response.data.categoryType) {
+          const [errors] = error.response.data.categoryType;
           errorMsg = errors;
         }
         dispatch(
-          addCategorytypeAction({
-            ...categorytype,
+          addCategoryTypeAction({
+            ...categoryType,
             title: ERROR,
             errorMsg,
           })
@@ -89,10 +88,10 @@ import {
   };
 
   // Categorytype UPDATE  ACTIONS
-  const updateCategoryType = (categorytypeId, categorytype) => {
+  const updateCategoryType = (categoryTypeId, categoryType) => {
 
-    return API.put(`${hapyCarURL}/${categorytypeId}`,
-      { data: categorytype },
+    return API.put(`${hapyCarURL}/${categoryTypeId}`,
+      { data: categoryType },
       { suppressErrors: [400] }
     )
       .then(({ data
@@ -100,7 +99,7 @@ import {
       }) =>
 
         dispatch(
-          updateCategorytypeAction({
+          updateCategoryTypeAction({
             ...data,
             title: SUCCESS,
           })
@@ -108,13 +107,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.categorytype) {
-          const [errors] = error.response.data.categorytype;
+        if (error.response.data.categoryType) {
+          const [errors] = error.response.data.categoryType;
           errorMsg = errors;
         }
         dispatch(
-          updateCategorytypeAction({
-            ...categorytype,
+          updateCategoryTypeAction({
+            ...categoryType,
             title: ERROR,
             errorMsg,
           })
@@ -124,14 +123,14 @@ import {
   };
 
   // Categorytype DELETE  ACTIONS
-  const deleteCategoryType = (categorytypeId) => {
-    return API.delete(`${hapyCarURL}/${categorytypeId}`,
+  const deleteCategoryType = (categoryTypeId) => {
+    return API.delete(`${hapyCarURL}/${categoryTypeId}`,
       null,
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          deleteCategorytypeAction({
+          deleteCategoryTypeAction({
             ...data,
             title: SUCCESS,
           })
@@ -139,13 +138,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.categorytype) {
-          const [errors] = error.response.data.categorytype;
+        if (error.response.data.categoryType) {
+          const [errors] = error.response.data.categoryType;
           errorMsg = errors;
         }
         dispatch(
-          deleteCategorytypeAction({
-            ...categorytypeId,
+          deleteCategoryTypeAction({
+            ...categoryTypeId,
             title: ERROR,
             errorMsg,
           })
@@ -155,8 +154,8 @@ import {
   };
 
   // Categorytype BY ID ACTIONS
-  const categoryTypeById = (categorytypeId) => {
-    return API.get(`${hapyCarURL}/${categorytypeId}`,
+  const categoryTypeById = (categoryTypeId) => {
+    return API.get(`${hapyCarURL}/${categoryTypeId}`,
       null,
       { suppressErrors: [400] }
     )
@@ -165,7 +164,7 @@ import {
       }) =>
 
         dispatch(
-            categorytypeAction({
+            categoryTypeAction({
             ...data,
             title: SUCCESS,
           })
@@ -173,12 +172,12 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.categorytype) {
-          const [errors] = error.response.data.categorytype;
+        if (error.response.data.categoryType) {
+          const [errors] = error.response.data.categoryType;
           errorMsg = errors;
         }
         dispatch(
-            categorytypeAction({
+            categoryTypeAction({
             ...errorMsg,
             title: ERROR,
             errorMsg,

@@ -21,9 +21,11 @@ export default function FileModel({
   const [newFile, setNewFile] = useState({
     folderId: null,
     resourceId: null,
-    file: null,
-    archived:"",
-    azureBlobId:"",
+    fileName: "",
+    fileMimeType: "",
+    externalURL: "",
+    archived:true,
+    azureBlobId: null,   
   });
 
   const [fileSelected, setFileSelected] = useState();
@@ -73,7 +75,6 @@ export default function FileModel({
       }
     }
     else {
-      debugger;
       const response = await onAddFile(newFile);
       if (response.payload.title == "Success") {
         setMessageStatus({
@@ -93,6 +94,7 @@ export default function FileModel({
   };
 
   const deleteHandler = async () => {
+    debugger;
     const response = await onDeleteFile(id);
     if (response.payload.title == "Success") {
       onClose(true);
@@ -116,7 +118,7 @@ export default function FileModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newFile?.folderId || !newFile?.resourceId || !newFile?.fileName || !newFile?.fileMimeType || !newFile?.azureBlobId|| !newFile?.archived|| !newFile?.externalURL;
+      !newFile?.folderId || !newFile?.resourceId || !newFile?.fileName || !newFile?.fileMimeType || !newFile?.archived|| !newFile?.azureBlobId|| !newFile?.externalURL;
     setSaveDisabled(isEnable);
   }, [newFile]);
 
@@ -146,21 +148,21 @@ export default function FileModel({
             className={styles.stFormContainer}
             controlId="formFile"
           >
-            <Form.Label>File</Form.Label>
+            <Form.Label>FolderId</Form.Label>
             <Form.Control
               type="text"
-              name="name"
-              placeholder="Enter File"
+              name="folderId"
+              placeholder="Enter Folder"
               value={newFile?.folderId}
               onChange={changeHandler}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="mobile">
-            <Form.Label>Mobile</Form.Label>
+            <Form.Label>resourceId</Form.Label>
             <Form.Control
               type="text"
-              name="mobile"
-              placeholder="Mobile"
+              name="resourceId"
+              placeholder="resourceId"
               value={newFile?.resourceId}
               onChange={changeHandler}
             />
@@ -168,37 +170,47 @@ export default function FileModel({
 
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Description</Form.Label>
+            <Form.Label>FileName</Form.Label>
             <Form.Control
               type="text"
-              name="description"
-              placeholder="Description"
+              name="fileName"
+              placeholder="fileName"
               value={newFile?.fileName}
               onChange={changeHandler}
             />
           </Form.Group>
-
+          <Form.Group className="mb-3" controlId="fileMimeType">
+          <Form.Label>fileMimeType</Form.Label>
+          <Form.Control
+            type="text"
+            name="fileMimeType"
+            placeholder="fileMimeType"
+            value={newFile?.fileMimeType}
+            onChange={changeHandler}
+          />
+        </Form.Group>
           <Form.Group className="mb-3" controlId="email">
-            <Form.Label>Email</Form.Label>
+            <Form.Label>externalURL</Form.Label>
             <Form.Control
               type="text"
-              name="email"
-              placeholder="Email"
+              name="externalURL"
+              placeholder="externalURL"
               value={newFile?.externalURL}
               onChange={changeHandler}
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="archived">
-            <Form.Label>archived</Form.Label>
-            <Form.Control
-              type="text"
-              name="archived"
-              placeholder="archived"
-              value={newFile?.archived}
-              onChange={changeHandler}
-            />
-          </Form.Group>
+          <Form.Group className="mb-3" controlId="azureBlobId">
+          <Form.Label>Archived</Form.Label>
+          <Form.Control
+            type="text"
+            name="archived"
+            placeholder=" Enter Archived"
+            value={newFile?.archived}
+            onChange={changeHandler}
+          />
+        </Form.Group>
+          
           <Form.Group className="mb-3" controlId="azureBlobId">
             <Form.Label>azureBlobId</Form.Label>
             <Form.Control
@@ -209,16 +221,7 @@ export default function FileModel({
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="fileMimeType">
-            <Form.Label>fileMimeType</Form.Label>
-            <Form.Control
-              type="text"
-              name="fileMimeType"
-              placeholder="fileMimeType"
-              value={newFile?.fileMimeType}
-              onChange={changeHandler}
-            />
-          </Form.Group>
+         
           <Form.Group>
           <input type="file" className="custom-file-label" onChange={saveFileSelected} />
           </Form.Group>

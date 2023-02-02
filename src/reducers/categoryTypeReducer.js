@@ -29,6 +29,7 @@ import {
   
   
       case ADD_CATEGORYTYPE:
+        debugger;
         return {
           ...state,
           categoryType: {

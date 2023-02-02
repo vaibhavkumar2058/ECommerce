@@ -53,6 +53,7 @@ import {
   };
 
   // Notification ADD  ACTIONS
+  debugger;
   const addNotification = (notification) => {
     return API.post(
       hapyCarURL,
@@ -63,7 +64,7 @@ import {
         dispatch(
           addNotificationAction({
             ...data,
-            title: SUCCESS,
+            title:SUCCESS,
           })
         )
       )
