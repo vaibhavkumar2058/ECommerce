@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
-import useFetchResourceAttachments from "../hooks/useFeatchResourceAttachments";
+import useFetchResourceAttachments from "../hooks/useFetchResourceAttachments";
 import ResourceAttachmentsModel from "../components/ResourceAttachmentsModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
@@ -45,7 +45,7 @@ export default function ResourceAttachments() {
     resourceId: null,
     fileId: null,
     attachmentTypeId: null,
-    visibleToCustomer: "",
+    visibleToCustomer: true,
     description: ""
       });
 
@@ -68,7 +68,7 @@ export default function ResourceAttachments() {
 
   const columns = [
 
-    { dataField: 'enquiryId', text: 'Attachment Id', sort: true, hidden: true },
+    { dataField: 'resourceAttachmentId', text: 'ResourceAttachmentId ', sort: true, hidden: true },
     { dataField: 'resourceId', text: ' ResourceId', sort: true },
     { dataField: 'fileId', text: 'FileId', sort: true },
     { dataField: 'attachmentTypeId', text: 'AttachmentTypeId', sort: true },
@@ -281,7 +281,7 @@ export default function ResourceAttachments() {
                 isEdit={isEdit}
                 isDelete={isDelete}
                 id={id}
-                resourceAttachmentsData={resourceAttachments}
+                resourceAttachmentsData={resourceAttachment}
               />
             </Modal.Body>
 

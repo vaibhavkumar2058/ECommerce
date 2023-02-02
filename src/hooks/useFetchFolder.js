@@ -3,33 +3,33 @@ import { useSelector, useDispatch } from "react-redux";
 import { useAPI } from "../services";
 
 import {
-    addMeasurementTypeAction,
-    updateMeasurementTypeAction,   
-    deleteMeasurementTypeAction,
-    getMeasurementTypeBeginAction,
-    getMeasurementTypeSuccessAction,
-    getMeasurementTypeFailureAction,
-    measurementTypeAction,
-  } from "../actions/measurementTypeActions";
+    addFolderAction,
+    updateFolderAction,   
+    deleteFolderAction,
+    getFolderBeginAction,
+    getFolderSuccessAction,
+    getFolderFailureAction,
+    folderAction,
+  } from "../actions/folderActions";
 
-  export default function useFetchMeasurementTypes() {
+  export default function useFetchFolders() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/measurementType";
+  const hapyCarURL = "https://localhost:7062/folder";
 
   const API = useAPI();
   const SUCCESS = "Success";
   const ERROR = "Error";
 
-  // MeasurementType GET  ACTIONS
-  const getMeasurementType = () => {
-    dispatch(getMeasurementTypeBeginAction());
+  // Folder GET  ACTIONS
+  const getFolders = () => {
+    dispatch(getFolderBeginAction());
     return API.get(hapyCarURL,
       null,
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          getMeasurementTypeSuccessAction({
+          getFolderSuccessAction({
             ...data,
             title: SUCCESS,
           })
@@ -37,12 +37,12 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.measurementType) {
-          const [errors] = error.response.data.measurementType;
+        if (error.response.data.folder) {
+          const [errors] = error.response.data.folder;
           errorMsg = errors;
         }
         dispatch(
-          getMeasurementTypeFailureAction({
+          getFolderFailureAction({
             ...errorMsg,
             title: ERROR,
             errorMsg,
@@ -52,16 +52,16 @@ import {
 
   };
 
-  // MeasurementType ADD  ACTIONS
-  const addMeasurementType = (measurementType) => {
+  // Folder ADD  ACTIONS
+  const addFolder = (folder) => {
     return API.post(
       hapyCarURL,
-      { data: measurementType },
+      { data: folder },
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          addMeasurementTypeAction({
+          addFolderAction({
             ...data,
             title: SUCCESS,
           })
@@ -70,13 +70,13 @@ import {
 
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.measurementType) {
-          const [errors] = error.response.data.measurementType;
+        if (error.response.data.folder) {
+          const [errors] = error.response.data.folder;
           errorMsg = errors;
         }
         dispatch(
-          addMeasurementTypeAction({
-            ...measurementType,
+          addFolderAction({
+            ...folder,
             title: ERROR,
             errorMsg,
           })
@@ -88,11 +88,11 @@ import {
 
   };
 
-  // MeasurementType UPDATE  ACTIONS
-  const updateMeasurementType = (measurementTypeId, measurementType) => {
+  // Folder UPDATE  ACTIONS
+  const updateFolder = (folderId, folder) => {
 
-    return API.put(`${hapyCarURL}/${measurementTypeId}`,
-      { data: measurementType },
+    return API.put(`${hapyCarURL}/${folderId}`,
+      { data: folder },
       { suppressErrors: [400] }
     )
       .then(({ data
@@ -100,7 +100,7 @@ import {
       }) =>
 
         dispatch(
-          updateMeasurementTypeAction({
+          updateFolderAction({
             ...data,
             title: SUCCESS,
           })
@@ -108,13 +108,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.measurementType) {
-          const [errors] = error.response.data.measurementType;
+        if (error.response.data.folder) {
+          const [errors] = error.response.data.folder;
           errorMsg = errors;
         }
         dispatch(
-          updateMeasurementTypeAction({
-            ...measurementType,
+          updateFolderAction({
+            ...folder,
             title: ERROR,
             errorMsg,
           })
@@ -123,15 +123,15 @@ import {
 
   };
 
-  // MeasurementType DELETE  ACTIONS
-  const deleteMeasurementType = (measurementTypeId) => {
-    return API.delete(`${hapyCarURL}/${measurementTypeId}`,
+  // Folder DELETE  ACTIONS
+  const deleteFolder = (folderId) => {
+    return API.delete(`${hapyCarURL}/${folderId}`,
       null,
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          deleteMeasurementTypeAction({
+          deleteFolderAction({
             ...data,
             title: SUCCESS,
           })
@@ -139,13 +139,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.measurementType) {
-          const [errors] = error.response.data.measurementType;
+        if (error.response.data.folder) {
+          const [errors] = error.response.data.folder;
           errorMsg = errors;
         }
         dispatch(
-          deleteMeasurementTypeAction({
-            ...measurementTypeId,
+          deleteFolderAction({
+            ...folderId,
             title: ERROR,
             errorMsg,
           })
@@ -154,9 +154,9 @@ import {
 
   };
 
-  // MeasurementType BY ID ACTIONS
-  const measurementTypeById = (measurementTypeId) => {
-    return API.get(`${hapyCarURL}/${measurementTypeId}`,
+  // Folder BY ID ACTIONS
+  const folderById = (folderId) => {
+    return API.get(`${hapyCarURL}/${folderId}`,
       null,
       { suppressErrors: [400] }
     )
@@ -165,7 +165,7 @@ import {
       }) =>
 
         dispatch(
-            measurementTypeAction({
+            folderAction({
             ...data,
             title: SUCCESS,
           })
@@ -173,12 +173,12 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.measurementType) {
-          const [errors] = error.response.data.measurementType;
+        if (error.response.data.folder) {
+          const [errors] = error.response.data.folder;
           errorMsg = errors;
         }
         dispatch(
-            measurementTypeAction({
+            folderAction({
             ...errorMsg,
             title: ERROR,
             errorMsg,
@@ -188,10 +188,10 @@ import {
       
   };
   return {
-    addMeasurementType,
-    updateMeasurementType,
-    deleteMeasurementType,
-    getMeasurementType,
-    measurementTypeById,
+    addFolder,
+    updateFolder,
+    deleteFolder,
+    getFolders,
+    folderById,
   };
 }

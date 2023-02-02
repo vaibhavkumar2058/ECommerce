@@ -7,24 +7,25 @@ import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
 
-export default function CartModel({
-  onAddCart,
-  onUpdateCart,
-  onDeleteCart,
+export default function FolderModel({
+  onAddFolder,
+  onUpdateFolder,
+  onDeleteFolder,
   isEdit,
   isDelete,
-  onGetCart,
+  onGetFolder,
   id,
   onClose,
-  cartData,
+  folderData,
 }) {
-  const [newCart, setNewCart] = useState({
-    resourceId:null,
-    productId:null,
-    productName:"",
-    cost:null,
-    quantity:"",
-    description:""
+  const [newFolder, setNewFolder] = useState({
+    resourceId: null,
+    parentFolderId: null,
+    folderName: "",
+    folderTypeId: null,
+    isSystemGenerated: true,
+    isArchived: true,
+    isDeleted:true,
   });
 
   const [fileSelected, setFileSelected] = useState();
@@ -47,18 +48,22 @@ export default function CartModel({
   };
 
   const changeHandler = (e) => {
-    setNewCart({
-      ...newCart,
+    setNewFolder({
+      ...newFolder,
       [e.target.name]: e.target.value,
     });
   };
 
-  
+  const saveFileSelected= (e) => {
+    //in case you wan to print the file selected
+    //console.log(e.target.files[0]);
+    setFileSelected(e.target.files[0]);
+  };
 
   const saveHandler = async () => {
-    newCart.file = fileSelected;
+    newFolder.file = fileSelected;
     if (isEdit) {
-      const response = await onUpdateCart(id, newCart);
+      const response = await onUpdateFolder(id, newFolder);
       if (response.payload.title == "Success") {
         onClose(true);
       }
@@ -71,11 +76,11 @@ export default function CartModel({
     }
     else {
       debugger;
-      const response = await onAddCart(newCart);
+      const response = await onAddFolder(newFolder);
       if (response.payload.title == "Success") {
         setMessageStatus({
           mode: 'success',
-          message: 'Cart Record Saved Succefully.'
+          message: 'Folder Record Saved Succefully.'
         })
         onClose(true);
         console.log(response.payload);
@@ -83,28 +88,28 @@ export default function CartModel({
       else {
         setMessageStatus({
           mode: 'danger',
-          message: 'Cart Save Failed.'
+          message: 'Folder Save Failed.'
         })
       }
     }
   };
 
   const deleteHandler = async () => {
-    const response = await onDeleteCart(id);
+    const response = await onDeleteFolder(id);
     if (response.payload.title == "Success") {
       onClose(true);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Cart Delete Failed.'
+        message: 'Folder Delete Failed.'
       })
     }
   };
 
   useEffect(() => {
     if (isEdit) {
-      setNewCart(cartData);
+      setNewFolder(folderData);
     }
   }, []);
 
@@ -113,9 +118,9 @@ export default function CartModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newCart?.resourceId || !newCart?.productId || !newCart?.productName || !newCart?.cost || !newCart?.quantity|| !newCart?.description;
+    !newFolder?.resourceId ||!newFolder?.parentFolderId || !newFolder?.folderName || !newFolder?.folderTypeId || !newFolder?.isSystemGenerated || !newFolder?.isArchived || !newFolder?.isDeleted;
     setSaveDisabled(isEnable);
-  }, [newCart]);
+  }, [newFolder]);
 
   return (
     <>
@@ -141,68 +146,78 @@ export default function CartModel({
         <Form>
           <Form.Group
             className={styles.stFormContainer}
-            controlId="formCart"
+            controlId="formFolder"
           >
             <Form.Label>ResourceId</Form.Label>
             <Form.Control
               type="text"
               name="resourceId"
-              placeholder="ResourceId"
-              value={newCart?.resourceId}
+              placeholder="Enter ResourceId"
+              value={newFolder?.resourceId}
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="productId">
-            <Form.Label>ProductId</Form.Label>
+          <Form.Group className="mb-3" controlId="ParentFolderId">
+            <Form.Label>ParentFolderId</Form.Label>
             <Form.Control
               type="text"
-              name="productId"
-              placeholder="ProductId"
-              value={newCart?.productId}
+              name="parentFolderId"
+              placeholder="ParentFolderId"
+              value={newFolder?.parentFolderId}
+              onChange={changeHandler}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="folderName">
+            <Form.Label>FolderName</Form.Label>
+            <Form.Control
+              type="text"
+              name="folderName"
+              placeholder="FolderName"
+              value={newFolder?.folderName}
               onChange={changeHandler}
             />
           </Form.Group>
 
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>ProductName</Form.Label>
+            <Form.Label>FolderTypeId</Form.Label>
             <Form.Control
               type="text"
-              name="productName"
-              placeholder="ProductName"
-              value={newCart?.productName}
+              name="folderTypeId"
+              placeholder="FolderTypeId"
+              value={newFolder?.folderTypeId}
               onChange={changeHandler}
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="cost">
-            <Form.Label>Cost</Form.Label>
+          <Form.Group className="mb-3" controlId="isSystemGenerated">
+            <Form.Label>IsSystemGenerated</Form.Label>
             <Form.Control
               type="text"
-              name="cost"
-              placeholder="Cost"
-              value={newCart?.cost}
+              name="isSystemGenerated"
+              placeholder="IsSystemGenerated"
+              value={newFolder?.isSystemGenerated}
               onChange={changeHandler}
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="quantity">
-            <Form.Label>Quantity</Form.Label>
+          <Form.Group className="mb-3" controlId="isArchived">
+            <Form.Label>IsArchived</Form.Label>
             <Form.Control
               type="text"
-              name="quantity"
-              placeholder="Quantity"
-              value={newCart?.quantity}
+              name="isArchived"
+              placeholder="IsArchived"
+              value={newFolder?.isArchived}
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="description">
-            <Form.Label>Description</Form.Label>
+          <Form.Group className="mb-3" controlId="isArchived">
+            <Form.Label>IsDeleted</Form.Label>
             <Form.Control
               type="text"
-              name="description"
-              placeholder="Description"
-              value={newCart?.description}
+              name="isDeleted"
+              placeholder="IsDeleted"
+              value={newFolder?.isDeleted}
               onChange={changeHandler}
             />
           </Form.Group>
@@ -222,23 +237,23 @@ export default function CartModel({
   );
 }
 
-CartModel.propTypes = {
+FolderModel.propTypes = {
   /**
-   * Callback function for Add Cart
+   * Callback function for Add Folder
    */
-  onAddCart: PropTypes.func,
+  onAddFolder: PropTypes.func,
   /**
-   * Callback function for Update Cart
+   * Callback function for Update Folder
    */
-  onUpdateCart: PropTypes.func,
+  onUpdateFolder: PropTypes.func,
   /**
-   * Callback function for Delete Cart
+   * Callback function for Delete Folder
    */
-  onDeleteCart: PropTypes.func,
+  onDeleteFolder: PropTypes.func,
   /**
-   * Callback function for Get Cart
+   * Callback function for Get Folder
    */
-  onGetCart: PropTypes.func,
+  onGetFolder: PropTypes.func,
   /**
    * isEdit for bool type
    */
@@ -248,7 +263,7 @@ CartModel.propTypes = {
    */
   isDelete: PropTypes.bool,
   /**
-   * Callback function for Get Cart
+   * Callback function for Get Folder
    */
   onClose: PropTypes.func,
   /**
@@ -256,20 +271,20 @@ CartModel.propTypes = {
    */
   id: PropTypes.number,
   /**
- * cartData for object type
+ * folderData for object type
  */
-  cartData: PropTypes.any,
+  folderData: PropTypes.any,
 };
 
-CartModel.defaultProps = {
-  onAddCart: null,
-  onUpdateCart: null,
-  onDeleteCart: null,
-  onGetCart: null,
+FolderModel.defaultProps = {
+  onAddFolder: null,
+  onUpdateFolder: null,
+  onDeleteFolder: null,
+  onGetFolder: null,
   isEdit: false,
   isDelete: false,
   onClose: null,
   id: null,
-  cartData: null,
+  folderData: null,
 };
 

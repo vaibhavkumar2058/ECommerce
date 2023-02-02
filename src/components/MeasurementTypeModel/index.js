@@ -49,11 +49,7 @@ export default function MeasurementTypeModel({
         });
     };
 
-    const saveFileSelected = (e) => {
-        //in case you wan to print the file selected
-        //console.log(e.target.files[0]);
-        setFileSelected(e.target.files[0]);
-    };
+    
 
     const saveHandler = async () => {
         newMeasurementType.file = fileSelected;
@@ -148,7 +144,7 @@ export default function MeasurementTypeModel({
                             type="text"
                             name="name"
                             placeholder="Enter MeasurementType"
-                            value={newMeasurementType?.measurementType}
+                            value={newMeasurementType?.name}
                             onChange={changeHandler}
                         />
                     </Form.Group>
@@ -164,9 +160,7 @@ export default function MeasurementTypeModel({
                         />
                     </Form.Group>
 
-                    <Form.Group>
-                        <input type="file" className="custom-file-label" onChange={saveFileSelected} />
-                    </Form.Group>
+                    
                     <Modal.Footer>
                         <Button variant="secondary" onClick={onClose}>
                             Cancel

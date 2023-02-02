@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
-import useFetchCart from "../hooks/useFetchCart";
-import CartModel from "../components/CartModel";
+import useFetchFolder from "../hooks/useFetchFolder";
+import FolderModel from "../components/FolderModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
@@ -24,16 +24,16 @@ const MyExportCSV = (props) => {
   );
 };
 
-export default function Carts() {
+export default function Folders() {
 
-  const [carts, setCarts] = useState([]);
+  const [folders, setFolders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
   const handleClose = () => {
-    getAllCarts();
+    getAllFolders();
     setIsEdit(false);
     setIsDelete(false);
     setShow(false);
@@ -41,14 +41,14 @@ export default function Carts() {
   const handleShow = () => setShow(true);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-  const [cart, setCart] = useState({
-    resourceId:null,
-    productId:null,
-    productName:"",
-    cost:null,
-    quantity:"",
-    description:"",
-
+  const [folder, setFolder] = useState({
+    resourceId:null, 
+    parentFolderId: null,
+    folderName: "",
+    folderTypeId: null,
+    isSystemGenerated: true,
+    isArchived: true,
+    isDeleted: true
       });
 
   const [id, setId] = useState(null);
@@ -61,59 +61,79 @@ export default function Carts() {
   });
 
   const { 
-    addCart,
-    updateCart,
-    deleteCart,
-    getCart,
-    cartById,
-  } = useFetchCart();
+    addFolder,
+    updateFolder,
+    deleteFolder,
+    getFolders,
+    folderById,
+  } = useFetchFolder();
 
   const columns = [
-    { dataField: 'cartId', text: 'Cart Id', sort: true, hidden: true },
-    { dataField: 'resourceId', text: 'Resource Id', sort: true  },
-    { dataField: 'productId', text: ' Product Id', sort: true },
-    { dataField: 'productName', text: 'Product Name', sort: true },
-    { dataField: 'cost', text: 'Cost', sort: true },
-    { dataField: 'quantity', text: 'Quantity', sort: true },
-    { dataField: 'description', text: 'Description', sort: true },
     // columns follow dataField and text structure
     {
       dataField: "Actions",
       text: "Actions",
+      headerStyle: () => {
+        return { width: "200px" };
+      },
       formatter: (cellContent, row) => {
         return (
           <><button
             className="btn btn-primary btn-xs"
-            onClick={() => handleView(row.cartId, row.name)}
+            onClick={() => handleView(row.folderId, row.name)}
           >
             View
           </button>
             <button
               className="btn btn-primary btn-xs"
-              onClick={() => handleEdit(row.cartId, row)}
+              onClick={() => handleEdit(row.folderId, row)}
             >
               Edit
             </button><button
               className="btn btn-danger btn-xs"
-              onClick={() => handleDelete(row.cartId, row.name)}
+              onClick={() => handleDelete(row.folderId, row.name)}
             >
               Delete
             </button></>
         );
       },
     },
+
+    { dataField: 'folderId', text: 'Folder ', sort: true, hidden: true },
+    { dataField: 'resourceId', text: ' Resource', sort: true, headerStyle: () => {
+      return { width: "150px" };
+    }},
+    { dataField: 'parentFolderId', text: ' ParentFolder', sort: true,headerStyle: () => {
+      return { width: "150px" };
+    } },
+    { dataField: 'folderName', text: 'FolderName', sort: true ,headerStyle: () => {
+      return { width: "150px" };
+    }},
+    { dataField: 'folderTypeId', text: 'FolderType', sort: true ,headerStyle: () => {
+      return { width: "150px" };
+    }},
+    { dataField: 'isSystemGenerated', text: 'IsSystemGenerated', sort: true,headerStyle: () => {
+      return { width: "200px" };
+    } },
+    { dataField: 'isArchived', text: 'IsArchived', sort: true,headerStyle: () => {
+      return { width: "150px" };
+    } },
+    { dataField: 'isDeleted', text: 'IsDeleted', sort: true ,headerStyle: () => {
+      return { width: "100px" };
+    }},
+    
   ];
 
   useEffect(() => {
-    if (carts.length == 0) {
-      getAllCarts();
+    if (folders.length == 0) {
+      getAllFolders();
       setLoading(false)
     }
-  }, [carts]);
+  }, [folders]);
 
 
   const defaultSorted = [{
-    dataField: 'cartId',
+    dataField: 'FolderId',
     order: 'desc'
   }];
 
@@ -127,8 +147,8 @@ export default function Carts() {
   };
 
   const handleEdit = (rowId, row) => {
-    setCart(row);
-    //getCartsById(rowId);
+    setFolder(row);
+    //getFoldersById(rowId);
     setId(rowId);
     setIsEdit(true);
     setShow(true);
@@ -160,12 +180,12 @@ export default function Carts() {
   });
 
 
-  const getAllCarts = async () => {
-    const response = await getCart();
+  const getAllFolders = async () => {
+    const response = await getFolders();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',
-        message: 'Carts Record Fetch Succefully.'
+        message: 'Folders Record Fetch Succefully.'
       })
 
       var arr = [];
@@ -173,25 +193,25 @@ export default function Carts() {
         arr.push(response.payload[key]);
       }
 
-      setCarts(arr);
+      setFolders(arr);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Cart Fetch Failed.'
+        message: 'Folder Fetch Failed.'
       })
     }
   };
 
-  const getCartById = async (id) => {
-    const response = await cartById(id);
+  const getFolderById = async (id) => {
+    const response = await folderById(id);
     if (response.payload.title == "Success") {
-      setCart(response.payload);
+      setFolder(response.payload);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Cart Get Failed.'
+        message: 'Folder Get Failed.'
       })
     }
   };
@@ -218,11 +238,11 @@ export default function Carts() {
     <>
       <div className="m-t-40">
         {loading && <div>A moment please...</div>}
-        {carts && (<div>
+        {folders && (<div>
           <ToolkitProvider
             bootstrap4
-            keyField='cartId'
-            data={carts}
+            keyField='folderId'
+            data={folders}
             columns={columns}
             search
           >
@@ -240,7 +260,7 @@ export default function Carts() {
                           <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
                           <Button variant="primary" onClick={handleShow}>
-                            Add Cart
+                            Add Folder
                           </Button>
                           </div>
                         </div>
@@ -271,19 +291,19 @@ export default function Carts() {
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Add Cart</Modal.Title>
+              <Modal.Title>Add Folder</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <CartModel
-                onAddCart={addCart}
-                onUpdateCart={updateCart}
-                onDeleteCart={deleteCart}
-                onGetCart={cartById}
+              <FolderModel
+                onAddFolder={addFolder}
+                onUpdateFolder={updateFolder}
+                onDeleteFolder={deleteFolder}
+                onGetFolder={folderById}
                 onClose={handleClose}
                 isEdit={isEdit}
                 isDelete={isDelete}
                 id={id}
-                cartData={cart}
+                folderData={folder}
               />
             </Modal.Body>
 
