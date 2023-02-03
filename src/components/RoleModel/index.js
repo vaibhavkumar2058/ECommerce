@@ -19,7 +19,7 @@ export default function RoleModel({
   roleData,
 }) {
   const [newRole, setNewRole] = useState({
-    RoleName: "",
+    roleName: "",
     description: "",
  });
 
@@ -49,11 +49,7 @@ export default function RoleModel({
     });
   };
 
-  const saveFileSelected= (e) => {
-    //in case you wan to print the file selected
-    //console.log(e.target.files[0]);
-    setFileSelected(e.target.files[0]);
-  };
+  
 
   const saveHandler = async () => {
     newRole.file = fileSelected;
@@ -113,7 +109,7 @@ export default function RoleModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newRole?.name || !newRole?.Id  || !newRole?.description; 
+       !newRole?.roleName || !newRole?.description; 
     setSaveDisabled(isEnable);
   }, [newRole]);
 
@@ -146,9 +142,9 @@ export default function RoleModel({
             <Form.Label>Role</Form.Label>
             <Form.Control
               type="text"
-              name="name"
-              placeholder="Enter Role"
-              value={newRole?.name}
+              name="roleName"
+              placeholder="Enter RoleName"
+              value={newRole?.roleName}
               onChange={changeHandler}
             />
           </Form.Group>
@@ -165,11 +161,6 @@ export default function RoleModel({
               onChange={changeHandler}
             />
           </Form.Group>
-
-         
-
-          
-          
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel

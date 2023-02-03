@@ -26,14 +26,14 @@ const MyExportCSV = (props) => {
 
 export default function Securitys() {
 
-  const [securitys, setSecuritys] = useState([]);
+  const [securities, setSecurities] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
   const handleClose = () => {
-    getAllSecuritys();
+    getAllSecurities();
     setIsEdit(false);
     setIsDelete(false);
     setShow(false);
@@ -42,12 +42,10 @@ export default function Securitys() {
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [security, setSecurity] = useState({
-    name: "",
-    questionId:"",
-    answerId:"",
-    description:"",
-    securityTypeId:""
-      });
+    questionId:null,
+    answerId:null,
+    description: "",
+    });
 
   const [id, setId] = useState(null);
 
@@ -68,8 +66,7 @@ export default function Securitys() {
 
   const columns = [
 
-    { dataField: 'securityId', text: 'Security Id', sort: true, hidden: true },
-    { dataField: 'name', text: ' Name', sort: true },
+    { dataField: 'securityId', text: 'SecurityId', sort: true },
     { dataField: 'questionId', text: ' QuestionId', sort: true },
     { dataField: 'answerId', text: ' AnswerId', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
@@ -103,11 +100,11 @@ export default function Securitys() {
   ];
 
   useEffect(() => {
-    if (securitys.length == 0) {
-      getAllSecuritys();
+    if (securities.length == 0) {
+      getAllSecurities();
       setLoading(false)
     }
-  }, [securitys]);
+  }, [securities]);
 
 
   const defaultSorted = [{
@@ -158,7 +155,7 @@ export default function Securitys() {
   });
 
 
-  const getAllSecuritys = async () => {
+  const getAllSecurities = async () => {
     const response = await getSecuritys();
     if (response.payload.title == "Success") {
       setMessageStatus({
@@ -171,7 +168,7 @@ export default function Securitys() {
         arr.push(response.payload[key]);
       }
 
-      setSecuritys(arr);
+      setSecurities(arr);
     }
     else {
       setMessageStatus({
@@ -216,11 +213,11 @@ export default function Securitys() {
     <>
       <div className="m-t-40">
         {loading && <div>A moment please...</div>}
-        {securitys && (<div>
+        {securities && (<div>
           <ToolkitProvider
             bootstrap4
             keyField='securityId'
-            data={securitys}
+            data={securities}
             columns={columns}
             search
           >

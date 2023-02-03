@@ -21,7 +21,7 @@ import {
   const ERROR = "Error";
 
   // Security GET  ACTIONS
-  const getSecurity = () => {
+  const getSecuritys = () => {
     dispatch(getSecurityBeginAction());
     return API.get(hapyCarURL,
       null,
@@ -191,7 +191,7 @@ import {
     addSecurity,
     updateSecurity,
     deleteSecurity,
-    getSecurity,
+    getSecuritys,
     securityById,
   };
 }

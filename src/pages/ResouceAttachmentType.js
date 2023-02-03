@@ -24,7 +24,7 @@ const MyExportCSV = (props) => {
   );
 };
 
-export default function ResourceAttachmentTypes() {
+export default function ResourceAttachmentType() {
 
   const [resourceAttachmentTypes, setResourceAttachmentTypes] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -33,7 +33,7 @@ export default function ResourceAttachmentTypes() {
   const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
   const handleClose = () => {
-    getAllResourceAttachmentTypes();
+    getAllResourceAttachmentType();
     setIsEdit(false);
     setIsDelete(false);
     setShow(false);
@@ -42,10 +42,8 @@ export default function ResourceAttachmentTypes() {
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [resourceAttachmentType, setResourceAttachmentType] = useState({
-    id: "",
-    displaytext:"",
-    sortorder:"",
-    isactive:"",
+    displayText:"",
+    sortOrder:null,
     description:"",
      });
 
@@ -69,10 +67,9 @@ export default function ResourceAttachmentTypes() {
   const columns = [
 
     
-    { dataField: 'id', text: ' Id', sort: true },
+    { dataField: 'resourceAttachmentTypeId', text: 'ResourceAttachmentTypeID', sort: true },
     { dataField: 'displayText', text: 'DisplayText', sort: true },
     { dataField: 'sortOrder', text: 'SortOrder', sort: true },
-    { dataField: 'IsActive', text: ' IsActive', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
    
     // columns follow dataField and text structure
@@ -105,7 +102,7 @@ export default function ResourceAttachmentTypes() {
 
   useEffect(() => {
     if (resourceAttachmentTypes.length == 0) {
-      getAllResourceAttachmentTypes();
+      getAllResourceAttachmentType();
       setLoading(false)
     }
   }, [resourceAttachmentTypes]);
@@ -127,7 +124,7 @@ export default function ResourceAttachmentTypes() {
 
   const handleEdit = (rowId, row) => {
     setResourceAttachmentType(row);
-    //getResourceAttachmentTypesById(rowId);
+    //getResourceAttachmentTypeById(rowId);
     setId(rowId);
     setIsEdit(true);
     setShow(true);
@@ -159,12 +156,12 @@ export default function ResourceAttachmentTypes() {
   });
 
 
-  const getAllResourceAttachmentTypes = async () => {
+  const getAllResourceAttachmentType = async () => {
     const response = await getResouceAttachmentTypes();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',
-        message: 'ResourceAttachmentTypes Record Fetch Succefully.'
+        message: 'ResourceAttachmentType Record Fetch Succefully.'
       })
 
       var arr = [];
@@ -217,7 +214,7 @@ export default function ResourceAttachmentTypes() {
     <>
       <div className="m-t-40">
         {loading && <div>A moment please...</div>}
-        {resourceAttachmentTypes && (<div>
+        {resourceAttachmentType && (<div>
           <ToolkitProvider
             bootstrap4
             keyField='resourceAttachmentTypeId'

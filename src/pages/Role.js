@@ -9,6 +9,7 @@ import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.m
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit';
+import { getRoles } from "@testing-library/react";
 
 
 const { SearchBar, ClearSearchButton } = Search;
@@ -42,7 +43,8 @@ export default function Roles() {
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [role, setRole] = useState({
-    name:"",
+    
+    roleName:"",
     description:"",
   });
 
@@ -65,8 +67,8 @@ export default function Roles() {
 
   const columns = [
 
-    { dataField: 'roleId', text: 'Role Id', sort: true, hidden: true },
-    { dataField: 'name', text: ' Name', sort: true },
+    { dataField: 'roleId', text: ' Role Id', sort: true},
+    { dataField: 'roleName', text: ' RoleName', sort: true},
     { dataField: 'description', text: 'Description', sort: true },
     // columns follow dataField and text structure
     {
@@ -268,7 +270,7 @@ export default function Roles() {
             <Modal.Body>
               <RoleModel
                 onAddRole={addRole}
-                onUpdaterole={updateRole}
+                onUpdateRole={updateRole}
                 onDeleteRole={deleteRole}
                 onGetRole={roleById}
                 onClose={handleClose}

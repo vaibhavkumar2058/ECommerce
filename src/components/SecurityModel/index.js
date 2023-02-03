@@ -16,16 +16,13 @@ export default function SecurityModel({
   onGetSecurity,
   id,
   onClose,
-  securityData,
+  securityData, 
 }) {
   const [newSecurity, setNewSecurity] = useState({
-    name: "",
-    questionId:"",
-    answerId:"",
-    description: "",
+    questionId:null,
+    answerId:null,
+    description: "",  
    });
-
-  const [fileSelected, setFileSelected] = useState();
 
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
@@ -51,14 +48,8 @@ export default function SecurityModel({
     });
   };
 
-  const saveFileSelected= (e) => {
-    //in case you wan to print the file selected
-    //console.log(e.target.files[0]);
-    setFileSelected(e.target.files[0]);
-  };
-
   const saveHandler = async () => {
-    newSecurity.file = fileSelected;
+   
     if (isEdit) {
       const response = await onUpdateSecurity(id, newSecurity);
       if (response.payload.title == "Success") {
@@ -92,6 +83,7 @@ export default function SecurityModel({
   };
 
   const deleteHandler = async () => {
+    debugger; 
     const response = await onDeleteSecurity(id);
     if (response.payload.title == "Success") {
       onClose(true);
@@ -115,7 +107,7 @@ export default function SecurityModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newSecurity?.name || !newSecurity?.questionId || !newSecurity?.answerId || !newSecurity?.description;
+      !newSecurity?.questionId || !newSecurity?.answerId || !newSecurity?.description;
     setSaveDisabled(isEnable);
   }, [newSecurity]);
 
@@ -144,19 +136,32 @@ export default function SecurityModel({
           <Form.Group></Form.Group>
             className={styles.stFormContainer}
             controlId="formSecurity"
-          
-            <Form.Label>Security</Form.Label>
+
+            <Form.Group className="mb-3" controlId="questionId">
+            <Form.Label>QuestionId</Form.Label>
             <Form.Control
               type="text"
-              name="name"
-              placeholder="Enter Security"
-              value={newSecurity?.name}
+              name="questionId"
+              placeholder="QuestionId"
+              value={newSecurity?.questionId}
               onChange={changeHandler}
             />
+          </Form.Group>
             
-         
 
-          <Form.Group className="mb-3" controlId="description">
+           <Form.Group className="mb-3" controlId="answerId">
+            <Form.Label>AnswerId</Form.Label>
+            <Form.Control
+              type="text"
+              name="answerId"
+              placeholder="AnswerId"
+              value={newSecurity?.answerId}
+              onChange={changeHandler}
+            />
+          </Form.Group>
+      
+
+      <Form.Group className="mb-3" controlId="description">
             <Form.Label>Description</Form.Label>
             <Form.Control
               type="text"
@@ -166,11 +171,6 @@ export default function SecurityModel({
               onChange={changeHandler}
             />
           </Form.Group>
-
-          
-
-          
-          
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel
