@@ -9,19 +9,19 @@ import {
     getGMTBeginAction,
     getGMTSuccessAction,
     getGMTFailureAction,
-    gmtAction,
-  } from "../actions/gmtActions";
+    GTMAction,
+  } from "../actions/GMTActions";
 
-  export default function useFetchgmt() {
+  export default function useFetchGMTs() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/gmt";
+  const hapyCarURL = "https://localhost:7062/GMT";
 
   const API = useAPI();
   const SUCCESS = "Success";
   const ERROR = "Error";
 
   //GMT GET  ACTIONS
-  const getGMT = () => {
+  const getGMTs = () => {
     dispatch(getGMTBeginAction());
     return API.get(hapyCarURL,
       null,
@@ -37,8 +37,8 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.gmt) {
-          const [errors] = error.response.data.gmt;
+        if (error.response.data.GMT) {
+          const [errors] = error.response.data.GMT;
           errorMsg = errors;
         }
         dispatch(
@@ -53,10 +53,10 @@ import {
   };
 
   // GMT ADD  ACTIONS
-  const addGMT = (gmt) => {
+  const addGMT = (GMT) => {
     return API.post(
       hapyCarURL,
-      { data: gmt },
+      { data: GMT },
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
@@ -70,13 +70,13 @@ import {
 
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.gmt) {
-          const [errors] = error.response.data.gmt;
+        if (error.response.data.GMT) {
+          const [errors] = error.response.data.GMT;
           errorMsg = errors;
         }
         dispatch(
           addGMTAction({
-            ...gmt,
+            ...GMT,
             title: ERROR,
             errorMsg,
           })
@@ -89,10 +89,10 @@ import {
   };
 
   //GMT UPDATE  ACTIONS
-  const updateGMT = (gmtId, gmt) => {
+  const updateGMT = (GMTId, GMT) => {
 
-    return API.put(`${hapyCarURL}/${gmtId}`,
-      { data: gmt },
+    return API.put(`${hapyCarURL}/${GMTId}`,
+      { data: GMT },
       { suppressErrors: [400] }
     )
       .then(({ data
@@ -108,13 +108,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.gmt) {
-          const [errors] = error.response.data.gmt;
+        if (error.response.data.GMT) {
+          const [errors] = error.response.data.GMT;
           errorMsg = errors;
         }
         dispatch(
           updateGMTAction({
-            ...gmt,
+            ...GMT,
             title: ERROR,
             errorMsg,
           })
@@ -124,8 +124,8 @@ import {
   };
 
   // GMT DELETE  ACTIONS
-  const deleteGMT = (gmtId) => {
-    return API.delete(`${hapyCarURL}/${gmtId}`,
+  const deleteGMT = (GMTId) => {
+    return API.delete(`${hapyCarURL}/${GMTId}`,
       null,
       { suppressErrors: [400] }
     )
@@ -139,13 +139,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.gmt) {
-          const [errors] = error.response.data.gmt;
+        if (error.response.data.GMT) {
+          const [errors] = error.response.data.GMT;
           errorMsg = errors;
         }
         dispatch(
           deleteGMTAction({
-            ...gmtId,
+            ...GMTId,
             title: ERROR,
             errorMsg,
           })
@@ -155,8 +155,8 @@ import {
   };
 
   // GMT BY ID ACTIONS
-  const gmtById = (gmtId) => {
-    return API.get(`${hapyCarURL}/${gmtId}`,
+  const GMTById = (GMTId) => {
+    return API.get(`${hapyCarURL}/${GMTId}`,
       null,
       { suppressErrors: [400] }
     )
@@ -165,7 +165,7 @@ import {
       }) =>
 
         dispatch(
-            gmtAction({
+          GTMAction({
             ...data,
             title: SUCCESS,
           })
@@ -173,12 +173,12 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.gmt) {
-          const [errors] = error.response.data.gmt;
+        if (error.response.data.GMT) {
+          const [errors] = error.response.data.GMT;
           errorMsg = errors;
         }
         dispatch(
-            gmtAction({
+          GTMAction({
             ...errorMsg,
             title: ERROR,
             errorMsg,
@@ -191,7 +191,7 @@ import {
     addGMT,
     updateGMT,
     deleteGMT,
-    getGMT,
-    gmtById,
+    getGMTs,
+    GMTById,
   };
 }

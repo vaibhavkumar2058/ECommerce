@@ -50,7 +50,7 @@ const NavbarComp = () => {
           <Route exact path="/cart" element={<Cart />} />    
           <Route exact path="/gender" element={<Gender />} />    
           <Route exact path="/country" element={<Country />} />        
-          <Route exact path="/gmt" element={<GMT />} />   
+          <Route exact path="/GMT" element={<GMT />} />   
           <Route exact path="/itemCost" element={<ItemCost />} />     
           <Route exact path="/measurementType" element={<MeasurementType />} />  
           <Route exact path="/measurementValue" element={<MeasurementValue />} />  

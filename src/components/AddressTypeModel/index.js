@@ -17,7 +17,7 @@ export default function AddressTypeModel({
   id,
   onClose,
   addressTypeData,
-}) {
+ }) {
   const [newAddressType, setNewAddressType] = useState({
     addressTypeName:"",
     description:"",

@@ -16,18 +16,17 @@ export default function GMTModel({
   onGetGMT,
   id,
   onClose,
-  gmtData,
-}) {
+  GMTData,
+ }) {
   const [newGMT, setNewGMT] = useState({
     resourceId:null,
-    latitude:null,
     longitude:null,
-    tracktime:null,
+    latitude:null,
+   // trackTime:null ,
     description:"",
-
   });
 
-  const [fileSelected, setFileSelected] = useState();
+  
 
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
@@ -53,14 +52,10 @@ export default function GMTModel({
     });
   };
 
-  const saveFileSelected= (e) => {
-    //in case you wan to print the file selected
-    //console.log(e.target.files[0]);
-    setFileSelected(e.target.files[0]);
-  };
+  
 
   const saveHandler = async () => {
-    newGMT.file = fileSelected;
+    debugger;
     if (isEdit) {
       const response = await onUpdateGMT(id, newGMT);
       if (response.payload.title == "Success") {
@@ -108,7 +103,7 @@ export default function GMTModel({
 
   useEffect(() => {
     if (isEdit) {
-      setNewGMT(gmtData);
+      setNewGMT(GMTData);
     }
   }, []);
 
@@ -117,7 +112,8 @@ export default function GMTModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newGMT?.resourceId || !newGMT?.latitude || !newGMT?.longitude|| !newGMT?.tracktime || !newGMT?.description;
+    
+    !newGMT?.resourceId || !newGMT?.longitude || !newGMT?.latitude||  !newGMT?.description;
     setSaveDisabled(isEnable);
   }, [newGMT]);
 
@@ -150,8 +146,8 @@ export default function GMTModel({
             <Form.Label>ResourceId</Form.Label>
             <Form.Control
               type="text"
-              name="resourceid"
-              placeholder="Enter resourceid"
+              name="resourceId"
+              placeholder="Enter resourceId"
               value={newGMT?.resourceId}
               onChange={changeHandler}
             />
@@ -190,19 +186,18 @@ export default function GMTModel({
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="tracktime">
-            <Form.Label>Tracktime</Form.Label>
+          {/* <Form.Group className="mb-3" controlId="tracktime">
+            <Form.Label>TrackTime</Form.Label>
             <Form.Control
               type="text"
-              name="tracktime"
-              placeholder="TrackTime"
-              value={newGMT?.tracktimeId}
+              name="trackTime"
+              placeholder="Enter TrackTime"
+              value={newGMT?.trackTime}
               onChange={changeHandler}
             />
-          </Form.Group>
-          <Form.Group>
-          <input type="file" className="custom-file-label" onChange={saveFileSelected} />
-          </Form.Group>
+          </Form.Group> */}
+
+          
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel
@@ -252,9 +247,9 @@ GMTModel.propTypes = {
    */
   id: PropTypes.number,
   /**
- * gmtData for object type
+ * GMTData for object type
  */
-  gmtData: PropTypes.any,
+  GMTData: PropTypes.any,
 };
 
 GMTModel.defaultProps = {
@@ -266,6 +261,6 @@ GMTModel.defaultProps = {
   isDelete: false,
   onClose: null,
   id: null,
-  gmtData: null,
+  GMTData: null,
 };
 

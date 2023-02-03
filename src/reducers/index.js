@@ -3,7 +3,7 @@ import { enquiryReducer } from "./enquiryReducer";
 import { addressReducer } from "./addressReducer";
 import { addressTypeReducer } from "./addressTypeReducer";
 import { cartReducer } from "./cartReducer";
-
+import{ GMTReducer} from"./GMTReducer";
 import { recordStatusReducer } from "./recordStatusReducer";
 import { resourceAttachmentsReducer } from "./resourceAttachmentsReducer";
 import { categoryTypeReducer } from "./categoryTypeReducer";
@@ -20,6 +20,7 @@ export const reducers = combineReducers({
        productReducer,
        fileReducer,
     categoryTypeReducer,
-    folderReducer
+    folderReducer,
+    GMTReducer
 
 })
