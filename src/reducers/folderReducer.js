@@ -1,12 +1,12 @@
 import {
-    ADD_GMT,
-    UPDATE_GMT,
-    DELETE_GMT,
-    FETCH_GMT,
-    FETCH_GMT_SUCCESS,
-    FETCH_ENQUIRY_GMT,
-    GMT,
-  } from "../actions/GMTActions";
+    ADD_FOLDER,
+    UPDATE_FOLDER,
+    DELETE_FOLDER,
+    FETCH_FOLDER,
+    FETCH_FOLDER_SUCCESS,
+    FETCH_FOLDER_FAILURE,
+    FOLDER,
+  } from "../actions/folderActions";
   
   const initialState = {
     loading: true,
@@ -14,52 +14,52 @@ import {
     data: null,
   };
   
-  export function GMTReducer(state = initialState, action) {
+  export function folderReducer(state = initialState, action) {
     switch (action.type) {
   
-      case FETCH_GMT_SUCCESS:
+      case FETCH_FOLDER_SUCCESS:
         return {
           ...state,
-          GMT: {
-            ...state.GMT,
+          folder: {
+            ...state.folder,
             data: action.payload,
           },
         };
   
   
   
-      case ADD_GMT:
+      case ADD_FOLDER:
         return {
           ...state,
-          GMT: {
-            ...state.GMT,
+          folder: {
+            ...state.folder,
             data: action.payload,
           },
         };
   
-        case UPDATE_GMT:
+        case UPDATE_FOLDER:
         return {
           ...state,
-          gGMTmt: {
-            ...state.GMT,
+          folder: {
+            ...state.folder,
             data: action.payload,
           },
         };
   
-        case GMT:
+        case FOLDER:
         return {
           ...state,
-          GMT: {
-            ...state.GMT,
+          folder: {
+            ...state.folder,
             data: action.payload,
           },
         };
   
-        case DELETE_GMT:
+        case DELETE_FOLDER:
           return {
             ...state,
-            GMT: {
-              ...state.GMT,
+            folder: {
+              ...state.folder,
               data: action.payload,
             },
           };

@@ -3,33 +3,33 @@ import { useSelector, useDispatch } from "react-redux";
 import { useAPI } from "../services";
 
 import {
-    addGenderAction,
-    updateGenderAction,   
-    deleteGenderAction,
-    getGenderBeginAction,
-    getGenderSuccessAction,
-    getGenderFailureAction,
-    genderAction,
-  } from "../actions/genderActions";
+    addFolderAction,
+    updateFolderAction,   
+    deleteFolderAction,
+    getFolderBeginAction,
+    getFolderSuccessAction,
+    getFolderFailureAction,
+    folderAction,
+  } from "../actions/folderActions";
 
-  export default function useFetchGender() {
+  export default function useFetchFolders() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/gender";
+  const hapyCarURL = "https://localhost:7062/folder";
 
   const API = useAPI();
   const SUCCESS = "Success";
   const ERROR = "Error";
 
-  // GENDER GET  ACTIONS
-  const getGender = () => {
-    dispatch(getGenderBeginAction());
+  // Folder GET  ACTIONS
+  const getFolders = () => {
+    dispatch(getFolderBeginAction());
     return API.get(hapyCarURL,
       null,
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          getGenderSuccessAction({
+          getFolderSuccessAction({
             ...data,
             title: SUCCESS,
           })
@@ -37,12 +37,12 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.gender) {
-          const [errors] = error.response.data.gender;
+        if (error.response.data.folder) {
+          const [errors] = error.response.data.folder;
           errorMsg = errors;
         }
         dispatch(
-          getGenderFailureAction({
+          getFolderFailureAction({
             ...errorMsg,
             title: ERROR,
             errorMsg,
@@ -52,16 +52,16 @@ import {
 
   };
 
-  // GENDER ADD  ACTIONS
-  const addGender = (gender) => {
+  // Folder ADD  ACTIONS
+  const addFolder = (folder) => {
     return API.post(
       hapyCarURL,
-      { data: gender },
+      { data: folder },
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          addGenderAction({
+          addFolderAction({
             ...data,
             title: SUCCESS,
           })
@@ -70,13 +70,13 @@ import {
 
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.gender) {
-          const [errors] = error.response.data.gender;
+        if (error.response.data.folder) {
+          const [errors] = error.response.data.folder;
           errorMsg = errors;
         }
         dispatch(
-          addGenderAction({
-            ...gender,
+          addFolderAction({
+            ...folder,
             title: ERROR,
             errorMsg,
           })
@@ -88,11 +88,11 @@ import {
 
   };
 
-  // GENDER UPDATE  ACTIONS
-  const updateGender = (genderId, gender) => {
+  // Folder UPDATE  ACTIONS
+  const updateFolder = (folderId, folder) => {
 
-    return API.put(`${hapyCarURL}/${genderId}`,
-      { data: gender },
+    return API.put(`${hapyCarURL}/${folderId}`,
+      { data: folder },
       { suppressErrors: [400] }
     )
       .then(({ data
@@ -100,7 +100,7 @@ import {
       }) =>
 
         dispatch(
-          updateGenderAction({
+          updateFolderAction({
             ...data,
             title: SUCCESS,
           })
@@ -108,13 +108,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.gender) {
-          const [errors] = error.response.data.gender;
+        if (error.response.data.folder) {
+          const [errors] = error.response.data.folder;
           errorMsg = errors;
         }
         dispatch(
-          updateGenderAction({
-            ...gender,
+          updateFolderAction({
+            ...folder,
             title: ERROR,
             errorMsg,
           })
@@ -123,15 +123,15 @@ import {
 
   };
 
-  // GENDER DELETE  ACTIONS
-  const deleteGender = (genderId) => {
-    return API.delete(`${hapyCarURL}/${genderId}`,
+  // Folder DELETE  ACTIONS
+  const deleteFolder = (folderId) => {
+    return API.delete(`${hapyCarURL}/${folderId}`,
       null,
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          deleteGenderAction({
+          deleteFolderAction({
             ...data,
             title: SUCCESS,
           })
@@ -139,13 +139,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.gender) {
-          const [errors] = error.response.data.gender;
+        if (error.response.data.folder) {
+          const [errors] = error.response.data.folder;
           errorMsg = errors;
         }
         dispatch(
-          deleteGenderAction({
-            ...genderId,
+          deleteFolderAction({
+            ...folderId,
             title: ERROR,
             errorMsg,
           })
@@ -154,9 +154,9 @@ import {
 
   };
 
-  // GENDERBY ID ACTIONS
-  const genderById = (genderId) => {
-    return API.get(`${hapyCarURL}/${genderId}`,
+  // Folder BY ID ACTIONS
+  const folderById = (folderId) => {
+    return API.get(`${hapyCarURL}/${folderId}`,
       null,
       { suppressErrors: [400] }
     )
@@ -165,7 +165,7 @@ import {
       }) =>
 
         dispatch(
-            genderAction({
+            folderAction({
             ...data,
             title: SUCCESS,
           })
@@ -173,12 +173,12 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.gender) {
-          const [errors] = error.response.data.gender;
+        if (error.response.data.folder) {
+          const [errors] = error.response.data.folder;
           errorMsg = errors;
         }
         dispatch(
-            genderAction({
+            folderAction({
             ...errorMsg,
             title: ERROR,
             errorMsg,
@@ -188,10 +188,10 @@ import {
       
   };
   return {
-    addGender,
-    updateGender,
-    deleteGender,
-    getGender,
-    genderById,
+    addFolder,
+    updateFolder,
+    deleteFolder,
+    getFolders,
+    folderById,
   };
 }

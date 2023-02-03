@@ -59,13 +59,14 @@ export default function MeasurementTypes() {
     addMeasurementType,
     updateMeasurementType,
     deleteMeasurementType,
-    getMeasurementTypes,
+    getMeasurementType,
     measurementTypeById,
+
   } = useFetchMeasurementType();
 
   const columns = [
 
-    { dataField: 'measurementTypeId', text: 'MeasurementType Id', sort: true, hidden: true },
+    { dataField: 'measurementTypeId', text: 'MeasurementType Id', sort: true , hidden: true },
     { dataField: 'name', text: ' Name', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
 
@@ -77,18 +78,18 @@ export default function MeasurementTypes() {
         return (
           <><button
             className="btn btn-primary btn-xs"
-            onClick={() => handleView(row.enquiryId, row.name)}
+            onClick={() => handleView(row.measurementTypeId, row.name)}
           >
             View
           </button>
             <button
               className="btn btn-primary btn-xs"
-              onClick={() => handleEdit(row.enquiryId, row)}
+              onClick={() => handleEdit(row.measurementTypeId, row)}
             >
               Edit
             </button><button
               className="btn btn-danger btn-xs"
-              onClick={() => handleDelete(row.enquiryId, row.name)}
+              onClick={() => handleDelete(row.measurementTypeId, row.name)}
             >
               Delete
             </button></>
@@ -125,6 +126,8 @@ export default function MeasurementTypes() {
     setId(rowId);
     setIsEdit(true);
     setShow(true);
+    debugger;
+    console.log(measurementType)
   };
 
   const handleDelete = (rowId, name) => {
@@ -154,7 +157,7 @@ export default function MeasurementTypes() {
 
 
   const getAllMeasurementTypes = async () => {
-    const response = await getMeasurementTypes();
+    const response = await getMeasurementType();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',
@@ -276,7 +279,7 @@ export default function MeasurementTypes() {
                 isEdit={isEdit}
                 isDelete={isDelete}
                 id={id}
-                MeasurementTypeData={measurementType}
+                measurementTypeData={measurementType}
               />
             </Modal.Body>
 

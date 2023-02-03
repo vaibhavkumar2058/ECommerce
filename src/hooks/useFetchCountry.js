@@ -20,8 +20,8 @@ import {
   const SUCCESS = "Success";
   const ERROR = "Error";
 
-  // Country GET  ACTIONS
-  const getCountry = () => {
+  // COUNTRY GET  ACTIONS
+  const getCountries = () => {
     dispatch(getCountryBeginAction());
     return API.get(hapyCarURL,
       null,
@@ -190,7 +190,7 @@ import {
     addCountry,
     updateCountry,
     deleteCountry,
-    getCountry,
+    getCountries,
     countryById,
   };
 }

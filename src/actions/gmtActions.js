@@ -21,7 +21,7 @@ export const addGMTAction = (data) => ({
     type: ADD_GMT,
     payload: data,
 })
-export const gmtAction = (data) => ({
+export const GTMAction = (data) => ({
     type: GMT,
     payload: data,
 })

@@ -49,6 +49,7 @@ export default function CountryModel({
   };
 
   const saveHandler = async () => {
+    
     if (isEdit) {
       const response = await onUpdateCountry(id, newCountry);
       if (response.payload.title == "Success") {
@@ -144,12 +145,12 @@ export default function CountryModel({
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="region">
+          <Form.Group className="mb-3" controlId="regioncode">
             <Form.Label>Region</Form.Label>
             <Form.Control
               type="text"
               name="regionCode"
-              placeholder="region"
+              placeholder="regioncode"
               value={newCountry?.regionCode}
               onChange={changeHandler}
             />
