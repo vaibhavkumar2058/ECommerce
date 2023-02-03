@@ -21,7 +21,7 @@ import {
   const ERROR = "Error";
 
   // Order GET  ACTIONS
-  const getOrders = () => {
+  const getOrder = () => {
     dispatch(getOrderBeginAction());
     return API.get(hapyCarURL,
       null,
@@ -70,6 +70,7 @@ import {
 
       .catch((error) => {
         let errorMsg = "error msg from copy file";
+        debugger;
         if (error.response.data.order) {
           const [errors] = error.response.data.order;
           errorMsg = errors;
@@ -191,7 +192,7 @@ import {
     addOrder,
     updateOrder,
     deleteOrder,
-    getOrders,
+    getOrder,
     orderById,
   };
 }

@@ -6,43 +6,31 @@ export const UPDATE_CATEGORYTYPE = "UPDATE_CATEGORYTYPE";
 export const DELETE_CATEGORYTYPE= "DELETE_CATEGORYTYPE";
 export const CATEGORYTYPE = "CATEGORYTYPE";
 
-export const getCategorytypeBeginAction = () => ({
+export const getCategoryTypeBeginAction = () => ({
     type: FETCH_CATEGORYTYPE,
 })
-export const getCategorytypeSuccessAction = (data) => ({
+export const getCategoryTypeSuccessAction = (data) => ({
     type: FETCH_CATEGORYTYPE_SUCCESS,
     payload:data,
 })
-export const getCategorytypeFailureAction = (error) => ({
+export const getCategoryTypeFailureAction = (error) => ({
     type: FETCH_CATEGORYTYPE_FAILURE,
     payload:{error},
 })
-export const addCategorytypeAction = (data) => ({
+export const addCategoryTypeAction = (data) => ({
     type: ADD_CATEGORYTYPE,
     payload: data,
 })
-export const categorytypeAction = (data) => ({
+export const categoryTypeAction = (data) => ({
     type: CATEGORYTYPE,
     payload: data,
 })
 
-export const updateCategorytypeAction = (data) => ({
+export const updateCategoryTypeAction = (data) => ({
     type: UPDATE_CATEGORYTYPE,
     payload: data,
 })
-export const deleteCategorytypeAction = (data) => ({
+export const deleteCategoryTypeAction = (data) => ({
     type: DELETE_CATEGORYTYPE,
     payload: data,
 })
-
-
-
-
-
-
-
-
-
-
-
-

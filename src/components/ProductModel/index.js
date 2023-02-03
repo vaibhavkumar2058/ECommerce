@@ -19,7 +19,7 @@ export default function ProductModel({
   productData,
 }) {
   const [newProduct, setNewProduct] = useState({
-    productname: "", 
+    productName: "", 
     description: "",
    
   });
@@ -50,12 +50,6 @@ export default function ProductModel({
     });
   };
 
-  const saveFileSelected= (e) => {
-    //in case you wan to print the file selected
-    //console.log(e.target.files[0]);
-    setFileSelected(e.target.files[0]);
-  };
-
   const saveHandler = async () => {
     newProduct.file = fileSelected;
     if (isEdit) {
@@ -71,7 +65,7 @@ export default function ProductModel({
       }
     }
     else {
-      debugger;
+    
       const response = await onAddProduct(newProduct);
       if (response.payload.title == "Success") {
         setMessageStatus({
@@ -114,7 +108,7 @@ export default function ProductModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newProduct?.productname ||   !newProduct?.description;
+      !newProduct?.productName ||   !newProduct?.description;
     setSaveDisabled(isEnable);
   }, [newProduct]);
 
@@ -147,9 +141,9 @@ export default function ProductModel({
             <Form.Label>Product</Form.Label>
             <Form.Control
               type="text"
-              name="name"
+              name="productName"
               placeholder="Enter Product"
-              value={newProduct?.productname}
+              value={newProduct?.productName}
               onChange={changeHandler}
             />
           </Form.Group>
@@ -167,7 +161,7 @@ export default function ProductModel({
             />
           </Form.Group>
           <Form.Group>
-          <input type="file" className="custom-file-label" onChange={saveFileSelected} />
+
           </Form.Group>
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
