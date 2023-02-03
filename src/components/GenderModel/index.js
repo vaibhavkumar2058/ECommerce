@@ -19,9 +19,8 @@ export default function GenderModel({
   genderData,
 }) {
   const [newGender, setNewGender] = useState({
-    name: "",
-    description: "",
-    
+    genderName: "",
+    description:"",
   });
 
   const [fileSelected, setFileSelected] = useState();
@@ -50,14 +49,9 @@ export default function GenderModel({
     });
   };
 
-  const saveFileSelected= (e) => {
-    //in case you wan to print the file selected
-    //console.log(e.target.files[0]);
-    setFileSelected(e.target.files[0]);
-  };
-
+  
   const saveHandler = async () => {
-    newGender.file = fileSelected;
+   debugger;
     if (isEdit) {
       const response = await onUpdateGender(id, newGender);
       if (response.payload.title == "Success") {
@@ -71,7 +65,7 @@ export default function GenderModel({
       }
     }
     else {
-      debugger;
+     
       const response = await onAddGender(newGender);
       if (response.payload.title == "Success") {
         setMessageStatus({
@@ -114,7 +108,7 @@ export default function GenderModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newGender?.name || !newGender?.description ;
+      !newGender?.genderName || !newGender?.description ;
     setSaveDisabled(isEnable);
   }, [newGender]);
 
@@ -142,14 +136,14 @@ export default function GenderModel({
         <Form>
           <Form.Group
             className={styles.stFormContainer}
-            controlId="formEnquiry"
+            controlId="formGender"
           >
             <Form.Label>Gender</Form.Label>
             <Form.Control
               type="text"
-              name="name"
-              placeholder="Enter Gender"
-              value={newGender?.name}
+              name="genderName"                                                                                                                                   
+              placeholder="Enter GenderName"
+              value={newGender?.genderName}
               onChange={changeHandler}
             />
           </Form.Group>
@@ -167,9 +161,7 @@ export default function GenderModel({
             />
           </Form.Group>
                     
-          <Form.Group>
-          <input type="file" className="custom-file-label" onChange={saveFileSelected} />
-          </Form.Group>
+          
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel

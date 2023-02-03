@@ -60,7 +60,7 @@ export default function Country() {
     addCountry,
     updateCountry,
     deleteCountry,
-    getCountry,
+    getCountries,
     countryById,
   } = useFetchCountry();
 
@@ -68,7 +68,7 @@ export default function Country() {
 
     { dataField: 'countryId', text: 'Country Id', sort: true, hidden: true },
     { dataField: 'countryName', text: ' CountryName', sort: true },
-    { dataField: 'regionCode', text: 'Region', sort: true },
+    { dataField: 'regionCode', text: 'RegionCode', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
         // columns follow dataField and text structure
     {
@@ -155,7 +155,7 @@ export default function Country() {
 
 
   const getAllCountry = async () => {
-    const response = await getCountry();
+    const response = await getCountries();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',
