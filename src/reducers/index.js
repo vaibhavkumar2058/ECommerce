@@ -9,6 +9,7 @@ import { categoryTypeReducer } from "./categoryTypeReducer";
 import { productReducer } from "./productReducer";
 import{ folderReducer} from "./folderReducer"
 import { fileReducer } from "./fileReducer";
+import{GMTReducer}from "./GMTReducer";
 
 
 
