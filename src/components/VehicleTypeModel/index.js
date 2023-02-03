@@ -53,7 +53,7 @@ export default function VehicleTypeModel({
     //console.log(e.target.files[0]);
     setFileSelected(e.target.files[0]);
   };
-
+debugger;
   const saveHandler = async () => {
     newVehicleType.file = fileSelected;
     if (isEdit) {
@@ -67,7 +67,7 @@ export default function VehicleTypeModel({
         });
       }
     } else {
-      debugger;
+
       const response = await onAddVehicleType(newVehicleType);
       if (response.payload.title == "Success") {
         setMessageStatus({
@@ -160,13 +160,13 @@ export default function VehicleTypeModel({
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group>
+          {/* <Form.Group>
             <input
               type="file"
               className="custom-file-label"
               onChange={saveFileSelected}
             />
-          </Form.Group>
+          </Form.Group> */}
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel
@@ -221,7 +221,7 @@ VehicleTypeModel.propTypes = {
   /**
    * VehicleTypeData for object type
    */
-  VehicleTypeyData: PropTypes.any,
+  VehicleTypeData: PropTypes.any,
 };
 
 VehicleTypeModel.defaultProps = {

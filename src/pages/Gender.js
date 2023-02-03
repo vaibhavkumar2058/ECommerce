@@ -24,9 +24,9 @@ const MyExportCSV = (props) => {
   );
 };
 
-export default function Country() {
+export default function Gender() {
 
-  const [genderr, setGender] = useState([]);
+  const [genders, setGenders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -41,8 +41,8 @@ export default function Country() {
   const handleShow = () => setShow(true);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-  const [gender, setgender] = useState({
-    name: "",
+  const [gender, setGender] = useState({
+    genderName: "",
     description:"",
           });
 
@@ -65,8 +65,8 @@ export default function Country() {
 
   const columns = [
 
-    { dataField: 'genderId', text: 'Gender Id', sort: true, hidden: true },
-    { dataField: '{ name', text: ' Name', sort: true },
+     { dataField: 'genderId', text: 'GenderId', sort: true,hidden:true },
+     { dataField: 'genderName', text: ' GenderName', sort: true },
       { dataField: 'description', text: 'Description', sort: true },
     
     // columns follow dataField and text structure
@@ -98,11 +98,11 @@ export default function Country() {
   ];
 
   useEffect(() => {
-    if (genderr.length == 0) {
+    if (genders.length == 0) {
       getAllGender();
       setLoading(false)
     }
-  }, [genderr]);
+  }, [genders]);
 
 
   const defaultSorted = [{
@@ -166,7 +166,7 @@ export default function Country() {
         arr.push(response.payload[key]);
       }
 
-      setGender(arr);
+      setGenders(arr);
     }
     else {
       setMessageStatus({
@@ -211,11 +211,11 @@ export default function Country() {
     <>
       <div className="m-t-40">
         {loading && <div>A moment please...</div>}
-        {genderr && (<div>
+        {gender && (<div>
           <ToolkitProvider
             bootstrap4
-            keyField='enquiryId'
-            data={genderr}
+            keyField='genderId'
+            data={genders}
             columns={columns}
             search
           >
@@ -233,7 +233,7 @@ export default function Country() {
                           <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
                           <Button variant="primary" onClick={handleShow}>
-                            Add Enquiry
+                            Add Gender
                           </Button>
                           </div>
                         </div>

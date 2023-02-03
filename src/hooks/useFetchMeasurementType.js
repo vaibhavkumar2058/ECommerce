@@ -88,11 +88,11 @@ import {
 
   };
 
-  // Enquiry UPDATE  ACTIONS
-  const updateEnquiry = (enquiryId, enquiry) => {
+  // MeasurementType UPDATE  ACTIONS
+  const updateMeasurementType = (measurementTypeId, measurementType) => {
 
-    return API.put(`${hapyCarURL}/${enquiryId}`,
-      { data: enquiry },
+    return API.put(`${hapyCarURL}/${measurementTypeId}`,
+      { data: measurementType },
       { suppressErrors: [400] }
     )
       .then(({ data
@@ -108,13 +108,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.enquiry) {
-          const [errors] = error.response.data.enquiry;
+        if (error.response.data.measurementType) {
+          const [errors] = error.response.data.measurementType;
           errorMsg = errors;
         }
         dispatch(
           updateMeasurementTypeAction({
-            ...enquiry,
+            ...measurementType,
             title: ERROR,
             errorMsg,
           })
@@ -123,9 +123,9 @@ import {
 
   };
 
-  // Enquiry DELETE  ACTIONS
-  const deleteEnquiry = (enquiryId) => {
-    return API.delete(`${hapyCarURL}/${enquiryId}`,
+  // MeasurementType DELETE  ACTIONS
+  const deleteMeasurementType = (measurementTypeId) => {
+    return API.delete(`${hapyCarURL}/${measurementTypeId}`,
       null,
       { suppressErrors: [400] }
     )
@@ -139,13 +139,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.enquiry) {
-          const [errors] = error.response.data.enquiry;
+        if (error.response.data.measurementType) {
+          const [errors] = error.response.data.measurementType;
           errorMsg = errors;
         }
         dispatch(
           deleteMeasurementTypeAction({
-            ...enquiryId,
+            ...measurementTypeId,
             title: ERROR,
             errorMsg,
           })
@@ -154,9 +154,9 @@ import {
 
   };
 
-  // Enquiry BY ID ACTIONS
-  const measurementById = (enquiryId) => {
-    return API.get(`${hapyCarURL}/${enquiryId}`,
+  // MeasurementType BY ID ACTIONS
+  const measurementTypeById = (measurementTypeId) => {
+    return API.get(`${hapyCarURL}/${measurementTypeId}`,
       null,
       { suppressErrors: [400] }
     )
@@ -173,8 +173,8 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.enquiry) {
-          const [errors] = error.response.data.enquiry;
+        if (error.response.data.measurementType) {
+          const [errors] = error.response.data.measurementType;
           errorMsg = errors;
         }
         dispatch(
@@ -189,9 +189,9 @@ import {
   };
   return {
     addMeasurementType,
-    updateEnquiry,
-    deleteEnquiry,
+    updateMeasurementType,
+    deleteMeasurementType,
     getMeasurementType,
-    measurementById,
+    measurementTypeById,
   };
 }

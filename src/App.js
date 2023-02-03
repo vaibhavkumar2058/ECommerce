@@ -6,6 +6,7 @@ import { store } from "./actions/store";
 import { Provider } from "react-redux";
 import { ToastProvider } from "react-toast-notifications";
 import './volt.css';
+import LoginPage from "../pages/LoginPage";
 
 function App() {
   // return (
@@ -17,7 +18,7 @@ function App() {
   // );
   return (
     <div>
-      <nav className="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none"><a className="navbar-brand me-lg-5" href="https://demo.themesberg.com/volt-pro/index.html"><img className="navbar-brand-dark" src="https://demo.themesberg.com/volt-pro/assets/img/brand/light.svg" alt="Volt logo" /> <img className="navbar-brand-light" src="https://demo.themesberg.com/volt-pro/assets/img/brand/dark.svg" alt="Volt logo" /></a>
+       <nav className="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none"><a className="navbar-brand me-lg-5" href="https://demo.themesberg.com/volt-pro/index.html"><img className="navbar-brand-dark" src="https://demo.themesberg.com/volt-pro/assets/img/brand/light.svg" alt="Volt logo" /> <img className="navbar-brand-light" src="https://demo.themesberg.com/volt-pro/assets/img/brand/dark.svg" alt="Volt logo" /></a>
         <div className="d-flex align-items-center"><button className="navbar-toggler d-lg-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation"><span className="navbar-toggler-icon" /></button></div>
       </nav>
       <nav id="sidebarMenu" className="sidebar d-lg-block bg-gray-800 text-white collapse" data-simplebar>
@@ -250,6 +251,7 @@ function App() {
               <NavbarComp />
             </ToastProvider>
           </Provider>
+         
         </div>
         <div className="container-fluid kanban-container py-4 px-0">
 
@@ -266,7 +268,9 @@ function App() {
           </div>
         </footer>
       </main>
+     
     </div>
+    
   );
 }
 

@@ -26,7 +26,7 @@ const MyExportCSV = (props) => {
 
 export default function VehicleType() {
 
-  const [vehicleType, setVehicleType] = useState([]);
+  const [vehicleTypes, setVehicleTypes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -41,11 +41,9 @@ export default function VehicleType() {
   const handleShow = () => setShow(true);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-  const [Vehicletype, setvehicleType] = useState({
-
-    vehicleTypeName : "",
+  const [vehicleType, setVehicleType] = useState({
+     vehicleTypeName : "",
      description:"",
-  
       });
 
   const [id, setId] = useState(null);
@@ -67,8 +65,8 @@ export default function VehicleType() {
 
   const columns = [
 
-    { dataField: ' vehicleType', text: ' vehicleType', sort: true, hidden: true },
-    { dataField: ' vehicleTypeName', text: ' vehicleTypeName', sort: true },
+    { dataField: 'vehicleTypeId', text: ' vehicleTypeId', sort: true, hidden: true},
+    { dataField: 'vehicleTypeName', text: ' VehicleTypeName', sort: true  },
     { dataField: 'description', text: 'Description', sort: true },
    
     // columns follow dataField and text structure
@@ -79,18 +77,18 @@ export default function VehicleType() {
         return (
           <><button
             className="btn btn-primary btn-xs"
-            onClick={() => handleView(row.enquiryId, row.name)}
+            onClick={() => handleView(row.vehicleTypeId, row.name)}
           >
             View
           </button>
             <button
               className="btn btn-primary btn-xs"
-              onClick={() => handleEdit(row.enquiryId, row)}
+              onClick={() => handleEdit(row.vehicleTypeId, row)}
             >
               Edit
             </button><button
               className="btn btn-danger btn-xs"
-              onClick={() => handleDelete(row.enquiryId, row.name)}
+              onClick={() => handleDelete(row.vehicleTypeId, row.name)}
             >
               Delete
             </button></>
@@ -100,11 +98,11 @@ export default function VehicleType() {
   ];
 
   useEffect(() => {
-    if ( vehicleType.length == 0) {
+    if ( vehicleTypes.length == 0) {
       getAllVehicleType();
       setLoading(false)
     }
-  }, [vehicleType]);
+  }, [vehicleTypes]);
 
 
   const defaultSorted = [{
@@ -168,12 +166,12 @@ export default function VehicleType() {
         arr.push(response.payload[key]);
       }
 
-      setVehicleType(arr);
+      setVehicleTypes(arr);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Enquiry Fetch Failed.'
+        message: 'VechileType Fetch Failed.'
       })
     }
   };
@@ -186,7 +184,7 @@ export default function VehicleType() {
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'VehicleTyp Get Failed.'
+        message: 'VehicleType Get Failed.'
       })
     }
   };
@@ -213,11 +211,11 @@ export default function VehicleType() {
     <>
       <div className="m-t-40">
         {loading && <div>A moment please...</div>}
-        {vehicleType && (<div>
+        {vehicleTypes && (<div>
           <ToolkitProvider
             bootstrap4
-            keyField='enquiryId'
-            data={vehicleType}
+            keyField='vehicleId'
+            data={vehicleTypes}
             columns={columns}
             search
           >
@@ -235,7 +233,7 @@ export default function VehicleType() {
                           <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
                           <Button variant="primary" onClick={handleShow}>
-                            Add VehicleTyp
+                            Add Vehicletype
                           </Button>
                           </div>
                         </div>
@@ -266,10 +264,10 @@ export default function VehicleType() {
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Add Enquiry</Modal.Title>
+              <Modal.Title>Add VehicleType</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <vehicleTypeModel
+              <VehicleTypeModel
                 onAddVehicleType={addVehicleType}
                 onUpdateVehicleType={updateVehicleType}
                 onDeleteVehicleType={deleteVehicleType}
@@ -278,7 +276,7 @@ export default function VehicleType() {
                 isEdit={isEdit}
                 isDelete={isDelete}
                 id={id}
-                vehicleTypeData={ vehicleType}
+                vehicleTypeData={vehicleType}
               />
             </Modal.Body>
 
