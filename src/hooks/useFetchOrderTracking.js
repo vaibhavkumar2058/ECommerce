@@ -14,13 +14,14 @@ import {
 
   export default function useFetchOrderTrackings() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/enquiry";
+  const hapyCarURL = "https://localhost:7062/orderTracking";
 
   const API = useAPI();
   const SUCCESS = "Success";
   const ERROR = "Error";
 
   // ORDERTRACKING GET  ACTIONS
+  debugger;
   const getOrderTracking = () => {
     dispatch(getOrderTrackingBeginAction());
     return API.get(hapyCarURL,
@@ -37,7 +38,7 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.enquiry) {
+        if (error.response.data.orderTracking) {
           const [errors] = error.response.data.ordertracking;
           errorMsg = errors;
         }
@@ -53,10 +54,10 @@ import {
   };
 
   // ORDERTRACKING ADD  ACTIONS
-  const addOrderTracking = (enquiry) => {
+  const addOrderTracking = (orderTracking) => {
     return API.post(
       hapyCarURL,
-      { data: enquiry },
+      { data: orderTracking },
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
@@ -70,13 +71,13 @@ import {
 
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.enquiry) {
+        if (error.response.data.orderTracking) {
           const [errors] = error.response.data.ordertracking;
           errorMsg = errors;
         }
         dispatch(
           addOrderTrackingAction({
-            ...enquiry,
+            ...orderTracking,
             title: ERROR,
             errorMsg,
           })
@@ -89,10 +90,10 @@ import {
   };
 
   // ORDERTRACKING UPDATE  ACTIONS
-  const updateOrderTracking = (enquiryId, enquiry) => {
+  const updateOrderTracking = (orderTrackingId, orderTracking) => {
 
-    return API.put(`${hapyCarURL}/${enquiryId}`,
-      { data: enquiry },
+    return API.put(`${hapyCarURL}/${orderTrackingId}`,
+      { data: orderTracking },
       { suppressErrors: [400] }
     )
       .then(({ data
@@ -108,13 +109,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.enquiry) {
-          const [errors] = error.response.data.enquiry;
+        if (error.response.data.orderTracking) {
+          const [errors] = error.response.data.orderTracking;
           errorMsg = errors;
         }
         dispatch(
           updateOrderTrackingAction({
-            ...enquiry,
+            ...orderTracking,
             title: ERROR,
             errorMsg,
           })
@@ -124,8 +125,8 @@ import {
   };
 
   // ORDERTRACKING DELETE  ACTIONS
-  const deleteOrderTracking = (enquiryId) => {
-    return API.delete(`${hapyCarURL}/${enquiryId}`,
+  const deleteOrderTracking = (orderTrackingId) => {
+    return API.delete(`${hapyCarURL}/${orderTrackingId}`,
       null,
       { suppressErrors: [400] }
     )
@@ -139,13 +140,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.enquiry) {
-          const [errors] = error.response.data.enquiry;
+        if (error.response.data.orderTracking) {
+          const [errors] = error.response.data.orderTracking;
           errorMsg = errors;
         }
         dispatch(
           deleteOrderTrackingAction({
-            ...enquiryId,
+            ...orderTrackingId,
             title: ERROR,
             errorMsg,
           })
@@ -155,8 +156,8 @@ import {
   };
 
   // ORDERTRACKING BY ID ACTIONS
-  const enquiryById = (enquiryId) => {
-    return API.get(`${hapyCarURL}/${enquiryId}`,
+  const orderTrackingById = (orderTrackingId) => {
+    return API.get(`${hapyCarURL}/${orderTrackingId}`,
       null,
       { suppressErrors: [400] }
     )
@@ -173,8 +174,8 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.enquiry) {
-          const [errors] = error.response.data.enquiry;
+        if (error.response.data.orderTracking) {
+          const [errors] = error.response.data.orderTracking;
           errorMsg = errors;
         }
         dispatch(
@@ -192,6 +193,6 @@ import {
     updateOrderTracking,
     deleteOrderTracking,
     getOrderTracking,
-    enquiryById,
+    orderTrackingById,
   };
 }

@@ -26,7 +26,7 @@ const MyExportCSV = (props) => {
 
 export default function OrderTracking() {
 
-  const [enquirys, setOrderTrackings] = useState([]);
+  const [orderTrackings, setOrderTrackings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -41,13 +41,11 @@ export default function OrderTracking() {
   const handleShow = () => setShow(true);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-  const [enquiry, setOrderTracking] = useState({
-    name: "",
-    mobile:"",
-    email:"",
+  const [orderTracking, setOrderTracking] = useState({
+    orderId: null,
+    productId:null,
     description:"",
-    enquiryTypeId:""
-      });
+     });
 
   const [id, setId] = useState(null);
 
@@ -63,17 +61,14 @@ export default function OrderTracking() {
     updateOrderTracking,
     deleteOrderTracking,
     getOrderTracking,
-    enquiryById,
+    orderTrackingById,
   } = useFetchOrderTracking();
 
   const columns = [
-
-    { dataField: 'enquiryId', text: 'OrderTracking Id', sort: true, hidden: true },
-    { dataField: 'name', text: ' Name', sort: true },
-    { dataField: 'mobile', text: 'Mobile', sort: true },
-    { dataField: 'email', text: 'Email', sort: true },
+    { dataField: 'orderTrackingId', text: 'OrderTrackingId', sort: true},
+    { dataField: 'orderId', text: 'Order Id', sort: true},
+    { dataField: 'productId', text: ' Product Id', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
-    { dataField: 'enquiryTypeId', text: 'MoOrderTrackingTypeIdbile', sort: true },
     // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -82,18 +77,18 @@ export default function OrderTracking() {
         return (
           <><button
             className="btn btn-primary btn-xs"
-            onClick={() => handleView(row.enquiryId, row.name)}
+            onClick={() => handleView(row.orderTrackingId, row.name)}
           >
             View
           </button>
             <button
               className="btn btn-primary btn-xs"
-              onClick={() => handleEdit(row.enquiryId, row)}
+              onClick={() => handleEdit(row.orderTrackingId, row)}
             >
               Edit
             </button><button
               className="btn btn-danger btn-xs"
-              onClick={() => handleDelete(row.enquiryId, row.name)}
+              onClick={() => handleDelete(row.orderTrackingId, row.name)}
             >
               Delete
             </button></>
@@ -103,15 +98,15 @@ export default function OrderTracking() {
   ];
 
   useEffect(() => {
-    if (enquirys.length == 0) {
+    if (orderTrackings.length == 0) {
       getAllOrderTracking();
       setLoading(false)
     }
-  }, [enquirys]);
+  }, [orderTrackings]);
 
 
   const defaultSorted = [{
-    dataField: 'enquiryId',
+    dataField: 'orderTrackingId',
     order: 'desc'
   }];
 
@@ -182,7 +177,7 @@ export default function OrderTracking() {
   };
 
   const getOrderTrackingById = async (id) => {
-    const response = await enquiryById(id);
+    const response = await orderTrackingById(id);
     if (response.payload.title == "Success") {
       setOrderTracking(response.payload);
     }
@@ -216,11 +211,11 @@ export default function OrderTracking() {
     <>
       <div className="m-t-40">
         {loading && <div>A moment please...</div>}
-        {enquirys && (<div>
+        {orderTrackings && (<div>
           <ToolkitProvider
             bootstrap4
-            keyField='enquiryId'
-            data={enquirys}
+            keyField='orderTrackingId'
+            data={orderTrackings}
             columns={columns}
             search
           >
@@ -276,12 +271,12 @@ export default function OrderTracking() {
                 onAddOrderTracking={addOrderTracking}
                 onUpdateOrderTracking={updateOrderTracking}
                 onDeleteOrderTracking={deleteOrderTracking}
-                onGetOrderTracking={enquiryById}
+                onGetOrderTracking={orderTrackingById}
                 onClose={handleClose}
                 isEdit={isEdit}
                 isDelete={isDelete}
                 id={id}
-                enquiryData={enquiry}
+                orderTrackingData={orderTracking}
               />
             </Modal.Body>
 
