@@ -47,6 +47,7 @@ export default function GMTs() {
     latitude:null,
     //trackTime:null ,
     description:"",
+    recordStatusId:null,
     
       });
 
@@ -74,6 +75,7 @@ export default function GMTs() {
     { dataField: 'latitude', text: 'Latitude', sort: true },
     //{ dataField: 'trackTime', text: 'TrackTime', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
+    { dataField: 'recordStatusId', text: 'RecordStatus', sort: true },
         // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -123,7 +125,7 @@ export default function GMTs() {
     console.log(rowId, name);
     //1 YourCellName
   };
-
+debugger;
   const handleEdit = (rowId, row) => {
     setGMT(row);
     //getGMTById(rowId);

@@ -24,6 +24,7 @@ export default function GMTModel({
     latitude:null,
    // trackTime:null ,
     description:"",
+    recordStatusId:null,
   });
 
   
@@ -113,7 +114,7 @@ export default function GMTModel({
     }
     const isEnable =
     
-    !newGMT?.resourceId || !newGMT?.longitude || !newGMT?.latitude||  !newGMT?.description;
+    !newGMT?.resourceId || !newGMT?.longitude || !newGMT?.latitude||  !newGMT?.description||  !newGMT?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newGMT]);
 
@@ -182,6 +183,16 @@ export default function GMTModel({
               name="latitude"
               placeholder="latitude"
               value={newGMT?.latitude}
+              onChange={changeHandler}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="latitude">
+            <Form.Label>RecordStatusId</Form.Label>
+            <Form.Control
+              type="text"
+              name="recordStatusId"
+              placeholder="Enter recordStatusId"
+              value={newGMT?.recordStatusId}
               onChange={changeHandler}
             />
           </Form.Group>
