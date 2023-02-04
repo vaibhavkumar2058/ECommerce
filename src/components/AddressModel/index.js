@@ -24,7 +24,7 @@ export default function AddressModel({
     city:"",
     town:"",
     locality:"",
-    pinCode:null,
+    pincode:null,
     addressTypeId:null,
     isDefault:"",
     defaultAddressTypeId:null,
@@ -57,11 +57,7 @@ export default function AddressModel({
     });
   };
 
-  const saveFileSelected= (e) => {
-    //in case you wan to print the file selected
-    //console.log(e.target.files[0]);
-    setFileSelected(e.target.files[0]);
-  };
+  
 
   const saveHandler = async () => {
     newAddress.file = fileSelected;
@@ -120,8 +116,8 @@ export default function AddressModel({
     if (isEdit) {
       setButtonType("Update");
     }
-    const isEnable =
-      !newAddress?.countryId || !newAddress?.stateId || !newAddress?.city || !newAddress?.town  || !newAddress?.locality|| !newAddress?.pinCode || !newAddress?.addressTypeId || !newAddress?.isDefault|| !newAddress?.defaultAddressTypeId ;
+    debugger;
+    const isEnable = !newAddress?.city || !newAddress?.town  || !newAddress?.locality || !newAddress?.pincode ;
     setSaveDisabled(isEnable);
   }, [newAddress]);
 
@@ -208,9 +204,9 @@ export default function AddressModel({
             <Form.Label>PinCode</Form.Label>
             <Form.Control
               type="text"
-              name="pinCode"
-              placeholder="PinCode"
-              value={newAddress?.pinCode}
+              name="pincode"
+              placeholder="Pincode"
+              value={newAddress?.pincode}
               onChange={changeHandler}
             />
           </Form.Group>
@@ -249,9 +245,7 @@ export default function AddressModel({
             />
             
           
-          <Form.Group>
-          <input type="file" className="custom-file-label" onChange={saveFileSelected} />
-          </Form.Group>
+          
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel

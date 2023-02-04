@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
-import useFetchVehicleType from "../hooks/useFetchVehicleType";
-import VehicleTypeModel from "../components/VehicleTypeModel";
+import useFetchFolder from "../hooks/useFetchFolder";
+import FolderModel from "../components/FolderModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
@@ -24,16 +24,16 @@ const MyExportCSV = (props) => {
   );
 };
 
-export default function VehicleType() {
+export default function Folders() {
 
-  const [vehicleTypes, setVehicleTypes] = useState([]);
+  const [folders, setFolders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
   const handleClose = () => {
-    getAllVehicleType();
+    getAllFolders();
     setIsEdit(false);
     setIsDelete(false);
     setShow(false);
@@ -41,9 +41,14 @@ export default function VehicleType() {
   const handleShow = () => setShow(true);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-  const [vehicleType, setVehicleType] = useState({
-     vehicleTypeName : "",
-     description:"",
+  const [folder, setFolder] = useState({
+    resourceId:null, 
+    parentFolderId: null,
+    folderName: "",
+    folderTypeId: null,
+    isSystemGenerated: true,
+    isArchived: true,
+    isDeleted: true
       });
 
   const [id, setId] = useState(null);
@@ -56,57 +61,79 @@ export default function VehicleType() {
   });
 
   const { 
-    addVehicleType,
-    updateVehicleType,
-    deleteVehicleType,
-    getVehicleType,
-    vehicleTypeById,
-  } = useFetchVehicleType();
+    addFolder,
+    updateFolder,
+    deleteFolder,
+    getFolders,
+    folderById,
+  } = useFetchFolder();
 
   const columns = [
-
-    { dataField: 'vehicleTypeId', text: ' vehicleTypeId', sort: true, hidden: true},
-    { dataField: 'vehicleTypeName', text: ' VehicleTypeName', sort: true  },
-    { dataField: 'description', text: 'Description', sort: true },
-   
     // columns follow dataField and text structure
     {
       dataField: "Actions",
       text: "Actions",
+      headerStyle: () => {
+        return { width: "200px" };
+      },
       formatter: (cellContent, row) => {
         return (
           <><button
             className="btn btn-primary btn-xs"
-            onClick={() => handleView(row.vehicleTypeId, row.name)}
+            onClick={() => handleView(row.folderId, row.name)}
           >
             View
           </button>
             <button
               className="btn btn-primary btn-xs"
-              onClick={() => handleEdit(row.vehicleTypeId, row)}
+              onClick={() => handleEdit(row.folderId, row)}
             >
               Edit
             </button><button
               className="btn btn-danger btn-xs"
-              onClick={() => handleDelete(row.vehicleTypeId, row.name)}
+              onClick={() => handleDelete(row.folderId, row.name)}
             >
               Delete
             </button></>
         );
       },
     },
+
+    { dataField: 'folderId', text: 'Folder ', sort: true, hidden: true },
+    { dataField: 'resourceId', text: ' Resource', sort: true, headerStyle: () => {
+      return { width: "150px" };
+    }},
+    { dataField: 'parentFolderId', text: ' ParentFolder', sort: true,headerStyle: () => {
+      return { width: "150px" };
+    } },
+    { dataField: 'folderName', text: 'FolderName', sort: true ,headerStyle: () => {
+      return { width: "150px" };
+    }},
+    { dataField: 'folderTypeId', text: 'FolderType', sort: true ,headerStyle: () => {
+      return { width: "150px" };
+    }},
+    { dataField: 'isSystemGenerated', text: 'IsSystemGenerated', sort: true,headerStyle: () => {
+      return { width: "200px" };
+    } },
+    { dataField: 'isArchived', text: 'IsArchived', sort: true,headerStyle: () => {
+      return { width: "150px" };
+    } },
+    { dataField: 'isDeleted', text: 'IsDeleted', sort: true ,headerStyle: () => {
+      return { width: "100px" };
+    }},
+    
   ];
 
   useEffect(() => {
-    if ( vehicleTypes.length == 0) {
-      getAllVehicleType();
+    if (folders.length == 0) {
+      getAllFolders();
       setLoading(false)
     }
-  }, [vehicleTypes]);
+  }, [folders]);
 
 
   const defaultSorted = [{
-    dataField: 'vehicleTypeId',
+    dataField: 'FolderId',
     order: 'desc'
   }];
 
@@ -120,8 +147,8 @@ export default function VehicleType() {
   };
 
   const handleEdit = (rowId, row) => {
-    setVehicleType(row);
-    //getVehicleTypeById(rowId);
+    setFolder(row);
+    //getFoldersById(rowId);
     setId(rowId);
     setIsEdit(true);
     setShow(true);
@@ -153,12 +180,12 @@ export default function VehicleType() {
   });
 
 
-  const getAllVehicleType = async () => {
-    const response = await getVehicleType();
+  const getAllFolders = async () => {
+    const response = await getFolders();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',
-        message: 'VehicleType Record Fetch Succefully.'
+        message: 'Folders Record Fetch Succefully.'
       })
 
       var arr = [];
@@ -166,25 +193,25 @@ export default function VehicleType() {
         arr.push(response.payload[key]);
       }
 
-      setVehicleTypes(arr);
+      setFolders(arr);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'VechileType Fetch Failed.'
+        message: 'Folder Fetch Failed.'
       })
     }
   };
 
-  const getvehicleTypeById = async (id) => {
-    const response = await vehicleTypeById(id);
+  const getFolderById = async (id) => {
+    const response = await folderById(id);
     if (response.payload.title == "Success") {
-      setVehicleType(response.payload);
+      setFolder(response.payload);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'VehicleType Get Failed.'
+        message: 'Folder Get Failed.'
       })
     }
   };
@@ -211,11 +238,11 @@ export default function VehicleType() {
     <>
       <div className="m-t-40">
         {loading && <div>A moment please...</div>}
-        {vehicleTypes && (<div>
+        {folders && (<div>
           <ToolkitProvider
             bootstrap4
-            keyField='vehicleId'
-            data={vehicleTypes}
+            keyField='folderId'
+            data={folders}
             columns={columns}
             search
           >
@@ -233,7 +260,7 @@ export default function VehicleType() {
                           <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
                           <Button variant="primary" onClick={handleShow}>
-                            Add Vehicletype
+                            Add Folder
                           </Button>
                           </div>
                         </div>
@@ -264,19 +291,19 @@ export default function VehicleType() {
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Add VehicleType</Modal.Title>
+              <Modal.Title>Add Folder</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <VehicleTypeModel
-                onAddVehicleType={addVehicleType}
-                onUpdateVehicleType={updateVehicleType}
-                onDeleteVehicleType={deleteVehicleType}
-                onGetVehicleType={vehicleTypeById}
+              <FolderModel
+                onAddFolder={addFolder}
+                onUpdateFolder={updateFolder}
+                onDeleteFolder={deleteFolder}
+                onGetFolder={folderById}
                 onClose={handleClose}
                 isEdit={isEdit}
                 isDelete={isDelete}
                 id={id}
-                vehicleTypeData={vehicleType}
+                folderData={folder}
               />
             </Modal.Body>
 

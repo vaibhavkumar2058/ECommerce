@@ -23,7 +23,7 @@ export default function RecordStatusModel({
     description: "",
   });
 
-  const [fileSelected, setFileSelected] = useState();
+ 
 
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
@@ -49,14 +49,10 @@ export default function RecordStatusModel({
     });
   };
 
-  const saveFileSelected= (e) => {
-    //in case you wan to print the file selected
-    //console.log(e.target.files[0]);
-    setFileSelected(e.target.files[0]);
-  };
+  
 
   const saveHandler = async () => {
-    newRecordStatus.file = fileSelected;
+   
     if (isEdit) {
       const response = await onUpdateRecordStatus(id, newRecordStatus);
       if (response.payload.title == "Success") {
@@ -143,12 +139,12 @@ export default function RecordStatusModel({
             className={styles.stFormContainer}
             controlId="formRecordStatus"
           >
-            <Form.Label>Action</Form.Label>
+            <Form.Label>ActionName</Form.Label>
             <Form.Control
               type="text"
-              name="name"
+              name="actionName"
               placeholder="Enter Action"
-              value={newRecordStatus?.action}
+              value={newRecordStatus?.actionName}
               onChange={changeHandler}
             />
           </Form.Group>

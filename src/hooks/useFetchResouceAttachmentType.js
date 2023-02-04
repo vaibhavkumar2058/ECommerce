@@ -14,7 +14,7 @@ import {
 
   export default function useFetchResouceAttachmentType() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/resouceAttachmentType";
+  const hapyCarURL = "https://localhost:7062/resourceAttachmentType";
 
   const API = useAPI();
   const SUCCESS = "Success";
@@ -71,7 +71,7 @@ import {
       .catch((error) => {
         let errorMsg = "error msg from copy file";
         if (error.response.data.resouceAttachmentType) {
-          const [errors] = error.response.data.esouceAttachmentType;
+          const [errors] = error.response.data.resouceAttachmentType;
           errorMsg = errors;
         }
         dispatch(
@@ -83,10 +83,7 @@ import {
         );
       });
 
-
-
-
-  };
+    };
 
   // ResouceAttachmentType UPDATE  ACTIONS
   const updateResouceAttachmentType = (resouceAttachmentTypeId, resouceAttachmentType) => {

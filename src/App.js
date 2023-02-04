@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import { ToastProvider } from "react-toast-notifications";
 import './volt.css';
 
+
 function App() {
   // return (
   //   <Provider store={store}>
@@ -17,7 +18,7 @@ function App() {
   // );
   return (
     <div>
-      <nav className="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none"><a className="navbar-brand me-lg-5" href="https://demo.themesberg.com/volt-pro/index.html"><img className="navbar-brand-dark" src="https://demo.themesberg.com/volt-pro/assets/img/brand/light.svg" alt="Volt logo" /> <img className="navbar-brand-light" src="https://demo.themesberg.com/volt-pro/assets/img/brand/dark.svg" alt="Volt logo" /></a>
+       <nav className="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none"><a className="navbar-brand me-lg-5" href="https://demo.themesberg.com/volt-pro/index.html"><img className="navbar-brand-dark" src="https://demo.themesberg.com/volt-pro/assets/img/brand/light.svg" alt="Volt logo" /> <img className="navbar-brand-light" src="https://demo.themesberg.com/volt-pro/assets/img/brand/dark.svg" alt="Volt logo" /></a>
         <div className="d-flex align-items-center"><button className="navbar-toggler d-lg-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation"><span className="navbar-toggler-icon" /></button></div>
       </nav>
       <nav id="sidebarMenu" className="sidebar d-lg-block bg-gray-800 text-white collapse" data-simplebar>
@@ -107,13 +108,16 @@ function App() {
             </svg> </span><span className="sidebar-text">Enquiry</span></a></li>
             <li className="nav-item"><a href="resourceAttachments" className="nav-link"><span className="sidebar-icon"><svg className="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
               <path fillRule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
-            </svg> </span><span className="sidebar-text">Attachments</span></a></li>
+            </svg> </span><span className="sidebar-text">ResourceAttachments</span></a></li>
             <li className="nav-item"><a href="resourceAttachmentType" className="nav-link"><span className="sidebar-icon"><svg className="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
               <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
             </svg> </span><span className="sidebar-text">Attachment Type</span></a></li>
-            <li className="nav-item"><a href="gmt" className="nav-link"><span className="sidebar-icon"><svg className="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <li className="nav-item"><a href="GMT" className="nav-link"><span className="sidebar-icon"><svg className="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
               <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
             </svg> </span><span className="sidebar-text">GMT</span></a></li>
+            <li className="nav-item"><a href="folder" className="nav-link"><span className="sidebar-icon"><svg className="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+            </svg> </span><span className="sidebar-text">Folder</span></a></li>
             <li className="nav-item"><span className="nav-link collapsed d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#submenu-app"><span><span className="sidebar-icon"><svg className="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
               <path fillRule="evenodd" d="M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm-1 9v-1h5v2H5a1 1 0 01-1-1zm7 1h4a1 1 0 001-1v-1h-5v2zm0-4h5V8h-5v2zM9 8H4v2h5V8z" clipRule="evenodd" />
             </svg> </span><span className="sidebar-text">Tables</span> </span><span className="link-arrow"><svg className="icon icon-sm" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -247,6 +251,7 @@ function App() {
               <NavbarComp />
             </ToastProvider>
           </Provider>
+         
         </div>
         <div className="container-fluid kanban-container py-4 px-0">
 
@@ -263,7 +268,9 @@ function App() {
           </div>
         </footer>
       </main>
+     
     </div>
+    
   );
 }
 

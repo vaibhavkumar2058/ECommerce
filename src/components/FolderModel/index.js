@@ -7,24 +7,25 @@ import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
 
-export default function EnquiryModel({
-  onAddEnquiry,
-  onUpdateEnquiry,
-  onDeleteEnquiry,
+export default function FolderModel({
+  onAddFolder,
+  onUpdateFolder,
+  onDeleteFolder,
   isEdit,
   isDelete,
-  onGetEnquiry,
+  onGetFolder,
   id,
   onClose,
-  enquiryData,
+  folderData,
 }) {
-  const [newEnquiry, setNewEnquiry] = useState({
-    name: "",
-    mobile: "",
-    email: "",
-    description: "",
-    enquiryTypeId: null,
-    file:null,
+  const [newFolder, setNewFolder] = useState({
+    resourceId: null,
+    parentFolderId: null,
+    folderName: "",
+    folderTypeId: null,
+    isSystemGenerated: true,
+    isArchived: true,
+    isDeleted:true,
   });
 
   const [fileSelected, setFileSelected] = useState();
@@ -47,8 +48,8 @@ export default function EnquiryModel({
   };
 
   const changeHandler = (e) => {
-    setNewEnquiry({
-      ...newEnquiry,
+    setNewFolder({
+      ...newFolder,
       [e.target.name]: e.target.value,
     });
   };
@@ -60,9 +61,9 @@ export default function EnquiryModel({
   };
 
   const saveHandler = async () => {
-    newEnquiry.file = fileSelected;
+    newFolder.file = fileSelected;
     if (isEdit) {
-      const response = await onUpdateEnquiry(id, newEnquiry);
+      const response = await onUpdateFolder(id, newFolder);
       if (response.payload.title == "Success") {
         onClose(true);
       }
@@ -75,11 +76,11 @@ export default function EnquiryModel({
     }
     else {
       debugger;
-      const response = await onAddEnquiry(newEnquiry);
+      const response = await onAddFolder(newFolder);
       if (response.payload.title == "Success") {
         setMessageStatus({
           mode: 'success',
-          message: 'Enquiry Record Saved Succefully.'
+          message: 'Folder Record Saved Succefully.'
         })
         onClose(true);
         console.log(response.payload);
@@ -87,28 +88,28 @@ export default function EnquiryModel({
       else {
         setMessageStatus({
           mode: 'danger',
-          message: 'Enquiry Save Failed.'
+          message: 'Folder Save Failed.'
         })
       }
     }
   };
 
   const deleteHandler = async () => {
-    const response = await onDeleteEnquiry(id);
+    const response = await onDeleteFolder(id);
     if (response.payload.title == "Success") {
       onClose(true);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Enquiry Delete Failed.'
+        message: 'Folder Delete Failed.'
       })
     }
   };
 
   useEffect(() => {
     if (isEdit) {
-      setNewEnquiry(enquiryData);
+      setNewFolder(folderData);
     }
   }, []);
 
@@ -117,9 +118,9 @@ export default function EnquiryModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newEnquiry?.name || !newEnquiry?.mobile || !newEnquiry?.email || !newEnquiry?.description || !newEnquiry?.enquiryTypeId;
+    !newFolder?.resourceId ||!newFolder?.parentFolderId || !newFolder?.folderName || !newFolder?.folderTypeId || !newFolder?.isSystemGenerated || !newFolder?.isArchived || !newFolder?.isDeleted;
     setSaveDisabled(isEnable);
-  }, [newEnquiry]);
+  }, [newFolder]);
 
   return (
     <>
@@ -145,64 +146,82 @@ export default function EnquiryModel({
         <Form>
           <Form.Group
             className={styles.stFormContainer}
-            controlId="formEnquiry"
+            controlId="formFolder"
           >
-            <Form.Label>Enquiry</Form.Label>
+            <Form.Label>ResourceId</Form.Label>
             <Form.Control
               type="text"
-              name="name"
-              placeholder="Enter Enquiry"
-              value={newEnquiry?.name}
+              name="resourceId"
+              placeholder="Enter ResourceId"
+              value={newFolder?.resourceId}
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="mobile">
-            <Form.Label>Mobile</Form.Label>
+          <Form.Group className="mb-3" controlId="ParentFolderId">
+            <Form.Label>ParentFolderId</Form.Label>
             <Form.Control
               type="text"
-              name="mobile"
-              placeholder="Mobile"
-              value={newEnquiry?.mobile}
+              name="parentFolderId"
+              placeholder="ParentFolderId"
+              value={newFolder?.parentFolderId}
+              onChange={changeHandler}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="folderName">
+            <Form.Label>FolderName</Form.Label>
+            <Form.Control
+              type="text"
+              name="folderName"
+              placeholder="FolderName"
+              value={newFolder?.folderName}
               onChange={changeHandler}
             />
           </Form.Group>
 
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Description</Form.Label>
+            <Form.Label>FolderTypeId</Form.Label>
             <Form.Control
               type="text"
-              name="description"
-              placeholder="Description"
-              value={newEnquiry?.description}
+              name="folderTypeId"
+              placeholder="FolderTypeId"
+              value={newFolder?.folderTypeId}
               onChange={changeHandler}
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="email">
-            <Form.Label>Email</Form.Label>
+          <Form.Group className="mb-3" controlId="isSystemGenerated">
+            <Form.Label>IsSystemGenerated</Form.Label>
             <Form.Control
               type="text"
-              name="email"
-              placeholder="Email"
-              value={newEnquiry?.email}
+              name="isSystemGenerated"
+              placeholder="IsSystemGenerated"
+              value={newFolder?.isSystemGenerated}
               onChange={changeHandler}
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="enquiryTypeId">
-            <Form.Label>EnquiryTypeId</Form.Label>
+          <Form.Group className="mb-3" controlId="isArchived">
+            <Form.Label>IsArchived</Form.Label>
             <Form.Control
               type="text"
-              name="enquiryTypeId"
-              placeholder="EnquiryTypeId"
-              value={newEnquiry?.enquiryTypeId}
+              name="isArchived"
+              placeholder="IsArchived"
+              value={newFolder?.isArchived}
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group>
-          <input type="file" className="custom-file-label" onChange={saveFileSelected} />
+          <Form.Group className="mb-3" controlId="isArchived">
+            <Form.Label>IsDeleted</Form.Label>
+            <Form.Control
+              type="text"
+              name="isDeleted"
+              placeholder="IsDeleted"
+              value={newFolder?.isDeleted}
+              onChange={changeHandler}
+            />
           </Form.Group>
+          
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel
@@ -218,23 +237,23 @@ export default function EnquiryModel({
   );
 }
 
-EnquiryModel.propTypes = {
+FolderModel.propTypes = {
   /**
-   * Callback function for Add Enquiry
+   * Callback function for Add Folder
    */
-  onAddEnquiry: PropTypes.func,
+  onAddFolder: PropTypes.func,
   /**
-   * Callback function for Update Enquiry
+   * Callback function for Update Folder
    */
-  onUpdateEnquiry: PropTypes.func,
+  onUpdateFolder: PropTypes.func,
   /**
-   * Callback function for Delete Enquiry
+   * Callback function for Delete Folder
    */
-  onDeleteEnquiry: PropTypes.func,
+  onDeleteFolder: PropTypes.func,
   /**
-   * Callback function for Get Enquiry
+   * Callback function for Get Folder
    */
-  onGetEnquiry: PropTypes.func,
+  onGetFolder: PropTypes.func,
   /**
    * isEdit for bool type
    */
@@ -244,7 +263,7 @@ EnquiryModel.propTypes = {
    */
   isDelete: PropTypes.bool,
   /**
-   * Callback function for Get Enquiry
+   * Callback function for Get Folder
    */
   onClose: PropTypes.func,
   /**
@@ -252,20 +271,20 @@ EnquiryModel.propTypes = {
    */
   id: PropTypes.number,
   /**
- * enquiryData for object type
+ * folderData for object type
  */
-  enquiryData: PropTypes.any,
+  folderData: PropTypes.any,
 };
 
-EnquiryModel.defaultProps = {
-  onAddEnquiry: null,
-  onUpdateEnquiry: null,
-  onDeleteEnquiry: null,
-  onGetEnquiry: null,
+FolderModel.defaultProps = {
+  onAddFolder: null,
+  onUpdateFolder: null,
+  onDeleteFolder: null,
+  onGetFolder: null,
   isEdit: false,
   isDelete: false,
   onClose: null,
   id: null,
-  enquiryData: null,
+  folderData: null,
 };
 
