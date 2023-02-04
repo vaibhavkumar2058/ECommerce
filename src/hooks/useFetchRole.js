@@ -12,7 +12,7 @@ import {
     roleAction,
   } from "../actions/roleActions";
 
-  export default function useFetchRoles() {
+  export default function useFetchRole() {
     const dispatch = useDispatch();
   const hapyCarURL = "https://localhost:7062/role";
 
@@ -21,7 +21,7 @@ import {
   const ERROR = "Error";
 
   // Role GET  ACTIONS
-  const getRole = () => {
+  const getRoles = () => {
     dispatch(getRoleBeginAction());
     return API.get(hapyCarURL,
       null,
@@ -191,7 +191,7 @@ import {
     addRole,
     updateRole,
     deleteRole,
-    getRole,
+    getRoles,
     roleById,
   };
 }
