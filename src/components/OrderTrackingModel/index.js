@@ -19,8 +19,8 @@ export default function OrderTrackingModel({
   OrderTrackingData,
 }) {
   const [newOrderTracking, setNewOrderTracking] = useState({
-    OrderId: null,
-    ProductId: null,
+    orderId: null,
+    productId: null,
     description: "",
   });
 
@@ -114,7 +114,7 @@ export default function OrderTrackingModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newOrderTracking?.OrderId || !newOrderTracking?.ProductId || !newOrderTracking?.description ;
+      !newOrderTracking?.orderId || !newOrderTracking?.productId || !newOrderTracking?.description ;
     setSaveDisabled(isEnable);
   }, [newOrderTracking]);
 
@@ -144,22 +144,22 @@ export default function OrderTrackingModel({
             className={styles.stFormContainer}
             controlId="formOrderTracking"
           >
-            <Form.Label>OrderTracking</Form.Label>
+            <Form.Label>Order Id</Form.Label>
             <Form.Control
               type="text"
-              name="OrderId"
-              placeholder="Enter OrderTracking"
-              value={newOrderTracking?.OrderId}
+              name="orderId"
+              placeholder="Enter Order Id"
+              value={newOrderTracking?.orderId}
               onChange={changeHandler}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="mobile">
-            <Form.Label>ProductId</Form.Label>
+            <Form.Label>Product Id</Form.Label>
             <Form.Control
               type="text"
-              name="ProductId"
-              placeholder="MobiProductIdle"
-              value={newOrderTracking?.ProductId}
+              name="productId"
+              placeholder="Product Id"
+              value={newOrderTracking?.productId}
               onChange={changeHandler}
             />
           </Form.Group>
@@ -177,10 +177,10 @@ export default function OrderTrackingModel({
           </Form.Group>
 
          
-         
+{/*          
           <Form.Group>
           <input type="file" className="custom-file-label" onChange={saveFileSelected} />
-          </Form.Group>
+          </Form.Group> */}
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel
