@@ -260,7 +260,7 @@ export default function AddressModel({
               type="text"
               name="description"
               placeholder="Description"
-              value={newCart?.description}
+              value={newAddress?.description}
               onChange={changeHandler}
             />
           </Form.Group>
