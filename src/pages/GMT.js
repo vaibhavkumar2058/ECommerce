@@ -84,18 +84,18 @@ export default function GMTs() {
         return (
           <><button
             className="btn btn-primary btn-xs"
-            onClick={() => handleView(row.GMTId, row.name)}
+            onClick={() => handleView(row.gmtId, row.name)}
           >
             View
           </button>
             <button
               className="btn btn-primary btn-xs"
-              onClick={() => handleEdit(row.GMTId, row)}
+              onClick={() => handleEdit(row.gmtId, row)}
             >
               Edit
             </button><button
               className="btn btn-danger btn-xs"
-              onClick={() => handleDelete(row.GMTId, row.name)}
+              onClick={() => handleDelete(row.gmtId, row.name)}
             >
               Delete
             </button></>
