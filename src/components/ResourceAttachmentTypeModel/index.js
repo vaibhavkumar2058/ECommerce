@@ -21,6 +21,7 @@ export default function ResourceAttachmentTypeModel({
   const [newResourceAttachmentType, setNewResourceAttachmentType] = useState({
     displayText:"",
     sortOrder:null,
+    isActive:null,
     description: "",
   });
 
@@ -111,6 +112,7 @@ export default function ResourceAttachmentTypeModel({
     }
     const isEnable = !newResourceAttachmentType?.displayText  
     || !newResourceAttachmentType?.sortOrder
+    || !newResourceAttachmentType?.isActive
     || !newResourceAttachmentType?.description;
     setSaveDisabled(isEnable);
   }, [newResourceAttachmentType]);
@@ -155,6 +157,17 @@ export default function ResourceAttachmentTypeModel({
               name="sortOrder"
               placeholder="Enter SortOrder"
               value={newResourceAttachmentType?.sortOrder}
+              onChange={changeHandler}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="isActive">
+            <Form.Label>IsActive</Form.Label>
+            <Form.Control
+              type="text"
+              name="isActive"
+              placeholder="IsActive"
+              value={newResourceAttachmentType?.isActive}
               onChange={changeHandler}
             />
           </Form.Group>
