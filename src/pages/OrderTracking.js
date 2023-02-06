@@ -43,7 +43,7 @@ export default function OrderTracking() {
   const [isDelete, setIsDelete] = useState(false);
   const [orderTracking, setOrderTracking] = useState({
     orderId: null,
-    productId:null,
+    orderStatusId:null,
     description:"",
      });
 
@@ -67,7 +67,7 @@ export default function OrderTracking() {
   const columns = [
     { dataField: 'orderTrackingId', text: 'OrderTrackingId', sort: true},
     { dataField: 'orderId', text: 'Order Id', sort: true},
-    { dataField: 'productId', text: ' Product Id', sort: true },
+    { dataField: 'orderStatusId', text: ' OrderStatusId', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
     // columns follow dataField and text structure
     {

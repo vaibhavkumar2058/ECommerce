@@ -21,7 +21,6 @@ export default function CartModel({
   const [newCart, setNewCart] = useState({
     resourceId:null,
     productId:null,
-    productName:"",
     cost:null,
     quantity:"",
     description:""
@@ -113,7 +112,7 @@ export default function CartModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newCart?.resourceId || !newCart?.productId || !newCart?.productName || !newCart?.cost || !newCart?.quantity|| !newCart?.description;
+      !newCart?.resourceId || !newCart?.productId  || !newCart?.cost || !newCart?.quantity|| !newCart?.description;
     setSaveDisabled(isEnable);
   }, [newCart]);
 
@@ -159,18 +158,6 @@ export default function CartModel({
               name="productId"
               placeholder="ProductId"
               value={newCart?.productId}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-
-
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>ProductName</Form.Label>
-            <Form.Control
-              type="text"
-              name="productName"
-              placeholder="ProductName"
-              value={newCart?.productName}
               onChange={changeHandler}
             />
           </Form.Group>

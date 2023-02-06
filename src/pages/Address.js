@@ -49,6 +49,7 @@ export default function Address() {
     locality:"",
     pincode:null,
     addressTypeId:null,
+    landMark:"",
     isDefault:"",
     defaultAddressTypeId:null,
     
@@ -100,6 +101,9 @@ export default function Address() {
     { dataField: 'defaultAddressTypeId', text: 'Default AddressType Id', sort: true ,headerStyle: () => {
       return { width: "200px" };
     }},
+    { dataField: 'landMark', text: 'LandMark', sort: true,headerStyle: () => {
+      return { width: "100px" };
+    } },
     
     // columns follow dataField and text structure
     {

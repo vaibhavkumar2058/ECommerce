@@ -42,6 +42,7 @@ export default function Notifications() {
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [notification, setNotification] = useState({
+    notificationTypeId:null,
     notificationName:"",
     description:"",
       });
@@ -65,6 +66,7 @@ export default function Notifications() {
 
   const columns = [
 
+    { dataField: 'notificationTypeId', text: 'NotificationTypeId', sort: true},
     { dataField: 'notificationId', text: 'NotificationId', sort: true},
     { dataField: 'notificationName', text: ' NotificationName', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
