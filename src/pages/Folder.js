@@ -48,7 +48,8 @@ export default function Folders() {
     folderTypeId: null,
     isSystemGenerated: true,
     isArchived: true,
-    isDeleted: true
+    isDeleted: true,
+    recordStatusId:null
       });
 
   const [id, setId] = useState(null);
@@ -121,6 +122,9 @@ export default function Folders() {
     { dataField: 'isDeleted', text: 'IsDeleted', sort: true ,headerStyle: () => {
       return { width: "100px" };
     }},
+    { dataField: 'recordStatusId', text: 'RecordStatus', sort: true,headerStyle: () => {
+      return { width: "150px" };
+    } },
     
   ];
 

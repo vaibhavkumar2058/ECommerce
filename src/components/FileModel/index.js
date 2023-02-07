@@ -21,11 +21,10 @@ export default function FileModel({
   const [newFile, setNewFile] = useState({
     folderId: null,
     resourceId: null,
-    fileName: "",
-    fileMimeType: "",
-    externalURL: "",
-    archived:true,
-    azureBlobId: null,   
+    attachment: null,
+    createdBy: 1,
+    modifiedBy: 1,
+    recordStatusId: 1,
   });
 
   const [fileSelected, setFileSelected] = useState();
@@ -52,16 +51,16 @@ export default function FileModel({
       ...newFile,
       [e.target.name]: e.target.value,
     });
-  };
+  };  
 
-  const saveFileSelected= (e) => {
+  const saveFileSelected = (e) => {
     //in case you wan to print the file selected
     //console.log(e.target.files[0]);
     setFileSelected(e.target.files[0]);
   };
 
   const saveHandler = async () => {
-    newFile.file = fileSelected;
+    newFile.attachment = fileSelected;
     if (isEdit) {
       const response = await onUpdateFile(id, newFile);
       if (response.payload.title == "Success") {
@@ -75,6 +74,7 @@ export default function FileModel({
       }
     }
     else {
+      debugger;
       const response = await onAddFile(newFile);
       if (response.payload.title == "Success") {
         setMessageStatus({
@@ -118,7 +118,7 @@ export default function FileModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newFile?.folderId || !newFile?.resourceId || !newFile?.fileName || !newFile?.fileMimeType || !newFile?.archived|| !newFile?.azureBlobId|| !newFile?.externalURL;
+      !newFile?.folderId || !newFile?.resourceId;// || !newFile?.fileName || !newFile?.fileMimeType || !newFile?.archived|| !newFile?.azureBlobId|| !newFile?.externalURL;
     setSaveDisabled(isEnable);
   }, [newFile]);
 
@@ -158,7 +158,7 @@ export default function FileModel({
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="mobile">
-            <Form.Label>resourceId</Form.Label>
+            <Form.Label>ResourceId</Form.Label>
             <Form.Control
               type="text"
               name="resourceId"
@@ -168,62 +168,8 @@ export default function FileModel({
             />
           </Form.Group>
 
-
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>FileName</Form.Label>
-            <Form.Control
-              type="text"
-              name="fileName"
-              placeholder="fileName"
-              value={newFile?.fileName}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="fileMimeType">
-          <Form.Label>fileMimeType</Form.Label>
-          <Form.Control
-            type="text"
-            name="fileMimeType"
-            placeholder="fileMimeType"
-            value={newFile?.fileMimeType}
-            onChange={changeHandler}
-          />
-        </Form.Group>
-          <Form.Group className="mb-3" controlId="email">
-            <Form.Label>externalURL</Form.Label>
-            <Form.Control
-              type="text"
-              name="externalURL"
-              placeholder="externalURL"
-              value={newFile?.externalURL}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="azureBlobId">
-          <Form.Label>Archived</Form.Label>
-          <Form.Control
-            type="text"
-            name="archived"
-            placeholder=" Enter Archived"
-            value={newFile?.archived}
-            onChange={changeHandler}
-          />
-        </Form.Group>
-          
-          <Form.Group className="mb-3" controlId="azureBlobId">
-            <Form.Label>azureBlobId</Form.Label>
-            <Form.Control
-              type="text"
-              name="azureBlobId"
-              placeholder="azureBlobId"
-              value={newFile?.azureBlobId}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-         
           <Form.Group>
-          <input type="file" className="custom-file-label" onChange={saveFileSelected} />
+            <input type="file" name="attachment" className="custom-file-label" onChange={saveFileSelected} />
           </Form.Group>
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>

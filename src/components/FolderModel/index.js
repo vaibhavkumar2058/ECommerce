@@ -22,10 +22,10 @@ export default function FolderModel({
     resourceId: null,
     parentFolderId: null,
     folderName: "",
-    folderTypeId: null,
     isSystemGenerated: true,
     isArchived: true,
     isDeleted:true,
+    recordStatusId:null,
   });
 
   const [fileSelected, setFileSelected] = useState();
@@ -36,7 +36,7 @@ export default function FolderModel({
     status: false,
     message: "",
   });
-
+debugger;
   const [saveDisabled, setSaveDisabled] = useState(true);
   const [buttonType, setButtonType] = useState("Save");
 
@@ -118,7 +118,7 @@ export default function FolderModel({
       setButtonType("Update");
     }
     const isEnable =
-    !newFolder?.resourceId ||!newFolder?.parentFolderId || !newFolder?.folderName || !newFolder?.folderTypeId || !newFolder?.isSystemGenerated || !newFolder?.isArchived || !newFolder?.isDeleted;
+    !newFolder?.resourceId ||!newFolder?.parentFolderId || !newFolder?.folderName  || !newFolder?.isSystemGenerated || !newFolder?.isArchived || !newFolder?.isDeleted|| !newFolder?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newFolder]);
 
@@ -177,19 +177,7 @@ export default function FolderModel({
               onChange={changeHandler}
             />
           </Form.Group>
-
-
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>FolderTypeId</Form.Label>
-            <Form.Control
-              type="text"
-              name="folderTypeId"
-              placeholder="FolderTypeId"
-              value={newFolder?.folderTypeId}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-
+          
           <Form.Group className="mb-3" controlId="isSystemGenerated">
             <Form.Label>IsSystemGenerated</Form.Label>
             <Form.Control
@@ -218,6 +206,16 @@ export default function FolderModel({
               name="isDeleted"
               placeholder="IsDeleted"
               value={newFolder?.isDeleted}
+              onChange={changeHandler}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="isArchived">
+            <Form.Label>RecordStatusId</Form.Label>
+            <Form.Control
+              type="text"
+              name="recordStatusId"
+              placeholder="Enter RecordStatusId"
+              value={newFolder?.recordStatusId}
               onChange={changeHandler}
             />
           </Form.Group>
