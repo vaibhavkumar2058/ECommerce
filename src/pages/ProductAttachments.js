@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
-import useFetchAddress from "../hooks/useFetchAddress";
-import AddressModel from "../components/AddressModel";
+import useFetchProductAttachments from "../hooks/useFetchProductAttachments";
+import ProductAttachmentsModel from "../components/ProductAttachmentsModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
@@ -24,16 +24,16 @@ const MyExportCSV = (props) => {
   );
 };
 
-export default function Address() {
+export default function ProductAttachments() {
 
-  const [addresses, setAddresses] = useState([]);
+  const [productAttachmentses, setProductAttachmentses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
   const handleClose = () => {
-    getAllAddresses();
+    getAllProductAttachmentses();
     setIsEdit(false);
     setIsDelete(false);
     setShow(false);
@@ -41,17 +41,10 @@ export default function Address() {
   const handleShow = () => setShow(true);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-  const [address, setAddress] = useState({
-    countryId:null,
-    stateId:null,
-    city:"",
-    town:"",
-    locality:"",
-    pincode:null,
-    addressTypeId:null,
-    landMark:"",
-    isDefault:"",
-    defaultAddressTypeId:null,
+  const [productAttachments, setProductAttachments] = useState({
+    productId:null,
+    fileId:null,
+    description:"",
     
       });
 
@@ -65,45 +58,25 @@ export default function Address() {
   });
 
   const { 
-    addAddress,
-    updateAddress,
-    deleteAddress,
-    getAddresses,
-    addressById,
-  } = useFetchAddress();
+    addProductAttachments,
+    updateProductAttachments,
+    deleteProductAttachments,
+    getProductAttachmentses,
+    productAttachmentsById,
+  } = useFetchProductAttachments();
 
   const columns = [
-    { dataField: 'addressId', text: 'address Id', sort: true, hidden: true },
-    { dataField: 'countryId', text: 'Country Id', sort: true,headerStyle: () => {
-      return { width: "120px" };
+    { dataField: 'productAttachmentsId', text: 'productAttachmentsId', sort: true, hidden: true },
+    { dataField: 'productId', text: 'ProductId ', sort: true,headerStyle: () => {
+      return { width: "130px" };
     }  },
-    { dataField: 'stateId', text: 'State Id', sort: true ,headerStyle: () => {
+    { dataField: 'fileId', text: 'FileId ', sort: true ,headerStyle: () => {
       return { width: "100px" };
     }},
-    { dataField: 'city', text: 'City', sort: true,headerStyle: () => {
-      return { width: "100px" };
-    } },
-    { dataField: 'town', text: 'Town', sort: true,headerStyle: () => {
-      return { width: "100px" };
-    } },
-    { dataField: 'locality', text: 'Locality', sort: true,headerStyle: () => {
-      return { width: "100px" };
-    } },
-    { dataField: 'pincode', text: 'Pincode', sort: true,headerStyle: () => {
-      return { width: "120px" };
-    } },
-    { dataField: 'addressTypeId', text: 'AddressType Id', sort: true,headerStyle: () => {
+    { dataField: 'description', text: 'Description', sort: true,headerStyle: () => {
       return { width: "150px" };
     } },
-    { dataField: 'isDefault', text: 'IsDefault', sort: true ,headerStyle: () => {
-      return { width: "120px" };
-    }},
-    { dataField: 'defaultAddressTypeId', text: 'Default AddressType Id', sort: true ,headerStyle: () => {
-      return { width: "200px" };
-    }},
-    { dataField: 'landMark', text: 'LandMark', sort: true,headerStyle: () => {
-      return { width: "100px" };
-    } },
+    
     
     // columns follow dataField and text structure
     {
@@ -113,18 +86,18 @@ export default function Address() {
         return (
           <><button
             className="btn btn-primary btn-xs"
-            onClick={() => handleView(row.addressId, row.name)}
+            onClick={() => handleView(row.productAttachmentsId, row.name)}
           >
             View
           </button>
             <button
               className="btn btn-primary btn-xs"
-              onClick={() => handleEdit(row.addressId, row)}
+              onClick={() => handleEdit(row.productAttachmentsId, row)}
             >
               Edit
             </button><button
               className="btn btn-danger btn-xs"
-              onClick={() => handleDelete(row.addressId, row.name)}
+              onClick={() => handleDelete(row.productAttachmentsId, row.name)}
             >
               Delete
             </button></>
@@ -134,15 +107,15 @@ export default function Address() {
   ];
 
   useEffect(() => {
-    if (addresses.length == 0) {
-      getAllAddresses();
+    if (productAttachmentses.length == 0) {
+        getAllProductAttachmentses();
       setLoading(false)
     }
-  }, [addresses]);
+  }, [productAttachmentses]);
 
 
   const defaultSorted = [{
-    dataField: 'addressId',
+    dataField: 'productAttachmentssId',
     order: 'desc'
   }];
 
@@ -156,8 +129,8 @@ export default function Address() {
   };
 
   const handleEdit = (rowId, row) => {
-    setAddress(row);
-    //getAddressById(rowId);
+    setProductAttachments(row);
+    //getproductAttachmentsById(rowId);
     setId(rowId);
     setIsEdit(true);
     setShow(true);
@@ -189,12 +162,12 @@ export default function Address() {
   });
 
 
-  const getAllAddresses = async () => {
-    const response = await getAddresses();
+  const getAllProductAttachmentses = async () => {
+    const response = await getProductAttachmentses();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',
-        message: 'Address Record Fetch Succefully.'
+        message: 'ProductAttachments Record Fetch Succefully.'
       })
 
       var arr = [];
@@ -202,25 +175,25 @@ export default function Address() {
         arr.push(response.payload[key]);
       }
 
-      setAddresses(arr);
+      setProductAttachmentses(arr);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Address Fetch Failed.'
+        message: 'ProductAttachmentss Fetch Failed.'
       })
     }
   };
 
-  const getAddressById = async (id) => {
-    const response = await addressById(id);
+  const getProductAttachmentssById = async (id) => {
+    const response = await productAttachmentsById(id);
     if (response.payload.title == "Success") {
-      setAddress(response.payload);
+      setProductAttachments(response.payload);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Address Get Failed.'
+        message: 'ProductAttachments Get Failed.'
       })
     }
   };
@@ -247,11 +220,11 @@ export default function Address() {
     <>
       <div className="m-t-40">
         {loading && <div>A moment please...</div>}
-        {addresses && (<div>
+        {productAttachmentses && (<div>
           <ToolkitProvider
             bootstrap4
-            keyField='addressId'
-            data={addresses}
+            keyField='productAttachmentsId'
+            data={productAttachmentses}
             columns={columns}
             search
           >
@@ -269,7 +242,7 @@ export default function Address() {
                           <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
                           <Button variant="primary" onClick={handleShow}>
-                            Add Address
+                            Add ProductAttachments
                           </Button>
                           </div>
                         </div>
@@ -300,19 +273,19 @@ export default function Address() {
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Add Address</Modal.Title>
+              <Modal.Title>Add ProductAttachments</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <AddressModel
-                onAddAddress={addAddress}
-                onUpdateAddress={updateAddress}
-                onDeleteAddress={deleteAddress}
-                onGetAddress={addressById}
+              <ProductAttachmentsModel
+                onAddProductAttachments={addProductAttachments}
+                onUpdateProductAttachments={updateProductAttachments}
+                onDeleteProductAttachments={deleteProductAttachments}
+                onGetProductAttachments={productAttachmentsById}
                 onClose={handleClose}
                 isEdit={isEdit}
                 isDelete={isDelete}
                 id={id}
-                addressData={address}
+                productAttachmentsData={productAttachments}
               />
             </Modal.Body>
 

@@ -26,6 +26,7 @@ export default function AddressModel({
     locality:"",
     pincode:null,
     addressTypeId:null,
+    landMark:"",
     isDefault:"",
     defaultAddressTypeId:null,
     
@@ -117,7 +118,7 @@ export default function AddressModel({
       setButtonType("Update");
     }
     debugger;
-    const isEnable = !newAddress?.city || !newAddress?.town  || !newAddress?.locality || !newAddress?.pincode ;
+    const isEnable = !newAddress?.city || !newAddress?.town  || !newAddress?.locality || !newAddress?.pincode|| !newAddress?.landMark ;
     setSaveDisabled(isEnable);
   }, [newAddress]);
 
@@ -234,7 +235,17 @@ export default function AddressModel({
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="defaultAddressTypeId">
+          <Form.Group className="mb-3" controlId="landMark">
+            <Form.Label>LandMark</Form.Label>
+            <Form.Control
+              type="text"
+              name="landMark"
+              placeholder="LandMark"
+              value={newAddress?.landMark}
+              onChange={changeHandler}
+            />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="defaultAddressTypeId">
             <Form.Label>DefaultAddressTypeId</Form.Label>
             <Form.Control
               type="text"
@@ -243,6 +254,16 @@ export default function AddressModel({
               value={newAddress?.defaultAddressTypeId}
               onChange={changeHandler}
             />
+             <Form.Group className="mb-3" controlId="description">
+            <Form.Label>Description</Form.Label>
+            <Form.Control
+              type="text"
+              name="description"
+              placeholder="Description"
+              value={newAddress?.description}
+              onChange={changeHandler}
+            />
+          </Form.Group>
             
           
           

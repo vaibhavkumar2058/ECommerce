@@ -189,6 +189,7 @@ import {
       
   };
   return {
+    
     addNotification,
     updateNotification,
     deleteNotification,

@@ -19,6 +19,7 @@ export default function NotificationModel({
   notificationData,
 }) {
   const [newNotification, setNewNotification] = useState({
+    notificationTypeId:null,
     notificationName: "",
     description: "",
   });
@@ -106,7 +107,7 @@ debugger;
       setButtonType("Update");
     }
     const isEnable =
-      !newNotification?.notificationName|| !newNotification?.description;
+      !newNotification?.notificationName|| !newNotification?.notificationTypeId|| !newNotification?.description;
     setSaveDisabled(isEnable);
   }, [newNotification]);
 
@@ -137,6 +138,16 @@ debugger;
             controlId="formNotification"
           >
             
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>NotificationTypeId</Form.Label>
+            <Form.Control
+              type="text"
+              name="notificationTypeId"
+              placeholder="NotificationTypeId"
+              value={newNotification?.notificationTypeId}
+              onChange={changeHandler}
+            />
           </Form.Group>
           <Form.Group>
             <Form.Label>NotificationName</Form.Label>

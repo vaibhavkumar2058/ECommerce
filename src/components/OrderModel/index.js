@@ -19,12 +19,11 @@ export default function OrderModel({
   orderData,
 }) {
   const [newOrder, setNewOrder] = useState({
-    categoryId : null,
+    categoryTypeId : null,
     productId : null,
     orderPrice : null,
     location : "",
     customerNumber : null,
-    orderTrackingId : null,
     email:"",
     description : "",
   });
@@ -110,7 +109,7 @@ export default function OrderModel({
       setButtonType("Update");
     }
     const isEnable =
-    !newOrder?.categoryId || !newOrder?.productId|| !newOrder?.orderPrice || !newOrder?.location  || !newOrder?.customerNumber  || !newOrder?.orderTrackingId  || !newOrder?.description|| !newOrder?.email;
+    !newOrder?.categoryTypeId || !newOrder?.productId|| !newOrder?.orderPrice || !newOrder?.location  || !newOrder?.customerNumber    || !newOrder?.description|| !newOrder?.email;
     setSaveDisabled(isEnable);
   }, [newOrder]);
 
@@ -143,13 +142,13 @@ export default function OrderModel({
             
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="categoryId">
-            <Form.Label>CategoryId</Form.Label>
+          <Form.Group className="mb-3" controlId="categoryTypeId">
+            <Form.Label>CategoryTypeId</Form.Label>
             <Form.Control
               type="text"
-              name="categoryId"
-              placeholder="CategoryId"
-              value={newOrder?.categoryId}
+              name="categoryTypeId"
+              placeholder="CategoryTypeId"
+              value={newOrder?.categoryTypeId}
               onChange={changeHandler}
             />
           </Form.Group>
@@ -220,17 +219,6 @@ export default function OrderModel({
               name="customerNumber"
               placeholder="CustomerNumber"
               value={newOrder?.customerNumber}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="orderTrackingId">
-            <Form.Label>OrderTrackingId</Form.Label>
-            <Form.Control
-              type="text"
-              name="orderTrackingId"
-              placeholder="OrderTrackingId"
-              value={newOrder?.orderTrackingId}
               onChange={changeHandler}
             />
           </Form.Group>

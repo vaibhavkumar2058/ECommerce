@@ -43,7 +43,7 @@ export default function Products() {
   const [isDelete, setIsDelete] = useState(false);
   const [product, setProduct] = useState({
     productName: "",
-    
+    categoryTypeId:null,
     description: "",
       });
 
@@ -67,7 +67,8 @@ export default function Products() {
   const columns = [
 
     { dataField: 'productId', text: 'Product Id', sort: true},
-    { dataField: 'productName', text: ' Product Name', sort: true }, 
+    { dataField: 'productName', text: ' Product Name', sort: true },
+    { dataField: 'categoryTypeId', text: ' CategoryTypeId', sort: true },  
     { dataField: 'description', text: 'Description', sort: true },
   
     // columns follow dataField and text structure

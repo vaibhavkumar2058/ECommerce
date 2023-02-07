@@ -7,22 +7,22 @@ import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
 
-export default function ProductModel({
-  onAddProduct,
-  onUpdateProduct,
-  onDeleteProduct,
+export default function ProductAttachmentsModel({
+  onAddProductAttachments,
+  onUpdateProductAttachments,
+  onDeleteProductAttachments,
   isEdit,
   isDelete,
-  onGetProduct,
+  onGetProductAttachments,
   id,
   onClose,
-  productData,
+  productAttachmentsData,
 }) {
-  const [newProduct, setNewProduct] = useState({
-    productName: "", 
-    categoryTypeId:null,
-    description: "",
-   
+  const [newProductAttachments, setNewProductAttachments] = useState({
+    productAttachmentsId:null,
+    productId:null,
+    field:null,
+    description:"",
   });
 
   const [fileSelected, setFileSelected] = useState();
@@ -45,16 +45,18 @@ export default function ProductModel({
   };
 
   const changeHandler = (e) => {
-    setNewProduct({
-      ...newProduct,
+    setNewProductAttachments({
+      ...newProductAttachments,
       [e.target.name]: e.target.value,
     });
   };
 
+  
+
   const saveHandler = async () => {
-    newProduct.file = fileSelected;
+    newProductAttachments.file = fileSelected;
     if (isEdit) {
-      const response = await onUpdateProduct(id, newProduct);
+      const response = await onUpdateProductAttachments(id, newProductAttachments);
       if (response.payload.title == "Success") {
         onClose(true);
       }
@@ -66,12 +68,12 @@ export default function ProductModel({
       }
     }
     else {
-    
-      const response = await onAddProduct(newProduct);
+      debugger;
+      const response = await onAddProductAttachments(newProductAttachments);
       if (response.payload.title == "Success") {
         setMessageStatus({
           mode: 'success',
-          message: 'Product Record Saved Succefully.'
+          message: 'ProductAttachments Record Saved Succefully.'
         })
         onClose(true);
         console.log(response.payload);
@@ -79,28 +81,28 @@ export default function ProductModel({
       else {
         setMessageStatus({
           mode: 'danger',
-          message: 'Product Save Failed.'
+          message: 'ProductAttachments Save Failed.'
         })
       }
     }
   };
 
   const deleteHandler = async () => {
-    const response = await onDeleteProduct(id);
+    const response = await onDeleteProductAttachments(id);
     if (response.payload.title == "Success") {
       onClose(true);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Product Delete Failed.'
+        message: 'ProductAttachments Delete Failed.'
       })
     }
   };
 
   useEffect(() => {
     if (isEdit) {
-      setNewProduct(productData);
+      setNewProductAttachments(productAttachmentsData);
     }
   }, []);
 
@@ -108,10 +110,10 @@ export default function ProductModel({
     if (isEdit) {
       setButtonType("Update");
     }
-    const isEnable =
-      !newProduct?.productName ||   !newProduct?.categoryTypeId||   !newProduct?.description;
+    debugger;
+    const isEnable = !newProductAttachments?.productAttachmentsId || !newProductAttachments?.productId  || !newProductAttachments?.field || !newProductAttachments?.description;
     setSaveDisabled(isEnable);
-  }, [newProduct]);
+  }, [newProductAttachments]);
 
   return (
     <>
@@ -137,28 +139,28 @@ export default function ProductModel({
         <Form>
           <Form.Group
             className={styles.stFormContainer}
-            controlId="formProduct"
+            controlId="formProductAttachments"
           >
-            <Form.Label>ProductName</Form.Label>
+            <Form.Label>ProductId</Form.Label>
             <Form.Control
               type="text"
-              name="productName"
-              placeholder="ProductName"
-              value={newProduct?.productName}
+              name="productId"
+              placeholder="ProductId"
+              value={newProductAttachments?.productId}
+              onChange={changeHandler}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="field">
+            <Form.Label>Field</Form.Label>
+            <Form.Control
+              type="text"
+              name="field"
+              placeholder="Field"
+              value={newProductAttachments?.field}
               onChange={changeHandler}
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="categoryTypeId">
-            <Form.Label>CategoryTypeId</Form.Label>
-            <Form.Control
-              type="text"
-              name="categoryTypeId"
-              placeholder="CategoryTypeId"
-              value={newProduct?.categoryTypeId}
-              onChange={changeHandler}
-            />
-          </Form.Group>
 
           <Form.Group className="mb-3" controlId="description">
             <Form.Label>Description</Form.Label>
@@ -166,13 +168,15 @@ export default function ProductModel({
               type="text"
               name="description"
               placeholder="Description"
-              value={newProduct?.description}
+              value={newProductAttachments?.description}
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group>
 
-          </Form.Group>
+            
+            
+          
+          
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel
@@ -182,29 +186,30 @@ export default function ProductModel({
               {buttonType}
             </Button>
           </Modal.Footer>
+         
         </Form>
       )}
     </>
   );
 }
 
-ProductModel.propTypes = {
+ProductAttachmentsModel.propTypes = {
   /**
-   * Callback function for Add Product
+   * Callback function for Add ProductAttachments
    */
-  onAddProduct: PropTypes.func,
+  onAddProductAttachments: PropTypes.func,
   /**
-   * Callback function for Update Product
+   * Callback function for Update ProductAttachments
    */
-  onUpdateProduct: PropTypes.func,
+  onUpdateProductAttachments: PropTypes.func,
   /**
-   * Callback function for Delete Product
+   * Callback function for Delete ProductAttachments
    */
-  onDeleteProduct: PropTypes.func,
+  onDeleteProductAttachments: PropTypes.func,
   /**
-   * Callback function for Get Product
+   * Callback function for Get ProductAttachments
    */
-  onGetProduct: PropTypes.func,
+  onGetProductAttachments: PropTypes.func,
   /**
    * isEdit for bool type
    */
@@ -214,7 +219,7 @@ ProductModel.propTypes = {
    */
   isDelete: PropTypes.bool,
   /**
-   * Callback function for GetProduct
+   * Callback function for Get ProductAttachments
    */
   onClose: PropTypes.func,
   /**
@@ -222,20 +227,20 @@ ProductModel.propTypes = {
    */
   id: PropTypes.number,
   /**
- * productData for object type
+ * productAttachmentsData for object type
  */
-  productData: PropTypes.any,
+  productAttachmentsData: PropTypes.any,
 };
 
-ProductModel.defaultProps = {
-  onAddProduct: null,
-  onUpdateProduct: null,
-  onDeleteProduct: null,
-  onGetProduct: null,
+ProductAttachmentsModel.defaultProps = {
+  onAddProductAttachments: null,
+  onUpdateProductAttachments: null,
+  onDeleteProductAttachments: null,
+  onGetProductAttachments: null,
   isEdit: false,
   isDelete: false,
   onClose: null,
   id: null,
-  productData: null,
+  productAttachmentsData: null,
 };
 

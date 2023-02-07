@@ -4,7 +4,7 @@ import {
     DELETE_GMT,
     FETCH_GMT,
     FETCH_GMT_SUCCESS,
-    FETCH_ENQUIRY_GMT,
+    FETCH_GMT_FAILURE,
     GMT,
   } from "../actions/GMTActions";
   

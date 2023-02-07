@@ -44,6 +44,7 @@ export default function ResourceAttachmentType() {
   const [resourceAttachmentType, setResourceAttachmentType] = useState({
     displayText:"",
     sortOrder:null,
+    isActive:null,
     description:"",
      });
 
@@ -70,6 +71,7 @@ export default function ResourceAttachmentType() {
     { dataField: 'resourceAttachmentTypeId', text: 'ResourceAttachmentTypeID', sort: true },
     { dataField: 'displayText', text: 'DisplayText', sort: true },
     { dataField: 'sortOrder', text: 'SortOrder', sort: true },
+    { dataField: 'isActive', text: 'IsActive', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
    
     // columns follow dataField and text structure

@@ -20,7 +20,7 @@ export default function OrderTrackingModel({
 }) {
   const [newOrderTracking, setNewOrderTracking] = useState({
     orderId: null,
-    productId: null,
+    orderStatusId: null,
     description: "",
   });
 
@@ -114,7 +114,7 @@ export default function OrderTrackingModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newOrderTracking?.orderId || !newOrderTracking?.productId || !newOrderTracking?.description ;
+      !newOrderTracking?.orderId || !newOrderTracking?.orderStatusId || !newOrderTracking?.description ;
     setSaveDisabled(isEnable);
   }, [newOrderTracking]);
 
@@ -153,13 +153,13 @@ export default function OrderTrackingModel({
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="mobile">
-            <Form.Label>Product Id</Form.Label>
+          <Form.Group className="mb-3" controlId="orderStatusId">
+            <Form.Label>OrderStatusId</Form.Label>
             <Form.Control
               type="text"
-              name="productId"
-              placeholder="Product Id"
-              value={newOrderTracking?.productId}
+              name="orderStatusId"
+              placeholder="OrderStatusId"
+              value={newOrderTracking?.orderStatusId}
               onChange={changeHandler}
             />
           </Form.Group>
