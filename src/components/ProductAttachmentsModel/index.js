@@ -21,7 +21,7 @@ export default function ProductAttachmentsModel({
   const [newProductAttachments, setNewProductAttachments] = useState({
     productAttachmentsId:null,
     productId:null,
-    field:null,
+    filesId:null,
     description:"",
   });
 
@@ -52,6 +52,11 @@ export default function ProductAttachmentsModel({
   };
 
   
+  const saveFileSelected= (e) => {
+    //in case you wan to print the file selected
+    //console.log(e.target.files[0]);
+    setFileSelected(e.target.files[0]);
+  };
 
   const saveHandler = async () => {
     newProductAttachments.file = fileSelected;
@@ -111,7 +116,7 @@ export default function ProductAttachmentsModel({
       setButtonType("Update");
     }
     debugger;
-    const isEnable = !newProductAttachments?.productAttachmentsId || !newProductAttachments?.productId  || !newProductAttachments?.field || !newProductAttachments?.description;
+    const isEnable = !newProductAttachments?.productAttachmentsId || !newProductAttachments?.productId  || !newProductAttachments?.filesId || !newProductAttachments?.description;
     setSaveDisabled(isEnable);
   }, [newProductAttachments]);
 
@@ -145,18 +150,18 @@ export default function ProductAttachmentsModel({
             <Form.Control
               type="text"
               name="productId"
-              placeholder="ProductId"
+              placeholder="Enter ProductId"
               value={newProductAttachments?.productId}
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="field">
-            <Form.Label>Field</Form.Label>
+          <Form.Group className="mb-3" controlId="filesId">
+            <Form.Label>FilesId</Form.Label>
             <Form.Control
               type="text"
-              name="field"
-              placeholder="Field"
-              value={newProductAttachments?.field}
+              name="filesId"
+              placeholder=" Enter FilesId"
+              value={newProductAttachments?.filesId}
               onChange={changeHandler}
             />
           </Form.Group>
@@ -172,11 +177,9 @@ export default function ProductAttachmentsModel({
               onChange={changeHandler}
             />
           </Form.Group>
-
-            
-            
-          
-          
+          <Form.Group>
+          <input type="file" className="custom-file-label" onChange={saveFileSelected} />
+          </Form.Group>
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel

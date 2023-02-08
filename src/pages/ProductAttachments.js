@@ -43,7 +43,7 @@ export default function ProductAttachments() {
   const [isDelete, setIsDelete] = useState(false);
   const [productAttachments, setProductAttachments] = useState({
     productId:null,
-    fileId:null,
+    filesId:null,
     description:"",
     
       });
@@ -67,15 +67,9 @@ export default function ProductAttachments() {
 
   const columns = [
     { dataField: 'productAttachmentsId', text: 'productAttachmentsId', sort: true, hidden: true },
-    { dataField: 'productId', text: 'ProductId ', sort: true,headerStyle: () => {
-      return { width: "130px" };
-    }  },
-    { dataField: 'fileId', text: 'FileId ', sort: true ,headerStyle: () => {
-      return { width: "100px" };
-    }},
-    { dataField: 'description', text: 'Description', sort: true,headerStyle: () => {
-      return { width: "150px" };
-    } },
+    { dataField: 'productId', text: 'ProductId ', sort: true,  },
+    { dataField: 'filesId', text: 'FilesId ', sort: true ,},
+    { dataField: 'description', text: 'Description', sort: true,},
     
     
     // columns follow dataField and text structure
@@ -115,7 +109,7 @@ export default function ProductAttachments() {
 
 
   const defaultSorted = [{
-    dataField: 'productAttachmentssId',
+    dataField: 'productAttachmentsesId',
     order: 'desc'
   }];
 
