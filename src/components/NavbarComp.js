@@ -32,6 +32,7 @@ import ResourceAttachmentType from "../pages/ResouceAttachmentType";
 import ResourceAttachments from "../pages/ResourceAttachments";
 import Role from "../pages/Role";
 import Folder from "../pages/Folder";
+import ProductAttachments from "../pages/ProductAttachments";
 
 
 const NavbarComp = () => {
@@ -62,7 +63,8 @@ const NavbarComp = () => {
           <Route exact path="/resourceAttachmentType" element={<ResourceAttachmentType />} />   
           <Route exact path="/resourceAttachments" element={<ResourceAttachments />} />     
           <Route exact path="/role" element={<Role />} />   
-          <Route exact path="/folder" element={<Folder />} />   
+          <Route exact path="/folder" element={<Folder />} /> 
+          <Route exact path="/productAttachments" element={<ProductAttachments />} />   
 
        </Routes>
       </div>

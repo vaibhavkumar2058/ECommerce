@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
-import useFetchFolder from "../hooks/useFetchFolder";
-import FolderModel from "../components/FolderModel";
+import useFetchProductAttachments from "../hooks/useFetchProductAttachments";
+import ProductAttachmentsModel from "../components/ProductAttachmentsModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
@@ -24,16 +24,16 @@ const MyExportCSV = (props) => {
   );
 };
 
-export default function Folders() {
+export default function ProductAttachments() {
 
-  const [folders, setFolders] = useState([]);
+  const [productAttachmentses, setProductAttachmentses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
   const handleClose = () => {
-    getAllFolders();
+    getAllProductAttachmentses();
     setIsEdit(false);
     setIsDelete(false);
     setShow(false);
@@ -41,15 +41,11 @@ export default function Folders() {
   const handleShow = () => setShow(true);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-  const [folder, setFolder] = useState({
-    resourceId:null, 
-    parentFolderId: null,
-    folderName: "",
-    folderTypeId: null,
-    isSystemGenerated: true,
-    isArchived: true,
-    isDeleted: true,
-    recordStatusId:null
+  const [productAttachments, setProductAttachments] = useState({
+    productId:null,
+    filesId:null,
+    description:"",
+    
       });
 
   const [id, setId] = useState(null);
@@ -62,82 +58,58 @@ export default function Folders() {
   });
 
   const { 
-    addFolder,
-    updateFolder,
-    deleteFolder,
-    getFolders,
-    folderById,
-  } = useFetchFolder();
+    addProductAttachments,
+    updateProductAttachments,
+    deleteProductAttachments,
+    getProductAttachmentses,
+    productAttachmentsById,
+  } = useFetchProductAttachments();
 
   const columns = [
+    { dataField: 'productAttachmentsId', text: 'productAttachmentsId', sort: true, hidden: true },
+    { dataField: 'productId', text: 'ProductId ', sort: true,  },
+    { dataField: 'filesId', text: 'FilesId ', sort: true ,},
+    { dataField: 'description', text: 'Description', sort: true,},
+    
+    
     // columns follow dataField and text structure
     {
       dataField: "Actions",
       text: "Actions",
-      headerStyle: () => {
-        return { width: "200px" };
-      },
       formatter: (cellContent, row) => {
         return (
           <><button
             className="btn btn-primary btn-xs"
-            onClick={() => handleView(row.folderId, row.name)}
+            onClick={() => handleView(row.productAttachmentsId, row.name)}
           >
             View
           </button>
             <button
               className="btn btn-primary btn-xs"
-              onClick={() => handleEdit(row.folderId, row)}
+              onClick={() => handleEdit(row.productAttachmentsId, row)}
             >
               Edit
             </button><button
               className="btn btn-danger btn-xs"
-              onClick={() => handleDelete(row.folderId, row.name)}
+              onClick={() => handleDelete(row.productAttachmentsId, row.name)}
             >
               Delete
             </button></>
         );
       },
     },
-
-    { dataField: 'folderId', text: 'Folder ', sort: true, hidden: true },
-    { dataField: 'resourceId', text: ' Resource', sort: true, headerStyle: () => {
-      return { width: "150px" };
-    }},
-    { dataField: 'parentFolderId', text: ' ParentFolder', sort: true,headerStyle: () => {
-      return { width: "150px" };
-    } },
-    { dataField: 'folderName', text: 'FolderName', sort: true ,headerStyle: () => {
-      return { width: "150px" };
-    }},
-    { dataField: 'folderTypeId', text: 'FolderType', sort: true ,headerStyle: () => {
-      return { width: "150px" };
-    }},
-    { dataField: 'isSystemGenerated', text: 'IsSystemGenerated', sort: true,headerStyle: () => {
-      return { width: "200px" };
-    } },
-    { dataField: 'isArchived', text: 'IsArchived', sort: true,headerStyle: () => {
-      return { width: "150px" };
-    } },
-    { dataField: 'isDeleted', text: 'IsDeleted', sort: true ,headerStyle: () => {
-      return { width: "100px" };
-    }},
-    { dataField: 'recordStatusId', text: 'RecordStatus', sort: true,headerStyle: () => {
-      return { width: "150px" };
-    } },
-    
   ];
 
   useEffect(() => {
-    if (folders.length == 0) {
-      getAllFolders();
+    if (productAttachmentses.length == 0) {
+        getAllProductAttachmentses();
       setLoading(false)
     }
-  }, [folders]);
+  }, [productAttachmentses]);
 
 
   const defaultSorted = [{
-    dataField: 'FolderId',
+    dataField: 'productAttachmentsesId',
     order: 'desc'
   }];
 
@@ -151,8 +123,8 @@ export default function Folders() {
   };
 
   const handleEdit = (rowId, row) => {
-    setFolder(row);
-    //getFoldersById(rowId);
+    setProductAttachments(row);
+    //getproductAttachmentsById(rowId);
     setId(rowId);
     setIsEdit(true);
     setShow(true);
@@ -184,12 +156,12 @@ export default function Folders() {
   });
 
 
-  const getAllFolders = async () => {
-    const response = await getFolders();
+  const getAllProductAttachmentses = async () => {
+    const response = await getProductAttachmentses();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',
-        message: 'Folders Record Fetch Succefully.'
+        message: 'ProductAttachments Record Fetch Succefully.'
       })
 
       var arr = [];
@@ -197,25 +169,25 @@ export default function Folders() {
         arr.push(response.payload[key]);
       }
 
-      setFolders(arr);
+      setProductAttachmentses(arr);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Folder Fetch Failed.'
+        message: 'ProductAttachmentss Fetch Failed.'
       })
     }
   };
 
-  const getFolderById = async (id) => {
-    const response = await folderById(id);
+  const getProductAttachmentssById = async (id) => {
+    const response = await productAttachmentsById(id);
     if (response.payload.title == "Success") {
-      setFolder(response.payload);
+      setProductAttachments(response.payload);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Folder Get Failed.'
+        message: 'ProductAttachments Get Failed.'
       })
     }
   };
@@ -242,11 +214,11 @@ export default function Folders() {
     <>
       <div className="m-t-40">
         {loading && <div>A moment please...</div>}
-        {folders && (<div>
+        {productAttachmentses && (<div>
           <ToolkitProvider
             bootstrap4
-            keyField='folderId'
-            data={folders}
+            keyField='productAttachmentsId'
+            data={productAttachmentses}
             columns={columns}
             search
           >
@@ -264,7 +236,7 @@ export default function Folders() {
                           <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
                           <Button variant="primary" onClick={handleShow}>
-                            Add Folder
+                            Add ProductAttachments
                           </Button>
                           </div>
                         </div>
@@ -295,19 +267,19 @@ export default function Folders() {
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Add Folder</Modal.Title>
+              <Modal.Title>Add ProductAttachments</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <FolderModel
-                onAddFolder={addFolder}
-                onUpdateFolder={updateFolder}
-                onDeleteFolder={deleteFolder}
-                onGetFolder={folderById}
+              <ProductAttachmentsModel
+                onAddProductAttachments={addProductAttachments}
+                onUpdateProductAttachments={updateProductAttachments}
+                onDeleteProductAttachments={deleteProductAttachments}
+                onGetProductAttachments={productAttachmentsById}
                 onClose={handleClose}
                 isEdit={isEdit}
                 isDelete={isDelete}
                 id={id}
-                folderData={folder}
+                productAttachmentsData={productAttachments}
               />
             </Modal.Body>
 

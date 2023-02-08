@@ -21,9 +21,10 @@ export default function ResourceAttachmentsModel({
   const [newResourceAttachments, setNewResourceAttachments] = useState({
     resourceId: null,
     fileId: null,
-    attachmentTypeId: null,
-    visibleToCustomer: true,
+    resourceAttachmentTypeId: null,
+    //visibleToCustomer: true,
     description: "",
+    recordStatusId:null,
       });
 
   const [fileSelected, setFileSelected] = useState();
@@ -116,7 +117,7 @@ export default function ResourceAttachmentsModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newResourceAttachments?.resourceId || !newResourceAttachments?.fileId || !newResourceAttachments?.attachmentTypeId || !newResourceAttachments?.description || !newResourceAttachments?.visibleToCustomer;
+      !newResourceAttachments?.resourceId || !newResourceAttachments?.fileId || !newResourceAttachments?.attachmentTypeId || !newResourceAttachments?.description|| !newResourceAttachments?.resourceAttachmentTypeId|| !newResourceAttachments?.recordStatusId ;
     setSaveDisabled(isEnable);
   }, [newResourceAttachments]);
 
@@ -179,17 +180,27 @@ export default function ResourceAttachmentsModel({
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="attachmentType">
-            <Form.Label>AttachmentTypeId</Form.Label>
+            <Form.Label>ResourceAttachmentTypeId</Form.Label>
             <Form.Control
               type="text"
-              name="attachmentTypeId"
-              placeholder="attachmentTypeId"
-              value={newResourceAttachments?.attachmentTypeId}
+              name="resourceAttachmentTypeId"
+              placeholder=" Enter ResourceAttachmentTypeId"
+              value={newResourceAttachments?.resourceAttachmentTypeId}
+              onChange={changeHandler}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="attachmentType">
+            <Form.Label>RecordStatusId</Form.Label>
+            <Form.Control
+              type="text"
+              name="recordStatusId"
+              placeholder=" Enter RecordStatusId"
+              value={newResourceAttachments?.recordStatusId}
               onChange={changeHandler}
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="visibleToCustomer">
+          {/* <Form.Group className="mb-3" controlId="visibleToCustomer">
             <Form.Label>VisibleToCustomer</Form.Label>
             <Form.Control
               type="text"
@@ -198,7 +209,7 @@ export default function ResourceAttachmentsModel({
               value={newResourceAttachments?.VisibleToCustomer}
               onChange={changeHandler}
             />
-          </Form.Group>
+          </Form.Group> */}
           
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>

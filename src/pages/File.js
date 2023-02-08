@@ -44,11 +44,11 @@ export default function Files() {
   const [file, setFile] = useState({
     folderId: null,
     resourceId: null,
-    fileName: "",
-    fileMimeType: "",
-    externalURL: "",
-    archived:true,
-    azureBlobId: null,
+    //fileName: "",
+    //fileMimeType: "",
+    //externalURL: "",
+    //archived:true,
+   // azureBlobId: null,
 
   });
 
@@ -74,11 +74,11 @@ export default function Files() {
     { dataField: 'filesId', text: 'Files Id', sort: true, hidden: true },
     { dataField: 'folderId', text: ' FolderId', sort: true },
     { dataField: 'resourceId', text: ' ResourceId', sort: true },
-    { dataField: 'fileName', text: 'fileName', sort: true },
-    { dataField: 'fileMimeType', text: 'File Mime Type', sort: true },
-    { dataField: 'externalURL', text: 'ExternalURL', sort: true },
-    { dataField: 'archived', text: 'Archived', sort: true },
-    { dataField: 'azureBlobId', text: 'azureBlobId', sort: true },
+    //{ dataField: 'fileName', text: 'fileName', sort: true },
+    //{ dataField: 'fileMimeType', text: 'File Mime Type', sort: true },
+    //{ dataField: 'externalURL', text: 'ExternalURL', sort: true },
+    //{ dataField: 'archived', text: 'Archived', sort: true },
+    //{ dataField: 'azureBlobId', text: 'azureBlobId', sort: true },
     // columns follow dataField and text structure
     {
       dataField: "Actions",
