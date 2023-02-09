@@ -16,12 +16,13 @@ export default function OrderTrackingModel({
   onGetOrderTracking,
   id,
   onClose,
-  OrderTrackingData,
+  orderTrackingData,
 }) {
   const [newOrderTracking, setNewOrderTracking] = useState({
-    orderId: null,
-    orderStatusId: null,
-    description: "",
+    orderId:null,
+    orderStatusId:null,
+    Description:"",
+    
   });
 
   const [fileSelected, setFileSelected] = useState();
@@ -32,7 +33,7 @@ export default function OrderTrackingModel({
     status: false,
     message: "",
   });
-
+  
   const [saveDisabled, setSaveDisabled] = useState(true);
   const [buttonType, setButtonType] = useState("Save");
 
@@ -50,11 +51,7 @@ export default function OrderTrackingModel({
     });
   };
 
-  const saveFileSelected= (e) => {
-    //in case you wan to print the file selected
-    //console.log(e.target.files[0]);
-    setFileSelected(e.target.files[0]);
-  };
+  
 
   const saveHandler = async () => {
     newOrderTracking.file = fileSelected;
@@ -105,7 +102,7 @@ export default function OrderTrackingModel({
 
   useEffect(() => {
     if (isEdit) {
-      setNewOrderTracking(OrderTrackingData);
+      setNewOrderTracking(orderTrackingData);
     }
   }, []);
 
@@ -113,8 +110,8 @@ export default function OrderTrackingModel({
     if (isEdit) {
       setButtonType("Update");
     }
-    const isEnable =
-      !newOrderTracking?.orderId || !newOrderTracking?.orderStatusId || !newOrderTracking?.description ;
+    debugger;
+    const isEnable = !newOrderTracking?.orderId || !newOrderTracking?.orderStatusId  || !newOrderTracking?.description ;
     setSaveDisabled(isEnable);
   }, [newOrderTracking]);
 
@@ -144,16 +141,16 @@ export default function OrderTrackingModel({
             className={styles.stFormContainer}
             controlId="formOrderTracking"
           >
-            <Form.Label>Order Id</Form.Label>
+            <Form.Label>OrderId</Form.Label>
             <Form.Control
               type="text"
               name="orderId"
-              placeholder="Enter Order Id"
+              placeholder="OrderId"
               value={newOrderTracking?.orderId}
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="orderStatusId">
+          <Form.Group className="mb-3" controlId="state">
             <Form.Label>OrderStatusId</Form.Label>
             <Form.Control
               type="text"
@@ -176,11 +173,7 @@ export default function OrderTrackingModel({
             />
           </Form.Group>
 
-         
-{/*          
-          <Form.Group>
-          <input type="file" className="custom-file-label" onChange={saveFileSelected} />
-          </Form.Group> */}
+          
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel
@@ -230,9 +223,9 @@ OrderTrackingModel.propTypes = {
    */
   id: PropTypes.number,
   /**
- * OrderTrackingData for object type
+ * orderTrackingData for object type
  */
-  OrderTrackingData: PropTypes.any,
+  orderTrackingData: PropTypes.any,
 };
 
 OrderTrackingModel.defaultProps = {
@@ -244,6 +237,6 @@ OrderTrackingModel.defaultProps = {
   isDelete: false,
   onClose: null,
   id: null,
-  OrderTrackingData: null,
+  orderTrackingData: null,
 };
 

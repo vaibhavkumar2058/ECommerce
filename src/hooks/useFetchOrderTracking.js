@@ -9,8 +9,8 @@ import {
     getOrderTrackingBeginAction,
     getOrderTrackingSuccessAction,
     getOrderTrackingFailureAction,
-    orderTrackingAction,
-  } from "../actions/orderTrackingAction";
+    orderTrackingAction ,
+  } from "../actions/orderTrackingActions";
 
   export default function useFetchOrderTrackings() {
     const dispatch = useDispatch();
@@ -20,9 +20,8 @@ import {
   const SUCCESS = "Success";
   const ERROR = "Error";
 
-  // ORDERTRACKING GET  ACTIONS
-  debugger;
-  const getOrderTracking = () => {
+  // OrderTracking GET  ACTIONS
+  const getOrderTrackinges = () => {
     dispatch(getOrderTrackingBeginAction());
     return API.get(hapyCarURL,
       null,
@@ -39,7 +38,7 @@ import {
       .catch((error) => {
         let errorMsg = "error msg from copy file";
         if (error.response.data.orderTracking) {
-          const [errors] = error.response.data.ordertracking;
+          const [errors] = error.response.data.orderTracking;
           errorMsg = errors;
         }
         dispatch(
@@ -53,7 +52,7 @@ import {
 
   };
 
-  // ORDERTRACKING ADD  ACTIONS
+  // OrderTracking ADD  ACTIONS
   const addOrderTracking = (orderTracking) => {
     return API.post(
       hapyCarURL,
@@ -72,7 +71,7 @@ import {
       .catch((error) => {
         let errorMsg = "error msg from copy file";
         if (error.response.data.orderTracking) {
-          const [errors] = error.response.data.ordertracking;
+          const [errors] = error.response.data.orderTracking;
           errorMsg = errors;
         }
         dispatch(
@@ -89,11 +88,11 @@ import {
 
   };
 
-  // ORDERTRACKING UPDATE  ACTIONS
+  // OrderTracking UPDATE  ACTIONS
   const updateOrderTracking = (orderTrackingId, orderTracking) => {
 
     return API.put(`${hapyCarURL}/${orderTrackingId}`,
-      { data: orderTracking },
+      { data: orderTracking},
       { suppressErrors: [400] }
     )
       .then(({ data
@@ -124,7 +123,7 @@ import {
 
   };
 
-  // ORDERTRACKING DELETE  ACTIONS
+  // OrderTracking DELETE  ACTIONS
   const deleteOrderTracking = (orderTrackingId) => {
     return API.delete(`${hapyCarURL}/${orderTrackingId}`,
       null,
@@ -155,7 +154,7 @@ import {
 
   };
 
-  // ORDERTRACKING BY ID ACTIONS
+  // OrderTracking BY ID ACTIONS
   const orderTrackingById = (orderTrackingId) => {
     return API.get(`${hapyCarURL}/${orderTrackingId}`,
       null,
@@ -166,7 +165,7 @@ import {
       }) =>
 
         dispatch(
-          orderTrackingAction({
+          orderTrackingAction ({
             ...data,
             title: SUCCESS,
           })
@@ -179,7 +178,7 @@ import {
           errorMsg = errors;
         }
         dispatch(
-          orderTrackingAction({
+          orderTrackingAction ({
             ...errorMsg,
             title: ERROR,
             errorMsg,
@@ -192,7 +191,7 @@ import {
     addOrderTracking,
     updateOrderTracking,
     deleteOrderTracking,
-    getOrderTracking,
+    getOrderTrackinges,
     orderTrackingById,
   };
 }

@@ -21,10 +21,7 @@ export default function FileModel({
   const [newFile, setNewFile] = useState({
     folderId: null,
     resourceId: null,
-    attachment: null,
-    createdBy: 1,
-    modifiedBy: 1,
-    recordStatusId: 1,
+    attachment:null,
   });
 
   const [fileSelected, setFileSelected] = useState();
@@ -118,7 +115,7 @@ export default function FileModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newFile?.folderId || !newFile?.resourceId;// || !newFile?.fileName || !newFile?.fileMimeType || !newFile?.archived|| !newFile?.azureBlobId|| !newFile?.externalURL;
+      !newFile?.resourceId;
     setSaveDisabled(isEnable);
   }, [newFile]);
 

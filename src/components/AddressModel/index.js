@@ -255,6 +255,7 @@ export default function AddressModel({
               value={newAddress?.defaultAddressTypeId}
               onChange={changeHandler}
             />
+            </Form.Group>
              <Form.Group className="mb-3" controlId="description">
             <Form.Label>Description</Form.Label>
             <Form.Control
@@ -287,7 +288,7 @@ export default function AddressModel({
               {buttonType}
             </Button>
           </Modal.Footer>
-          </Form.Group>
+          
         </Form>
       )}
     </>

@@ -53,10 +53,13 @@ import {
   };
 
   // ProductAttachments ADD  ACTIONS
-  const addProductAttachments = (productAttachments) => {
+  const addProductAttachments = (productAttachments, attachment) => {
+    const formData = new FormData();
+    Object.keys(productAttachments).forEach((key) => formData.append(key,productAttachments[key]));
+
     return API.post(
       hapyCarURL,
-      { data: productAttachments },
+      { data: formData },
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
