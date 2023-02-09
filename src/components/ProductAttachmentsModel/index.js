@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
+import Select from 'react-select';
 
 export default function ProductAttachmentsModel({
   onAddProductAttachments,
@@ -19,11 +20,17 @@ export default function ProductAttachmentsModel({
   productAttachmentsData,
 }) {
   const [newProductAttachments, setNewProductAttachments] = useState({
-    productAttachmentsId:null,
     productId:null,
-    filesId:null,
-    description:"",
+    attachment:null,
+    description:"test",
   });
+
+  const Products = [
+    { label: "Soaps", value: 1 },
+    { label: "Liquids", value: 2 },
+    { label: "Dishwash", value: 3 },
+    { label: "Power", value: 4 }
+  ];
 
   const [fileSelected, setFileSelected] = useState();
 
@@ -45,9 +52,18 @@ export default function ProductAttachmentsModel({
   };
 
   const changeHandler = (e) => {
+    debugger;
     setNewProductAttachments({
       ...newProductAttachments,
       [e.target.name]: e.target.value,
+    });
+  };
+
+  const selectChangeHandler = (e) => {
+    debugger;
+    setNewProductAttachments({
+      ...newProductAttachments,
+      "productId": e.value,
     });
   };
 
@@ -59,7 +75,8 @@ export default function ProductAttachmentsModel({
   };
 
   const saveHandler = async () => {
-    newProductAttachments.file = fileSelected;
+    newProductAttachments.attachment = fileSelected;
+    debugger;
     if (isEdit) {
       const response = await onUpdateProductAttachments(id, newProductAttachments);
       if (response.payload.title == "Success") {
@@ -73,7 +90,6 @@ export default function ProductAttachmentsModel({
       }
     }
     else {
-      debugger;
       const response = await onAddProductAttachments(newProductAttachments);
       if (response.payload.title == "Success") {
         setMessageStatus({
@@ -115,8 +131,7 @@ export default function ProductAttachmentsModel({
     if (isEdit) {
       setButtonType("Update");
     }
-    debugger;
-    const isEnable = !newProductAttachments?.productAttachmentsId || !newProductAttachments?.productId  || !newProductAttachments?.filesId || !newProductAttachments?.description;
+    const isEnable =  !newProductAttachments?.productId;
     setSaveDisabled(isEnable);
   }, [newProductAttachments]);
 
@@ -147,38 +162,11 @@ export default function ProductAttachmentsModel({
             controlId="formProductAttachments"
           >
             <Form.Label>ProductId</Form.Label>
-            <Form.Control
-              type="text"
-              name="productId"
-              placeholder="Enter ProductId"
-              value={newProductAttachments?.productId}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="filesId">
-            <Form.Label>FilesId</Form.Label>
-            <Form.Control
-              type="text"
-              name="filesId"
-              placeholder=" Enter FilesId"
-              value={newProductAttachments?.filesId}
-              onChange={changeHandler}
-            />
+            <Select options={Products} name="productId" value={newProductAttachments?.productId} onChange={selectChangeHandler} />
           </Form.Group>
 
-
-          <Form.Group className="mb-3" controlId="description">
-            <Form.Label>Description</Form.Label>
-            <Form.Control
-              type="text"
-              name="description"
-              placeholder="Description"
-              value={newProductAttachments?.description}
-              onChange={changeHandler}
-            />
-          </Form.Group>
           <Form.Group>
-          <input type="file" className="custom-file-label" onChange={saveFileSelected} />
+          <input type="file" onChange={saveFileSelected} />
           </Form.Group>
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
