@@ -20,6 +20,7 @@ export default function ProductModel({
 }) {
   const [newProduct, setNewProduct] = useState({
     productName: "", 
+    categoryTypeId:null,
     description: "",
    
   });
@@ -108,7 +109,7 @@ export default function ProductModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newProduct?.productName ||   !newProduct?.description;
+      !newProduct?.productName ||   !newProduct?.categoryTypeId||   !newProduct?.description;
     setSaveDisabled(isEnable);
   }, [newProduct]);
 
@@ -147,7 +148,16 @@ export default function ProductModel({
               onChange={changeHandler}
             />
           </Form.Group>
-         
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>CategoryTypeId</Form.Label>
+          <Form.Control
+            type="text"
+            name="categoryTypeId"
+            placeholder="CategoryTypeId"
+            value={newProduct?.categoryTypeId}
+            onChange={changeHandler}
+          />
+        </Form.Group>
 
 
           <Form.Group className="mb-3" controlId="formBasicPassword">

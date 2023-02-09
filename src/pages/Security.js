@@ -42,11 +42,11 @@ export default function Securitys() {
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [security, setSecurity] = useState({
-    name: "",
-    questionId:"",
-    answerId:"",
+
+    questionId:null,
+    answerId:null,
     description:"",
-    securityTypeId:""
+ 
       });
 
   const [id, setId] = useState(null);
@@ -62,14 +62,13 @@ export default function Securitys() {
     addSecurity,
     updateSecurity,
     deleteSecurity,
-    getSecuritys,
+    getSecurity,
     securityById,
   } = useFetchSecurity();
 
   const columns = [
 
-    { dataField: 'securityId', text: 'Security Id', sort: true, hidden: true },
-    { dataField: 'name', text: ' Name', sort: true },
+    { dataField: 'securityId', text: 'Security Id', sort: true},
     { dataField: 'questionId', text: ' QuestionId', sort: true },
     { dataField: 'answerId', text: ' AnswerId', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
@@ -159,7 +158,7 @@ export default function Securitys() {
 
 
   const getAllSecuritys = async () => {
-    const response = await getSecuritys();
+    const response = await getSecurity();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',

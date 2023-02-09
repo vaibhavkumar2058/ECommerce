@@ -16,14 +16,13 @@ export default function SecurityModel({
   onGetSecurity,
   id,
   onClose,
-  securityData,
+  SecurityData,
 }) {
   const [newSecurity, setNewSecurity] = useState({
-    name: "",
-    questionId:"",
-    answerId:"",
-    description: "",
-   });
+    questionId:null,
+    answerId:null,
+    description:"",
+  });
 
   const [fileSelected, setFileSelected] = useState();
 
@@ -106,7 +105,7 @@ export default function SecurityModel({
 
   useEffect(() => {
     if (isEdit) {
-      setNewSecurity(securityData);
+      setNewSecurity(SecurityData);
     }
   }, []);
 
@@ -115,7 +114,7 @@ export default function SecurityModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newSecurity?.name || !newSecurity?.questionId || !newSecurity?.answerId || !newSecurity?.description;
+    !newSecurity?.questionId ||!newSecurity?.answerId || !newSecurity?.description ;
     setSaveDisabled(isEnable);
   }, [newSecurity]);
 
@@ -141,21 +140,29 @@ export default function SecurityModel({
       )}
       {!isDelete && (
         <Form>
-          <Form.Group></Form.Group>
+          <Form.Group
             className={styles.stFormContainer}
             controlId="formSecurity"
-          
-            <Form.Label>Security</Form.Label>
+          >
+            <Form.Label>QuestionId</Form.Label>
             <Form.Control
               type="text"
-              name="name"
-              placeholder="Enter Security"
-              value={newSecurity?.name}
+              name="questionId"
+              placeholder="Enter QuestionId"
+              value={newSecurity?.questionId}
               onChange={changeHandler}
             />
-            
-         
-
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="answerId">
+            <Form.Label>AnswerId</Form.Label>
+            <Form.Control
+              type="text"
+              name="answerId"
+              placeholder="AnswerId"
+              value={newSecurity?.answerId}
+              onChange={changeHandler}
+            />
+          </Form.Group>
           <Form.Group className="mb-3" controlId="description">
             <Form.Label>Description</Form.Label>
             <Form.Control
@@ -166,10 +173,7 @@ export default function SecurityModel({
               onChange={changeHandler}
             />
           </Form.Group>
-
-          
-
-          
+                                                    
           
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
@@ -178,7 +182,7 @@ export default function SecurityModel({
             <Button variant="primary" onClick={saveHandler}
               disabled={saveDisabled}>
               {buttonType}
-            </Button>
+            </Button>        
           </Modal.Footer>
         </Form>
       )}
@@ -236,4 +240,3 @@ SecurityModel.defaultProps = {
   id: null,
   securityData: null,
 };
-
