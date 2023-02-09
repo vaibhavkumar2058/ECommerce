@@ -17,7 +17,8 @@ export default function RoleModel({
   id,
   onClose,
   roleData,
-}) {
+}) 
+{
   const [newRole, setNewRole] = useState({
     RoleName: "",
     description: "",
