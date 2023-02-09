@@ -21,6 +21,7 @@ export default function CategorytypeModel({
   const [newCategoryType, setNewCategoryType] = useState({
     categoryTypeName: "",
     description: "",
+    recordStatusId:null,
    
   });
 
@@ -106,7 +107,7 @@ export default function CategorytypeModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newCategoryType?.categoryTypeName|| !newCategoryType?.description;
+      !newCategoryType?.categoryTypeName|| !newCategoryType?.description|| !newCategoryType?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newCategoryType]);
 
@@ -145,13 +146,23 @@ export default function CategorytypeModel({
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="mobile">
-            <Form.Label>Discription</Form.Label>
+          <Form.Group className="mb-3" controlId="description">
+            <Form.Label>Description</Form.Label>
             <Form.Control
               type="text"
               name="description"
-              placeholder="Discription"
+              placeholder="Description"
               value={newCategoryType?.description}
+              onChange={changeHandler}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="recordStatusId">
+            <Form.Label>RecordStatusId</Form.Label>
+            <Form.Control
+              type="text"
+              name="recordStatusId"
+              placeholder="RecordStatusId"
+              value={newCategoryType?.recordStatusId}
               onChange={changeHandler}
             />
           </Form.Group>

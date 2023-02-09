@@ -47,6 +47,7 @@ export default function Carts() {
     cost:null,
     quantity:"",
     description:"",
+    recordStatusId:null,
 
       });
 
@@ -74,6 +75,7 @@ export default function Carts() {
     { dataField: 'cost', text: 'Cost', sort: true },
     { dataField: 'quantity', text: 'Quantity', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
+    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true },
     // columns follow dataField and text structure
     {
       dataField: "Actions",

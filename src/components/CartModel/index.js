@@ -23,7 +23,8 @@ export default function CartModel({
     productId:null,
     cost:null,
     quantity:"",
-    description:""
+    description:"",
+    recordStatusId:null,
   });
 
   const [fileSelected, setFileSelected] = useState();
@@ -112,7 +113,7 @@ export default function CartModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newCart?.resourceId || !newCart?.productId  || !newCart?.cost || !newCart?.quantity|| !newCart?.description;
+      !newCart?.resourceId || !newCart?.productId  || !newCart?.cost || !newCart?.quantity|| !newCart?.description|| !newCart?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newCart]);
 
@@ -193,6 +194,17 @@ export default function CartModel({
               onChange={changeHandler}
             />
           </Form.Group>
+          <Form.Group className="mb-3" controlId="recordStatusId">
+            <Form.Label>RecordStatusId</Form.Label>
+            <Form.Control
+              type="text"
+              name="recordStatusId"
+              placeholder="RecordStatusId"
+              value={newCart?.recordStatusId}
+              onChange={changeHandler}
+            />
+          </Form.Group>
+          
           
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>

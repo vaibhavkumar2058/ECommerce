@@ -44,6 +44,7 @@ export default function CategoryTypes() {
     const [categoryType, setCategoryType] = useState({
         categoryTypeName: "",
         description: "",
+        recordStatusId:null,
     });
 
     const [id, setId] = useState(null);
@@ -68,6 +69,7 @@ export default function CategoryTypes() {
         { dataField: 'categoryTypeId', text: 'CategoryType Id', sort: true,},
         { dataField: 'categoryTypeName', text: ' Category Type Name', sort: true },
         { dataField: 'description', text: 'Description', sort: true },
+        { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true },
 
         // columns follow dataField and text structure
         {

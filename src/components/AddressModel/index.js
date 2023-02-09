@@ -29,6 +29,7 @@ export default function AddressModel({
     landMark:"",
     isDefault:"",
     defaultAddressTypeId:null,
+    recordStatusId:null,
     
   });
 
@@ -118,7 +119,7 @@ export default function AddressModel({
       setButtonType("Update");
     }
     debugger;
-    const isEnable = !newAddress?.city || !newAddress?.town  || !newAddress?.locality || !newAddress?.pincode|| !newAddress?.landMark ;
+    const isEnable = !newAddress?.city || !newAddress?.town  || !newAddress?.locality || !newAddress?.pincode|| !newAddress?.landMark|| !newAddress?.recordStatusId ;
     setSaveDisabled(isEnable);
   }, [newAddress]);
 
@@ -261,6 +262,16 @@ export default function AddressModel({
               name="description"
               placeholder="Description"
               value={newAddress?.description}
+              onChange={changeHandler}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="recordStatusId">
+            <Form.Label>RecordStatusId</Form.Label>
+            <Form.Control
+              type="text"
+              name="recordStatusId"
+              placeholder="RecordStatusId"
+              value={newAddress?.recordStatusId}
               onChange={changeHandler}
             />
           </Form.Group>
