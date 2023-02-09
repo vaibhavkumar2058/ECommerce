@@ -53,11 +53,14 @@ import {
   };
 
   // File ADD  ACTIONS
-  const addFile = (file) => {
+  const addFile = async (file) => {
+    const formData = new FormData();
+    Object.keys(file).forEach((key) => formData.append(key,file[key]));
+
     return API.post(
       hapyCarURL,
-      { data: file },
-      { suppressErrors: [400] }
+      { data: formData },
+      { suppressErrors: [400] }     
     )
       .then(({ data }) =>
         dispatch(

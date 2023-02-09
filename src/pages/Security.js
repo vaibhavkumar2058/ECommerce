@@ -26,14 +26,14 @@ const MyExportCSV = (props) => {
 
 export default function Securitys() {
 
-  const [securitys, setSecuritys] = useState([]);
+  const [securities, setSecurities] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
   const handleClose = () => {
-    getAllSecuritys();
+    getAllSecurities();
     setIsEdit(false);
     setIsDelete(false);
     setShow(false);
@@ -102,11 +102,11 @@ export default function Securitys() {
   ];
 
   useEffect(() => {
-    if (securitys.length == 0) {
-      getAllSecuritys();
+    if (securities.length == 0) {
+      getAllSecurities();
       setLoading(false)
     }
-  }, [securitys]);
+  }, [securities]);
 
 
   const defaultSorted = [{
@@ -170,7 +170,7 @@ export default function Securitys() {
         arr.push(response.payload[key]);
       }
 
-      setSecuritys(arr);
+      setSecurities(arr);
     }
     else {
       setMessageStatus({
@@ -215,11 +215,11 @@ export default function Securitys() {
     <>
       <div className="m-t-40">
         {loading && <div>A moment please...</div>}
-        {securitys && (<div>
+        {securities && (<div>
           <ToolkitProvider
             bootstrap4
             keyField='securityId'
-            data={securitys}
+            data={securities}
             columns={columns}
             search
           >

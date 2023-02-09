@@ -26,14 +26,14 @@ const MyExportCSV = (props) => {
 
 export default function OrderTracking() {
 
-  const [enquirys, setOrderTrackings] = useState([]);
+  const [orderTrackinges, setOrderTrackinges] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
   const handleClose = () => {
-    getAllOrderTracking();
+    getAllOrderTrackinges();
     setIsEdit(false);
     setIsDelete(false);
     setShow(false);
@@ -41,12 +41,18 @@ export default function OrderTracking() {
   const handleShow = () => setShow(true);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-  const [enquiry, setOrderTracking] = useState({
-    name: "",
-    mobile:"",
-    email:"",
-    description:"",
-    enquiryTypeId:""
+  const [orderTracking, setOrderTracking] = useState({
+    countryId:null,
+    stateId:null,
+    city:"",
+    town:"",
+    locality:"",
+    pincode:null,
+    orderTrackingTypeId:null,
+    landMark:"",
+    isDefault:"",
+    defaultOrderTrackingTypeId:null,
+    
       });
 
   const [id, setId] = useState(null);
@@ -62,18 +68,18 @@ export default function OrderTracking() {
     addOrderTracking,
     updateOrderTracking,
     deleteOrderTracking,
-    getOrderTracking,
-    enquiryById,
+    getOrderTrackinges,
+    orderTrackingById,
   } = useFetchOrderTracking();
 
   const columns = [
-
-    { dataField: 'enquiryId', text: 'OrderTracking Id', sort: true, hidden: true },
-    { dataField: 'name', text: ' Name', sort: true },
-    { dataField: 'mobile', text: 'Mobile', sort: true },
-    { dataField: 'email', text: 'Email', sort: true },
-    { dataField: 'description', text: 'Description', sort: true },
-    { dataField: 'enquiryTypeId', text: 'MoOrderTrackingTypeIdbile', sort: true },
+    { dataField: 'orderTrackingId', text: 'orderTracking Id', sort: true, hidden: true },
+    { dataField: 'orderId', text: 'Order Id', sort: true },
+    
+    { dataField: 'orderStatusId', text: 'OrderStatus Id', sort: true },
+    { dataField: 'description', text: 'Description', sort: true,},
+    
+    
     // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -82,18 +88,18 @@ export default function OrderTracking() {
         return (
           <><button
             className="btn btn-primary btn-xs"
-            onClick={() => handleView(row.enquiryId, row.name)}
+            onClick={() => handleView(row.orderTrackingId, row.name)}
           >
             View
           </button>
             <button
               className="btn btn-primary btn-xs"
-              onClick={() => handleEdit(row.enquiryId, row)}
+              onClick={() => handleEdit(row.orderTrackingId, row)}
             >
               Edit
             </button><button
               className="btn btn-danger btn-xs"
-              onClick={() => handleDelete(row.enquiryId, row.name)}
+              onClick={() => handleDelete(row.orderTrackingId, row.name)}
             >
               Delete
             </button></>
@@ -103,15 +109,15 @@ export default function OrderTracking() {
   ];
 
   useEffect(() => {
-    if (enquirys.length == 0) {
-      getAllOrderTracking();
+    if (orderTrackinges.length == 0) {
+      getAllOrderTrackinges();
       setLoading(false)
     }
-  }, [enquirys]);
+  }, [orderTrackinges]);
 
 
   const defaultSorted = [{
-    dataField: 'enquiryId',
+    dataField: 'orderTrackingId',
     order: 'desc'
   }];
 
@@ -158,8 +164,8 @@ export default function OrderTracking() {
   });
 
 
-  const getAllOrderTracking = async () => {
-    const response = await getOrderTracking();
+  const getAllOrderTrackinges = async () => {
+    const response = await getOrderTrackinges();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',
@@ -171,7 +177,7 @@ export default function OrderTracking() {
         arr.push(response.payload[key]);
       }
 
-      setOrderTracking(arr);
+      setOrderTrackinges(arr);
     }
     else {
       setMessageStatus({
@@ -182,7 +188,7 @@ export default function OrderTracking() {
   };
 
   const getOrderTrackingById = async (id) => {
-    const response = await enquiryById(id);
+    const response = await orderTrackingById(id);
     if (response.payload.title == "Success") {
       setOrderTracking(response.payload);
     }
@@ -216,11 +222,11 @@ export default function OrderTracking() {
     <>
       <div className="m-t-40">
         {loading && <div>A moment please...</div>}
-        {enquirys && (<div>
+        {orderTrackinges && (<div>
           <ToolkitProvider
             bootstrap4
-            keyField='enquiryId'
-            data={enquirys}
+            keyField='orderTrackingId'
+            data={orderTrackinges}
             columns={columns}
             search
           >
@@ -276,12 +282,12 @@ export default function OrderTracking() {
                 onAddOrderTracking={addOrderTracking}
                 onUpdateOrderTracking={updateOrderTracking}
                 onDeleteOrderTracking={deleteOrderTracking}
-                onGetOrderTracking={enquiryById}
+                onGetOrderTracking={orderTrackingById}
                 onClose={handleClose}
                 isEdit={isEdit}
                 isDelete={isDelete}
                 id={id}
-                enquiryData={enquiry}
+                orderTrackingData={orderTracking}
               />
             </Modal.Body>
 

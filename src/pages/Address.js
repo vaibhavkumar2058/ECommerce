@@ -47,10 +47,12 @@ export default function Address() {
     city:"",
     town:"",
     locality:"",
-    pinCode:null,
+    pincode:null,
     addressTypeId:null,
+    landMark:"",
     isDefault:"",
     defaultAddressTypeId:null,
+    recordStatusId:null,
     
       });
 
@@ -73,15 +75,40 @@ export default function Address() {
 
   const columns = [
     { dataField: 'addressId', text: 'address Id', sort: true, hidden: true },
-    { dataField: 'countryId', text: 'Country Id', sort: true,  },
-    { dataField: 'stateId', text: 'State Id', sort: true },
-    { dataField: 'city', text: 'City', sort: true },
-    { dataField: 'town', text: 'Town', sort: true },
-    { dataField: 'locality', text: 'Locality', sort: true },
-    { dataField: 'pinCode', text: 'PinCode', sort: true },
-    { dataField: 'addressTypeId', text: 'AddressType Id', sort: true },
-    { dataField: 'isDefault', text: 'IsDefault', sort: true },
-    { dataField: 'defaultAddressTypeId', text: 'Default AddressType Id', sort: true },
+    { dataField: 'countryId', text: 'Country Id', sort: true,headerStyle: () => {
+      return { width: "120px" };
+    }  },
+    { dataField: 'stateId', text: 'State Id', sort: true ,headerStyle: () => {
+      return { width: "100px" };
+    }},
+    { dataField: 'city', text: 'City', sort: true,headerStyle: () => {
+      return { width: "100px" };
+    } },
+    { dataField: 'town', text: 'Town', sort: true,headerStyle: () => {
+      return { width: "100px" };
+    } },
+    { dataField: 'locality', text: 'Locality', sort: true,headerStyle: () => {
+      return { width: "100px" };
+    } },
+    { dataField: 'pincode', text: 'Pincode', sort: true,headerStyle: () => {
+      return { width: "120px" };
+    } },
+    { dataField: 'addressTypeId', text: 'AddressType Id', sort: true,headerStyle: () => {
+      return { width: "150px" };
+    } },
+    { dataField: 'isDefault', text: 'IsDefault', sort: true ,headerStyle: () => {
+      return { width: "120px" };
+    }},
+    { dataField: 'defaultAddressTypeId', text: 'Default AddressType Id', sort: true ,headerStyle: () => {
+      return { width: "200px" };
+    }},
+    { dataField: 'landMark', text: 'LandMark', sort: true,headerStyle: () => {
+      return { width: "100px" };
+    } },
+    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true,headerStyle: () => {
+      return { width: "100px" };
+    } },
+    
     
     // columns follow dataField and text structure
     {

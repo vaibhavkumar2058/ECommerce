@@ -21,10 +21,10 @@ export default function CartModel({
   const [newCart, setNewCart] = useState({
     resourceId:null,
     productId:null,
-    productName:"",
     cost:null,
     quantity:"",
-    description:""
+    description:"",
+    recordStatusId:null,
   });
 
   const [fileSelected, setFileSelected] = useState();
@@ -113,7 +113,7 @@ export default function CartModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newCart?.resourceId || !newCart?.productId || !newCart?.productName || !newCart?.cost || !newCart?.quantity|| !newCart?.description;
+      !newCart?.resourceId || !newCart?.productId  || !newCart?.cost || !newCart?.quantity|| !newCart?.description|| !newCart?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newCart]);
 
@@ -163,18 +163,6 @@ export default function CartModel({
             />
           </Form.Group>
 
-
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>ProductName</Form.Label>
-            <Form.Control
-              type="text"
-              name="productName"
-              placeholder="ProductName"
-              value={newCart?.productName}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-
           <Form.Group className="mb-3" controlId="cost">
             <Form.Label>Cost</Form.Label>
             <Form.Control
@@ -206,6 +194,17 @@ export default function CartModel({
               onChange={changeHandler}
             />
           </Form.Group>
+          <Form.Group className="mb-3" controlId="recordStatusId">
+            <Form.Label>RecordStatusId</Form.Label>
+            <Form.Control
+              type="text"
+              name="recordStatusId"
+              placeholder="RecordStatusId"
+              value={newCart?.recordStatusId}
+              onChange={changeHandler}
+            />
+          </Form.Group>
+          
           
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>

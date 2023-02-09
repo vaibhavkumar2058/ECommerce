@@ -19,10 +19,9 @@ export default function ResourceAttachmentTypeModel({
   resourceAttachmentTypeData,
 }) {
   const [newResourceAttachmentType, setNewResourceAttachmentType] = useState({
-    id: "",
-    DisplayText:"",
-    SortOrder:"",
-    IsActive:"",
+    displayText:"",
+    sortOrder:null,
+    isActive:null,
     description: "",
   });
 
@@ -52,14 +51,10 @@ export default function ResourceAttachmentTypeModel({
     });
   };
 
-  const saveFileSelected= (e) => {
-    //in case you wan to print the file selected
-    //console.log(e.target.files[0]);
-    setFileSelected(e.target.files[0]);
-  };
+  
 
   const saveHandler = async () => {
-    newResourceAttachmentType.file = fileSelected;
+    debugger
     if (isEdit) {
       const response = await onUpdateResourceAttachmentType(id, newResourceAttachmentType);
       if (response.payload.title == "Success") {
@@ -115,8 +110,10 @@ export default function ResourceAttachmentTypeModel({
     if (isEdit) {
       setButtonType("Update");
     }
-    const isEnable =
-      !newResourceAttachmentType?.id || !newResourceAttachmentType?.displaytext  || !newResourceAttachmentType?.sortorder || !newResourceAttachmentType?.isactive || !newResourceAttachmentType?.description;
+    const isEnable = !newResourceAttachmentType?.displayText  
+    || !newResourceAttachmentType?.sortOrder
+    || !newResourceAttachmentType?.isActive
+    || !newResourceAttachmentType?.description;
     setSaveDisabled(isEnable);
   }, [newResourceAttachmentType]);
 
@@ -142,67 +139,49 @@ export default function ResourceAttachmentTypeModel({
       )}
       {!isDelete && (
         <Form>
-          <Form.Group
-            classId={styles.stFormContainer}
-            controlId="formResourceAttachmentType"
-          >
-            <Form.Label>ResourceAttachmentType</Form.Label>
+         
+          <Form.Group classId="mb-3" controlId="displayText">
+            <Form.Label>Displaytext</Form.Label>
             <Form.Control
               type="text"
-              id="id"
-              placeholder="Enter ResourceAttachmentType"
-              value={newResourceAttachmentType?.id}
+              id="displayText"
+              placeholder="Enter Displaytext"
+              value={newResourceAttachmentType?.displayText}
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group classId="mb-3" controlId="displaytext">
-            <Form.Label>Mobile</Form.Label>
+          <Form.Group className="mb-3" controlId="sortOrder">
+            <Form.Label>SortOrder</Form.Label>
             <Form.Control
               type="text"
-              id="displaytext"
-              placeholder="displaytext"
-              value={newResourceAttachmentType?.mobile}
+              name="sortOrder"
+              placeholder="Enter SortOrder"
+              value={newResourceAttachmentType?.sortOrder}
               onChange={changeHandler}
             />
           </Form.Group>
 
-
+          <Form.Group className="mb-3" controlId="isActive">
+            <Form.Label>IsActive</Form.Label>
+            <Form.Control
+              type="text"
+              name="isActive"
+              placeholder="IsActive"
+              value={newResourceAttachmentType?.isActive}
+              onChange={changeHandler}
+            />
+          </Form.Group>
           <Form.Group classId="mb-3" controlId="description">
             <Form.Label>Description</Form.Label>
             <Form.Control
               type="text"
               name="description"
-              placeholder="Description"
+              placeholder="Enter Description"
               value={newResourceAttachmentType?.description}
               onChange={changeHandler}
             />
           </Form.Group>
-
-          <Form.Group className="mb-3" controlId="sortorder">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              type="text"
-              name="sortorder"
-              placeholder="SortOrder"
-              value={newResourceAttachmentType?.email}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="isactive">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              type="text"
-              name="isactive"
-              placeholder="IsActive"
-              value={newResourceAttachmentType?.email}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-
-          
-         
-          <Modal.Footer>
+         <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel
             </Button>

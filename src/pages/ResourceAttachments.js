@@ -44,9 +44,10 @@ export default function ResourceAttachments() {
   const [resourceAttachment, setResourceAttachment] = useState({
     resourceId: null,
     fileId: null,
-    attachmentTypeId: null,
-    visibleToCustomer: true,
-    description: ""
+    resourceAttachmentTypeId: null,
+    //visibleToCustomer: true,
+    description: "",
+    recordStatusId:null
       });
 
   const [id, setId] = useState(null);
@@ -68,12 +69,21 @@ export default function ResourceAttachments() {
 
   const columns = [
 
-    { dataField: 'resourceAttachmentId', text: 'ResourceAttachmentId ', sort: true, hidden: true },
-    { dataField: 'resourceId', text: ' ResourceId', sort: true },
+    { dataField: 'resourceAttachmentsId', text: 'ResourceAttachmentsId ', sort: true, hidden: true },
+    { dataField: 'resourceId', text: ' Resource', sort: true },
     { dataField: 'fileId', text: 'FileId', sort: true },
-    { dataField: 'attachmentTypeId', text: 'AttachmentTypeId', sort: true },
-    { dataField: 'description', text: 'Description', sort: true },
-    { dataField: 'visibleToCustomer', text: 'VisibleToCustomer', sort: true },
+    { dataField: 'resourceAttachmentTypeId', text: 'ResourceAttachmentType', sort: true,headerStyle: () => {
+      return { width: "230px" };
+    } },
+    { dataField: 'description', text: 'Description', sort: true,headerStyle: () => {
+      return { width: "200px" };
+    } },
+    //{ dataField: 'visibleToCustomer', text: 'VisibleToCustomer', sort: true ,headerStyle: () => {
+      //return { width: "200px" };
+    //}},
+    { dataField: 'recordStatusId', text: 'RecordStatus', sort: true,headerStyle: () => {
+      return { width: "200px" };
+    } },
     // columns follow dataField and text structure
     {
       dataField: "Actions",

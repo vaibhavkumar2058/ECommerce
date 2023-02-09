@@ -19,9 +19,9 @@ export default function NotificationModel({
   notificationData,
 }) {
   const [newNotification, setNewNotification] = useState({
-   notificationname: "null",
-    notificationDate: "null",
-    description: "null",
+    notificationTypeId:null,
+    notificationName: "",
+    description: "",
   });
 
   const [fileSelected, setFileSelected] = useState();
@@ -42,18 +42,12 @@ export default function NotificationModel({
     `,
     stFormControl: css``,
   };
-
+debugger;
   const changeHandler = (e) => {
     setNewNotification({
       ...newNotification,
       [e.target.name]: e.target.value,
     });
-  };
-
-  const saveFileSelected= (e) => {
-    //in case you wan to print the file selected
-    //console.log(e.target.files[0]);
-    setFileSelected(e.target.files[0]);
   };
 
   const saveHandler = async () => {
@@ -71,7 +65,6 @@ export default function NotificationModel({
       }
     }
     else {
-      debugger;
       const response = await onAddNotification(newNotification);
       if (response.payload.title == "Success") {
         setMessageStatus({
@@ -114,7 +107,7 @@ export default function NotificationModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newNotification?.notificationName || !newNotification?.notificationDate || !newNotification?.description;
+      !newNotification?.notificationName|| !newNotification?.notificationTypeId|| !newNotification?.description;
     setSaveDisabled(isEnable);
   }, [newNotification]);
 
@@ -144,49 +137,49 @@ export default function NotificationModel({
             className={styles.stFormContainer}
             controlId="formNotification"
           >
-            <Form.Label>NotificationId</Form.Label>
+            
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>NotificationTypeId</Form.Label>
             <Form.Control
               type="text"
-              name="notificationId"
-              placeholder="notificationId"
-              value={newNotification?.notificationId}
+              name="notificationTypeId"
+              placeholder="NotificationTypeId"
+              value={newNotification?.notificationTypeId}
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="notificationName">
+          <Form.Group>
             <Form.Label>NotificationName</Form.Label>
             <Form.Control
               type="text"
               name="notificationName"
-              placeholder="notificationName"
+              placeholder="NotificationName"
               value={newNotification?.notificationName}
               onChange={changeHandler}
             />
           </Form.Group>
-
-
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Description</Form.Label>
-            <Form.Control
-              type="text"
-              name="description"
-              placeholder="description"
-              value={newNotification?.description}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="notificationDate">
+          {/* <Form.Group>
             <Form.Label>NotificationDate</Form.Label>
             <Form.Control
               type="text"
               name="notificationDate"
-              placeholder="notificationDate"
+              placeholder="NotificationDate"
               value={newNotification?.notificationDate}
               onChange={changeHandler}
             />
+          </Form.Group> */}
+
+          <Form.Group>
+            <Form.Label>Description</Form.Label>
+            <Form.Control
+              type="text"
+              name="description"
+              placeholder="Description"
+              value={newNotification?.description}
+              onChange={changeHandler}
+            />
           </Form.Group>
-          
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel

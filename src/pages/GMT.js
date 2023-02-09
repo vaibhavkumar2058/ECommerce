@@ -24,16 +24,16 @@ const MyExportCSV = (props) => {
   );
 };
 
-export default function GMT() {
+export default function GMTs() {
 
-  const [gmt, setgmt] = useState([]);
+  const [GMTs, setGMTs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
   const handleClose = () => {
-    getAllGMT();
+    getAllGMTs();
     setIsEdit(false);
     setIsDelete(false);
     setShow(false);
@@ -42,11 +42,12 @@ export default function GMT() {
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [GMT, setGMT] = useState({
-    resourceid:"",
-    latitude:"",
-    longitude:"",
-    tracktime:"",
+    resourceId:null,
+    longitude:null,
+    latitude:null,
+    //trackTime:null ,
     description:"",
+    recordStatusId:null,
     
       });
 
@@ -63,17 +64,18 @@ export default function GMT() {
     addGMT,
     updateGMT,
     deleteGMT,
-    getGMT,
-    gmtById,
+    getGMTs,
+    GMTById,
   } = useFetchGMT();
 
   const columns = [
-
-    { dataField: 'resourceId', text: 'Resource Id', sort: true, hidden: true },
+    { dataField: 'gmtId', text: 'GMT', sort: true, hidden: true },
+    { dataField: 'resourceId', text: 'Resource', sort: true },
     { dataField: 'longitude', text: ' Longitude', sort: true },
     { dataField: 'latitude', text: 'Latitude', sort: true },
-    { dataField: 'tracktime', text: 'Tracktime', sort: true },
+    //{ dataField: 'trackTime', text: 'TrackTime', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
+    { dataField: 'recordStatusId', text: 'RecordStatus', sort: true },
         // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -103,15 +105,15 @@ export default function GMT() {
   ];
 
   useEffect(() => {
-    if (gmt.length == 0) {
-      getAllGMT();
+    if (GMTs.length == 0) {
+      getAllGMTs();
       setLoading(false)
     }
-  }, [gmt]);
+  }, [GMTs]);
 
 
   const defaultSorted = [{
-    dataField: 'gmtId',
+    dataField: 'GMTId',
     order: 'desc'
   }];
 
@@ -123,7 +125,7 @@ export default function GMT() {
     console.log(rowId, name);
     //1 YourCellName
   };
-
+debugger;
   const handleEdit = (rowId, row) => {
     setGMT(row);
     //getGMTById(rowId);
@@ -158,12 +160,12 @@ export default function GMT() {
   });
 
 
-  const getAllGMT = async () => {
-    const response = await getGMT();
+  const getAllGMTs = async () => {
+    const response = await getGMTs();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',
-        message: 'GMT Record Fetch Succefully.'
+        message: 'GMTs Record Fetch Succefully.'
       })
 
       var arr = [];
@@ -171,7 +173,7 @@ export default function GMT() {
         arr.push(response.payload[key]);
       }
 
-      setGMT(arr);
+      setGMTs(arr);
     }
     else {
       setMessageStatus({
@@ -182,7 +184,7 @@ export default function GMT() {
   };
 
   const getGMTById = async (id) => {
-    const response = await gmtById(id);
+    const response = await GMTById(id);
     if (response.payload.title == "Success") {
       setGMT(response.payload);
     }
@@ -216,11 +218,11 @@ export default function GMT() {
     <>
       <div className="m-t-40">
         {loading && <div>A moment please...</div>}
-        {gmt && (<div>
+        {GMTs && (<div>
           <ToolkitProvider
             bootstrap4
-            keyField='gmtId'
-            data={gmt}
+            keyField='GMTId'
+            data={GMTs}
             columns={columns}
             search
           >
@@ -276,12 +278,12 @@ export default function GMT() {
                 onAddGMT={addGMT}
                 onUpdateGMT={updateGMT}
                 onDeleteGMT={deleteGMT}
-                onGetGMT={gmtById}
+                onGetGMT={GMTById}
                 onClose={handleClose}
                 isEdit={isEdit}
                 isDelete={isDelete}
                 id={id}
-                gmtData={gmt}
+                GMTData={GMT}
               />
             </Modal.Body>
 

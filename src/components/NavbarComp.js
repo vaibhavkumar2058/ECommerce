@@ -18,7 +18,7 @@ import Security from "../pages/Security";
 import AddressType from "../pages/AddressType";
 import Address from "../pages/Address";
 import Cart from "../pages/Cart";
-import Country from "../pages/country";
+import Country from "../pages/Country";
 import Gender from "../pages/Gender";
 import GMT from "../pages/GMT";
 import ItemCost from "../pages/ItemCost";
@@ -32,6 +32,8 @@ import ResourceAttachmentType from "../pages/ResouceAttachmentType";
 import ResourceAttachments from "../pages/ResourceAttachments";
 import Role from "../pages/Role";
 import Folder from "../pages/Folder";
+import ProductAttachments from "../pages/ProductAttachments";
+
 
 const NavbarComp = () => {
   return (
@@ -50,7 +52,7 @@ const NavbarComp = () => {
           <Route exact path="/cart" element={<Cart />} />    
           <Route exact path="/gender" element={<Gender />} />    
           <Route exact path="/country" element={<Country />} />        
-          <Route exact path="/gmt" element={<GMT />} />   
+          <Route exact path="/GMT" element={<GMT />} />   
           <Route exact path="/itemCost" element={<ItemCost />} />     
           <Route exact path="/measurementType" element={<MeasurementType />} />  
           <Route exact path="/measurementValue" element={<MeasurementValue />} />  
@@ -61,7 +63,8 @@ const NavbarComp = () => {
           <Route exact path="/resourceAttachmentType" element={<ResourceAttachmentType />} />   
           <Route exact path="/resourceAttachments" element={<ResourceAttachments />} />     
           <Route exact path="/role" element={<Role />} />   
-          <Route exact path="/folder" element={<Folder />} />   
+          <Route exact path="/folder" element={<Folder />} /> 
+          <Route exact path="/productAttachments" element={<ProductAttachments />} />   
 
        </Routes>
       </div>

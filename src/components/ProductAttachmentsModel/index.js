@@ -6,26 +6,31 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
+import Select from 'react-select';
 
-export default function EnquiryModel({
-  onAddEnquiry,
-  onUpdateEnquiry,
-  onDeleteEnquiry,
+export default function ProductAttachmentsModel({
+  onAddProductAttachments,
+  onUpdateProductAttachments,
+  onDeleteProductAttachments,
   isEdit,
   isDelete,
-  onGetEnquiry,
+  onGetProductAttachments,
   id,
   onClose,
-  enquiryData,
+  productAttachmentsData,
 }) {
-  const [newEnquiry, setNewEnquiry] = useState({
-    name: "",
-    mobile: "",
-    email: "",
-    description: "",
-    enquiryTypeId: null,
-    file:null,
+  const [newProductAttachments, setNewProductAttachments] = useState({
+    productId:null,
+    attachment:null,
+    description:"test",
   });
+
+  const Products = [
+    { label: "Soaps", value: 1 },
+    { label: "Liquids", value: 2 },
+    { label: "Dishwash", value: 3 },
+    { label: "Power", value: 4 }
+  ];
 
   const [fileSelected, setFileSelected] = useState();
 
@@ -47,12 +52,22 @@ export default function EnquiryModel({
   };
 
   const changeHandler = (e) => {
-    setNewEnquiry({
-      ...newEnquiry,
+    debugger;
+    setNewProductAttachments({
+      ...newProductAttachments,
       [e.target.name]: e.target.value,
     });
   };
 
+  const selectChangeHandler = (e) => {
+    debugger;
+    setNewProductAttachments({
+      ...newProductAttachments,
+      "productId": e.value,
+    });
+  };
+
+  
   const saveFileSelected= (e) => {
     //in case you wan to print the file selected
     //console.log(e.target.files[0]);
@@ -60,9 +75,10 @@ export default function EnquiryModel({
   };
 
   const saveHandler = async () => {
-    newEnquiry.file = fileSelected;
+    newProductAttachments.attachment = fileSelected;
+    debugger;
     if (isEdit) {
-      const response = await onUpdateEnquiry(id, newEnquiry);
+      const response = await onUpdateProductAttachments(id, newProductAttachments);
       if (response.payload.title == "Success") {
         onClose(true);
       }
@@ -74,12 +90,11 @@ export default function EnquiryModel({
       }
     }
     else {
-      debugger;
-      const response = await onAddEnquiry(newEnquiry);
+      const response = await onAddProductAttachments(newProductAttachments);
       if (response.payload.title == "Success") {
         setMessageStatus({
           mode: 'success',
-          message: 'Enquiry Record Saved Succefully.'
+          message: 'ProductAttachments Record Saved Succefully.'
         })
         onClose(true);
         console.log(response.payload);
@@ -87,28 +102,28 @@ export default function EnquiryModel({
       else {
         setMessageStatus({
           mode: 'danger',
-          message: 'Enquiry Save Failed.'
+          message: 'ProductAttachments Save Failed.'
         })
       }
     }
   };
 
   const deleteHandler = async () => {
-    const response = await onDeleteEnquiry(id);
+    const response = await onDeleteProductAttachments(id);
     if (response.payload.title == "Success") {
       onClose(true);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Enquiry Delete Failed.'
+        message: 'ProductAttachments Delete Failed.'
       })
     }
   };
 
   useEffect(() => {
     if (isEdit) {
-      setNewEnquiry(enquiryData);
+      setNewProductAttachments(productAttachmentsData);
     }
   }, []);
 
@@ -116,10 +131,9 @@ export default function EnquiryModel({
     if (isEdit) {
       setButtonType("Update");
     }
-    const isEnable =
-      !newEnquiry?.name || !newEnquiry?.mobile || !newEnquiry?.email || !newEnquiry?.description || !newEnquiry?.enquiryTypeId;
+    const isEnable =  !newProductAttachments?.productId;
     setSaveDisabled(isEnable);
-  }, [newEnquiry]);
+  }, [newProductAttachments]);
 
   return (
     <>
@@ -145,63 +159,14 @@ export default function EnquiryModel({
         <Form>
           <Form.Group
             className={styles.stFormContainer}
-            controlId="formEnquiry"
+            controlId="formProductAttachments"
           >
-            <Form.Label>Enquiry</Form.Label>
-            <Form.Control
-              type="text"
-              name="name"
-              placeholder="Enter Enquiry"
-              value={newEnquiry?.name}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="mobile">
-            <Form.Label>Mobile</Form.Label>
-            <Form.Control
-              type="text"
-              name="mobile"
-              placeholder="Mobile"
-              value={newEnquiry?.mobile}
-              onChange={changeHandler}
-            />
+            <Form.Label>ProductId</Form.Label>
+            <Select options={Products} name="productId" value={newProductAttachments?.productId} onChange={selectChangeHandler} />
           </Form.Group>
 
-
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Description</Form.Label>
-            <Form.Control
-              type="text"
-              name="description"
-              placeholder="Description"
-              value={newEnquiry?.description}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="email">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              type="text"
-              name="email"
-              placeholder="Email"
-              value={newEnquiry?.email}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="enquiryTypeId">
-            <Form.Label>EnquiryTypeId</Form.Label>
-            <Form.Control
-              type="text"
-              name="enquiryTypeId"
-              placeholder="EnquiryTypeId"
-              value={newEnquiry?.enquiryTypeId}
-              onChange={changeHandler}
-            />
-          </Form.Group>
           <Form.Group>
-          <input type="file" className="custom-file-label" onChange={saveFileSelected} />
+          <input type="file" onChange={saveFileSelected} />
           </Form.Group>
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
@@ -212,29 +177,30 @@ export default function EnquiryModel({
               {buttonType}
             </Button>
           </Modal.Footer>
+         
         </Form>
       )}
     </>
   );
 }
 
-EnquiryModel.propTypes = {
+ProductAttachmentsModel.propTypes = {
   /**
-   * Callback function for Add Enquiry
+   * Callback function for Add ProductAttachments
    */
-  onAddEnquiry: PropTypes.func,
+  onAddProductAttachments: PropTypes.func,
   /**
-   * Callback function for Update Enquiry
+   * Callback function for Update ProductAttachments
    */
-  onUpdateEnquiry: PropTypes.func,
+  onUpdateProductAttachments: PropTypes.func,
   /**
-   * Callback function for Delete Enquiry
+   * Callback function for Delete ProductAttachments
    */
-  onDeleteEnquiry: PropTypes.func,
+  onDeleteProductAttachments: PropTypes.func,
   /**
-   * Callback function for Get Enquiry
+   * Callback function for Get ProductAttachments
    */
-  onGetEnquiry: PropTypes.func,
+  onGetProductAttachments: PropTypes.func,
   /**
    * isEdit for bool type
    */
@@ -244,7 +210,7 @@ EnquiryModel.propTypes = {
    */
   isDelete: PropTypes.bool,
   /**
-   * Callback function for Get Enquiry
+   * Callback function for Get ProductAttachments
    */
   onClose: PropTypes.func,
   /**
@@ -252,20 +218,20 @@ EnquiryModel.propTypes = {
    */
   id: PropTypes.number,
   /**
- * enquiryData for object type
+ * productAttachmentsData for object type
  */
-  enquiryData: PropTypes.any,
+  productAttachmentsData: PropTypes.any,
 };
 
-EnquiryModel.defaultProps = {
-  onAddEnquiry: null,
-  onUpdateEnquiry: null,
-  onDeleteEnquiry: null,
-  onGetEnquiry: null,
+ProductAttachmentsModel.defaultProps = {
+  onAddProductAttachments: null,
+  onUpdateProductAttachments: null,
+  onDeleteProductAttachments: null,
+  onGetProductAttachments: null,
   isEdit: false,
   isDelete: false,
   onClose: null,
   id: null,
-  enquiryData: null,
+  productAttachmentsData: null,
 };
 

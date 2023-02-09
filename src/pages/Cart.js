@@ -44,10 +44,10 @@ export default function Carts() {
   const [cart, setCart] = useState({
     resourceId:null,
     productId:null,
-    productName:"",
     cost:null,
     quantity:"",
     description:"",
+    recordStatusId:null,
 
       });
 
@@ -72,10 +72,10 @@ export default function Carts() {
     { dataField: 'cartId', text: 'Cart Id', sort: true, hidden: true },
     { dataField: 'resourceId', text: 'Resource Id', sort: true  },
     { dataField: 'productId', text: ' Product Id', sort: true },
-    { dataField: 'productName', text: 'Product Name', sort: true },
     { dataField: 'cost', text: 'Cost', sort: true },
     { dataField: 'quantity', text: 'Quantity', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
+    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true },
     // columns follow dataField and text structure
     {
       dataField: "Actions",

@@ -24,10 +24,12 @@ export default function AddressModel({
     city:"",
     town:"",
     locality:"",
-    pinCode:null,
+    pincode:null,
     addressTypeId:null,
+    landMark:"",
     isDefault:"",
     defaultAddressTypeId:null,
+    recordStatusId:null,
     
   });
 
@@ -116,8 +118,8 @@ export default function AddressModel({
     if (isEdit) {
       setButtonType("Update");
     }
-    const isEnable =
-      !newAddress?.countryId || !newAddress?.stateId || !newAddress?.city || !newAddress?.town  || !newAddress?.locality|| !newAddress?.pinCode || !newAddress?.addressTypeId || !newAddress?.isDefault|| !newAddress?.defaultAddressTypeId ;
+    debugger;
+    const isEnable = !newAddress?.city || !newAddress?.town  || !newAddress?.locality || !newAddress?.pincode|| !newAddress?.landMark|| !newAddress?.recordStatusId ;
     setSaveDisabled(isEnable);
   }, [newAddress]);
 
@@ -204,9 +206,9 @@ export default function AddressModel({
             <Form.Label>PinCode</Form.Label>
             <Form.Control
               type="text"
-              name="pinCode"
-              placeholder="PinCode"
-              value={newAddress?.pinCode}
+              name="pincode"
+              placeholder="Pincode"
+              value={newAddress?.pincode}
               onChange={changeHandler}
             />
           </Form.Group>
@@ -234,7 +236,17 @@ export default function AddressModel({
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="defaultAddressTypeId">
+          <Form.Group className="mb-3" controlId="landMark">
+            <Form.Label>LandMark</Form.Label>
+            <Form.Control
+              type="text"
+              name="landMark"
+              placeholder="LandMark"
+              value={newAddress?.landMark}
+              onChange={changeHandler}
+            />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="defaultAddressTypeId">
             <Form.Label>DefaultAddressTypeId</Form.Label>
             <Form.Control
               type="text"
@@ -243,6 +255,27 @@ export default function AddressModel({
               value={newAddress?.defaultAddressTypeId}
               onChange={changeHandler}
             />
+            </Form.Group>
+             <Form.Group className="mb-3" controlId="description">
+            <Form.Label>Description</Form.Label>
+            <Form.Control
+              type="text"
+              name="description"
+              placeholder="Description"
+              value={newAddress?.description}
+              onChange={changeHandler}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="recordStatusId">
+            <Form.Label>RecordStatusId</Form.Label>
+            <Form.Control
+              type="text"
+              name="recordStatusId"
+              placeholder="RecordStatusId"
+              value={newAddress?.recordStatusId}
+              onChange={changeHandler}
+            />
+          </Form.Group>
             
           
           
@@ -255,7 +288,7 @@ export default function AddressModel({
               {buttonType}
             </Button>
           </Modal.Footer>
-          </Form.Group>
+          
         </Form>
       )}
     </>

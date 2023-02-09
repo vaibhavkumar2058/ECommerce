@@ -14,7 +14,7 @@ import {
 
   export default function useFetchGender() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/Gender";
+  const hapyCarURL = "https://localhost:7062/gender";
 
   const API = useAPI();
   const SUCCESS = "Success";
@@ -38,7 +38,7 @@ import {
       .catch((error) => {
         let errorMsg = "error msg from copy file";
         if (error.response.data.gender) {
-          const [errors] = error.response.data.Gender;
+          const [errors] = error.response.data.gender;
           errorMsg = errors;
         }
         dispatch(

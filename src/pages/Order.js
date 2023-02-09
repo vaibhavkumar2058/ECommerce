@@ -42,14 +42,12 @@ export default function Orders() {
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [order, setOrder] = useState({
-    categoryId:"null",
-    productId:"null",
-    orderDate:"",
-    orderPrice:"",
+    categoryTypeId:null,
+    productId:null,
+    orderPrice:null,
     location:"",
-    customerNumber:"",
-    orderTrackingId:"null",
-    email:"null",
+    customerNumber:null,
+    email:"",
     description:"",
       });
 
@@ -66,20 +64,18 @@ export default function Orders() {
     addOrder,
     updateOrder,
     deleteOrder,
-    getOrders,
+    getOrder,
     orderById,
   } = useFetchOrder();
 
   const columns = [
 
-    { dataField: 'orderId', text: 'OrderId', sort: true, hidden: true },
-    { dataField: 'categoryId', text: ' CategoryId', sort: true },
+    { dataField: 'orderId', text: 'OrderId', sort: true},
+    { dataField: 'categoryTypeId', text: ' CategoryTypeId', sort: true },
     { dataField: 'productId', text: 'ProductId', sort: true },
-    { dataField: 'orderDate', text: 'OrderDate', sort: true },
     { dataField: 'orderPrice', text: 'OrderPrice', sort: true },
     { dataField: 'location', text: 'Location', sort: true },
-    { dataField: 'customerNumber', text: 'customerNumber', sort: true },
-    { dataField: 'orderTrackingId', text: 'OrderTrackingId', sort: true },
+    { dataField: 'customerNumber', text: 'CustomerNumber', sort: true },
     { dataField: 'email', text: 'Email', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
     // columns follow dataField and text structure
@@ -165,9 +161,9 @@ export default function Orders() {
     }
   });
 
-
+debugger;
   const getAllOrders = async () => {
-    const response = await getOrders();
+    const response = await getOrder();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',

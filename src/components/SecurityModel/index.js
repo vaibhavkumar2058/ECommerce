@@ -24,8 +24,6 @@ export default function SecurityModel({
     description:"",
   });
 
-  const [fileSelected, setFileSelected] = useState();
-
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
     title: "",
@@ -50,14 +48,8 @@ export default function SecurityModel({
     });
   };
 
-  const saveFileSelected= (e) => {
-    //in case you wan to print the file selected
-    //console.log(e.target.files[0]);
-    setFileSelected(e.target.files[0]);
-  };
-
   const saveHandler = async () => {
-    newSecurity.file = fileSelected;
+   
     if (isEdit) {
       const response = await onUpdateSecurity(id, newSecurity);
       if (response.payload.title == "Success") {
@@ -91,6 +83,7 @@ export default function SecurityModel({
   };
 
   const deleteHandler = async () => {
+    debugger; 
     const response = await onDeleteSecurity(id);
     if (response.payload.title == "Success") {
       onClose(true);

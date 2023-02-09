@@ -14,7 +14,7 @@ import {
 
   export default function useFetchVehicleTypes() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/enquiry";
+  const hapyCarURL = "https://localhost:7062/vehicleType";
 
   const API = useAPI();
   const SUCCESS = "Success";
@@ -89,7 +89,8 @@ import {
   };
 
   // VehicleType UPDATE  ACTIONS
-  const updateVehicleType = (vehicleTypeId, vehicleType) => {
+
+   const updateVehicleType = (vehicleTypeId, vehicleType) => {
 
     return API.put(`${hapyCarURL}/${vehicleTypeId}`,
       { data: vehicleType },

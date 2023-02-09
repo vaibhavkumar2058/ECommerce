@@ -49,12 +49,7 @@ export default function MeasurementValueModel({
     });
   };
 
-  const saveFileSelected= (e) => {
-    //in case you wan to print the file selected
-    //console.log(e.target.files[0]);
-    setFileSelected(e.target.files[0]);
-  };
-
+  
   const saveHandler = async () => {
     newMeasurementValue.file = fileSelected;
     if (isEdit) {
@@ -165,9 +160,7 @@ export default function MeasurementValueModel({
             />
           </Form.Group>
           
-          <Form.Group>
-          <input type="file" className="custom-file-label" onChange={saveFileSelected} />
-          </Form.Group>
+          
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel

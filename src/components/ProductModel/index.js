@@ -139,11 +139,11 @@ export default function ProductModel({
             className={styles.stFormContainer}
             controlId="formProduct"
           >
-            <Form.Label>Product</Form.Label>
+            <Form.Label>ProductName</Form.Label>
             <Form.Control
               type="text"
               name="productName"
-              placeholder="Enter Product"
+              placeholder="ProductName"
               value={newProduct?.productName}
               onChange={changeHandler}
             />
@@ -159,8 +159,18 @@ export default function ProductModel({
           />
         </Form.Group>
 
+          <Form.Group className="mb-3" controlId="categoryTypeId">
+            <Form.Label>CategoryTypeId</Form.Label>
+            <Form.Control
+              type="text"
+              name="categoryTypeId"
+              placeholder="CategoryTypeId"
+              value={newProduct?.categoryTypeId}
+              onChange={changeHandler}
+            />
+          </Form.Group>
 
-          <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Group className="mb-3" controlId="description">
             <Form.Label>Description</Form.Label>
             <Form.Control
               type="text"

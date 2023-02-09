@@ -4,9 +4,9 @@ import {
     DELETE_GMT,
     FETCH_GMT,
     FETCH_GMT_SUCCESS,
-    FETCH_ENQUIRY_GMT,
+    FETCH_GMT_FAILURE,
     GMT,
-  } from "../actions/gmtActions";
+  } from "../actions/GMTActions";
   
   const initialState = {
     loading: true,
@@ -14,14 +14,14 @@ import {
     data: null,
   };
   
-  export function gmtReducer(state = initialState, action) {
+  export function GMTReducer(state = initialState, action) {
     switch (action.type) {
   
       case FETCH_GMT_SUCCESS:
         return {
           ...state,
-          gmt: {
-            ...state.gmt,
+          GMT: {
+            ...state.GMT,
             data: action.payload,
           },
         };
@@ -31,8 +31,8 @@ import {
       case ADD_GMT:
         return {
           ...state,
-          gmt: {
-            ...state.gmt,
+          GMT: {
+            ...state.GMT,
             data: action.payload,
           },
         };
@@ -40,8 +40,8 @@ import {
         case UPDATE_GMT:
         return {
           ...state,
-          gmt: {
-            ...state.gmt,
+          gGMTmt: {
+            ...state.GMT,
             data: action.payload,
           },
         };
@@ -49,8 +49,8 @@ import {
         case GMT:
         return {
           ...state,
-          gmt: {
-            ...state.gmt,
+          GMT: {
+            ...state.GMT,
             data: action.payload,
           },
         };
@@ -58,8 +58,8 @@ import {
         case DELETE_GMT:
           return {
             ...state,
-            gmt: {
-              ...state.gmt,
+            GMT: {
+              ...state.GMT,
               data: action.payload,
             },
           };

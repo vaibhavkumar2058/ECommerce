@@ -19,15 +19,14 @@ export default function ItemCostModel({
   itemCostData,
 }) {
   const [newItemCost, setNewItemCost] = useState({
-    ProductId: "",
-    MeasurementTypeId: "",
-    MeasurementValueId: "",
-    CustomTypeId: null,
-    Price:null,
+    productId: null,
+    measurementTypeId: null,
+    measurementValueId: null,
+    customTypeId: null,
+    price:null,
     description: "",
+    recordStatusId:null,
   });
-
-  const [fileSelected, setFileSelected] = useState();
 
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
@@ -53,14 +52,9 @@ export default function ItemCostModel({
     });
   };
 
-  const saveFileSelected= (e) => {
-    //in case you wan to print the file selected
-    //console.log(e.target.files[0]);
-    setFileSelected(e.target.files[0]);
-  };
-
+ 
   const saveHandler = async () => {
-    newItemCost.file = fileSelected;
+   
     if (isEdit) {
       const response = await onUpdateItemCost(id, newItemCost);
       if (response.payload.title == "Success") {
@@ -117,7 +111,7 @@ export default function ItemCostModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newItemCost?.ProductId || !newItemCost?.MeasurementTypeId || !newItemCost?.MeasurementValueId || !newItemCost?.CustomTypeId || !newItemCost?.Price || !newItemCost?.description;
+      !newItemCost?.productId || !newItemCost?.measurementTypeId || !newItemCost?.measurementValueId || !newItemCost?.customTypeId || !newItemCost?.price || !newItemCost?.description|| !newItemCost?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newItemCost]);
 
@@ -147,59 +141,59 @@ export default function ItemCostModel({
             className={styles.stFormContainer}
             controlId="formItemCost"
           >
-            <Form.Label>ItemCost</Form.Label>
+            <Form.Label>ProductId</Form.Label>
             <Form.Control
               type="text"
-              name="ProductId"
-              placeholder="Enter ItemCost"
-              value={newItemCost?.ProductId}
+              name="productId"
+              placeholder="ProductId"
+              value={newItemCost?.productId}
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="mobile">
+          <Form.Group className="mb-3" controlId="measurementTypeId">
             <Form.Label>MeasurementTypeId</Form.Label>
             <Form.Control
               type="text"
-              name="MeasurementTypeId"
+              name="measurementTypeId"
               placeholder="MeasurementTypeId"
-              value={newItemCost?.MeasurementTypeId}
+              value={newItemCost?.measurementTypeId}
               onChange={changeHandler}
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="email">
+          <Form.Group className="mb-3" controlId="MeasurementValueId">
             <Form.Label>MeasurementValueId</Form.Label>
             <Form.Control
               type="text"
-              name="MeasurementValueId"
+              name="measurementValueId"
               placeholder="MeasurementValueId"
-              value={newItemCost?.MeasurementValueId}
+              value={newItemCost?.measurementValueId}
               onChange={changeHandler}
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="itemCostTypeId">
+          <Form.Group className="mb-3" controlId="customTypeId">
             <Form.Label>CustomTypeId</Form.Label>
             <Form.Control
               type="text"
-              name="CustomTypeId"
+              name="customTypeId"
               placeholder="CustomTypeId"
-              value={newItemCost?.CustomTypeId}
+              value={newItemCost?.customTypeId}
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="itemCostTypeId">
+          <Form.Group className="mb-3" controlId="price">
             <Form.Label>Price</Form.Label>
             <Form.Control
               type="text"
-              name="Price"
+              name="price"
               placeholder="Price"
-              value={newItemCost?.Price}
+              value={newItemCost?.price}
               onChange={changeHandler}
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Group className="mb-3" controlId="description">
             <Form.Label>Description</Form.Label>
             <Form.Control
               type="text"
@@ -209,9 +203,17 @@ export default function ItemCostModel({
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group>
-          <input type="file" className="custom-file-label" onChange={saveFileSelected} />
+          <Form.Group className="mb-3" controlId="recordStatusId">
+            <Form.Label>RecordStatusId</Form.Label>
+            <Form.Control
+              type="text"
+              name="recordStatusId"
+              placeholder="RecordStatusId"
+              value={newItemCost?.recordStatusId}
+              onChange={changeHandler}
+            />
           </Form.Group>
+
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel

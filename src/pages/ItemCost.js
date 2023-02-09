@@ -42,11 +42,14 @@ export default function ItemCosts() {
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [itemcost, setItemCost] = useState({
-    name: "",
-    mobile:"",
-    email:"",
-    description:"",
-    itemcostTypeId:""
+   
+    productId: null,
+    measurementTypeId: null,
+    measurementValueId: null,
+    customTypeId: null,
+    price:null,
+    description: "",
+    recordStatusId:null,
       });
 
   const [id, setId] = useState(null);
@@ -63,18 +66,33 @@ export default function ItemCosts() {
     updateItemCost,
     deleteItemCost,
     getItemCosts,
-    itemcostById,
+    itemCostById,
   } = useFetchItemCost();
 
   const columns = [
 
-    { dataField: 'itemCostId', text: 'ItemCost Id', sort: true, hidden: true },
-    { dataField: 'productId', text: ' Product Id', sort: true },
-    { dataField: 'measurementTypeId', text: 'MeasurementType Id', sort: true },
-    { dataField: 'measurementValueId', text: 'MeasurementValue Id', sort: true },
-    { dataField: 'CustomTypeId', text: 'CustomType Id', sort: true },
-    { dataField: 'Price', text: 'Price', sort: true },
-    { dataField: 'description', text: 'Description', sort: true },
+    { dataField: 'itemCostId', text: 'ItemCost Id', sort: true},
+    { dataField: 'productId', text: ' Product Id', sort: true ,headerStyle: () => {
+      return { width: "120px" };
+    } },
+    { dataField: 'measurementTypeId', text: 'MeasurementType Id', sort: true ,headerStyle: () => {
+      return { width: "200px" };
+    } },
+    { dataField: 'measurementValueId', text: 'MeasurementValue Id', sort: true,headerStyle: () => {
+      return { width: "200px" };
+    }  },
+    { dataField: 'customTypeId', text: 'CustomType Id', sort: true,headerStyle: () => {
+      return { width: "150px" };
+    }  },
+    { dataField: 'price', text: 'Price', sort: true,headerStyle: () => {
+      return { width: "120px" };
+    }  },
+    { dataField: 'description', text: 'Description', sort: true,headerStyle: () => {
+      return { width: "150px" };
+    }  },
+    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true ,headerStyle: () => {
+      return { width: "180px" };
+    } },
     // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -83,18 +101,18 @@ export default function ItemCosts() {
         return (
           <><button
             className="btn btn-primary btn-xs"
-            onClick={() => handleView(row.itemcostId, row.name)}
+            onClick={() => handleView(row.itemCostId, row.name)}
           >
             View
           </button>
             <button
               className="btn btn-primary btn-xs"
-              onClick={() => handleEdit(row.itemcostId, row)}
+              onClick={() => handleEdit(row.itemCostId, row)}
             >
               Edit
             </button><button
               className="btn btn-danger btn-xs"
-              onClick={() => handleDelete(row.itemcostId, row.name)}
+              onClick={() => handleDelete(row.itemCostId, row.name)}
             >
               Delete
             </button></>
@@ -183,7 +201,7 @@ export default function ItemCosts() {
   };
 
   const getItemCostById = async (id) => {
-    const response = await itemcostById(id);
+    const response = await itemCostById(id);
     if (response.payload.title == "Success") {
       setItemCost(response.payload);
     }
@@ -239,7 +257,7 @@ export default function ItemCosts() {
                           <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
                           <Button variant="primary" onClick={handleShow}>
-                            Add ItemCost
+                            AddItemCost
                           </Button>
                           </div>
                         </div>
@@ -270,14 +288,14 @@ export default function ItemCosts() {
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Add ItemCost</Modal.Title>
+              <Modal.Title>AddItemCost</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <ItemCostModel
                 onAddItemCost={addItemCost}
                 onUpdateItemCost={updateItemCost}
                 onDeleteItemCost={deleteItemCost}
-                onGetItemCost={itemcostById}
+                onGetItemCost={itemCostById}
                 onClose={handleClose}
                 isEdit={isEdit}
                 isDelete={isDelete}

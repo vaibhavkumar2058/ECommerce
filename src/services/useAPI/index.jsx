@@ -21,7 +21,7 @@ export default function useAPI() {
   //const { paradigmApiBaseUrl } = useSelector((state) => state.env);
 
   const HTTP = axios.create({
-    baseURL: "https://localhost:7062/",
+    baseURL: "https://localhost:7062/order",
   });
 
   /**
