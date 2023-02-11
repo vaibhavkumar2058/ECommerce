@@ -19,12 +19,11 @@ export default function ResourceAttachmentsModel({
   resourceAttachmentsData,
 }) {
   const [newResourceAttachments, setNewResourceAttachments] = useState({
-    resourceId: null,
-    fileId: null,
+    resourcesId: null,
+    attachment:null,
     resourceAttachmentTypeId: null,
     //visibleToCustomer: true,
     description: "",
-    recordStatusId:null,
       });
 
   const [fileSelected, setFileSelected] = useState();
@@ -60,7 +59,7 @@ export default function ResourceAttachmentsModel({
   };
 
   const saveHandler = async () => {
-    newResourceAttachments.file = fileSelected;
+    newResourceAttachments.attachment = fileSelected;
     if (isEdit) {
       const response = await onUpdateResourceAttachments(id, newResourceAttachments);
       if (response.payload.title == "Success") {
@@ -113,11 +112,12 @@ export default function ResourceAttachmentsModel({
   }, []);
 
   useEffect(() => {
+debugger;
     if (isEdit) {
       setButtonType("Update");
     }
     const isEnable =
-      !newResourceAttachments?.resourceId || !newResourceAttachments?.fileId || !newResourceAttachments?.attachmentTypeId || !newResourceAttachments?.description|| !newResourceAttachments?.resourceAttachmentTypeId|| !newResourceAttachments?.recordStatusId ;
+      !newResourceAttachments?.resourcesId || !newResourceAttachments?.resourceAttachmentTypeId|| !newResourceAttachments?.description;
     setSaveDisabled(isEnable);
   }, [newResourceAttachments]);
 
@@ -150,35 +150,12 @@ export default function ResourceAttachmentsModel({
             <Form.Label>ResourceId</Form.Label>
             <Form.Control
               type="text"
-              name="resourceId"
+              name="resourcesId"
               placeholder="Enter ResourceId"
-              value={newResourceAttachments?.resourceId}
+              value={newResourceAttachments?.resourcesId}
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="file">
-            <Form.Label>FileId</Form.Label>
-            <Form.Control
-              type="text"
-              name="fileId"
-              placeholder="FileId"
-              value={newResourceAttachments?.fileId}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-
-
-          <Form.Group className="mb-3" controlId="description">
-            <Form.Label>Description</Form.Label>
-            <Form.Control
-              type="text"
-              name="description"
-              placeholder="Description"
-              value={newResourceAttachments?.description}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-
           <Form.Group className="mb-3" controlId="attachmentType">
             <Form.Label>ResourceAttachmentTypeId</Form.Label>
             <Form.Control
@@ -189,28 +166,21 @@ export default function ResourceAttachmentsModel({
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="attachmentType">
-            <Form.Label>RecordStatusId</Form.Label>
+         
+
+          <Form.Group className="mb-3" controlId="Description">
+            <Form.Label>Description</Form.Label>
             <Form.Control
               type="text"
-              name="recordStatusId"
-              placeholder=" Enter RecordStatusId"
-              value={newResourceAttachments?.recordStatusId}
+              name="description"
+              placeholder="Description"
+              value={newResourceAttachments?.description}
               onChange={changeHandler}
             />
           </Form.Group>
-
-          {/* <Form.Group className="mb-3" controlId="visibleToCustomer">
-            <Form.Label>VisibleToCustomer</Form.Label>
-            <Form.Control
-              type="text"
-              name="visibleToCustomer"
-              placeholder="VisibleToCustomer"
-              value={newResourceAttachments?.VisibleToCustomer}
-              onChange={changeHandler}
-            />
-          </Form.Group> */}
-          
+          <Form.Group>
+          <input type="file" onChange={saveFileSelected} />
+          </Form.Group>
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel
@@ -228,21 +198,21 @@ export default function ResourceAttachmentsModel({
 
 ResourceAttachmentsModel.propTypes = {
   /**
-   * Callback function for Add Enquiry
+   * Callback function for Add ResourceAttachments
    */
-  onAddEnquiry: PropTypes.func,
+  onAddResourceAttachments: PropTypes.func,
   /**
-   * Callback function for Update Enquiry
+   * Callback function for Update ResourceAttachments
    */
-  onUpdateEnquiry: PropTypes.func,
+  onUpdateResourceAttachments: PropTypes.func,
   /**
-   * Callback function for Delete Enquiry
+   * Callback function for Delete ResourceAttachments
    */
-  onDeleteEnquiry: PropTypes.func,
+  onDeleteResourceAttachments: PropTypes.func,
   /**
-   * Callback function for Get Enquiry
+   * Callback function for Get ResourceAttachments
    */
-  onGetEnquiry: PropTypes.func,
+  onGetResourceAttachments: PropTypes.func,
   /**
    * isEdit for bool type
    */
@@ -252,7 +222,7 @@ ResourceAttachmentsModel.propTypes = {
    */
   isDelete: PropTypes.bool,
   /**
-   * Callback function for Get Enquiry
+   * Callback function for Get ResourceAttachments
    */
   onClose: PropTypes.func,
   /**
@@ -260,9 +230,9 @@ ResourceAttachmentsModel.propTypes = {
    */
   id: PropTypes.number,
   /**
- * enquiryData for object type
+ * resourceAttachmentsData for object type
  */
-  enquiryData: PropTypes.any,
+  resourceAttachmentsData: PropTypes.any,
 };
 
 ResourceAttachmentsModel.defaultProps = {

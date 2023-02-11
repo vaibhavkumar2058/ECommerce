@@ -22,7 +22,7 @@ import {
   const ERROR = "Error";
 
   // ResourceAttachments GET  ACTIONS
-  const getResourceAttachments = () => {
+  const getResourceAttachmentses = () => {
     dispatch(getResourceAttachmentsBeginAction());
     return API.get(hapyCarURL,
       null,
@@ -55,9 +55,12 @@ import {
 
   // ResourceAttachments ADD  ACTIONS
   const addResourceAttachments = (resourceAttachments) => {
+    const formData = new FormData();
+    Object.keys(resourceAttachments).forEach((key) => formData.append(key,resourceAttachments[key]));
+
     return API.post(
       hapyCarURL,
-      { data: resourceAttachments },
+      { data: formData },
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
@@ -192,7 +195,7 @@ import {
     addResourceAttachments,
     updateResourceAttachments,
     deleteResourceAttachments,
-    getResourceAttachments,
+    getResourceAttachmentses,
     resourceAttachmentsById,
   };
 }

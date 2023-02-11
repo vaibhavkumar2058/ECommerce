@@ -6,6 +6,8 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
+import Select from 'react-select';
+import Products from "../../pages/Product";
 
 export default function ProductModel({
   onAddProduct,
@@ -17,13 +19,21 @@ export default function ProductModel({
   id,
   onClose,
   productData,
+  categories,
 }) {
   const [newProduct, setNewProduct] = useState({
-    productName: "", 
-    categoryTypeId:null,
+    productName: "",
+    categoryTypeId: null,
+    attachment: null,
     description: "",
-   
   });
+
+  const [categoryOptions, setCategoryOptions] = useState(categories.map((category, i) => (
+    {
+      key: i,
+      label: category.categoryTypeName,
+      value: category.categoryTypeId,
+    })).filter((item) => item));
 
   const [fileSelected, setFileSelected] = useState();
 
@@ -51,6 +61,20 @@ export default function ProductModel({
     });
   };
 
+  const selectChangeHandler = (e) => {
+    debugger;
+    setNewProduct({
+      ...newProduct,
+      "productId": e.value,
+    });
+  };
+
+  const saveFileSelected = (e) => {
+    //in case you wan to print the file selected
+    //console.log(e.target.files[0]);
+    setFileSelected(e.target.files[0]);
+  };
+
   const saveHandler = async () => {
     newProduct.file = fileSelected;
     if (isEdit) {
@@ -66,7 +90,7 @@ export default function ProductModel({
       }
     }
     else {
-    
+
       const response = await onAddProduct(newProduct);
       if (response.payload.title == "Success") {
         setMessageStatus({
@@ -99,6 +123,16 @@ export default function ProductModel({
   };
 
   useEffect(() => {
+    setCategoryOptions(categories.map((category, i) => (
+      {
+        key: i,
+        label: category.categoryTypeName,
+        value: category.categoryTypeId,
+      })).filter((item) => item));
+
+  }, [categories]);
+
+  useEffect(() => {
     if (isEdit) {
       setNewProduct(productData);
     }
@@ -109,7 +143,7 @@ export default function ProductModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newProduct?.productName ||   !newProduct?.categoryTypeId||   !newProduct?.description;
+      !newProduct?.productName || !newProduct?.categoryTypeId || !newProduct?.description;
     setSaveDisabled(isEnable);
   }, [newProduct]);
 
@@ -135,6 +169,14 @@ export default function ProductModel({
       )}
       {!isDelete && (
         <Form>
+
+          <Form.Group className="mb-3" controlId="categoryTypeId">
+            <Form.Label>Category Type</Form.Label>
+            <Select options={categoryOptions} name="categoryTypeId"
+              value={newProduct?.categoryTypeId}
+              onChange={selectChangeHandler} />
+          </Form.Group>
+
           <Form.Group
             className={styles.stFormContainer}
             controlId="formProduct"
@@ -148,28 +190,12 @@ export default function ProductModel({
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>CategoryTypeId</Form.Label>
-          <Form.Control
-            type="text"
-            name="categoryTypeId"
-            placeholder="CategoryTypeId"
-            value={newProduct?.categoryTypeId}
-            onChange={changeHandler}
-          />
-        </Form.Group>
-
-          <Form.Group className="mb-3" controlId="categoryTypeId">
-            <Form.Label>CategoryTypeId</Form.Label>
-            <Form.Control
-              type="text"
-              name="categoryTypeId"
-              placeholder="CategoryTypeId"
-              value={newProduct?.categoryTypeId}
-              onChange={changeHandler}
-            />
+          <Form.Group>
+            <Form.Label>Product Image</Form.Label>
           </Form.Group>
-
+          <Form.Group>
+            <input type="file" onChange={saveFileSelected} />
+          </Form.Group>
           <Form.Group className="mb-3" controlId="description">
             <Form.Label>Description</Form.Label>
             <Form.Control
@@ -235,6 +261,10 @@ ProductModel.propTypes = {
  * productData for object type
  */
   productData: PropTypes.any,
+  /**
+* categories for object type
+*/
+  categories: PropTypes.any,
 };
 
 ProductModel.defaultProps = {
@@ -247,5 +277,6 @@ ProductModel.defaultProps = {
   onClose: null,
   id: null,
   productData: null,
+  categories: null,
 };
 

@@ -157,7 +157,7 @@ export default function Securitys() {
   });
 
 
-  const getAllSecuritys = async () => {
+  const getAllSecurities = async () => {
     const response = await getSecurity();
     if (response.payload.title == "Success") {
       setMessageStatus({
