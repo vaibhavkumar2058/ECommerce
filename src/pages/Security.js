@@ -156,7 +156,6 @@ export default function Securitys() {
     }
   });
 
-
   const getAllSecurities = async () => {
     const response = await getSecurity();
     if (response.payload.title == "Success") {
