@@ -20,7 +20,7 @@ export default function ProductAttachmentsModel({
   productAttachmentsData,
 }) {
   const [newProductAttachments, setNewProductAttachments] = useState({
-    productId:null,
+    productId:id,
     attachment:null,
     description:"test",
   });
@@ -162,7 +162,10 @@ export default function ProductAttachmentsModel({
             controlId="formProductAttachments"
           >
             <Form.Label>ProductId</Form.Label>
-            <Select options={Products} name="productId" value={newProductAttachments?.productId} onChange={selectChangeHandler} />
+            <Select options={Products} name="productId"
+            onChange={selectChangeHandler}
+            defaultValue={newProductAttachments?.productId}
+             />
           </Form.Group>
 
           <Form.Group>
