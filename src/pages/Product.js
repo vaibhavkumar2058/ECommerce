@@ -62,7 +62,7 @@ export default function Products() {
     addProduct,
     updateProduct,
     deleteProduct,
-    getProduct,
+    getProducts,
     productById,
   } = useFetchProducts();
 
@@ -175,7 +175,7 @@ export default function Products() {
 
 
   const getAllProducts = async () => {
-    const response = await getProduct();
+    const response = await getProducts();
     if (response.payload.title == "Success") {
       const categoryList = await getCategoryTypes();
 

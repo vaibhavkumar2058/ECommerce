@@ -21,7 +21,7 @@ import {
   const ERROR = "Error";
 
   // Product GET  ACTIONS
-  const getProduct = () => {
+  const getProducts = () => {
     dispatch(getProductBeginAction());
     return API.get(hapyCarURL,
       null,
@@ -82,9 +82,6 @@ import {
           })
         );
       });
-
-
-
 
   };
 
@@ -191,7 +188,7 @@ import {
     addProduct,
     updateProduct,
     deleteProduct,
-    getProduct,
+    getProducts,
     productById,
   };
 }
