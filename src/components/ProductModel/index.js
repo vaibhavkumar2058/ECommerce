@@ -237,7 +237,7 @@ ProductModel.propTypes = {
    * Callback function for Delete Product
    */
   onDeleteProduct: PropTypes.func,
-  /**
+  /**     
    * Callback function for Get Product
    */
   onGetProduct: PropTypes.func,

@@ -6,6 +6,8 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
+import Select from 'react-select';
+import Carts from "../../pages/Cart";
 
 export default function CartModel({
   onAddCart,
@@ -17,15 +19,32 @@ export default function CartModel({
   id,
   onClose,
   cartData,
+  products,
+  // recordStatuses,
 }) {
   const [newCart, setNewCart] = useState({
-    resourceId:null,
+    resourcesId:null,
     productId:null,
     cost:null,
     quantity:"",
     description:"",
     recordStatusId:null,
   });
+  const [productOptions, setProductOptions] = useState(products.map((product, i) => (
+    {
+      key: i,
+      label: product.productName,
+      value: product.productId,
+    })).filter((item) => item));
+
+    // const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatuses.map((recordStatus, i) => (
+    //   {
+    //     key: i,
+    //     label: recordStatus.actionName,
+    //     value: recordStatus.recordStatusId,
+    //   })).filter((item) => item));
+  
+
 
   const [fileSelected, setFileSelected] = useState();
 
@@ -50,6 +69,13 @@ export default function CartModel({
     setNewCart({
       ...newCart,
       [e.target.name]: e.target.value,
+    });
+  };
+  const selectChangeHandler = (e) => {
+    debugger;
+    setNewCart({
+      ...newCart,
+      "cartId": e.value,
     });
   };
 
@@ -101,6 +127,27 @@ export default function CartModel({
       })
     }
   };
+  useEffect(() => {
+    setProductOptions(products.map((product, i) => (
+      {
+        key: i,
+        label: product.productName,
+        value: product.productId,
+      })).filter((item) => item));
+
+  }, [products]);
+
+  // useEffect(() => {
+  //   setRecordStatusOptions(recordStatuses.map((recordStatus, i) => (
+  //     {
+  //       key: i,
+  //       label: recordStatus.actionName,
+  //       value: recordStatus.recordStatusId,
+  //     })).filter((item) => item));
+
+  // }, [recordStatuses]);
+
+
 
   useEffect(() => {
     if (isEdit) {
@@ -113,7 +160,7 @@ export default function CartModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newCart?.resourceId || !newCart?.productId  || !newCart?.cost || !newCart?.quantity|| !newCart?.description|| !newCart?.recordStatusId;
+      !newCart?.resourcesId || !newCart?.productId  || !newCart?.cost || !newCart?.quantity|| !newCart?.description|| !newCart?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newCart]);
 
@@ -139,16 +186,30 @@ export default function CartModel({
       )}
       {!isDelete && (
         <Form>
+          <Form.Group className="mb-3" controlId="productId">
+            <Form.Label>Product</Form.Label>
+            <Select options={productOptions} name="productId"
+              value={newCart?.productId}
+              onChange={selectChangeHandler} />
+          </Form.Group>
+          {/* <Form.Group className="mb-3" controlId="recordStatusId">
+            <Form.Label>RecordStatus</Form.Label>
+            <Select options={recordStatusOptions} name="recordStatusId"
+              value={newCart?.recordStatusId}
+              onChange={selectChangeHandler} />
+          </Form.Group> */}
+
+
           <Form.Group
             className={styles.stFormContainer}
             controlId="formCart"
           >
-            <Form.Label>ResourceId</Form.Label>
+            <Form.Label>ResourcesId</Form.Label>
             <Form.Control
               type="text"
-              name="resourceId"
-              placeholder="ResourceId"
-              value={newCart?.resourceId}
+              name="resourcesId"
+              placeholder="ResourcesId"
+              value={newCart?.resourcesId}
               onChange={changeHandler}
             />
           </Form.Group>
@@ -258,6 +319,14 @@ CartModel.propTypes = {
  * cartData for object type
  */
   cartData: PropTypes.any,
+  /**
+* products for object type
+*/
+products: PropTypes.any,
+/**
+* recordStatuses for object type
+*/
+// recordStatuses: PropTypes.any,
 };
 
 CartModel.defaultProps = {
@@ -270,5 +339,7 @@ CartModel.defaultProps = {
   onClose: null,
   id: null,
   cartData: null,
+  products:null,
+  // recordStatuses:null,
 };
 
