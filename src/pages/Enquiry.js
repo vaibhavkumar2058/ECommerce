@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Map, GoogleApiWrapper, Marker  } from 'google-maps-react';
-import CustomMap from '../pages/Address';
+import CustomMap from '../pages/CustomMap';
 
 const mapStyles = {
   width: '100%',
