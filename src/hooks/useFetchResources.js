@@ -3,33 +3,33 @@ import { useSelector, useDispatch } from "react-redux";
 import { useAPI } from "../services";
 
 import {
-    addGenderAction,
-    updateGenderAction,   
-    deleteGenderAction,
-    getGenderBeginAction,
-    getGenderSuccessAction,
-    getGenderFailureAction,
-    genderAction,
-  } from "../actions/genderActions";
+    addResourcesAction,
+    updateResourcesAction,   
+    deleteResourcesAction,
+    getResourcesBeginAction,
+    getResourcesSuccessAction,
+    getResourcesFailureAction,
+    resourcesAction,
+  } from "../actions/resourcesActions";
 
-  export default function useFetchGender() {
+  export default function useFetchResources() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/gender";
+  const hapyCarURL = "https://localhost:7062/resources";
 
   const API = useAPI();
   const SUCCESS = "Success";
   const ERROR = "Error";
 
-  // GENDER GET  ACTIONS
-  const getGenders = () => {
-    dispatch(getGenderBeginAction());
+  // Resources GET  ACTIONS
+  const getResources = () => {
+    dispatch(getResourcesBeginAction());
     return API.get(hapyCarURL,
       null,
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          getGenderSuccessAction({
+          getResourcesSuccessAction({
             ...data,
             title: SUCCESS,
           })
@@ -37,12 +37,12 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.gender) {
-          const [errors] = error.response.data.gender;
+        if (error.response.data.resources) {
+          const [errors] = error.response.data.resources;
           errorMsg = errors;
         }
         dispatch(
-          getGenderFailureAction({
+          getResourcesFailureAction({
             ...errorMsg,
             title: ERROR,
             errorMsg,
@@ -52,16 +52,16 @@ import {
 
   };
 
-  // GENDER ADD  ACTIONS
-  const addGender = (gender) => {
+  // Resources ADD  ACTIONS
+  const addResources = (resources) => {
     return API.post(
       hapyCarURL,
-      { data: gender },
+      { data: resources },
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          addGenderAction({
+          addResourcesAction({
             ...data,
             title: SUCCESS,
           })
@@ -70,13 +70,13 @@ import {
 
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.gender) {
-          const [errors] = error.response.data.gender;
+        if (error.response.data.resources) {
+          const [errors] = error.response.data.resources;
           errorMsg = errors;
         }
         dispatch(
-          addGenderAction({
-            ...gender,
+          addResourcesAction({
+            ...resources,
             title: ERROR,
             errorMsg,
           })
@@ -88,11 +88,11 @@ import {
 
   };
 
-  // GENDER UPDATE  ACTIONS
-  const updateGender = (genderId, gender) => {
+  // Resources UPDATE  ACTIONS
+  const updateResources = (resourcesId, resources) => {
 
-    return API.put(`${hapyCarURL}/${genderId}`,
-      { data: gender },
+    return API.put(`${hapyCarURL}/${resourcesId}`,
+      { data: resources },
       { suppressErrors: [400] }
     )
       .then(({ data
@@ -100,7 +100,7 @@ import {
       }) =>
 
         dispatch(
-          updateGenderAction({
+          updateResourcesAction({
             ...data,
             title: SUCCESS,
           })
@@ -108,13 +108,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.gender) {
-          const [errors] = error.response.data.gender;
+        if (error.response.data.resources) {
+          const [errors] = error.response.data.resources;
           errorMsg = errors;
         }
         dispatch(
-          updateGenderAction({
-            ...gender,
+          updateResourcesAction({
+            ...resources,
             title: ERROR,
             errorMsg,
           })
@@ -123,15 +123,15 @@ import {
 
   };
 
-  // GENDER DELETE  ACTIONS
-  const deleteGender = (genderId) => {
-    return API.delete(`${hapyCarURL}/${genderId}`,
+  // Product DELETE  ACTIONS
+  const deleteResources = (resourcesId) => {
+    return API.delete(`${hapyCarURL}/${resourcesId}`,
       null,
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          deleteGenderAction({
+          deleteResourcesAction({
             ...data,
             title: SUCCESS,
           })
@@ -139,13 +139,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.gender) {
-          const [errors] = error.response.data.gender;
+        if (error.response.data.resources) {
+          const [errors] = error.response.data.resources;
           errorMsg = errors;
         }
         dispatch(
-          deleteGenderAction({
-            ...genderId,
+          deleteResourcesAction({
+            ...resourcesId,
             title: ERROR,
             errorMsg,
           })
@@ -154,9 +154,9 @@ import {
 
   };
 
-  // GENDERBY ID ACTIONS
-  const genderById = (genderId) => {
-    return API.get(`${hapyCarURL}/${genderId}`,
+  // Product BY ID ACTIONS
+  const resourcesById = (resourcesId) => {
+    return API.get(`${hapyCarURL}/${resourcesId}`,
       null,
       { suppressErrors: [400] }
     )
@@ -165,7 +165,7 @@ import {
       }) =>
 
         dispatch(
-            genderAction({
+            resourcesAction({
             ...data,
             title: SUCCESS,
           })
@@ -173,12 +173,12 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.gender) {
-          const [errors] = error.response.data.gender;
+        if (error.response.data.resources) {
+          const [errors] = error.response.data.eesources;
           errorMsg = errors;
         }
         dispatch(
-            genderAction({
+            resourcesAction({
             ...errorMsg,
             title: ERROR,
             errorMsg,
@@ -188,10 +188,10 @@ import {
       
   };
   return {
-    addGender,
-    updateGender,
-    deleteGender,
-    getGenders,
-    genderById,
+    addResources,
+    updateResources,
+    deleteResources,
+    getResources,
+    resourcesById,
   };
 }

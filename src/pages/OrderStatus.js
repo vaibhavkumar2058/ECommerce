@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
-import useFetchGender from "../hooks/useFetchGender";
-import GenderModel from "../components/GenderModel";
+import useFetchOrderStatus from "../hooks/useFetchOrderStatus";
+import OrderStatusModel from "../components/OrderStatusModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
@@ -24,16 +24,16 @@ const MyExportCSV = (props) => {
   );
 };
 
-export default function Gender() {
+export default function OrderStatus() {
 
-  const [genders, setGenders] = useState([]);
+  const [orderStatuses, setOrderStatuses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
   const handleClose = () => {
-    getAllGender();
+    getAllOrderStatuses();
     setIsEdit(false);
     setIsDelete(false);
     setShow(false);
@@ -41,10 +41,13 @@ export default function Gender() {
   const handleShow = () => setShow(true);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-  const [gender, setGender] = useState({
-    genderName: "",
+  const [orderStatus, setOrderStatus] = useState({
+    orderStatusName:"",
     description:"",
-          });
+    recordStatusId:null,
+    
+    
+      });
 
   const [id, setId] = useState(null);
 
@@ -56,18 +59,20 @@ export default function Gender() {
   });
 
   const { 
-    addGender,
-    updateGender,
-    deleteGender,
-    getGenders,
-    genderById,
-  } = useFetchGender();
+    addOrderStatus,
+    updateOrderStatus,
+    deleteOrderStatus,
+    getOrderStatuses,
+    orderStatusById,
+  } = useFetchOrderStatus();
 
   const columns = [
-
-     { dataField: 'genderId', text: 'GenderId', sort: true,hidden:true },
-     { dataField: 'genderName', text: ' GenderName', sort: true },
-      { dataField: 'description', text: 'Description', sort: true },
+    { dataField: 'orderStatusId', text: 'orderStatus Id', sort: true, hidden: true },
+    { dataField: 'orderStatusName', text: 'OrderStatus Name', sort: true },
+    
+    { dataField: 'recordStatusId', text: 'RecordStatus Id', sort: true },
+    { dataField: 'description', text: 'Description', sort: true,},
+    
     
     // columns follow dataField and text structure
     {
@@ -77,18 +82,18 @@ export default function Gender() {
         return (
           <><button
             className="btn btn-primary btn-xs"
-            onClick={() => handleView(row.genderId, row.name)}
+            onClick={() => handleView(row.orderStatusId, row.name)}
           >
             View
           </button>
             <button
               className="btn btn-primary btn-xs"
-              onClick={() => handleEdit(row.genderId, row)}
+              onClick={() => handleEdit(row.orderStatusId, row)}
             >
               Edit
             </button><button
               className="btn btn-danger btn-xs"
-              onClick={() => handleDelete(row.genderId, row.name)}
+              onClick={() => handleDelete(row.orderStatusId, row.name)}
             >
               Delete
             </button></>
@@ -98,15 +103,15 @@ export default function Gender() {
   ];
 
   useEffect(() => {
-    if (genders.length == 0) {
-      getAllGender();
+    if (orderStatuses.length == 0) {
+      getAllOrderStatuses();
       setLoading(false)
     }
-  }, [genders]);
+  }, [orderStatuses]);
 
 
   const defaultSorted = [{
-    dataField: 'genderId',
+    dataField: 'orderStatusId',
     order: 'desc'
   }];
 
@@ -120,8 +125,8 @@ export default function Gender() {
   };
 
   const handleEdit = (rowId, row) => {
-    setGender(row);
-    //getGenderById(rowId);
+    setOrderStatus(row);
+    //getOrderStatusById(rowId);
     setId(rowId);
     setIsEdit(true);
     setShow(true);
@@ -153,12 +158,12 @@ export default function Gender() {
   });
 
 
-  const getAllGender = async () => {
-    const response = await getGenders();
+  const getAllOrderStatuses = async () => {
+    const response = await getOrderStatuses();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',
-        message: 'Gender Record Fetch Succefully.'
+        message: 'OrderStatus Record Fetch Succefully.'
       })
 
       var arr = [];
@@ -166,25 +171,25 @@ export default function Gender() {
         arr.push(response.payload[key]);
       }
 
-      setGenders(arr);
+      setOrderStatuses(arr);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Gender Fetch Failed.'
+        message: 'OrderStatus Fetch Failed.'
       })
     }
   };
 
-  const getGenderById = async (id) => {
-    const response = await genderById(id);
+  const getOrderStatusById = async (id) => {
+    const response = await orderStatusById(id);
     if (response.payload.title == "Success") {
-      setGender(response.payload);
+      setOrderStatus(response.payload);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Gender Get Failed.'
+        message: 'OrderStatus Get Failed.'
       })
     }
   };
@@ -211,11 +216,11 @@ export default function Gender() {
     <>
       <div className="m-t-40">
         {loading && <div>A moment please...</div>}
-        {gender && (<div>
+        {orderStatuses && (<div>
           <ToolkitProvider
             bootstrap4
-            keyField='genderId'
-            data={genders}
+            keyField='orderStatusId'
+            data={orderStatuses}
             columns={columns}
             search
           >
@@ -233,7 +238,7 @@ export default function Gender() {
                           <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
                           <Button variant="primary" onClick={handleShow}>
-                            Add Gender
+                            Add OrderStatus
                           </Button>
                           </div>
                         </div>
@@ -264,19 +269,19 @@ export default function Gender() {
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Add Gender</Modal.Title>
+              <Modal.Title>Add OrderStatus</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <GenderModel
-                onAddGender={addGender}
-                onUpdateGender={updateGender}
-                onDeleteGender={deleteGender}
-                onGetGender={genderById}
+              <OrderStatusModel
+                onAddOrderStatus={addOrderStatus}
+                onUpdateOrderStatus={updateOrderStatus}
+                onDeleteOrderStatus={deleteOrderStatus}
+                onGetOrderStatus={orderStatusById}
                 onClose={handleClose}
                 isEdit={isEdit}
                 isDelete={isDelete}
                 id={id}
-                genderData={gender}
+                orderStatusData={orderStatus}
               />
             </Modal.Body>
 
