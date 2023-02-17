@@ -3,33 +3,33 @@ import { useSelector, useDispatch } from "react-redux";
 import { useAPI } from "../services";
 
 import {
-    addProductAction,
-    updateProductAction,   
-    deleteProductAction,
-    getProductBeginAction,
-    getProductSuccessAction,
-    getProductFailureAction,
-    productAction,
-  } from "../actions/productActions";
+    addOrderStatusAction,
+    updateOrderStatusAction,   
+    deleteOrderStatusAction,
+    getOrderStatusBeginAction,
+    getOrderStatusSuccessAction,
+    getOrderStatusFailureAction,
+    orderStatusAction ,
+  } from "../actions/orderStatusActions";
 
-  export default function useFetchProducts() {
+  export default function useFetchOrderStatuses() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/product";
+  const hapyCarURL = "https://localhost:7062/orderStatus";
 
   const API = useAPI();
   const SUCCESS = "Success";
   const ERROR = "Error";
 
-  // Product GET  ACTIONS
-  const getProducts = () => {
-    dispatch(getProductBeginAction());
+  // OrderTracking GET  ACTIONS
+  const getOrderStatuses = () => {
+    dispatch(getOrderStatusBeginAction());
     return API.get(hapyCarURL,
       null,
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          getProductSuccessAction({
+          getOrderStatusSuccessAction({
             ...data,
             title: SUCCESS,
           })
@@ -37,12 +37,12 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.Product) {
-          const [errors] = error.response.data.product;
+        if (error.response.data.orderStatus) {
+          const [errors] = error.response.data.orderStatus;
           errorMsg = errors;
         }
         dispatch(
-          getProductFailureAction({
+          getOrderStatusFailureAction({
             ...errorMsg,
             title: ERROR,
             errorMsg,
@@ -52,16 +52,16 @@ import {
 
   };
 
-  // Product ADD  ACTIONS
-  const addProduct = (product) => {
+  // OrderStatus ADD  ACTIONS
+  const addOrderStatus = (orderStatus) => {
     return API.post(
       hapyCarURL,
-      { data: product },
+      { data: orderStatus },
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          addProductAction({
+          addOrderStatusAction({
             ...data,
             title: SUCCESS,
           })
@@ -70,26 +70,29 @@ import {
 
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.product) {
-          const [errors] = error.response.data.product;
+        if (error.response.data.orderStatus) {
+          const [errors] = error.response.data.orderStatus;
           errorMsg = errors;
         }
         dispatch(
-          addProductAction({
-            ...product,
+          addOrderStatusAction({
+            ...orderStatus,
             title: ERROR,
             errorMsg,
           })
         );
       });
 
+
+
+
   };
 
-  // Product UPDATE  ACTIONS
-  const updateProduct = (productId, product) => {
+  // OrderStatus UPDATE  ACTIONS
+  const updateOrderStatus = (orderStatusId, orderStatus) => {
 
-    return API.put(`${hapyCarURL}/${productId}`,
-      { data: product },
+    return API.put(`${hapyCarURL}/${orderStatusId}`,
+      { data: orderStatus},
       { suppressErrors: [400] }
     )
       .then(({ data
@@ -97,7 +100,7 @@ import {
       }) =>
 
         dispatch(
-          updateProductAction({
+          updateOrderStatusAction({
             ...data,
             title: SUCCESS,
           })
@@ -105,13 +108,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.product) {
-          const [errors] = error.response.data.product;
+        if (error.response.data.orderStatus) {
+          const [errors] = error.response.data.orderStatus;
           errorMsg = errors;
         }
         dispatch(
-          updateProductAction({
-            ...product,
+          updateOrderStatusAction({
+            ...orderStatus,
             title: ERROR,
             errorMsg,
           })
@@ -120,15 +123,15 @@ import {
 
   };
 
-  // Product DELETE  ACTIONS
-  const deleteProduct = (productId) => {
-    return API.delete(`${hapyCarURL}/${productId}`,
+  // OrderStatus DELETE  ACTIONS
+  const deleteOrderStatus = (orderStatusId) => {
+    return API.delete(`${hapyCarURL}/${orderStatusId}`,
       null,
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          deleteProductAction({
+          deleteOrderStatusAction({
             ...data,
             title: SUCCESS,
           })
@@ -136,13 +139,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.product) {
-          const [errors] = error.response.data.product;
+        if (error.response.data.orderStatus) {
+          const [errors] = error.response.data.orderStatus;
           errorMsg = errors;
         }
         dispatch(
-          deleteProductAction({
-            ...productId,
+          deleteOrderStatusAction({
+            ...orderStatusId,
             title: ERROR,
             errorMsg,
           })
@@ -151,9 +154,9 @@ import {
 
   };
 
-  // Product BY ID ACTIONS
-  const productById = (productId) => {
-    return API.get(`${hapyCarURL}/${productId}`,
+  // OrderStatus BY ID ACTIONS
+  const orderStatusById = (orderStatusId) => {
+    return API.get(`${hapyCarURL}/${orderStatusId}`,
       null,
       { suppressErrors: [400] }
     )
@@ -162,7 +165,7 @@ import {
       }) =>
 
         dispatch(
-            productAction({
+          orderStatusAction ({
             ...data,
             title: SUCCESS,
           })
@@ -170,12 +173,12 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.product) {
-          const [errors] = error.response.data.product;
+        if (error.response.data.orderStatus) {
+          const [errors] = error.response.data.orderStatus;
           errorMsg = errors;
         }
         dispatch(
-            productAction({
+          orderStatusAction ({
             ...errorMsg,
             title: ERROR,
             errorMsg,
@@ -185,10 +188,10 @@ import {
       
   };
   return {
-    addProduct,
-    updateProduct,
-    deleteProduct,
-    getProducts,
-    productById,
+    addOrderStatus,
+    updateOrderStatus,
+    deleteOrderStatus,
+    getOrderStatuses,
+    orderStatusById,
   };
 }

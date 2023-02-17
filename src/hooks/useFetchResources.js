@@ -3,33 +3,33 @@ import { useSelector, useDispatch } from "react-redux";
 import { useAPI } from "../services";
 
 import {
-    addProductAction,
-    updateProductAction,   
-    deleteProductAction,
-    getProductBeginAction,
-    getProductSuccessAction,
-    getProductFailureAction,
-    productAction,
-  } from "../actions/productActions";
+    addResourcesAction,
+    updateResourcesAction,   
+    deleteResourcesAction,
+    getResourcesBeginAction,
+    getResourcesSuccessAction,
+    getResourcesFailureAction,
+    resourcesAction,
+  } from "../actions/resourcesActions";
 
-  export default function useFetchProducts() {
+  export default function useFetchResources() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/product";
+  const hapyCarURL = "https://localhost:7062/resources";
 
   const API = useAPI();
   const SUCCESS = "Success";
   const ERROR = "Error";
 
-  // Product GET  ACTIONS
-  const getProducts = () => {
-    dispatch(getProductBeginAction());
+  // Resources GET  ACTIONS
+  const getResources = () => {
+    dispatch(getResourcesBeginAction());
     return API.get(hapyCarURL,
       null,
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          getProductSuccessAction({
+          getResourcesSuccessAction({
             ...data,
             title: SUCCESS,
           })
@@ -37,12 +37,12 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.Product) {
-          const [errors] = error.response.data.product;
+        if (error.response.data.resources) {
+          const [errors] = error.response.data.resources;
           errorMsg = errors;
         }
         dispatch(
-          getProductFailureAction({
+          getResourcesFailureAction({
             ...errorMsg,
             title: ERROR,
             errorMsg,
@@ -52,16 +52,16 @@ import {
 
   };
 
-  // Product ADD  ACTIONS
-  const addProduct = (product) => {
+  // Resources ADD  ACTIONS
+  const addResources = (resources) => {
     return API.post(
       hapyCarURL,
-      { data: product },
+      { data: resources },
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          addProductAction({
+          addResourcesAction({
             ...data,
             title: SUCCESS,
           })
@@ -70,26 +70,29 @@ import {
 
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.product) {
-          const [errors] = error.response.data.product;
+        if (error.response.data.resources) {
+          const [errors] = error.response.data.resources;
           errorMsg = errors;
         }
         dispatch(
-          addProductAction({
-            ...product,
+          addResourcesAction({
+            ...resources,
             title: ERROR,
             errorMsg,
           })
         );
       });
 
+
+
+
   };
 
-  // Product UPDATE  ACTIONS
-  const updateProduct = (productId, product) => {
+  // Resources UPDATE  ACTIONS
+  const updateResources = (resourcesId, resources) => {
 
-    return API.put(`${hapyCarURL}/${productId}`,
-      { data: product },
+    return API.put(`${hapyCarURL}/${resourcesId}`,
+      { data: resources },
       { suppressErrors: [400] }
     )
       .then(({ data
@@ -97,7 +100,7 @@ import {
       }) =>
 
         dispatch(
-          updateProductAction({
+          updateResourcesAction({
             ...data,
             title: SUCCESS,
           })
@@ -105,13 +108,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.product) {
-          const [errors] = error.response.data.product;
+        if (error.response.data.resources) {
+          const [errors] = error.response.data.resources;
           errorMsg = errors;
         }
         dispatch(
-          updateProductAction({
-            ...product,
+          updateResourcesAction({
+            ...resources,
             title: ERROR,
             errorMsg,
           })
@@ -121,14 +124,14 @@ import {
   };
 
   // Product DELETE  ACTIONS
-  const deleteProduct = (productId) => {
-    return API.delete(`${hapyCarURL}/${productId}`,
+  const deleteResources = (resourcesId) => {
+    return API.delete(`${hapyCarURL}/${resourcesId}`,
       null,
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          deleteProductAction({
+          deleteResourcesAction({
             ...data,
             title: SUCCESS,
           })
@@ -136,13 +139,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.product) {
-          const [errors] = error.response.data.product;
+        if (error.response.data.resources) {
+          const [errors] = error.response.data.resources;
           errorMsg = errors;
         }
         dispatch(
-          deleteProductAction({
-            ...productId,
+          deleteResourcesAction({
+            ...resourcesId,
             title: ERROR,
             errorMsg,
           })
@@ -152,8 +155,8 @@ import {
   };
 
   // Product BY ID ACTIONS
-  const productById = (productId) => {
-    return API.get(`${hapyCarURL}/${productId}`,
+  const resourcesById = (resourcesId) => {
+    return API.get(`${hapyCarURL}/${resourcesId}`,
       null,
       { suppressErrors: [400] }
     )
@@ -162,7 +165,7 @@ import {
       }) =>
 
         dispatch(
-            productAction({
+            resourcesAction({
             ...data,
             title: SUCCESS,
           })
@@ -170,12 +173,12 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.product) {
-          const [errors] = error.response.data.product;
+        if (error.response.data.resources) {
+          const [errors] = error.response.data.eesources;
           errorMsg = errors;
         }
         dispatch(
-            productAction({
+            resourcesAction({
             ...errorMsg,
             title: ERROR,
             errorMsg,
@@ -185,10 +188,10 @@ import {
       
   };
   return {
-    addProduct,
-    updateProduct,
-    deleteProduct,
-    getProducts,
-    productById,
+    addResources,
+    updateResources,
+    deleteResources,
+    getResources,
+    resourcesById,
   };
 }

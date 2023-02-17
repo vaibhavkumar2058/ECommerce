@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
-import useFetchCart from "../hooks/useFetchCart";
-import useFetchProduct from "../hooks/useFetchProduct";
-// import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
-import CartModel from "../components/CartModel";
+import useFetchOrderStatus from "../hooks/useFetchOrderStatus";
+import OrderStatusModel from "../components/OrderStatusModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
@@ -26,18 +24,16 @@ const MyExportCSV = (props) => {
   );
 };
 
-export default function Carts() {
+export default function OrderStatus() {
 
-  const [carts, setCarts] = useState([]);
-  const [products, setProducts  ] = useState();
-  // const [recordStatuses, setRecordStatuses  ] = useState();
+  const [orderStatuses, setOrderStatuses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
   const handleClose = () => {
-    getAllCarts();
+    getAllOrderStatuses();
     setIsEdit(false);
     setIsDelete(false);
     setShow(false);
@@ -45,14 +41,12 @@ export default function Carts() {
   const handleShow = () => setShow(true);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-  const [cart, setCart] = useState({
-    resourcesId:null,
-    productId:null,
-    cost:null,
-    quantity:"",
+  const [orderStatus, setOrderStatus] = useState({
+    orderStatusName:"",
     description:"",
     recordStatusId:null,
-
+    
+    
       });
 
   const [id, setId] = useState(null);
@@ -65,29 +59,21 @@ export default function Carts() {
   });
 
   const { 
-    addCart,
-    updateCart,
-    deleteCart,
-    getCart,
-    cartById,
-  } = useFetchCart();
-  const {
-    getProducts,
-  } = useFetchProduct();
-  // const {
-  //   getRecordStatuses,
-  // } = useFetchRecordStatus();
-
-
+    addOrderStatus,
+    updateOrderStatus,
+    deleteOrderStatus,
+    getOrderStatuses,
+    orderStatusById,
+  } = useFetchOrderStatus();
 
   const columns = [
-    { dataField: 'cartId', text: 'Cart Id', sort: true, hidden: true },
-    { dataField: 'resourcesId', text: 'Resources Id', sort: true  },
-    { dataField: 'productId', text: ' Product Id', sort: true },
-    { dataField: 'cost', text: 'Cost', sort: true },
-    { dataField: 'quantity', text: 'Quantity', sort: true },
-    { dataField: 'description', text: 'Description', sort: true },
-    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true },
+    { dataField: 'orderStatusId', text: 'orderStatus Id', sort: true, hidden: true },
+    { dataField: 'orderStatusName', text: 'OrderStatus Name', sort: true },
+    
+    { dataField: 'recordStatusId', text: 'RecordStatus Id', sort: true },
+    { dataField: 'description', text: 'Description', sort: true,},
+    
+    
     // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -96,18 +82,18 @@ export default function Carts() {
         return (
           <><button
             className="btn btn-primary btn-xs"
-            onClick={() => handleView(row.cartId, row.name)}
+            onClick={() => handleView(row.orderStatusId, row.name)}
           >
             View
           </button>
             <button
               className="btn btn-primary btn-xs"
-              onClick={() => handleEdit(row.cartId, row)}
+              onClick={() => handleEdit(row.orderStatusId, row)}
             >
               Edit
             </button><button
               className="btn btn-danger btn-xs"
-              onClick={() => handleDelete(row.cartId, row.name)}
+              onClick={() => handleDelete(row.orderStatusId, row.name)}
             >
               Delete
             </button></>
@@ -117,15 +103,15 @@ export default function Carts() {
   ];
 
   useEffect(() => {
-    if (carts.length == 0) {
-      getAllCarts();
+    if (orderStatuses.length == 0) {
+      getAllOrderStatuses();
       setLoading(false)
     }
-  }, [carts]);
+  }, [orderStatuses]);
 
 
   const defaultSorted = [{
-    dataField: 'cartId',
+    dataField: 'orderStatusId',
     order: 'desc'
   }];
 
@@ -139,8 +125,8 @@ export default function Carts() {
   };
 
   const handleEdit = (rowId, row) => {
-    setCart(row);
-    //getCartsById(rowId);
+    setOrderStatus(row);
+    //getOrderStatusById(rowId);
     setId(rowId);
     setIsEdit(true);
     setShow(true);
@@ -172,28 +158,12 @@ export default function Carts() {
   });
 
 
-  const getAllCarts = async () => {
-    const response = await getCart();
+  const getAllOrderStatuses = async () => {
+    const response = await getOrderStatuses();
     if (response.payload.title == "Success") {
-      const productList = await getProducts();
-      if (productList.payload.title == "Success") {
-        var carr = [];
-      for (var key in productList.payload) {
-        carr.push(productList.payload[key]);
-      }
-        setProducts(carr);
-      }
-      // const recordStatusList = await getRecordStatuses();
-      // if (recordStatusList.payload.title == "Success") {
-      //   var carr = [];
-      // for (var key in recordStatusList.payload) {
-      //   carr.push(recordStatusList.payload[key]);
-      // }
-      //   setRecordStatuses(carr);
-      // }
       setMessageStatus({
         mode: 'success',
-        message: 'Carts Record Fetch Succefully.'
+        message: 'OrderStatus Record Fetch Succefully.'
       })
 
       var arr = [];
@@ -201,25 +171,25 @@ export default function Carts() {
         arr.push(response.payload[key]);
       }
 
-      setCarts(arr);
+      setOrderStatuses(arr);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Cart Fetch Failed.'
+        message: 'OrderStatus Fetch Failed.'
       })
     }
   };
 
-  const getCartById = async (id) => {
-    const response = await cartById(id);
+  const getOrderStatusById = async (id) => {
+    const response = await orderStatusById(id);
     if (response.payload.title == "Success") {
-      setCart(response.payload);
+      setOrderStatus(response.payload);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Cart Get Failed.'
+        message: 'OrderStatus Get Failed.'
       })
     }
   };
@@ -246,11 +216,11 @@ export default function Carts() {
     <>
       <div className="m-t-40">
         {loading && <div>A moment please...</div>}
-        {carts && (<div>
+        {orderStatuses && (<div>
           <ToolkitProvider
             bootstrap4
-            keyField='cartId'
-            data={carts}
+            keyField='orderStatusId'
+            data={orderStatuses}
             columns={columns}
             search
           >
@@ -268,7 +238,7 @@ export default function Carts() {
                           <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
                           <Button variant="primary" onClick={handleShow}>
-                            Add Cart
+                            Add OrderStatus
                           </Button>
                           </div>
                         </div>
@@ -299,21 +269,19 @@ export default function Carts() {
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Add Cart</Modal.Title>
+              <Modal.Title>Add OrderStatus</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <CartModel
-                onAddCart={addCart}
-                onUpdateCart={updateCart}
-                onDeleteCart={deleteCart}
-                onGetCart={cartById}
+              <OrderStatusModel
+                onAddOrderStatus={addOrderStatus}
+                onUpdateOrderStatus={updateOrderStatus}
+                onDeleteOrderStatus={deleteOrderStatus}
+                onGetOrderStatus={orderStatusById}
                 onClose={handleClose}
                 isEdit={isEdit}
                 isDelete={isDelete}
                 id={id}
-                cartData={cart}
-                products={products}
-                // recordStatuses={recordStatuses}
+                orderStatusData={orderStatus}
               />
             </Modal.Body>
 

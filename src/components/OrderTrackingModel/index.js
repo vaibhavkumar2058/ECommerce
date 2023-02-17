@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
+//import OrderTracking from "../../pages/OrderTracking";
 
 export default function OrderTrackingModel({
   onAddOrderTracking,
@@ -17,13 +18,23 @@ export default function OrderTrackingModel({
   id,
   onClose,
   orderTrackingData,
+  //orderStatuss,
+
+
 }) {
   const [newOrderTracking, setNewOrderTracking] = useState({
     orderId:null,
     orderStatusId:null,
-    Description:"",
+    description:"",
     
   });
+  
+  // const [orderStatusOptions, setOrderStatusOptions] = useState(orderStatuss.map((orderStatus, i) => (
+  //   {
+  //     key: i,
+  //     label: orderStatus.actionName,
+  //     value: orderStatus.orderStatusId,
+  //   })).filter((item) => item));
 
   const [fileSelected, setFileSelected] = useState();
 
@@ -48,6 +59,13 @@ export default function OrderTrackingModel({
     setNewOrderTracking({
       ...newOrderTracking,
       [e.target.name]: e.target.value,
+    });
+  };
+  const selectChangeHandler = (e) => {
+    debugger;
+    setNewOrderTracking({
+      ...newOrderTracking,
+      "orderTrackingId": e.value,
     });
   };
 

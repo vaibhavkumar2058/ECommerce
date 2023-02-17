@@ -62,7 +62,7 @@ export default function Products() {
     addProduct,
     updateProduct,
     deleteProduct,
-    getProduct,
+    getProducts,
     productById,
   } = useFetchProducts();
 
@@ -74,7 +74,7 @@ export default function Products() {
 
     { dataField: 'productId', text: 'Product Id', sort: true, hidden: true },
     { dataField: 'productName', text: ' Product Name', sort: true },
-    { dataField: 'categoryType', text: ' Category Type', sort: true },
+    { dataField: 'categoryTypeId', text: ' Category Type Id', sort: true },
     { dataField: 'fileName', text: 'File Name', sort: true },
     // columns follow dataField and text structure
     {
@@ -175,7 +175,7 @@ export default function Products() {
 
 
   const getAllProducts = async () => {
-    const response = await getProduct();
+    const response = await getProducts();
     if (response.payload.title == "Success") {
       const categoryList = await getCategoryTypes();
 
