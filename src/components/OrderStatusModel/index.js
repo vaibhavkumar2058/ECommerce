@@ -6,34 +6,35 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
-import Select from 'react-select';
-import Products from "../../pages/Product";
 
-export default function ProductModel({
-  onAddProduct,
-  onUpdateProduct,
-  onDeleteProduct,
+
+export default function OrderStatusModel({
+  onAddOrderStatus,
+  onUpdateOrderStatus,
+  onDeleteOrderStatus,
   isEdit,
   isDelete,
-  onGetProduct,
+  onGetOrderStatus,
   id,
   onClose,
-  productData,
-  categories,
-}) {
-  const [newProduct, setNewProduct] = useState({
-    productName: "",
-    categoryTypeId: null,
-    attachment: null,
-    description: "",
-  });
+  orderStatusData,
+  //orderStatuss,
 
-  const [categoryOptions, setCategoryOptions] = useState(categories.map((category, i) => (
-    {
-      key: i,
-      label: category.categoryTypeName,
-      value: category.categoryTypeId,
-    })).filter((item) => item));
+
+}) {
+  const [newOrderStatus, setNewOrderStatus] = useState({
+    orderStatusName:"",
+    description:"",
+    recordStatusId:null,
+    
+  });
+  
+  // const [orderStatusOptions, setOrderStatusOptions] = useState(orderStatuss.map((orderStatus, i) => (
+  //   {
+  //     key: i,
+  //     label: orderStatus.actionName,
+  //     value: orderStatus.orderStatusId,
+  //   })).filter((item) => item));
 
   const [fileSelected, setFileSelected] = useState();
 
@@ -43,7 +44,7 @@ export default function ProductModel({
     status: false,
     message: "",
   });
-
+  
   const [saveDisabled, setSaveDisabled] = useState(true);
   const [buttonType, setButtonType] = useState("Save");
 
@@ -55,30 +56,25 @@ export default function ProductModel({
   };
 
   const changeHandler = (e) => {
-    setNewProduct({
-      ...newProduct,
+    setNewOrderStatus({
+      ...newOrderStatus,
       [e.target.name]: e.target.value,
     });
   };
-
   const selectChangeHandler = (e) => {
     debugger;
-    setNewProduct({
-      ...newProduct,
-      "productId": e.value,
+    setNewOrderStatus({
+      ...newOrderStatus,
+      "orderStatusId": e.value,
     });
   };
 
-  const saveFileSelected = (e) => {
-    //in case you wan to print the file selected
-    //console.log(e.target.files[0]);
-    setFileSelected(e.target.files[0]);
-  };
+  
 
   const saveHandler = async () => {
-    newProduct.file = fileSelected;
+    newOrderStatus.file = fileSelected;
     if (isEdit) {
-      const response = await onUpdateProduct(id, newProduct);
+      const response = await onUpdateOrderStatus(id, newOrderStatus);
       if (response.payload.title == "Success") {
         onClose(true);
       }
@@ -90,12 +86,12 @@ export default function ProductModel({
       }
     }
     else {
-
-      const response = await onAddProduct(newProduct);
+      debugger;
+      const response = await onAddOrderStatus(newOrderStatus);
       if (response.payload.title == "Success") {
         setMessageStatus({
           mode: 'success',
-          message: 'Product Record Saved Succefully.'
+          message: 'OrderTracking Record Saved Succefully.'
         })
         onClose(true);
         console.log(response.payload);
@@ -103,38 +99,28 @@ export default function ProductModel({
       else {
         setMessageStatus({
           mode: 'danger',
-          message: 'Product Save Failed.'
+          message: 'OrderTracking Save Failed.'
         })
       }
     }
   };
 
   const deleteHandler = async () => {
-    const response = await onDeleteProduct(id);
+    const response = await onDeleteOrderStatus(id);
     if (response.payload.title == "Success") {
       onClose(true);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Product Delete Failed.'
+        message: 'OrderStatus Delete Failed.'
       })
     }
   };
 
   useEffect(() => {
-    setCategoryOptions(categories.map((category, i) => (
-      {
-        key: i,
-        label: category.categoryTypeName,
-        value: category.categoryTypeId,
-      })).filter((item) => item));
-
-  }, [categories]);
-
-  useEffect(() => {
     if (isEdit) {
-      setNewProduct(productData);
+      setNewOrderStatus(orderStatusData);
     }
   }, []);
 
@@ -142,10 +128,10 @@ export default function ProductModel({
     if (isEdit) {
       setButtonType("Update");
     }
-    const isEnable =
-      !newProduct?.productName || !newProduct?.categoryTypeId || !newProduct?.description;
+    debugger;
+    const isEnable = !newOrderStatus?.orderStatusName || !newOrderStatus?.recordStatusId  || !newOrderStatus?.description ;
     setSaveDisabled(isEnable);
-  }, [newProduct]);
+  }, [newOrderStatus]);
 
   return (
     <>
@@ -169,46 +155,43 @@ export default function ProductModel({
       )}
       {!isDelete && (
         <Form>
-
-          <Form.Group className="mb-3" controlId="categoryTypeId">
-            <Form.Label>Category Type</Form.Label>
-            <Select options={categoryOptions} name="categoryTypeId"
-              value={newProduct?.categoryTypeId}
-              onChange={selectChangeHandler} />
-          </Form.Group>
-
           <Form.Group
             className={styles.stFormContainer}
-            controlId="formProduct"
+            controlId="formOrderStatus"
           >
-            <Form.Label>ProductName</Form.Label>
+            <Form.Label>OrderStatusName</Form.Label>
             <Form.Control
               type="text"
-              name="productName"
-              placeholder="ProductName"
-              value={newProduct?.productName}
+              name="orderStatusName"
+              placeholder="OrderStatusName"
+              value={newOrderStatus?.orderStatusName}
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group>
-            <Form.Label>Product Image</Form.Label>
+          <Form.Group className="mb-3" controlId="state">
+            <Form.Label>RecordStatusId</Form.Label>
+            <Form.Control
+              type="text"
+              name="recordStatusId"
+              placeholder="RecordStatusId"
+              value={newOrderStatus?.recordStatusId}
+              onChange={changeHandler}
+            />
           </Form.Group>
-          <Form.Group>
-            <input type="file" onChange={saveFileSelected} />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="description">
+
+
+          <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Description</Form.Label>
             <Form.Control
               type="text"
               name="description"
               placeholder="Description"
-              value={newProduct?.description}
+              value={newOrderStatus?.description}
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group>
 
-          </Form.Group>
+          
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel
@@ -224,23 +207,23 @@ export default function ProductModel({
   );
 }
 
-ProductModel.propTypes = {
+OrderStatusModel.propTypes = {
   /**
-   * Callback function for Add Product
+   * Callback function for Add OrderStatus
    */
-  onAddProduct: PropTypes.func,
+  onAddOrderStatus: PropTypes.func,
   /**
-   * Callback function for Update Product
+   * Callback function for Update OrderStatus
    */
-  onUpdateProduct: PropTypes.func,
+  onUpdateOrderStatus: PropTypes.func,
   /**
-   * Callback function for Delete Product
+   * Callback function for Delete OrderStatus
    */
-  onDeleteProduct: PropTypes.func,
-  /**     
-   * Callback function for Get Product
+  onDeleteOrderStatus: PropTypes.func,
+  /**
+   * Callback function for Get OrderStatus
    */
-  onGetProduct: PropTypes.func,
+  onGetOrderStatus: PropTypes.func,
   /**
    * isEdit for bool type
    */
@@ -250,7 +233,7 @@ ProductModel.propTypes = {
    */
   isDelete: PropTypes.bool,
   /**
-   * Callback function for GetProduct
+   * Callback function for Get OrderStatus
    */
   onClose: PropTypes.func,
   /**
@@ -258,25 +241,20 @@ ProductModel.propTypes = {
    */
   id: PropTypes.number,
   /**
- * productData for object type
+ * orderTrackingData for object type
  */
-  productData: PropTypes.any,
-  /**
-* categories for object type
-*/
-  categories: PropTypes.any,
+  orderStatusData: PropTypes.any,
 };
 
-ProductModel.defaultProps = {
-  onAddProduct: null,
-  onUpdateProduct: null,
-  onDeleteProduct: null,
-  onGetProduct: null,
+OrderStatusModel.defaultProps = {
+  onAddOrderStatus: null,
+  onUpdateOrderStatus: null,
+  onDeleteOrderStatus: null,
+  onGetOrderStatus: null,
   isEdit: false,
   isDelete: false,
   onClose: null,
   id: null,
-  productData: null,
-  categories: null,
+  orderStatusData: null,
 };
 

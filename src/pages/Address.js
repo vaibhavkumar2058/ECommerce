@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
 import useFetchAddress from "../hooks/useFetchAddress";
+import useFetchCountry from "../hooks/useFetchCountry";
+import useFetchState from "../hooks/useFetchState";
+import useFetchAddressType from "../hooks/useFetchAddressType";
+//import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
 import AddressModel from "../components/AddressModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
@@ -27,12 +31,16 @@ const MyExportCSV = (props) => {
 export default function Address() {
 
   const [addresses, setAddresses] = useState([]);
+  const [countries, setCountries] = useState();
+  const [states, setStates] = useState();
+  const [addressTypes, setAddressTypes] = useState();
+  //const [recordStatuss, setRecordStatuss] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [show, setShow] = useState(false);
-  // const handleClose = () => setShow(false);
-  const handleClose = () => {
+   //const handleClose = () => setShow(false);
+   const handleClose = () =>{
     getAllAddresses();
     setIsEdit(false);
     setIsDelete(false);
@@ -72,6 +80,20 @@ export default function Address() {
     getAddresses,
     addressById,
   } = useFetchAddress();
+  const {
+    getCountries,
+  } = useFetchCountry();
+  const {
+    getStates,
+  } = useFetchState();
+  const {
+    getAddressTypes,
+  } = useFetchAddressType();
+  //  const {
+  //   getRecordStatuss,
+  // } = useFetchRecordStatus();
+
+
 
   const columns = [
     { dataField: 'addressId', text: 'address Id', sort: true, hidden: true },
@@ -197,6 +219,42 @@ export default function Address() {
   const getAllAddresses = async () => {
     const response = await getAddresses();
     if (response.payload.title == "Success") {
+      const countryList = await getCountries();
+
+      if (countryList.payload.title == "Success") {
+        var carr = [];
+      for (var key in countryList.payload) {
+        carr.push(countryList.payload[key]);
+      }
+        setCountries(carr);
+      }
+      const stateList = await getStates();
+
+      if (stateList.payload.title == "Success") {
+        var carr = [];
+      for (var key in stateList.payload) {
+        carr.push(stateList.payload[key]);
+      }
+        setStates(carr);
+      }
+      const addressTypeList = await getAddressTypes();
+
+      if (addressTypeList.payload.title == "Success") {
+        var carr = [];
+      for (var key in addressTypeList.payload) {
+        carr.push(addressTypeList.payload[key]);
+      }
+        setAddressTypes(carr);
+      }
+      // const recordStatusList = await getRecordStatuss();
+
+      // if (recordStatusList.payload.title == "Success") {
+      //   var carr = [];
+      // for (var key in recordStatusList.payload) {
+      //   carr.push(recordStatusList.payload[key]);
+      // }
+      //   setRecordStatuss(carr);
+      // }
       setMessageStatus({
         mode: 'success',
         message: 'Address Record Fetch Succefully.'
@@ -318,6 +376,10 @@ export default function Address() {
                 isDelete={isDelete}
                 id={id}
                 addressData={address}
+                countries = {countries}
+                states = {states}
+                addressTypes = {addressTypes}
+                //recordStatuss = {recordStatuss}
               />
             </Modal.Body>
 

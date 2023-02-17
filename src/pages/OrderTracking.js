@@ -42,16 +42,9 @@ export default function OrderTracking() {
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [orderTracking, setOrderTracking] = useState({
-    countryId:null,
-    stateId:null,
-    city:"",
-    town:"",
-    locality:"",
-    pincode:null,
-    orderTrackingTypeId:null,
-    landMark:"",
-    isDefault:"",
-    defaultOrderTrackingTypeId:null,
+    orderId:null,
+    orderStatusId:null,
+    description:"",
     
       });
 
