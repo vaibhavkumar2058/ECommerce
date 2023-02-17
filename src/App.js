@@ -6,6 +6,7 @@ import { store } from "./actions/store";
 import { Provider } from "react-redux";
 import { ToastProvider } from "react-toast-notifications";
 import './volt.css';
+//import 'semantic-ui-css/semantic.min.css'
 
 
 function App() {
