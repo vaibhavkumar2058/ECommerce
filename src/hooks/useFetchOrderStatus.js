@@ -3,33 +3,33 @@ import { useSelector, useDispatch } from "react-redux";
 import { useAPI } from "../services";
 
 import {
-    addGenderAction,
-    updateGenderAction,   
-    deleteGenderAction,
-    getGenderBeginAction,
-    getGenderSuccessAction,
-    getGenderFailureAction,
-    genderAction,
-  } from "../actions/genderActions";
+    addOrderStatusAction,
+    updateOrderStatusAction,   
+    deleteOrderStatusAction,
+    getOrderStatusBeginAction,
+    getOrderStatusSuccessAction,
+    getOrderStatusFailureAction,
+    orderStatusAction ,
+  } from "../actions/orderStatusActions";
 
-  export default function useFetchGender() {
+  export default function useFetchOrderStatuses() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/gender";
+  const hapyCarURL = "https://localhost:7062/orderStatus";
 
   const API = useAPI();
   const SUCCESS = "Success";
   const ERROR = "Error";
 
-  // GENDER GET  ACTIONS
-  const getGenders = () => {
-    dispatch(getGenderBeginAction());
+  // OrderTracking GET  ACTIONS
+  const getOrderStatuses = () => {
+    dispatch(getOrderStatusBeginAction());
     return API.get(hapyCarURL,
       null,
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          getGenderSuccessAction({
+          getOrderStatusSuccessAction({
             ...data,
             title: SUCCESS,
           })
@@ -37,12 +37,12 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.gender) {
-          const [errors] = error.response.data.gender;
+        if (error.response.data.orderStatus) {
+          const [errors] = error.response.data.orderStatus;
           errorMsg = errors;
         }
         dispatch(
-          getGenderFailureAction({
+          getOrderStatusFailureAction({
             ...errorMsg,
             title: ERROR,
             errorMsg,
@@ -52,16 +52,16 @@ import {
 
   };
 
-  // GENDER ADD  ACTIONS
-  const addGender = (gender) => {
+  // OrderStatus ADD  ACTIONS
+  const addOrderStatus = (orderStatus) => {
     return API.post(
       hapyCarURL,
-      { data: gender },
+      { data: orderStatus },
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          addGenderAction({
+          addOrderStatusAction({
             ...data,
             title: SUCCESS,
           })
@@ -70,13 +70,13 @@ import {
 
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.gender) {
-          const [errors] = error.response.data.gender;
+        if (error.response.data.orderStatus) {
+          const [errors] = error.response.data.orderStatus;
           errorMsg = errors;
         }
         dispatch(
-          addGenderAction({
-            ...gender,
+          addOrderStatusAction({
+            ...orderStatus,
             title: ERROR,
             errorMsg,
           })
@@ -88,11 +88,11 @@ import {
 
   };
 
-  // GENDER UPDATE  ACTIONS
-  const updateGender = (genderId, gender) => {
+  // OrderStatus UPDATE  ACTIONS
+  const updateOrderStatus = (orderStatusId, orderStatus) => {
 
-    return API.put(`${hapyCarURL}/${genderId}`,
-      { data: gender },
+    return API.put(`${hapyCarURL}/${orderStatusId}`,
+      { data: orderStatus},
       { suppressErrors: [400] }
     )
       .then(({ data
@@ -100,7 +100,7 @@ import {
       }) =>
 
         dispatch(
-          updateGenderAction({
+          updateOrderStatusAction({
             ...data,
             title: SUCCESS,
           })
@@ -108,13 +108,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.gender) {
-          const [errors] = error.response.data.gender;
+        if (error.response.data.orderStatus) {
+          const [errors] = error.response.data.orderStatus;
           errorMsg = errors;
         }
         dispatch(
-          updateGenderAction({
-            ...gender,
+          updateOrderStatusAction({
+            ...orderStatus,
             title: ERROR,
             errorMsg,
           })
@@ -123,15 +123,15 @@ import {
 
   };
 
-  // GENDER DELETE  ACTIONS
-  const deleteGender = (genderId) => {
-    return API.delete(`${hapyCarURL}/${genderId}`,
+  // OrderStatus DELETE  ACTIONS
+  const deleteOrderStatus = (orderStatusId) => {
+    return API.delete(`${hapyCarURL}/${orderStatusId}`,
       null,
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          deleteGenderAction({
+          deleteOrderStatusAction({
             ...data,
             title: SUCCESS,
           })
@@ -139,13 +139,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.gender) {
-          const [errors] = error.response.data.gender;
+        if (error.response.data.orderStatus) {
+          const [errors] = error.response.data.orderStatus;
           errorMsg = errors;
         }
         dispatch(
-          deleteGenderAction({
-            ...genderId,
+          deleteOrderStatusAction({
+            ...orderStatusId,
             title: ERROR,
             errorMsg,
           })
@@ -154,9 +154,9 @@ import {
 
   };
 
-  // GENDERBY ID ACTIONS
-  const genderById = (genderId) => {
-    return API.get(`${hapyCarURL}/${genderId}`,
+  // OrderStatus BY ID ACTIONS
+  const orderStatusById = (orderStatusId) => {
+    return API.get(`${hapyCarURL}/${orderStatusId}`,
       null,
       { suppressErrors: [400] }
     )
@@ -165,7 +165,7 @@ import {
       }) =>
 
         dispatch(
-            genderAction({
+          orderStatusAction ({
             ...data,
             title: SUCCESS,
           })
@@ -173,12 +173,12 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.gender) {
-          const [errors] = error.response.data.gender;
+        if (error.response.data.orderStatus) {
+          const [errors] = error.response.data.orderStatus;
           errorMsg = errors;
         }
         dispatch(
-            genderAction({
+          orderStatusAction ({
             ...errorMsg,
             title: ERROR,
             errorMsg,
@@ -188,10 +188,10 @@ import {
       
   };
   return {
-    addGender,
-    updateGender,
-    deleteGender,
-    getGenders,
-    genderById,
+    addOrderStatus,
+    updateOrderStatus,
+    deleteOrderStatus,
+    getOrderStatuses,
+    orderStatusById,
   };
 }

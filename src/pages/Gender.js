@@ -59,7 +59,7 @@ export default function Gender() {
     addGender,
     updateGender,
     deleteGender,
-    getGender,
+    getGenders,
     genderById,
   } = useFetchGender();
 
@@ -154,7 +154,7 @@ export default function Gender() {
 
 
   const getAllGender = async () => {
-    const response = await getGender();
+    const response = await getGenders();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',

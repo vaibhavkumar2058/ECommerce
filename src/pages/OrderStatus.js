@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
-import useFetchAddress from "../hooks/useFetchAddress";
-import useFetchCountry from "../hooks/useFetchCountry";
-import useFetchState from "../hooks/useFetchState";
-import useFetchAddressType from "../hooks/useFetchAddressType";
-//import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
-import AddressModel from "../components/AddressModel";
+import useFetchOrderStatus from "../hooks/useFetchOrderStatus";
+import OrderStatusModel from "../components/OrderStatusModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
@@ -28,20 +24,16 @@ const MyExportCSV = (props) => {
   );
 };
 
-export default function Address() {
+export default function OrderStatus() {
 
-  const [addresses, setAddresses] = useState([]);
-  const [countries, setCountries] = useState();
-  const [states, setStates] = useState();
-  const [addressTypes, setAddressTypes] = useState();
-  //const [recordStatuss, setRecordStatuss] = useState();
+  const [orderStatuses, setOrderStatuses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [show, setShow] = useState(false);
-   //const handleClose = () => setShow(false);
-   const handleClose = () =>{
-    getAllAddresses();
+  // const handleClose = () => setShow(false);
+  const handleClose = () => {
+    getAllOrderStatuses();
     setIsEdit(false);
     setIsDelete(false);
     setShow(false);
@@ -49,18 +41,11 @@ export default function Address() {
   const handleShow = () => setShow(true);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-  const [address, setAddress] = useState({
-    countryId:null,
-    stateId:null,
-    city:"",
-    town:"",
-    locality:"",
-    pincode:null,
-    addressTypeId:null,
-    landMark:"",
-    isDefault:"",
-    defaultAddressTypeId:null,
+  const [orderStatus, setOrderStatus] = useState({
+    orderStatusName:"",
+    description:"",
     recordStatusId:null,
+    
     
       });
 
@@ -74,62 +59,19 @@ export default function Address() {
   });
 
   const { 
-    addAddress,
-    updateAddress,
-    deleteAddress,
-    getAddresses,
-    addressById,
-  } = useFetchAddress();
-  const {
-    getCountries,
-  } = useFetchCountry();
-  const {
-    getStates,
-  } = useFetchState();
-  const {
-    getAddressTypes,
-  } = useFetchAddressType();
-  //  const {
-  //   getRecordStatuss,
-  // } = useFetchRecordStatus();
-
-
+    addOrderStatus,
+    updateOrderStatus,
+    deleteOrderStatus,
+    getOrderStatuses,
+    orderStatusById,
+  } = useFetchOrderStatus();
 
   const columns = [
-    { dataField: 'addressId', text: 'address Id', sort: true, hidden: true },
-    { dataField: 'countryId', text: 'Country Id', sort: true,headerStyle: () => {
-      return { width: "120px" };
-    }  },
-    { dataField: 'stateId', text: 'State Id', sort: true ,headerStyle: () => {
-      return { width: "100px" };
-    }},
-    { dataField: 'city', text: 'City', sort: true,headerStyle: () => {
-      return { width: "100px" };
-    } },
-    { dataField: 'town', text: 'Town', sort: true,headerStyle: () => {
-      return { width: "100px" };
-    } },
-    { dataField: 'locality', text: 'Locality', sort: true,headerStyle: () => {
-      return { width: "100px" };
-    } },
-    { dataField: 'pincode', text: 'Pincode', sort: true,headerStyle: () => {
-      return { width: "120px" };
-    } },
-    { dataField: 'addressTypeId', text: 'AddressType Id', sort: true,headerStyle: () => {
-      return { width: "150px" };
-    } },
-    { dataField: 'isDefault', text: 'IsDefault', sort: true ,headerStyle: () => {
-      return { width: "120px" };
-    }},
-    { dataField: 'defaultAddressTypeId', text: 'Default AddressType Id', sort: true ,headerStyle: () => {
-      return { width: "200px" };
-    }},
-    { dataField: 'landMark', text: 'LandMark', sort: true,headerStyle: () => {
-      return { width: "100px" };
-    } },
-    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true,headerStyle: () => {
-      return { width: "100px" };
-    } },
+    { dataField: 'orderStatusId', text: 'orderStatus Id', sort: true, hidden: true },
+    { dataField: 'orderStatusName', text: 'OrderStatus Name', sort: true },
+    
+    { dataField: 'recordStatusId', text: 'RecordStatus Id', sort: true },
+    { dataField: 'description', text: 'Description', sort: true,},
     
     
     // columns follow dataField and text structure
@@ -140,18 +82,18 @@ export default function Address() {
         return (
           <><button
             className="btn btn-primary btn-xs"
-            onClick={() => handleView(row.addressId, row.name)}
+            onClick={() => handleView(row.orderStatusId, row.name)}
           >
             View
           </button>
             <button
               className="btn btn-primary btn-xs"
-              onClick={() => handleEdit(row.addressId, row)}
+              onClick={() => handleEdit(row.orderStatusId, row)}
             >
               Edit
             </button><button
               className="btn btn-danger btn-xs"
-              onClick={() => handleDelete(row.addressId, row.name)}
+              onClick={() => handleDelete(row.orderStatusId, row.name)}
             >
               Delete
             </button></>
@@ -161,15 +103,15 @@ export default function Address() {
   ];
 
   useEffect(() => {
-    if (addresses.length == 0) {
-      getAllAddresses();
+    if (orderStatuses.length == 0) {
+      getAllOrderStatuses();
       setLoading(false)
     }
-  }, [addresses]);
+  }, [orderStatuses]);
 
 
   const defaultSorted = [{
-    dataField: 'addressId',
+    dataField: 'orderStatusId',
     order: 'desc'
   }];
 
@@ -183,8 +125,8 @@ export default function Address() {
   };
 
   const handleEdit = (rowId, row) => {
-    setAddress(row);
-    //getAddressById(rowId);
+    setOrderStatus(row);
+    //getOrderStatusById(rowId);
     setId(rowId);
     setIsEdit(true);
     setShow(true);
@@ -216,48 +158,12 @@ export default function Address() {
   });
 
 
-  const getAllAddresses = async () => {
-    const response = await getAddresses();
+  const getAllOrderStatuses = async () => {
+    const response = await getOrderStatuses();
     if (response.payload.title == "Success") {
-      const countryList = await getCountries();
-
-      if (countryList.payload.title == "Success") {
-        var carr = [];
-      for (var key in countryList.payload) {
-        carr.push(countryList.payload[key]);
-      }
-        setCountries(carr);
-      }
-      const stateList = await getStates();
-
-      if (stateList.payload.title == "Success") {
-        var carr = [];
-      for (var key in stateList.payload) {
-        carr.push(stateList.payload[key]);
-      }
-        setStates(carr);
-      }
-      const addressTypeList = await getAddressTypes();
-
-      if (addressTypeList.payload.title == "Success") {
-        var carr = [];
-      for (var key in addressTypeList.payload) {
-        carr.push(addressTypeList.payload[key]);
-      }
-        setAddressTypes(carr);
-      }
-      // const recordStatusList = await getRecordStatuss();
-
-      // if (recordStatusList.payload.title == "Success") {
-      //   var carr = [];
-      // for (var key in recordStatusList.payload) {
-      //   carr.push(recordStatusList.payload[key]);
-      // }
-      //   setRecordStatuss(carr);
-      // }
       setMessageStatus({
         mode: 'success',
-        message: 'Address Record Fetch Succefully.'
+        message: 'OrderStatus Record Fetch Succefully.'
       })
 
       var arr = [];
@@ -265,25 +171,25 @@ export default function Address() {
         arr.push(response.payload[key]);
       }
 
-      setAddresses(arr);
+      setOrderStatuses(arr);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Address Fetch Failed.'
+        message: 'OrderStatus Fetch Failed.'
       })
     }
   };
 
-  const getAddressById = async (id) => {
-    const response = await addressById(id);
+  const getOrderStatusById = async (id) => {
+    const response = await orderStatusById(id);
     if (response.payload.title == "Success") {
-      setAddress(response.payload);
+      setOrderStatus(response.payload);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Address Get Failed.'
+        message: 'OrderStatus Get Failed.'
       })
     }
   };
@@ -310,11 +216,11 @@ export default function Address() {
     <>
       <div className="m-t-40">
         {loading && <div>A moment please...</div>}
-        {addresses && (<div>
+        {orderStatuses && (<div>
           <ToolkitProvider
             bootstrap4
-            keyField='addressId'
-            data={addresses}
+            keyField='orderStatusId'
+            data={orderStatuses}
             columns={columns}
             search
           >
@@ -332,7 +238,7 @@ export default function Address() {
                           <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
                           <Button variant="primary" onClick={handleShow}>
-                            Add Address
+                            Add OrderStatus
                           </Button>
                           </div>
                         </div>
@@ -363,23 +269,19 @@ export default function Address() {
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Add Address</Modal.Title>
+              <Modal.Title>Add OrderStatus</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <AddressModel
-                onAddAddress={addAddress}
-                onUpdateAddress={updateAddress}
-                onDeleteAddress={deleteAddress}
-                onGetAddress={addressById}
+              <OrderStatusModel
+                onAddOrderStatus={addOrderStatus}
+                onUpdateOrderStatus={updateOrderStatus}
+                onDeleteOrderStatus={deleteOrderStatus}
+                onGetOrderStatus={orderStatusById}
                 onClose={handleClose}
                 isEdit={isEdit}
                 isDelete={isDelete}
                 id={id}
-                addressData={address}
-                countries = {countries}
-                states = {states}
-                addressTypes = {addressTypes}
-                //recordStatuss = {recordStatuss}
+                orderStatusData={orderStatus}
               />
             </Modal.Body>
 

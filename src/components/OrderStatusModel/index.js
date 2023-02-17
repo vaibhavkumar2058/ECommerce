@@ -6,26 +6,26 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
-//import OrderTracking from "../../pages/OrderTracking";
 
-export default function OrderTrackingModel({
-  onAddOrderTracking,
-  onUpdateOrderTracking,
-  onDeleteOrderTracking,
+
+export default function OrderStatusModel({
+  onAddOrderStatus,
+  onUpdateOrderStatus,
+  onDeleteOrderStatus,
   isEdit,
   isDelete,
-  onGetOrderTracking,
+  onGetOrderStatus,
   id,
   onClose,
-  orderTrackingData,
+  orderStatusData,
   //orderStatuss,
 
 
 }) {
-  const [newOrderTracking, setNewOrderTracking] = useState({
-    orderId:null,
-    orderStatusId:null,
+  const [newOrderStatus, setNewOrderStatus] = useState({
+    orderStatusName:"",
     description:"",
+    recordStatusId:null,
     
   });
   
@@ -56,25 +56,25 @@ export default function OrderTrackingModel({
   };
 
   const changeHandler = (e) => {
-    setNewOrderTracking({
-      ...newOrderTracking,
+    setNewOrderStatus({
+      ...newOrderStatus,
       [e.target.name]: e.target.value,
     });
   };
   const selectChangeHandler = (e) => {
     debugger;
-    setNewOrderTracking({
-      ...newOrderTracking,
-      "orderTrackingId": e.value,
+    setNewOrderStatus({
+      ...newOrderStatus,
+      "orderStatusId": e.value,
     });
   };
 
   
 
   const saveHandler = async () => {
-    newOrderTracking.file = fileSelected;
+    newOrderStatus.file = fileSelected;
     if (isEdit) {
-      const response = await onUpdateOrderTracking(id, newOrderTracking);
+      const response = await onUpdateOrderStatus(id, newOrderStatus);
       if (response.payload.title == "Success") {
         onClose(true);
       }
@@ -87,7 +87,7 @@ export default function OrderTrackingModel({
     }
     else {
       debugger;
-      const response = await onAddOrderTracking(newOrderTracking);
+      const response = await onAddOrderStatus(newOrderStatus);
       if (response.payload.title == "Success") {
         setMessageStatus({
           mode: 'success',
@@ -106,21 +106,21 @@ export default function OrderTrackingModel({
   };
 
   const deleteHandler = async () => {
-    const response = await onDeleteOrderTracking(id);
+    const response = await onDeleteOrderStatus(id);
     if (response.payload.title == "Success") {
       onClose(true);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'OrderTracking Delete Failed.'
+        message: 'OrderStatus Delete Failed.'
       })
     }
   };
 
   useEffect(() => {
     if (isEdit) {
-      setNewOrderTracking(orderTrackingData);
+      setNewOrderStatus(orderStatusData);
     }
   }, []);
 
@@ -129,9 +129,9 @@ export default function OrderTrackingModel({
       setButtonType("Update");
     }
     debugger;
-    const isEnable = !newOrderTracking?.orderId || !newOrderTracking?.orderStatusId  || !newOrderTracking?.description ;
+    const isEnable = !newOrderStatus?.orderStatusName || !newOrderStatus?.recordStatusId  || !newOrderStatus?.description ;
     setSaveDisabled(isEnable);
-  }, [newOrderTracking]);
+  }, [newOrderStatus]);
 
   return (
     <>
@@ -157,24 +157,24 @@ export default function OrderTrackingModel({
         <Form>
           <Form.Group
             className={styles.stFormContainer}
-            controlId="formOrderTracking"
+            controlId="formOrderStatus"
           >
-            <Form.Label>OrderId</Form.Label>
+            <Form.Label>OrderStatusName</Form.Label>
             <Form.Control
               type="text"
-              name="orderId"
-              placeholder="OrderId"
-              value={newOrderTracking?.orderId}
+              name="orderStatusName"
+              placeholder="OrderStatusName"
+              value={newOrderStatus?.orderStatusName}
               onChange={changeHandler}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="state">
-            <Form.Label>OrderStatusId</Form.Label>
+            <Form.Label>RecordStatusId</Form.Label>
             <Form.Control
               type="text"
-              name="orderStatusId"
-              placeholder="OrderStatusId"
-              value={newOrderTracking?.orderStatusId}
+              name="recordStatusId"
+              placeholder="RecordStatusId"
+              value={newOrderStatus?.recordStatusId}
               onChange={changeHandler}
             />
           </Form.Group>
@@ -186,7 +186,7 @@ export default function OrderTrackingModel({
               type="text"
               name="description"
               placeholder="Description"
-              value={newOrderTracking?.description}
+              value={newOrderStatus?.description}
               onChange={changeHandler}
             />
           </Form.Group>
@@ -207,23 +207,23 @@ export default function OrderTrackingModel({
   );
 }
 
-OrderTrackingModel.propTypes = {
+OrderStatusModel.propTypes = {
   /**
-   * Callback function for Add OrderTracking
+   * Callback function for Add OrderStatus
    */
-  onAddOrderTracking: PropTypes.func,
+  onAddOrderStatus: PropTypes.func,
   /**
-   * Callback function for Update OrderTracking
+   * Callback function for Update OrderStatus
    */
-  onUpdateOrderTracking: PropTypes.func,
+  onUpdateOrderStatus: PropTypes.func,
   /**
-   * Callback function for Delete OrderTracking
+   * Callback function for Delete OrderStatus
    */
-  onDeleteOrderTracking: PropTypes.func,
+  onDeleteOrderStatus: PropTypes.func,
   /**
-   * Callback function for Get OrderTracking
+   * Callback function for Get OrderStatus
    */
-  onGetOrderTracking: PropTypes.func,
+  onGetOrderStatus: PropTypes.func,
   /**
    * isEdit for bool type
    */
@@ -233,7 +233,7 @@ OrderTrackingModel.propTypes = {
    */
   isDelete: PropTypes.bool,
   /**
-   * Callback function for Get OrderTracking
+   * Callback function for Get OrderStatus
    */
   onClose: PropTypes.func,
   /**
@@ -243,18 +243,18 @@ OrderTrackingModel.propTypes = {
   /**
  * orderTrackingData for object type
  */
-  orderTrackingData: PropTypes.any,
+  orderStatusData: PropTypes.any,
 };
 
-OrderTrackingModel.defaultProps = {
-  onAddOrderTracking: null,
-  onUpdateOrderTracking: null,
-  onDeleteOrderTracking: null,
-  onGetOrderTracking: null,
+OrderStatusModel.defaultProps = {
+  onAddOrderStatus: null,
+  onUpdateOrderStatus: null,
+  onDeleteOrderStatus: null,
+  onGetOrderStatus: null,
   isEdit: false,
   isDelete: false,
   onClose: null,
   id: null,
-  orderTrackingData: null,
+  orderStatusData: null,
 };
 
