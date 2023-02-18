@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import useFetchItemCost from "../hooks/useFetchItemCost";
+import OrderSummaryModel from "../components/OrderSummaryModel";
+import { Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import useFetchCart from "../hooks/useFetchCart";
 
 export default function ItemList() {
-
+  const [show, setShow] = useState(false);
+  const handleShow = () => setShow(true);
   const [itemcosts, setItemCosts] = useState([]);
   const [carts, setCarts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -19,6 +22,10 @@ export default function ItemList() {
     description: "",
     recordStatusId: null,
   });
+
+  const handleClose = () => {
+    setShow(false);
+  };
 
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
@@ -142,7 +149,24 @@ export default function ItemList() {
           )};
 
 
+<div className="model_box">
+          <Modal
+            show={show}
+            onHide={handleClose}
+            backdrop="static"
+            keyboard={false}
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>View Order Summary</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <OrderSummaryModel
+              />
+            </Modal.Body>
 
+          </Modal>
+          {/* Model Box Finsihs */}
+        </div>
 
 
         </div>)}
