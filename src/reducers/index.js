@@ -10,9 +10,7 @@ import { productReducer } from "./productReducer";
 import{ folderReducer} from "./folderReducer"
 import { fileReducer } from "./fileReducer";
 import{GMTReducer}from "./GMTReducer";
-
-
-
+ 
 export const reducers = combineReducers({
     enquiryReducer,
     recordStatusReducer,

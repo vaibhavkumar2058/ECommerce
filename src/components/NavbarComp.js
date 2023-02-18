@@ -18,6 +18,7 @@ import Security from "../pages/Security";
 import AddressType from "../pages/AddressType";
 import Address from "../pages/Address";
 import Cart from "../pages/Cart";
+import InVoice from "../pages/InVoice";
 import Country from "../pages/Country";
 import Gender from "../pages/Gender";
 import GMT from "../pages/GMT";
@@ -49,7 +50,8 @@ const NavbarComp = () => {
           <Route exact path="/security" element={<Security />} />  
           <Route exact path="/addressType" element={<AddressType />} />  
           <Route exact path="/address" element={<Address />} />   
-          <Route exact path="/cart" element={<Cart />} />    
+          <Route exact path="/cart" element={<Cart />} />
+          <Route exact path="/inVoice" element={<InVoice />} />     
           <Route exact path="/gender" element={<Gender />} />    
           <Route exact path="/country" element={<Country />} />        
           <Route exact path="/GMT" element={<GMT />} />   

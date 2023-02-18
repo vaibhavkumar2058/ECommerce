@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
-import useFetchCountry from "../hooks/useFetchCountry";
-import CountryModel from "../components/CountryModel";
+import useFetchInVoice from "../hooks/useFetchInVoice";
+import InVoiceModel from "../components/InVoiceModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
@@ -24,16 +24,16 @@ const MyExportCSV = (props) => {
   );
 };
 
-export default function Country() {
+export default function InVoices() {
 
-  const [countries, setCountries] = useState([]);
+  const [inVoices, setInVoices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
   const handleClose = () => {
-    getAllCountry();
+    getAllInVoices();
     setIsEdit(false);
     setIsDelete(false);
     setShow(false);
@@ -41,12 +41,16 @@ export default function Country() {
   const handleShow = () => setShow(true);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-  const [country, setCountry] = useState({
-    countryname: "",
-    region:null,
-    description:"",
-    recordStatusId:null,
-    });
+  const [inVoice, setInVoice] = useState({
+    resourcesId:null,
+    productId:null,
+    cost:"",
+    costInclude:"",
+    quantity:"",
+    total:"",
+    description:""
+
+      });
 
   const [id, setId] = useState(null);
 
@@ -58,21 +62,23 @@ export default function Country() {
   });
 
   const { 
-    addCountry,
-    updateCountry,
-    deleteCountry,
-    getCountries,
-    countryById,
-  } = useFetchCountry();
+    addInVoice,
+    updateInVoice,
+    deleteInVoice,
+    getInVoice,
+    inVoiceById,
+  } = useFetchInVoice();
 
   const columns = [
-
-    { dataField: 'countryId', text: 'Country Id', sort: true, hidden: true },
-    { dataField: 'countryName', text: ' CountryName', sort: true },
-    { dataField: 'regionCode', text: 'RegionCode', sort: true },
+    { dataField: 'inVoiceId', text: 'inVoiceId', sort: true, hidden: true },
+    { dataField: 'resourcesId', text: 'ResourcesId', sort: true  },
+    { dataField: 'productId', text: ' ProductId', sort: true },
+    { dataField: 'cost', text: 'Cost', sort: true },
+    { dataField: 'costInclude', text: 'CostInclude', sort: true },
+    { dataField: 'quantity', text: 'Quantity', sort: true },
+    { dataField: 'total', text: 'total', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
-    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true },
-        // columns follow dataField and text structure
+    // columns follow dataField and text structure
     {
       dataField: "Actions",
       text: "Actions",
@@ -80,18 +86,18 @@ export default function Country() {
         return (
           <><button
             className="btn btn-primary btn-xs"
-            onClick={() => handleView(row.countryId, row.name)}
+            onClick={() => handleView(row.inVoiceId, row.name)}
           >
             View
           </button>
             <button
               className="btn btn-primary btn-xs"
-              onClick={() => handleEdit(row.countryId, row)}
+              onClick={() => handleEdit(row.inVoiceId, row)}
             >
               Edit
             </button><button
               className="btn btn-danger btn-xs"
-              onClick={() => handleDelete(row.countryId, row.name)}
+              onClick={() => handleDelete(row.inVoiceId, row.name)}
             >
               Delete
             </button></>
@@ -101,15 +107,15 @@ export default function Country() {
   ];
 
   useEffect(() => {
-    if (countries.length == 0) {
-      getAllCountry();
+    if (inVoices.length == 0) {
+      getAllInVoices();
       setLoading(false)
     }
-  }, [countries]);
+  }, [inVoices]);
 
 
   const defaultSorted = [{
-    dataField: 'countryId',
+    dataField: 'inVoiceId',
     order: 'desc'
   }];
 
@@ -123,8 +129,8 @@ export default function Country() {
   };
 
   const handleEdit = (rowId, row) => {
-    setCountry(row);
-    //getCountryById(rowId);
+    setInVoice(row);
+    //getInVoicesById(rowId);
     setId(rowId);
     setIsEdit(true);
     setShow(true);
@@ -156,12 +162,12 @@ export default function Country() {
   });
 
 
-  const getAllCountry = async () => {
-    const response = await getCountries();
+  const getAllInVoices = async () => {
+    const response = await getInVoice();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',
-        message: 'Country Record Fetch Succefully.'
+        message: 'InVoices Record Fetch Succefully.'
       })
 
       var arr = [];
@@ -169,25 +175,25 @@ export default function Country() {
         arr.push(response.payload[key]);
       }
 
-      setCountries(arr);
+      setInVoices(arr);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Country Fetch Failed.'
+        message: 'InVoice Fetch Failed.'
       })
     }
   };
 
-  const getCountryById = async (id) => {
-    const response = await countryById(id);
+  const getInVoiceById = async (id) => {
+    const response = await inVoiceById(id);
     if (response.payload.title == "Success") {
-      setCountry(response.payload);
+      setInVoice(response.payload);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Country Get Failed.'
+        message: 'InVoice Get Failed.'
       })
     }
   };
@@ -214,11 +220,11 @@ export default function Country() {
     <>
       <div className="m-t-40">
         {loading && <div>A moment please...</div>}
-        {countries && (<div>
+        {inVoices && (<div>
           <ToolkitProvider
             bootstrap4
-            keyField='countryId'
-            data={countries}
+            keyField='inVoiceId'
+            data={inVoices}
             columns={columns}
             search
           >
@@ -236,7 +242,7 @@ export default function Country() {
                           <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
                           <Button variant="primary" onClick={handleShow}>
-                            Add Country
+                            Add InVoice
                           </Button>
                           </div>
                         </div>
@@ -267,19 +273,19 @@ export default function Country() {
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Add Country</Modal.Title>
+              <Modal.Title>Add InVoice</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <CountryModel
-                onAddCountry={addCountry}
-                onUpdateCountry={updateCountry}
-                onDeleteCountry={deleteCountry}
-                onGetCountry={countryById}
+              <InVoiceModel
+                onAddInVoice={addInVoice}
+                onUpdateInVoice={updateInVoice}
+                onDeleteInVoice={deleteInVoice}
+                onGetInVoice={inVoiceById}
                 onClose={handleClose}
                 isEdit={isEdit}
                 isDelete={isDelete}
                 id={id}
-                countryData={country}
+                inVoiceData={inVoice}
               />
             </Modal.Body>
 

@@ -7,23 +7,30 @@ import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
 
-export default function CountryModel({
-  onAddCountry,
-  onUpdateCountry,
-  onDeleteCountry,
+export default function InVoiceModel({
+  onAddInVoice,
+  onUpdateInVoice,
+  onDeleteInVoice,
   isEdit,
   isDelete,
-  onGetCountry,
+  onGetInVoice,
   id,
   onClose,
-  countryData,
+  inVoiceData,
 }) {
-  const [newCountry, setNewCountry] = useState({
-    countryName: "",
-    regionCode: null,
-    description: "",
-    recordStatusId:null,
-     });
+  const [newInVoice, setNewInVoice] = useState({
+    resourcesId:null,
+    productId:null,
+    cost:"",
+    costInclude:"",
+    quantity:"",
+    total:"",
+    description:""
+    
+    
+  });
+
+  const [fileSelected, setFileSelected] = useState();
 
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
@@ -43,16 +50,18 @@ export default function CountryModel({
   };
 
   const changeHandler = (e) => {
-    setNewCountry({
-      ...newCountry,
+    setNewInVoice({
+      ...newInVoice,
       [e.target.name]: e.target.value,
     });
   };
 
+  
+
   const saveHandler = async () => {
-    
+    newInVoice.file = fileSelected;
     if (isEdit) {
-      const response = await onUpdateCountry(id, newCountry);
+      const response = await onUpdateInVoice(id, newInVoice);
       if (response.payload.title == "Success") {
         onClose(true);
       }
@@ -65,11 +74,11 @@ export default function CountryModel({
     }
     else {
       debugger;
-      const response = await onAddCountry(newCountry);
+      const response = await onAddInVoice(newInVoice);
       if (response.payload.title == "Success") {
         setMessageStatus({
           mode: 'success',
-          message: 'Country Record Saved Succefully.'
+          message: 'InVoice Record Saved Succefully.'
         })
         onClose(true);
         console.log(response.payload);
@@ -77,28 +86,28 @@ export default function CountryModel({
       else {
         setMessageStatus({
           mode: 'danger',
-          message: 'Country Save Failed.'
+          message: 'InVoice Save Failed.'
         })
       }
     }
   };
 
   const deleteHandler = async () => {
-    const response = await onDeleteCountry(id);
+    const response = await onDeleteInVoice(id);
     if (response.payload.title == "Success") {
       onClose(true);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Country Delete Failed.'
+        message: 'InVoice Delete Failed.'
       })
     }
   };
 
   useEffect(() => {
     if (isEdit) {
-      setNewCountry(countryData);
+      setNewInVoice(inVoiceData);
     }
   }, []);
 
@@ -106,10 +115,10 @@ export default function CountryModel({
     if (isEdit) {
       setButtonType("Update");
     }
-    const isEnable =
-      !newCountry?.countryName || !newCountry?.regionCode || !newCountry?.description || !newCountry?.recordStatusId;
+    debugger;
+    const isEnable = !newInVoice?.resourcesId || !newInVoice?.productId  || !newInVoice?.cost || !newInVoice?.costInclude || !newInVoice?.quantity||  !newInVoice?.total || !newInVoice?.description;
     setSaveDisabled(isEnable);
-  }, [newCountry]);
+  }, [newInVoice]);
 
   return (
     <>
@@ -135,50 +144,86 @@ export default function CountryModel({
         <Form>
           <Form.Group
             className={styles.stFormContainer}
-            controlId="formCountry"
+            controlId="formInVoice"
           >
-            <Form.Label>Country</Form.Label>
+            <Form.Label>ResorcesId</Form.Label>
             <Form.Control
               type="text"
-              name="countryName"
-              placeholder="Enter Country"
-              value={newCountry?.countryName}
+              name="resourcesId"
+              placeholder="ResourcesId"
+              value={newInVoice?.resourcesId}
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="regioncode">
-            <Form.Label>Region</Form.Label>
+          <Form.Group className="mb-3" controlId="product">
+            <Form.Label>ProductId</Form.Label>
             <Form.Control
               type="text"
-              name="regionCode"
-              placeholder="regioncode"
-              value={newCountry?.regionCode}
+              name="productId"
+              placeholder="ProductId"
+              value={newInVoice?.productId}
               onChange={changeHandler}
             />
           </Form.Group>
 
 
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Cost</Form.Label>
+            <Form.Control
+              type="text"
+              name="cost"
+              placeholder="Cost"
+              value={newInVoice?.cost}
+              onChange={changeHandler}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="costInclude">
+            <Form.Label>CostInclude</Form.Label>
+            <Form.Control
+              type="text"
+              name="costInclude"
+              placeholder="CostInclude"
+              value={newInVoice?.costInclude}
+              onChange={changeHandler}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="Quantity">
+            <Form.Label>Quantity</Form.Label>
+            <Form.Control
+              type="text"
+              name="quantity"
+              placeholder="Quantity"
+              value={newInVoice?.quantity}
+              onChange={changeHandler}
+            />
+            
+
+
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Total</Form.Label>
+            <Form.Control
+              type="text"
+              name="total"
+              placeholder="Total"
+              value={newInVoice?.total}
+              onChange={changeHandler}
+            />
+          </Form.Group>
           <Form.Group className="mb-3" controlId="description">
             <Form.Label>Description</Form.Label>
             <Form.Control
               type="text"
               name="description"
               placeholder="Description"
-              value={newCountry?.description}
+              value={newInVoice?.description}
               onChange={changeHandler}
             />
           </Form.Group>
-
-          <Form.Group className="mb-3" controlId="recordStatusId">
-            <Form.Label>RecordStatusId</Form.Label>
-            <Form.Control
-              type="text"
-              name="recordStatusId"
-              placeholder="RecordStatusId"
-              value={newCountry?.recordStatusId}
-              onChange={changeHandler}
-            />
-          </Form.Group>
+            
+          
+          
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel
@@ -188,29 +233,30 @@ export default function CountryModel({
               {buttonType}
             </Button>
           </Modal.Footer>
+          </Form.Group>
         </Form>
       )}
     </>
   );
 }
 
-CountryModel.propTypes = {
+InVoiceModel.propTypes = {
   /**
-   * Callback function for Add Country
+   * Callback function for Add InVoice
    */
-  onAddCountry: PropTypes.func,
+  onAddInVoice: PropTypes.func,
   /**
-   * Callback function for Update Country
+   * Callback function for Update InVoice
    */
-  onUpdateCountry: PropTypes.func,
+  onUpdateInVoice: PropTypes.func,
   /**
-   * Callback function for Delete Country
+   * Callback function for Delete InVoice
    */
-  onDeleteCountry: PropTypes.func,
+  onDeleteInVoice: PropTypes.func,
   /**
-   * Callback function for Get Country
+   * Callback function for Get InVoice
    */
-  onGetCountry: PropTypes.func,
+  onGetInVoice: PropTypes.func,
   /**
    * isEdit for bool type
    */
@@ -220,7 +266,7 @@ CountryModel.propTypes = {
    */
   isDelete: PropTypes.bool,
   /**
-   * Callback function for Get Country
+   * Callback function for Get InVoice
    */
   onClose: PropTypes.func,
   /**
@@ -228,20 +274,20 @@ CountryModel.propTypes = {
    */
   id: PropTypes.number,
   /**
- * countryData for object type
+ * inVoiceData for object type
  */
-  countryData: PropTypes.any,
+  inVoiceData: PropTypes.any,
 };
 
-CountryModel.defaultProps = {
-  onAddCountry: null,
-  onUpdateCountry: null,
-  onDeleteCountry: null,
-  onGetCountry: null,
+InVoiceModel.defaultProps = {
+  onAddInVoice: null,
+  onUpdateInVoice: null,
+  onDeleteInVoice: null,
+  onGetInVoice: null,
   isEdit: false,
   isDelete: false,
   onClose: null,
   id: null,
-  countryData: null,
+  inVoiceData: null,
 };
 
