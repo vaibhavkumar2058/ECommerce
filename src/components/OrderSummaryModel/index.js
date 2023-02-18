@@ -19,6 +19,7 @@ export default function OrderSummaryModel({
         <div class=" col-md-6 col-lg-6"><b><h3>Order Summary</h3></b></div>
         <div class=" col-md-6 col-lg-3"></div>
       </div>
+      
       <div class="row">
         <div class=" col-md-2 col-lg-2"></div>
         <div class=" col-md-5 col-lg-5">Manthra Soap</div>
@@ -36,8 +37,7 @@ export default function OrderSummaryModel({
         <div class=" col-md-1 col-lg-1"><b>Total:80.00</b></div>
         <div class=" col-md-1 col-lg-1"></div>
       </div>
-      
-      
+
         <div class="row">
           <div class=" col-md-2 col-lg-2"></div>
           <div class=" col-md-4 col-lg-4"></div>
@@ -46,12 +46,6 @@ export default function OrderSummaryModel({
           <div class=" col-md-2 col-lg-2"> <Button variant="primary">Confirm Order</Button>{' '}</div>
           <div class=" col-md-1 col-lg-1"></div>
         </div>
-
-      {loading && <div>A moment please...</div>}
-      {itemcosts && (<div>
-
-
-      </div>)}
     </div>
   </>
   

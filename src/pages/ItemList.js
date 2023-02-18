@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import useFetchItemCost from "../hooks/useFetchItemCost";
+import OrderSummaryModel from "../components/OrderSummaryModel";
+import { Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function ItemList() {
-
+  const [show, setShow] = useState(false);
+  const handleShow = () => setShow(true);
   const [itemcosts, setItemCosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -17,6 +20,10 @@ export default function ItemList() {
     description: "",
     recordStatusId: null,
   });
+
+  const handleClose = () => {
+    setShow(false);
+  };
 
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
@@ -66,7 +73,10 @@ export default function ItemList() {
         {itemcosts && (<div className="row">
         <div class="row">
            <div class="col-md-3 col-lg-3"></div>
-            <div class="col-md-6 col-lg-6"><b><h1>ProductList</h1></b></div> 
+            <div class="col-md-6 col-lg-6"><b><h1>ProductList</h1></b></div>
+            <div class="col-md-6 col-lg-6">  <Button variant="primary" onClick={handleShow}>
+                              Order Summary
+                            </Button></div>  
              </div>
              
           {itemcosts.map((item) =>
@@ -106,7 +116,24 @@ export default function ItemList() {
           )};
 
 
+<div className="model_box">
+          <Modal
+            show={show}
+            onHide={handleClose}
+            backdrop="static"
+            keyboard={false}
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>View Order Summary</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <OrderSummaryModel
+              />
+            </Modal.Body>
 
+          </Modal>
+          {/* Model Box Finsihs */}
+        </div>
 
           
         </div>)}
