@@ -71,6 +71,7 @@ const NavbarComp = () => {
           <Route exact path="/orderStatus" element={<OrderStatus />} />
           <Route exact path="/productAttachments" element={<ProductAttachments />} />
           <Route exact path="/itemList" element={<ItemList />} />
+          
 
 
         </Routes>
