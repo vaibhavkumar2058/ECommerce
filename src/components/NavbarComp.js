@@ -35,7 +35,7 @@ import Folder from "../pages/Folder";
 import ProductAttachments from "../pages/ProductAttachments";
 import Resources from "../pages/Resources"
 import OrderStatus from "../pages/OrderStatus"
-import ItemList from "../pages/ItemList"
+import ShoppingList from "../pages/ShoppingList"
 
 
 const NavbarComp = () => {
@@ -70,7 +70,7 @@ const NavbarComp = () => {
           <Route exact path="/resources" element={<Resources />} />
           <Route exact path="/orderStatus" element={<OrderStatus />} />
           <Route exact path="/productAttachments" element={<ProductAttachments />} />
-          <Route exact path="/itemList" element={<ItemList />} />
+          <Route exact path="/shoppingList" element={<ShoppingList/>}/>
 
 
         </Routes>
