@@ -16,7 +16,7 @@ export default function CustomMap({ google, locations = [] }) {
           }}
           center={locations[0]}
           initialCenter={locations[0]}
-          zoom={locations.length === 1 ? 18 : 13}
+          zoom={locations.length === 1 ? 18 : 18}
           disableDefaultUI={true}
       >
           {locations.map(

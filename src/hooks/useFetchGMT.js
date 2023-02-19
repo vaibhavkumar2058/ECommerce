@@ -14,7 +14,7 @@ import {
 
   export default function useFetchGMTs() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/GMT";
+  const hapyCarURL = "https://msa-api-host.azurewebsites.net/GMT";
 
   const API = useAPI();
   const SUCCESS = "Success";

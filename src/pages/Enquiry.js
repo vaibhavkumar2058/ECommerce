@@ -20,8 +20,12 @@ class MapView extends Component {
       <div>
         <div style={{ width: 300, height: 300 }}>
     <CustomMap google={this.props.google} locations={[{
-            lat: "13.818693657174972",
-            lng: "77.48491621843388"
+            // lat: "13.8083237000",
+            // lng: "77.4972623000" 
+            // lat: "12.9800000000",
+            // lng: "77.5927000000"
+            lat: "13.8195340000",
+            lng: "77.4872130000"
           }]}/>
 </div>
       </div>
