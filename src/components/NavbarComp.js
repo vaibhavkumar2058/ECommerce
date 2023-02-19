@@ -7,7 +7,7 @@ import {
   Button,
   Nav,
 } from "react-bootstrap";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link, Navigate } from "react-router-dom";
 import Enquiry from "../pages/Enquiry";
 import State from "../pages/State";
 import VehicleType from "../pages/VehicleType";
@@ -37,8 +37,8 @@ import Resources from "../pages/Resources"
 import OrderStatus from "../pages/OrderStatus"
 import ShoppingList from "../pages/ShoppingList"
 import ItemList from "../pages/ItemList"
-
-
+import ZMap from "../pages/ZMap"
+import Dashboard from "../pages/DashBoard"
 
 const NavbarComp = () => {
   return (
@@ -72,11 +72,11 @@ const NavbarComp = () => {
           <Route exact path="/resources" element={<Resources />} />
           <Route exact path="/orderStatus" element={<OrderStatus />} />
           <Route exact path="/productAttachments" element={<ProductAttachments />} />
-       <Route exact path="/shoppingList" element={<ShoppingList/>}/>
-       <Route exact path="/itemList" element={<ItemList/>}/>
-          
-
-
+          <Route exact path="/shoppingList" element={<ShoppingList />} />
+          <Route exact path="/itemList" element={<ItemList />} />
+          <Route exact path="/map" element={<ZMap />} />
+          <Route exact path="/dashboard" element={<Dashboard />} />
+          <Route path="/" element={<Navigate replace to="/dashboard" />} />
         </Routes>
       </div>
     </Router>

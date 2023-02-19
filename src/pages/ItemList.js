@@ -35,12 +35,12 @@ export default function ItemList() {
   });
 
   const [newCart, setNewCart] = useState({
-    resourcesId:6,
-    productId:null,
-    cost:null,
-    quantity:"1",
-    description:null,
-    recordStatusId:1,
+    resourcesId: 6,
+    productId: null,
+    cost: null,
+    quantity: "1",
+    description: null,
+    recordStatusId: 1,
   });
 
   const addToCart = async (item) => {
@@ -53,7 +53,7 @@ export default function ItemList() {
         mode: 'success',
         message: 'Cart Record Saved Succefully.'
       })
-     alert("Add To Cart Succefully.");
+      alert("Add To Cart Succefully.");
     }
     else {
       setMessageStatus({
@@ -87,7 +87,8 @@ export default function ItemList() {
 
       var arr = [];
       for (var key in response.payload) {
-        arr.push(response.payload[key]);
+        if (key !== 'title')
+          arr.push(response.payload[key]);
       }
 
       setItemCosts(arr);
@@ -149,24 +150,24 @@ export default function ItemList() {
           )};
 
 
-<div className="model_box">
-          <Modal
-            show={show}
-            onHide={handleClose}
-            backdrop="static"
-            keyboard={false}
-          >
-            <Modal.Header closeButton>
-              <Modal.Title>View Order Summary</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <OrderSummaryModel
-              />
-            </Modal.Body>
+          <div className="model_box">
+            <Modal
+              show={show}
+              onHide={handleClose}
+              backdrop="static"
+              keyboard={false}
+            >
+              <Modal.Header closeButton>
+                <Modal.Title>View Order Summary</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <OrderSummaryModel
+                />
+              </Modal.Body>
 
-          </Modal>
-          {/* Model Box Finsihs */}
-        </div>
+            </Modal>
+            {/* Model Box Finsihs */}
+          </div>
 
 
         </div>)}

@@ -18,39 +18,17 @@ class ZMap extends React.Component {
       });
     });
 
-    const options = {
-      enableHighAccuracy: true,
-      timeout: 5000,
-      maximumAge: 0
-    };
-    
-    function success(pos) {
-      const crd = pos.coords;
-    
-      console.log('Your current position is:');
-      console.log(`Latitude : ${crd.latitude}`);
-      console.log(`Longitude: ${crd.longitude}`);
-      console.log(`More or less ${crd.accuracy} meters.`);
-    }
-    
-    function error(err) {
-      console.warn(`ERROR(${err.code}): ${err.message}`);
-    }
-    
-    navigator.geolocation.watchPosition(success, error, options);
-
-
-    // this.interval = setInterval(() => {
-    //   debugger;
-    //   navigator.geolocation.getCurrentPosition((position) => {
-    //     this.setState({
-    //       currentPosition: {
-    //         lat: position.coords.latitude,
-    //         lng: position.coords.longitude
-    //       },
-    //     });
-    //   });
-    // }, 10000);
+    this.interval = setInterval(() => {
+      debugger;
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.setState({
+          currentPosition: {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          },
+        });
+      });
+    }, 10000);
   }
 
   componentWillUnmount() {
@@ -61,7 +39,7 @@ class ZMap extends React.Component {
   render() {
     const { google } = this.props;
     return (
-      <Map google={google} zoom={14} 
+      <Map google={google} zoom={16} 
       center={this.state.currentPosition}
       >
         {this.state.currentPosition && (

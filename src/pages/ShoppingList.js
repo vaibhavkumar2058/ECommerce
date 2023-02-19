@@ -4,7 +4,6 @@ import useFetchCart from "../hooks/useFetchCart";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function ShoppingList() {
-  debugger
   const [carts, setCarts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

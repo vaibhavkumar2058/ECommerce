@@ -14,7 +14,7 @@ import {
 
   export default function useFetchItemCosts() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/itemCost";
+  const hapyCarURL = "https://msa-api-host.azurewebsites.net/itemCost";
 
   const API = useAPI();
   const SUCCESS = "Success";

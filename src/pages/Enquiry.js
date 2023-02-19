@@ -24,26 +24,12 @@ class MapView extends Component {
             lng: "77.48491621843388"
           }]}/>
 </div>
-        {/* <Map
-          google={this.props.google}
-          zoom={14}
-          style={mapStyles}
-          initialCenter={{
-            lat: "18.677490",
-            lng: "74.116531"
-          }}
-        >
-         <Marker
-          onClick={this.onMarkerClick}
-          name={'This is test name'}
-        />
-        </Map> */}
       </div>
     );
   }
 }
 
 export default GoogleApiWrapper({
-  apiKey: ''
-  // apiKey: 'AIzaSyAf_G4R_GlpOOoGIDJ8WLvyAFjuq8F2jYc'
+  //apiKey: ''
+  apiKey: 'AIzaSyAf_G4R_GlpOOoGIDJ8WLvyAFjuq8F2jYc'
 })(MapView);
