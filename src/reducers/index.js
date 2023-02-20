@@ -13,6 +13,8 @@ import{GMTReducer}from "./GMTReducer";
 import{orderTrackingReducer}from "./orderTrackingReducer";
 import { resourcesReducer } from "./resourcesReducer";
 import{orderStatusReducer}from "./orderStatusReducer";
+import { loginReducer } from "./loginReducer";
+
 
 
 
@@ -26,6 +28,7 @@ export const reducers = combineReducers({
     folderReducer,
     GMTReducer,
     orderTrackingReducer,
+    loginReducer,
     resourcesReducer,
     orderStatusReducer
 

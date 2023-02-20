@@ -39,6 +39,7 @@ import ShoppingList from "../pages/ShoppingList"
 import ItemList from "../pages/ItemList"
 import ZMap from "../pages/ZMap"
 import Dashboard from "../pages/DashBoard"
+import ChangePassword from "../pages/login";
 
 const NavbarComp = () => {
   return (
@@ -77,6 +78,8 @@ const NavbarComp = () => {
           <Route exact path="/map" element={<ZMap />} />
           <Route exact path="/dashboard" element={<Dashboard />} />
           <Route path="/" element={<Navigate replace to="/dashboard" />} />
+          <Route path="/" element={<Navigate replace to="/dashboard" />} />
+          <Route exact path="/changepassword" element={<ChangePassword/>} />
         </Routes>
       </div>
     </Router>
