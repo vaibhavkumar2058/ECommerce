@@ -10,6 +10,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit';
 import { getRoles } from "@testing-library/react";
+import Geocode from "react-geocode";
 
 
 const { SearchBar, ClearSearchButton } = Search;
@@ -26,6 +27,22 @@ const MyExportCSV = (props) => {
 };
 
 export default function Roles() {
+
+  
+  Geocode.setApiKey("AIzaSyAf_G4R_GlpOOoGIDJ8WLvyAFjuq8F2jYc");
+Geocode.enableDebug();
+
+Geocode.fromLatLng("12.9800000000", "77.5927000000").then(
+  response => {
+    var addressComponent = response.pincode;
+    console.log('pincode', response.results[5].address_components[0].long_name);
+    const address = response.results[0].formatted_address;
+    console.log(address);
+  },
+  error => {
+    console.error(error);
+  }
+);
 
   const [roles, setRoles] = useState([]);
   const [loading, setLoading] = useState(true);

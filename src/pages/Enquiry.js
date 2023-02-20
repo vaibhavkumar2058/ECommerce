@@ -23,8 +23,8 @@ class MapView extends Component {
             lat: "13.8186936572",
             lng: "77.4849162184"
           },{
-            lat: "13.8187076000",
-            lng: "77.4848860000"
+            lat: "13.8195340000",
+            lng: "77.4872130000"
           }]} />
         </div>
         {/* <div style={{ width: 300, height: 300 }}>
