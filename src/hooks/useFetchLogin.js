@@ -3,33 +3,33 @@ import { useSelector, useDispatch } from "react-redux";
 import { useAPI } from "../services";
 
 import {
-    addItemCostAction,
-    updateItemCostAction,   
-    deleteItemCostAction,
-    getItemCostBeginAction,
-    getItemCostSuccessAction,
-    getItemCostFailureAction,
-    itemCostAction,
-  } from "../actions/itemCostActions";
+    addLoginAction,
+    updateLoginAction,   
+    deleteLoginAction,
+    getLoginBeginAction,
+    getLoginSuccessAction,
+    getLoginFailureAction,
+    LoginAction,
+  } from "../actions/loginActions";
 
-  export default function useFetchItemCosts() {
+  export default function useFetchLogins() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://msa-api-host.azurewebsites.net/itemCost";
+  const hapyCarURL = "https://localhost:7062/login";
 
   const API = useAPI();
   const SUCCESS = "Success";
   const ERROR = "Error";
 
-  // ItemCost GET  ACTIONS
-  const getItemCosts = () => {
-    dispatch(getItemCostBeginAction());
+  // Login GET  ACTIONS
+  const getLogin = () => {
+    dispatch(getLoginBeginAction());
     return API.get(hapyCarURL,
       null,
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          getItemCostSuccessAction({
+          getLoginSuccessAction({
             ...data,
             title: SUCCESS,
           })
@@ -37,12 +37,12 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.itemCost) {
-          const [errors] = error.response.data.itemCost;
+        if (error.response.data.login) {
+          const [errors] = error.response.data.login;
           errorMsg = errors;
         }
         dispatch(
-          getItemCostFailureAction({
+          getLoginFailureAction({
             ...errorMsg,
             title: ERROR,
             errorMsg,
@@ -52,16 +52,16 @@ import {
 
   };
 
-  // ItemCost ADD  ACTIONS
-  const addItemCost = (itemCost) => {
+  // Login ADD  ACTIONS
+  const addLogin = (login) => {
     return API.post(
       hapyCarURL,
-      { data: itemCost },
+      { data: login },
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          addItemCostAction({
+          addLoginAction({
             ...data,
             title: SUCCESS,
           })
@@ -70,13 +70,13 @@ import {
 
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.itemCost) {
-          const [errors] = error.response.data.itemCost;
+        if (error.response.datalogin) {
+          const [errors] = error.response.data.login;
           errorMsg = errors;
         }
         dispatch(
-          addItemCostAction({
-            ...itemCost,
+          addLoginAction({
+            ...login,
             title: ERROR,
             errorMsg,
           })
@@ -84,15 +84,15 @@ import {
       });
 
 
-
+login
 
   };
 
-  // ItemCost UPDATE  ACTIONS
-  const updateItemCost = (itemCostId, itemCost) => {
+  // Login UPDATE  ACTIONS
+  const updateLogin = (loginId, login) => {
 
-    return API.put(`${hapyCarURL}/${itemCostId}`,
-      { data: itemCost},
+    return API.put(`${hapyCarURL}/${loginId}`,
+      { data: login},
       { suppressErrors: [400] }
     )
       .then(({ data
@@ -100,7 +100,7 @@ import {
       }) =>
 
         dispatch(
-          updateItemCostAction({
+          updateLoginAction({
             ...data,
             title: SUCCESS,
           })
@@ -108,13 +108,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.itemCost) {
-          const [errors] = error.response.data.itemCost;
+        if (error.response.data.login) {
+          const [errors] = error.response.data.login;
           errorMsg = errors;
         }
         dispatch(
-          updateItemCostAction({
-            ...itemCost,
+          updateLoginAction({
+            ...login,
             title: ERROR,
             errorMsg,
           })
@@ -123,15 +123,15 @@ import {
 
   };
 
-  // ItemCost DELETE  ACTIONS
-  const deleteItemCost = (itemCostId) => {
-    return API.delete(`${hapyCarURL}/${itemCostId}`,
+  // Login DELETE  ACTIONS
+  const deleteLogin= (loginId) => {
+    return API.delete(`${hapyCarURL}/${loginId}`,
       null,
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          deleteItemCostAction({
+          deleteLoginAction({
             ...data,
             title: SUCCESS,
           })
@@ -139,13 +139,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.itemCost) {
-          const [errors] = error.response.data.itemCost;
+        if (error.response.data.login) {
+          const [errors] = error.response.data.login;
           errorMsg = errors;
         }
         dispatch(
-          deleteItemCostAction({
-            ...itemCostId,
+          deleteLoginAction({
+            ...loginId,
             title: ERROR,
             errorMsg,
           })
@@ -154,9 +154,9 @@ import {
 
   };
 
-  // ItemCost BY ID ACTIONS
-  const itemCostById = (itemCostId) => {
-    return API.get(`${hapyCarURL}/${itemCostId}`,
+  //Login BY ID ACTIONS
+  const loginById = (loginId) => {
+    return API.get(`${hapyCarURL}/${loginId}`,
       null,
       { suppressErrors: [400] }
     )
@@ -165,7 +165,7 @@ import {
       }) =>
 
         dispatch(
-          itemCostAction({
+            loginAction({
             ...data,
             title: SUCCESS,
           })
@@ -173,12 +173,12 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.itemCost) {
-          const [errors] = error.response.data.itemCost;
+        if (error.response.data.login) {
+          const [errors] = error.response.data.login;
           errorMsg = errors;
         }
         dispatch(
-          itemCostAction({
+            loginAction({
             ...errorMsg,
             title: ERROR,
             errorMsg,
@@ -188,10 +188,10 @@ import {
       
   };
   return {
-    addItemCost,
-    updateItemCost,
-    deleteItemCost,
-    getItemCosts,
-    itemCostById,
+    addLogin,
+    updateLogin,
+    deleteLogin,
+    getLogin,
+    loginById,
   };
 }

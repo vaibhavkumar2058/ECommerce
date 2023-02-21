@@ -18,7 +18,6 @@ import getErrorMessage from "./getErrorMessage";
 
 export default function useAPI() {
   const dispatch = useDispatch();
-  //const { paradigmApiBaseUrl } = useSelector((state) => state.env);
 
   const HTTP = axios.create({
     baseURL: "https://localhost:7062/order",

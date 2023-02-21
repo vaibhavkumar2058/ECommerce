@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Map, GoogleApiWrapper, Marker  } from 'google-maps-react';
+import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 import CustomMap from '../pages/CustomMap';
 
 const mapStyles = {
@@ -19,31 +19,34 @@ class MapView extends Component {
     return (
       <div>
         <div style={{ width: 300, height: 300 }}>
-    <CustomMap google={this.props.google} locations={[{
-            lat: "13.818693657174972",
-            lng: "77.48491621843388"
-          }]}/>
-</div>
-        {/* <Map
-          google={this.props.google}
-          zoom={14}
-          style={mapStyles}
-          initialCenter={{
-            lat: "18.677490",
-            lng: "74.116531"
-          }}
-        >
-         <Marker
-          onClick={this.onMarkerClick}
-          name={'This is test name'}
-        />
-        </Map> */}
+          <CustomMap google={this.props.google} locations={[{
+            lat: "13.8186936572",
+            lng: "77.4849162184"
+          },{
+            lat: "13.8195340000",
+            lng: "77.4872130000"
+          }]} />
+        </div>
+        {/* <div style={{ width: 300, height: 300 }}>
+          <CustomMap google={this.props.google} locations={[{
+            // lat: "13.8083237000",
+            // lng: "77.4972623000" 
+            // lat: "12.9800000000",
+            // lng: "77.5927000000"
+            // lat: "13.8195340000",
+            // lng: "77.4872130000"
+            // lat: "13.8187076000",
+            // lng: "77.4848860000",
+            lat: "13.8186936572",
+            lng: "77.4849162184"
+          }]} />
+        </div> */}
       </div>
     );
   }
 }
 
 export default GoogleApiWrapper({
-  apiKey: ''
-  // apiKey: 'AIzaSyAf_G4R_GlpOOoGIDJ8WLvyAFjuq8F2jYc'
+  //apiKey: ''
+  apiKey: 'AIzaSyAf_G4R_GlpOOoGIDJ8WLvyAFjuq8F2jYc'
 })(MapView);
