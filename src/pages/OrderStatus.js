@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
-import useFetchSecurity from "../hooks/useFetchSecurity";
-import SecurityModel from "../components/SecurityModel";
+import useFetchOrderStatus from "../hooks/useFetchOrderStatus";
+import OrderStatusModel from "../components/OrderStatusModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
@@ -24,16 +24,16 @@ const MyExportCSV = (props) => {
   );
 };
 
-export default function Securitys() {
+export default function OrderStatus() {
 
-  const [securities, setSecurities] = useState([]);
+  const [orderStatuses, setOrderStatuses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
   const handleClose = () => {
-    getAllSecurities();
+    getAllOrderStatuses();
     setIsEdit(false);
     setIsDelete(false);
     setShow(false);
@@ -41,12 +41,12 @@ export default function Securitys() {
   const handleShow = () => setShow(true);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-  const [security, setSecurity] = useState({
-
-    questionId:null,
-    answerId:null,
+  const [orderStatus, setOrderStatus] = useState({
+    orderStatusName:"",
     description:"",
- 
+    recordStatusId:null,
+    
+    
       });
 
   const [id, setId] = useState(null);
@@ -59,19 +59,20 @@ export default function Securitys() {
   });
 
   const { 
-    addSecurity,
-    updateSecurity,
-    deleteSecurity,
-    getSecurity,
-    securityById,
-  } = useFetchSecurity();
+    addOrderStatus,
+    updateOrderStatus,
+    deleteOrderStatus,
+    getOrderStatuses,
+    orderStatusById,
+  } = useFetchOrderStatus();
 
   const columns = [
-
-    { dataField: 'securityId', text: 'Security Id', sort: true},
-    { dataField: 'questionId', text: ' QuestionId', sort: true },
-    { dataField: 'answerId', text: ' AnswerId', sort: true },
-    { dataField: 'description', text: 'Description', sort: true },
+    { dataField: 'orderStatusId', text: 'orderStatus Id', sort: true, hidden: true },
+    { dataField: 'orderStatusName', text: 'OrderStatus Name', sort: true },
+    
+    { dataField: 'recordStatusId', text: 'RecordStatus Id', sort: true },
+    { dataField: 'description', text: 'Description', sort: true,},
+    
     
     // columns follow dataField and text structure
     {
@@ -81,18 +82,18 @@ export default function Securitys() {
         return (
           <><button
             className="btn btn-primary btn-xs"
-            onClick={() => handleView(row.securityId, row.name)}
+            onClick={() => handleView(row.orderStatusId, row.name)}
           >
             View
           </button>
             <button
               className="btn btn-primary btn-xs"
-              onClick={() => handleEdit(row.securityId, row)}
+              onClick={() => handleEdit(row.orderStatusId, row)}
             >
               Edit
             </button><button
               className="btn btn-danger btn-xs"
-              onClick={() => handleDelete(row.securityId, row.name)}
+              onClick={() => handleDelete(row.orderStatusId, row.name)}
             >
               Delete
             </button></>
@@ -102,15 +103,15 @@ export default function Securitys() {
   ];
 
   useEffect(() => {
-    if (securities.length == 0) {
-      getAllSecurities();
+    if (orderStatuses.length == 0) {
+      getAllOrderStatuses();
       setLoading(false)
     }
-  }, [securities]);
+  }, [orderStatuses]);
 
 
   const defaultSorted = [{
-    dataField: 'securityId',
+    dataField: 'orderStatusId',
     order: 'desc'
   }];
 
@@ -124,8 +125,8 @@ export default function Securitys() {
   };
 
   const handleEdit = (rowId, row) => {
-    setSecurity(row);
-    //getSecuritysById(rowId);
+    setOrderStatus(row);
+    //getOrderStatusById(rowId);
     setId(rowId);
     setIsEdit(true);
     setShow(true);
@@ -156,12 +157,13 @@ export default function Securitys() {
     }
   });
 
-  const getAllSecurities = async () => {
-    const response = await getSecurity();
+
+  const getAllOrderStatuses = async () => {
+    const response = await getOrderStatuses();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',
-        message: 'Securitys Record Fetch Succefully.'
+        message: 'OrderStatus Record Fetch Succefully.'
       })
 
       var arr = [];
@@ -169,25 +171,25 @@ export default function Securitys() {
         arr.push(response.payload[key]);
       }
 
-      setSecurities(arr);
+      setOrderStatuses(arr);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Security Fetch Failed.'
+        message: 'OrderStatus Fetch Failed.'
       })
     }
   };
 
-  const getSecurityById = async (id) => {
-    const response = await securityById(id);
+  const getOrderStatusById = async (id) => {
+    const response = await orderStatusById(id);
     if (response.payload.title == "Success") {
-      setSecurity(response.payload);
+      setOrderStatus(response.payload);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Security Get Failed.'
+        message: 'OrderStatus Get Failed.'
       })
     }
   };
@@ -214,11 +216,11 @@ export default function Securitys() {
     <>
       <div className="m-t-40">
         {loading && <div>A moment please...</div>}
-        {securities && (<div>
+        {orderStatuses && (<div>
           <ToolkitProvider
             bootstrap4
-            keyField='securityId'
-            data={securities}
+            keyField='orderStatusId'
+            data={orderStatuses}
             columns={columns}
             search
           >
@@ -236,7 +238,7 @@ export default function Securitys() {
                           <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
                           <Button variant="primary" onClick={handleShow}>
-                            Add Security
+                            Add OrderStatus
                           </Button>
                           </div>
                         </div>
@@ -267,19 +269,19 @@ export default function Securitys() {
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Add Security</Modal.Title>
+              <Modal.Title>Add OrderStatus</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <SecurityModel
-                onAddSecurity={addSecurity}
-                onUpdateSecurity={updateSecurity}
-                onDeleteSecurity={deleteSecurity}
-                onGetSecurity={securityById}
+              <OrderStatusModel
+                onAddOrderStatus={addOrderStatus}
+                onUpdateOrderStatus={updateOrderStatus}
+                onDeleteOrderStatus={deleteOrderStatus}
+                onGetOrderStatus={orderStatusById}
                 onClose={handleClose}
                 isEdit={isEdit}
                 isDelete={isDelete}
                 id={id}
-                securityData={security}
+                orderStatusData={orderStatus}
               />
             </Modal.Body>
 

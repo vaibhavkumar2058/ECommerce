@@ -21,7 +21,7 @@ import {
   const ERROR = "Error";
 
   // GENDER GET  ACTIONS
-  const getGender = () => {
+  const getGenders = () => {
     dispatch(getGenderBeginAction());
     return API.get(hapyCarURL,
       null,
@@ -191,7 +191,7 @@ import {
     addGender,
     updateGender,
     deleteGender,
-    getGender,
+    getGenders,
     genderById,
   };
 }

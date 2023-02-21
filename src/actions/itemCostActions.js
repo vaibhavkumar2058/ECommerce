@@ -21,7 +21,7 @@ export const addItemCostAction = (data) => ({
     type: ADD_ITEMCOST,
     payload: data,
 })
-export const enquiryAction = (data) => ({
+export const itemCostAction = (data) => ({
     type: ITEMCOST,
     payload: data,
 })

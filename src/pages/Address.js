@@ -52,6 +52,7 @@ export default function Address() {
     landMark:"",
     isDefault:"",
     defaultAddressTypeId:null,
+    recordStatusId:null,
     
       });
 
@@ -104,6 +105,10 @@ export default function Address() {
     { dataField: 'landMark', text: 'LandMark', sort: true,headerStyle: () => {
       return { width: "100px" };
     } },
+    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true,headerStyle: () => {
+      return { width: "100px" };
+    } },
+    
     
     // columns follow dataField and text structure
     {

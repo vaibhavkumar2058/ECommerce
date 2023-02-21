@@ -1,271 +1,197 @@
 import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import { css } from "@emotion/react";
+import { useSelector, useDispatch } from "react-redux";
+import { useAPI } from "../services";
 
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Alert from 'react-bootstrap/Alert';
-import Modal from 'react-bootstrap/Modal';
+import {
+    addItemCostAction,
+    updateItemCostAction,   
+    deleteItemCostAction,
+    getItemCostBeginAction,
+    getItemCostSuccessAction,
+    getItemCostFailureAction,
+    itemCostAction,
+  } from "../actions/itemCostActions";
 
-export default function ItemCostModel({
-  onAddItemCost,
-  onUpdateItemCost,
-  onDeleteItemCost,
-  isEdit,
-  isDelete,
-  onGetItemCost,
-  id,
-  onClose,
-  itemCostData,
-}) {
-  const [newItemCost, setNewItemCost] = useState({
-    name: "",
-    mobile: "",
-    email: "",
-    description: "",
-    itemCostTypeId: null,
-    file:null,
-  });
+  export default function useFetchItemCosts() {
+    const dispatch = useDispatch();
+  const hapyCarURL = "https://localhost:7062/itemCost";
 
-  const [fileSelected, setFileSelected] = useState();
+  const API = useAPI();
+  const SUCCESS = "Success";
+  const ERROR = "Error";
 
-  const [messageStatus, setMessageStatus] = useState({
-    mode: "",
-    title: "",
-    status: false,
-    message: "",
-  });
+  // ItemCost GET  ACTIONS
+  const getItemCosts = () => {
+    dispatch(getItemCostBeginAction());
+    return API.get(hapyCarURL,
+      null,
+      { suppressErrors: [400] }
+    )
+      .then(({ data }) =>
+        dispatch(
+          getItemCostSuccessAction({
+            ...data,
+            title: SUCCESS,
+          })
+        )
+      )
+      .catch((error) => {
+        let errorMsg = "error msg from copy file";
+        if (error.response.data.itemCost) {
+          const [errors] = error.response.data.itemCost;
+          errorMsg = errors;
+        }
+        dispatch(
+          getItemCostFailureAction({
+            ...errorMsg,
+            title: ERROR,
+            errorMsg,
+          })
+        );
+      });
 
-  const [saveDisabled, setSaveDisabled] = useState(true);
-  const [buttonType, setButtonType] = useState("Save");
-
-  const styles = {
-    stFormContainer: css`
-      width: 400px !important;
-    `,
-    stFormControl: css``,
   };
 
-  const changeHandler = (e) => {
-    setNewItemCost({
-      ...newItemCost,
-      [e.target.name]: e.target.value,
-    });
+  // ItemCost ADD  ACTIONS
+  const addItemCost = (itemCost) => {
+    return API.post(
+      hapyCarURL,
+      { data: itemCost },
+      { suppressErrors: [400] }
+    )
+      .then(({ data }) =>
+        dispatch(
+          addItemCostAction({
+            ...data,
+            title: SUCCESS,
+          })
+        )
+      )
+
+      .catch((error) => {
+        let errorMsg = "error msg from copy file";
+        if (error.response.data.itemCost) {
+          const [errors] = error.response.data.itemCost;
+          errorMsg = errors;
+        }
+        dispatch(
+          addItemCostAction({
+            ...itemCost,
+            title: ERROR,
+            errorMsg,
+          })
+        );
+      });
+
+
+
+
   };
 
-  const saveFileSelected= (e) => {
-    //in case you wan to print the file selected
-    //console.log(e.target.files[0]);
-    setFileSelected(e.target.files[0]);
+  // ItemCost UPDATE  ACTIONS
+  const updateItemCost = (itemCostId, itemCost) => {
+
+    return API.put(`${hapyCarURL}/${itemCostId}`,
+      { data: itemCost},
+      { suppressErrors: [400] }
+    )
+      .then(({ data
+
+      }) =>
+
+        dispatch(
+          updateItemCostAction({
+            ...data,
+            title: SUCCESS,
+          })
+        )
+      )
+      .catch((error) => {
+        let errorMsg = "error msg from copy file";
+        if (error.response.data.itemCost) {
+          const [errors] = error.response.data.itemCost;
+          errorMsg = errors;
+        }
+        dispatch(
+          updateItemCostAction({
+            ...itemCost,
+            title: ERROR,
+            errorMsg,
+          })
+        );
+      });
+
   };
 
-  const saveHandler = async () => {
-    newItemCost.file = fileSelected;
-    if (isEdit) {
-      const response = await onUpdateItemCost(id, newItemCost);
-      if (response.payload.title == "Success") {
-        onClose(true);
-      }
-      else {
-        setMessageStatus({
-          mode: 'danger',
-          message: 'Un-Known Error Occured.'
-        })
-      }
-    }
-    else {
-      debugger;
-      const response = await onAddItemCost(newItemCost);
-      if (response.payload.title == "Success") {
-        setMessageStatus({
-          mode: 'success',
-          message: 'ItemCost Record Saved Succefully.'
-        })
-        onClose(true);
-        console.log(response.payload);
-      }
-      else {
-        setMessageStatus({
-          mode: 'danger',
-          message: 'ItemCost Save Failed.'
-        })
-      }
-    }
+  // ItemCost DELETE  ACTIONS
+  const deleteItemCost = (itemCostId) => {
+    return API.delete(`${hapyCarURL}/${itemCostId}`,
+      null,
+      { suppressErrors: [400] }
+    )
+      .then(({ data }) =>
+        dispatch(
+          deleteItemCostAction({
+            ...data,
+            title: SUCCESS,
+          })
+        )
+      )
+      .catch((error) => {
+        let errorMsg = "error msg from copy file";
+        if (error.response.data.itemCost) {
+          const [errors] = error.response.data.itemCost;
+          errorMsg = errors;
+        }
+        dispatch(
+          deleteItemCostAction({
+            ...itemCostId,
+            title: ERROR,
+            errorMsg,
+          })
+        );
+      });
+
   };
 
-  const deleteHandler = async () => {
-    const response = await onDeleteItemCost(id);
-    if (response.payload.title == "Success") {
-      onClose(true);
-    }
-    else {
-      setMessageStatus({
-        mode: 'danger',
-        message: 'ItemCost Delete Failed.'
-      })
-    }
+  // ItemCost BY ID ACTIONS
+  const itemCostById = (itemCostId) => {
+    return API.get(`${hapyCarURL}/${itemCostId}`,
+      null,
+      { suppressErrors: [400] }
+    )
+      .then(({ data
+
+      }) =>
+
+        dispatch(
+          itemCostAction({
+            ...data,
+            title: SUCCESS,
+          })
+        )
+      )
+      .catch((error) => {
+        let errorMsg = "error msg from copy file";
+        if (error.response.data.itemCost) {
+          const [errors] = error.response.data.itemCost;
+          errorMsg = errors;
+        }
+        dispatch(
+          itemCostAction({
+            ...errorMsg,
+            title: ERROR,
+            errorMsg,
+          })
+        );
+      });
+      
   };
-
-  useEffect(() => {
-    if (isEdit) {
-      setNewItemCost(itemCostData);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (isEdit) {
-      setButtonType("Update");
-    }
-    const isEnable =
-      !newItemCost?.name || !newItemCost?.mobile || !newItemCost?.email || !newItemCost?.description || !newItemCost?.itemCostTypeId;
-    setSaveDisabled(isEnable);
-  }, [newItemCost]);
-
-  return (
-    <>
-      {(messageStatus.message && <Alert key={messageStatus.mode} variant={messageStatus.mode}>
-        {messageStatus.message}
-      </Alert>)}
-      {isDelete && (
-        <>
-          <Modal.Body>
-            <p>Are you sure you want to delete?.</p>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={onClose}>
-              Cancel
-            </Button>
-            <Button variant="primary" onClick={deleteHandler}>
-              Delete
-            </Button>
-          </Modal.Footer>
-        </>
-      )}
-      {!isDelete && (
-        <Form>
-          <Form.Group
-            className={styles.stFormContainer}
-            controlId="formItemCost"
-          >
-            <Form.Label>ItemCost</Form.Label>
-            <Form.Control
-              type="text"
-              name="name"
-              placeholder="Enter ItemCost"
-              value={newItemCost?.name}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="mobile">
-            <Form.Label>Mobile</Form.Label>
-            <Form.Control
-              type="text"
-              name="mobile"
-              placeholder="Mobile"
-              value={newItemCost?.mobile}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-
-
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Description</Form.Label>
-            <Form.Control
-              type="text"
-              name="description"
-              placeholder="Description"
-              value={newItemCost?.description}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="email">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              type="text"
-              name="email"
-              placeholder="Email"
-              value={newItemCost?.email}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="itemCostTypeId">
-            <Form.Label>ItemCostTypeId</Form.Label>
-            <Form.Control
-              type="text"
-              name="itemCostTypeId"
-              placeholder="ItemCostTypeId"
-              value={newItemCost?.itemCostTypeId}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-          <Form.Group>
-          <input type="file" className="custom-file-label" onChange={saveFileSelected} />
-          </Form.Group>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={onClose}>
-              Cancel
-            </Button>
-            <Button variant="primary" onClick={saveHandler}
-              disabled={saveDisabled}>
-              {buttonType}
-            </Button>
-          </Modal.Footer>
-        </Form>
-      )}
-    </>
-  );
+  return {
+    addItemCost,
+    updateItemCost,
+    deleteItemCost,
+    getItemCosts,
+    itemCostById,
+  };
 }
-
-ItemCostModel.propTypes = {
-  /**
-   * Callback function for Add ItemCost
-   */
-  onAddItemCost: PropTypes.func,
-  /**
-   * Callback function for Update ItemCost
-   */
-  onUpdateItemCost: PropTypes.func,
-  /**
-   * Callback function for Delete ItemCost
-   */
-  onDeleteItemCost: PropTypes.func,
-  /**
-   * Callback function for Get ItemCost
-   */
-  onGetItemCost: PropTypes.func,
-  /**
-   * isEdit for bool type
-   */
-  isEdit: PropTypes.bool,
-  /**
-   * isDelete for bool type
-   */
-  isDelete: PropTypes.bool,
-  /**
-   * Callback function for Get ItemCost
-   */
-  onClose: PropTypes.func,
-  /**
-   * id for number type
-   */
-  id: PropTypes.number,
-  /**
- * itemCostData for object type
- */
-  itemCostData: PropTypes.any,
-};
-
-ItemCostModel.defaultProps = {
-  onAddItemCost: null,
-  onUpdateItemCost: null,
-  onDeleteItemCost: null,
-  onGetItemCost: null,
-  isEdit: false,
-  isDelete: false,
-  onClose: null,
-  id: null,
-  itemCostData: null,
-};
-

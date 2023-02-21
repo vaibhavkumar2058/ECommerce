@@ -34,6 +34,11 @@ import ResourceAttachments from "../pages/ResourceAttachments";
 import Role from "../pages/Role";
 import Folder from "../pages/Folder";
 import ProductAttachments from "../pages/ProductAttachments";
+import Resources from "../pages/Resources"
+import OrderStatus from "../pages/OrderStatus"
+import ShoppingList from "../pages/ShoppingList"
+import ItemList from "../pages/ItemList"
+
 
 
 const NavbarComp = () => {
@@ -41,34 +46,39 @@ const NavbarComp = () => {
     <Router>
       <div>
         <Routes>
-          <Route exact path="/enquiry" element={<Enquiry />} />   
-          <Route exact path="/state" element={<State />} />    
-          <Route exact path="/vehicleType" element={<VehicleType />} />    
-          <Route exact path="/categoryType" element={<CategoryType />} />        
-          <Route exact path="/product" element={<Product />} />   
-          <Route exact path="/file" element={<File />} />     
-          <Route exact path="/security" element={<Security />} />  
-          <Route exact path="/addressType" element={<AddressType />} />  
-          <Route exact path="/address" element={<Address />} />   
+          <Route exact path="/enquiry" element={<Enquiry />} />
+          <Route exact path="/state" element={<State />} />
+          <Route exact path="/vehicleType" element={<VehicleType />} />
+          <Route exact path="/categoryType" element={<CategoryType />} />
+          <Route exact path="/product" element={<Product />} />
+          <Route exact path="/file" element={<File />} />
+          <Route exact path="/security" element={<Security />} />
+          <Route exact path="/addressType" element={<AddressType />} />
+          <Route exact path="/address" element={<Address />} />
           <Route exact path="/cart" element={<Cart />} />
-          <Route exact path="/inVoice" element={<InVoice />} />     
-          <Route exact path="/gender" element={<Gender />} />    
-          <Route exact path="/country" element={<Country />} />        
-          <Route exact path="/GMT" element={<GMT />} />   
-          <Route exact path="/itemCost" element={<ItemCost />} />     
-          <Route exact path="/measurementType" element={<MeasurementType />} />  
-          <Route exact path="/measurementValue" element={<MeasurementValue />} />  
-          <Route exact path="/notifications" element={<Notification />} />   
-          <Route exact path="/orders" element={<Order />} />    
-          <Route exact path="/orderTracking" element={<OrderTracking />} />    
-          <Route exact path="/recordStatus" element={<RecordStatus />} />        
-          <Route exact path="/resourceAttachmentType" element={<ResourceAttachmentType />} />   
-          <Route exact path="/resourceAttachments" element={<ResourceAttachments />} />     
-          <Route exact path="/role" element={<Role />} />   
-          <Route exact path="/folder" element={<Folder />} /> 
-          <Route exact path="/productAttachments" element={<ProductAttachments />} />   
+          <Route exact path="/gender" element={<Gender />} />
+          <Route exact path="/country" element={<Country />} />
+          <Route exact path="/GMT" element={<GMT />} />
+          <Route exact path="/itemCost" element={<ItemCost />} />
+          <Route exact path="/measurementType" element={<MeasurementType />} />
+          <Route exact path="/measurementValue" element={<MeasurementValue />} />
+          <Route exact path="/notifications" element={<Notification />} />
+          <Route exact path="/orders" element={<Order />} />
+          <Route exact path="/orderTracking" element={<OrderTracking />} />
+          <Route exact path="/recordStatus" element={<RecordStatus />} />
+          <Route exact path="/resourceAttachmentType" element={<ResourceAttachmentType />} />
+          <Route exact path="/resourceAttachments" element={<ResourceAttachments />} />
+          <Route exact path="/role" element={<Role />} />
+          <Route exact path="/folder" element={<Folder />} />
+          <Route exact path="/resources" element={<Resources />} />
+          <Route exact path="/orderStatus" element={<OrderStatus />} />
+          <Route exact path="/productAttachments" element={<ProductAttachments />} />
+       <Route exact path="/shoppingList" element={<ShoppingList/>}/>
+       <Route exact path="/itemList" element={<ItemList/>}/>
+          
 
-       </Routes>
+
+        </Routes>
       </div>
     </Router>
   );

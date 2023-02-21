@@ -26,14 +26,14 @@ const MyExportCSV = (props) => {
 
 export default function ResourceAttachments() {
 
-  const [resourceAttachments, setResourceAttachments] = useState([]);
+  const [resourceAttachmentses, setResourceAttachmentses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
   const handleClose = () => {
-    getAllResourceAttachments();
+    getAllResourceAttachmentses();
     setIsEdit(false);
     setIsDelete(false);
     setShow(false);
@@ -41,13 +41,13 @@ export default function ResourceAttachments() {
   const handleShow = () => setShow(true);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-  const [resourceAttachment, setResourceAttachment] = useState({
-    resourceId: null,
-    fileId: null,
+  const [resourceAttachmentes, setResourceAttachments] = useState({
+    resourcesId: null,
+    filesId: null,
     resourceAttachmentTypeId: null,
     //visibleToCustomer: true,
     description: "",
-    recordStatusId:null
+   
       });
 
   const [id, setId] = useState(null);
@@ -63,15 +63,15 @@ export default function ResourceAttachments() {
     addResourceAttachments,
     updateResourceAttachments,
     deleteResourceAttachments,
-    getResourceAttachments,
+    getResourceAttachmentses,
     resourceAttachmentsById,
   } = useFetchResourceAttachments();
 
   const columns = [
 
     { dataField: 'resourceAttachmentsId', text: 'ResourceAttachmentsId ', sort: true, hidden: true },
-    { dataField: 'resourceId', text: ' Resource', sort: true },
-    { dataField: 'fileId', text: 'FileId', sort: true },
+    { dataField: 'resourcesId', text: ' Resources', sort: true },
+    { dataField: 'filesId', text: 'FilesId', sort: true },
     { dataField: 'resourceAttachmentTypeId', text: 'ResourceAttachmentType', sort: true,headerStyle: () => {
       return { width: "230px" };
     } },
@@ -81,9 +81,7 @@ export default function ResourceAttachments() {
     //{ dataField: 'visibleToCustomer', text: 'VisibleToCustomer', sort: true ,headerStyle: () => {
       //return { width: "200px" };
     //}},
-    { dataField: 'recordStatusId', text: 'RecordStatus', sort: true,headerStyle: () => {
-      return { width: "200px" };
-    } },
+    
     // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -114,7 +112,7 @@ export default function ResourceAttachments() {
 
   useEffect(() => {
     if (ResourceAttachments.length == 0) {
-      getAllResourceAttachments();
+      getAllResourceAttachmentses();
       setLoading(false)
     }
   }, [ResourceAttachments]);
@@ -135,7 +133,7 @@ export default function ResourceAttachments() {
   };
 
   const handleEdit = (rowId, row) => {
-    setResourceAttachment(row);
+    setResourceAttachments(row);
     //getResourceAttachmentsById(rowId);
     setId(rowId);
     setIsEdit(true);
@@ -168,8 +166,8 @@ export default function ResourceAttachments() {
   });
 
 
-  const getAllResourceAttachments = async () => {
-    const response = await getResourceAttachments();
+  const getAllResourceAttachmentses = async () => {
+    const response = await getResourceAttachmentses();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',
@@ -181,7 +179,7 @@ export default function ResourceAttachments() {
         arr.push(response.payload[key]);
       }
 
-      setResourceAttachments(arr);
+      setResourceAttachmentses(arr);
     }
     else {
       setMessageStatus({
@@ -194,7 +192,7 @@ export default function ResourceAttachments() {
   const getResourceAttachmentsById = async (id) => {
     const response = await resourceAttachmentsById(id);
     if (response.payload.title == "Success") {
-      setResourceAttachment(response.payload);
+      setResourceAttachments(response.payload);
     }
     else {
       setMessageStatus({
@@ -226,11 +224,11 @@ export default function ResourceAttachments() {
     <>
       <div className="m-t-40">
         {loading && <div>A moment please...</div>}
-        {resourceAttachments && (<div>
+        {resourceAttachmentses && (<div>
           <ToolkitProvider
             bootstrap4
             keyField='resourceAttachmentsId'
-            data={resourceAttachments}
+            data={resourceAttachmentses}
             columns={columns}
             search
           >
@@ -291,7 +289,7 @@ export default function ResourceAttachments() {
                 isEdit={isEdit}
                 isDelete={isDelete}
                 id={id}
-                resourceAttachmentsData={resourceAttachment}
+                resourceAttachmentsData={resourceAttachmentses}
               />
             </Modal.Body>
 

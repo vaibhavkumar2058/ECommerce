@@ -10,15 +10,23 @@ import { productReducer } from "./productReducer";
 import{ folderReducer} from "./folderReducer"
 import { fileReducer } from "./fileReducer";
 import{GMTReducer}from "./GMTReducer";
- 
+import{orderTrackingReducer}from "./orderTrackingReducer";
+import { resourcesReducer } from "./resourcesReducer";
+import{orderStatusReducer}from "./orderStatusReducer";
+
+
+
 export const reducers = combineReducers({
     enquiryReducer,
     recordStatusReducer,
     resourceAttachmentsReducer,
-       productReducer,
-       fileReducer,
+    productReducer,
+    fileReducer,
     categoryTypeReducer,
     folderReducer,
-    GMTReducer
+    GMTReducer,
+    orderTrackingReducer,
+    resourcesReducer,
+    orderStatusReducer
 
 })

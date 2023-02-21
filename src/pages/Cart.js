@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
 import useFetchCart from "../hooks/useFetchCart";
+import useFetchProduct from "../hooks/useFetchProduct";
+// import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
 import CartModel from "../components/CartModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
@@ -27,6 +29,8 @@ const MyExportCSV = (props) => {
 export default function Carts() {
 
   const [carts, setCarts] = useState([]);
+  const [products, setProducts  ] = useState();
+  // const [recordStatuses, setRecordStatuses  ] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -42,11 +46,12 @@ export default function Carts() {
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [cart, setCart] = useState({
-    resourceId:null,
+    resourcesId:null,
     productId:null,
     cost:null,
     quantity:"",
     description:"",
+    recordStatusId:null,
 
       });
 
@@ -66,14 +71,23 @@ export default function Carts() {
     getCart,
     cartById,
   } = useFetchCart();
+  const {
+    getProducts,
+  } = useFetchProduct();
+  // const {
+  //   getRecordStatuses,
+  // } = useFetchRecordStatus();
+
+
 
   const columns = [
     { dataField: 'cartId', text: 'Cart Id', sort: true, hidden: true },
-    { dataField: 'resourceId', text: 'Resource Id', sort: true  },
+    { dataField: 'resourcesId', text: 'Resources Id', sort: true  },
     { dataField: 'productId', text: ' Product Id', sort: true },
     { dataField: 'cost', text: 'Cost', sort: true },
     { dataField: 'quantity', text: 'Quantity', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
+    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true },
     // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -161,6 +175,22 @@ export default function Carts() {
   const getAllCarts = async () => {
     const response = await getCart();
     if (response.payload.title == "Success") {
+      const productList = await getProducts();
+      if (productList.payload.title == "Success") {
+        var carr = [];
+      for (var key in productList.payload) {
+        carr.push(productList.payload[key]);
+      }
+        setProducts(carr);
+      }
+      // const recordStatusList = await getRecordStatuses();
+      // if (recordStatusList.payload.title == "Success") {
+      //   var carr = [];
+      // for (var key in recordStatusList.payload) {
+      //   carr.push(recordStatusList.payload[key]);
+      // }
+      //   setRecordStatuses(carr);
+      // }
       setMessageStatus({
         mode: 'success',
         message: 'Carts Record Fetch Succefully.'
@@ -282,6 +312,8 @@ export default function Carts() {
                 isDelete={isDelete}
                 id={id}
                 cartData={cart}
+                products={products}
+                // recordStatuses={recordStatuses}
               />
             </Modal.Body>
 

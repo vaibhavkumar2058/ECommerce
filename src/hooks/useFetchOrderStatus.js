@@ -3,33 +3,33 @@ import { useSelector, useDispatch } from "react-redux";
 import { useAPI } from "../services";
 
 import {
-    addFileAction,
-    updateFileAction,   
-    deleteFileAction,
-    getFileBeginAction,
-    getFileSuccessAction,
-    getFileFailureAction,
-    fileAction,
-  } from "../actions/fileActions";
+    addOrderStatusAction,
+    updateOrderStatusAction,   
+    deleteOrderStatusAction,
+    getOrderStatusBeginAction,
+    getOrderStatusSuccessAction,
+    getOrderStatusFailureAction,
+    orderStatusAction ,
+  } from "../actions/orderStatusActions";
 
-  export default function useFetchFiles() {
+  export default function useFetchOrderStatuses() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/files";
+  const hapyCarURL = "https://localhost:7062/orderStatus";
 
   const API = useAPI();
   const SUCCESS = "Success";
   const ERROR = "Error";
 
-  // File GET  ACTIONS
-  const getFile = () => {
-    dispatch(getFileBeginAction());
+  // OrderTracking GET  ACTIONS
+  const getOrderStatuses = () => {
+    dispatch(getOrderStatusBeginAction());
     return API.get(hapyCarURL,
       null,
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          getFileSuccessAction({
+          getOrderStatusSuccessAction({
             ...data,
             title: SUCCESS,
           })
@@ -37,12 +37,12 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.file) {
-          const [errors] = error.response.data.file;
+        if (error.response.data.orderStatus) {
+          const [errors] = error.response.data.orderStatus;
           errorMsg = errors;
         }
         dispatch(
-          getFileFailureAction({
+          getOrderStatusFailureAction({
             ...errorMsg,
             title: ERROR,
             errorMsg,
@@ -52,19 +52,16 @@ import {
 
   };
 
-  // File ADD  ACTIONS
-  const addFile = async (file) => {
-    const formData = new FormData();
-    Object.keys(file).forEach((key) => formData.append(key,file[key]));
-
+  // OrderStatus ADD  ACTIONS
+  const addOrderStatus = (orderStatus) => {
     return API.post(
       hapyCarURL,
-      { data: formData },
-      { suppressErrors: [400] }     
+      { data: orderStatus },
+      { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          addFileAction({
+          addOrderStatusAction({
             ...data,
             title: SUCCESS,
           })
@@ -73,13 +70,13 @@ import {
 
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.file) {
-          const [errors] = error.response.data.file;
+        if (error.response.data.orderStatus) {
+          const [errors] = error.response.data.orderStatus;
           errorMsg = errors;
         }
         dispatch(
-          addFileAction({
-            ...file,
+          addOrderStatusAction({
+            ...orderStatus,
             title: ERROR,
             errorMsg,
           })
@@ -91,11 +88,11 @@ import {
 
   };
 
-  // File UPDATE  ACTIONS
-  const updateFile = (fileId, file) => {
+  // OrderStatus UPDATE  ACTIONS
+  const updateOrderStatus = (orderStatusId, orderStatus) => {
 
-    return API.put(`${hapyCarURL}/${fileId}`,
-      { data: file },
+    return API.put(`${hapyCarURL}/${orderStatusId}`,
+      { data: orderStatus},
       { suppressErrors: [400] }
     )
       .then(({ data
@@ -103,7 +100,7 @@ import {
       }) =>
 
         dispatch(
-          updateFileAction({
+          updateOrderStatusAction({
             ...data,
             title: SUCCESS,
           })
@@ -111,13 +108,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.file) {
-          const [errors] = error.response.data.file;
+        if (error.response.data.orderStatus) {
+          const [errors] = error.response.data.orderStatus;
           errorMsg = errors;
         }
         dispatch(
-          updateFileAction({
-            ...file,
+          updateOrderStatusAction({
+            ...orderStatus,
             title: ERROR,
             errorMsg,
           })
@@ -126,15 +123,15 @@ import {
 
   };
 
-  // File DELETE  ACTIONS
-  const deleteFile = (fileId) => {
-    return API.delete(`${hapyCarURL}/${fileId}`,
+  // OrderStatus DELETE  ACTIONS
+  const deleteOrderStatus = (orderStatusId) => {
+    return API.delete(`${hapyCarURL}/${orderStatusId}`,
       null,
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          deleteFileAction({
+          deleteOrderStatusAction({
             ...data,
             title: SUCCESS,
           })
@@ -142,13 +139,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.file) {
-          const [errors] = error.response.data.file;
+        if (error.response.data.orderStatus) {
+          const [errors] = error.response.data.orderStatus;
           errorMsg = errors;
         }
         dispatch(
-          deleteFileAction({
-            ...fileId,
+          deleteOrderStatusAction({
+            ...orderStatusId,
             title: ERROR,
             errorMsg,
           })
@@ -157,9 +154,9 @@ import {
 
   };
 
-  // File BY ID ACTIONS
-  const fileById = (fileId) => {
-    return API.get(`${hapyCarURL}/${fileId}`,
+  // OrderStatus BY ID ACTIONS
+  const orderStatusById = (orderStatusId) => {
+    return API.get(`${hapyCarURL}/${orderStatusId}`,
       null,
       { suppressErrors: [400] }
     )
@@ -168,7 +165,7 @@ import {
       }) =>
 
         dispatch(
-            fileAction({
+          orderStatusAction ({
             ...data,
             title: SUCCESS,
           })
@@ -176,12 +173,12 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.file) {
-          const [errors] = error.response.data.file;
+        if (error.response.data.orderStatus) {
+          const [errors] = error.response.data.orderStatus;
           errorMsg = errors;
         }
         dispatch(
-            fileAction({
+          orderStatusAction ({
             ...errorMsg,
             title: ERROR,
             errorMsg,
@@ -191,10 +188,10 @@ import {
       
   };
   return {
-    addFile,
-    updateFile,
-    deleteFile,
-    getFile,
-    fileById,
+    addOrderStatus,
+    updateOrderStatus,
+    deleteOrderStatus,
+    getOrderStatuses,
+    orderStatusById,
   };
 }

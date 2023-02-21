@@ -3,33 +3,33 @@ import { useSelector, useDispatch } from "react-redux";
 import { useAPI } from "../services";
 
 import {
-    addFileAction,
-    updateFileAction,   
-    deleteFileAction,
-    getFileBeginAction,
-    getFileSuccessAction,
-    getFileFailureAction,
-    fileAction,
-  } from "../actions/fileActions";
+    addResourcesAction,
+    updateResourcesAction,   
+    deleteResourcesAction,
+    getResourcesBeginAction,
+    getResourcesSuccessAction,
+    getResourcesFailureAction,
+    resourcesAction,
+  } from "../actions/resourcesActions";
 
-  export default function useFetchFiles() {
+  export default function useFetchResources() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/files";
+  const hapyCarURL = "https://localhost:7062/resources";
 
   const API = useAPI();
   const SUCCESS = "Success";
   const ERROR = "Error";
 
-  // File GET  ACTIONS
-  const getFile = () => {
-    dispatch(getFileBeginAction());
+  // Resources GET  ACTIONS
+  const getResources = () => {
+    dispatch(getResourcesBeginAction());
     return API.get(hapyCarURL,
       null,
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          getFileSuccessAction({
+          getResourcesSuccessAction({
             ...data,
             title: SUCCESS,
           })
@@ -37,12 +37,12 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.file) {
-          const [errors] = error.response.data.file;
+        if (error.response.data.resources) {
+          const [errors] = error.response.data.resources;
           errorMsg = errors;
         }
         dispatch(
-          getFileFailureAction({
+          getResourcesFailureAction({
             ...errorMsg,
             title: ERROR,
             errorMsg,
@@ -52,19 +52,16 @@ import {
 
   };
 
-  // File ADD  ACTIONS
-  const addFile = async (file) => {
-    const formData = new FormData();
-    Object.keys(file).forEach((key) => formData.append(key,file[key]));
-
+  // Resources ADD  ACTIONS
+  const addResources = (resources) => {
     return API.post(
       hapyCarURL,
-      { data: formData },
-      { suppressErrors: [400] }     
+      { data: resources },
+      { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          addFileAction({
+          addResourcesAction({
             ...data,
             title: SUCCESS,
           })
@@ -73,13 +70,13 @@ import {
 
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.file) {
-          const [errors] = error.response.data.file;
+        if (error.response.data.resources) {
+          const [errors] = error.response.data.resources;
           errorMsg = errors;
         }
         dispatch(
-          addFileAction({
-            ...file,
+          addResourcesAction({
+            ...resources,
             title: ERROR,
             errorMsg,
           })
@@ -91,11 +88,11 @@ import {
 
   };
 
-  // File UPDATE  ACTIONS
-  const updateFile = (fileId, file) => {
+  // Resources UPDATE  ACTIONS
+  const updateResources = (resourcesId, resources) => {
 
-    return API.put(`${hapyCarURL}/${fileId}`,
-      { data: file },
+    return API.put(`${hapyCarURL}/${resourcesId}`,
+      { data: resources },
       { suppressErrors: [400] }
     )
       .then(({ data
@@ -103,7 +100,7 @@ import {
       }) =>
 
         dispatch(
-          updateFileAction({
+          updateResourcesAction({
             ...data,
             title: SUCCESS,
           })
@@ -111,13 +108,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.file) {
-          const [errors] = error.response.data.file;
+        if (error.response.data.resources) {
+          const [errors] = error.response.data.resources;
           errorMsg = errors;
         }
         dispatch(
-          updateFileAction({
-            ...file,
+          updateResourcesAction({
+            ...resources,
             title: ERROR,
             errorMsg,
           })
@@ -126,15 +123,15 @@ import {
 
   };
 
-  // File DELETE  ACTIONS
-  const deleteFile = (fileId) => {
-    return API.delete(`${hapyCarURL}/${fileId}`,
+  // Product DELETE  ACTIONS
+  const deleteResources = (resourcesId) => {
+    return API.delete(`${hapyCarURL}/${resourcesId}`,
       null,
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          deleteFileAction({
+          deleteResourcesAction({
             ...data,
             title: SUCCESS,
           })
@@ -142,13 +139,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.file) {
-          const [errors] = error.response.data.file;
+        if (error.response.data.resources) {
+          const [errors] = error.response.data.resources;
           errorMsg = errors;
         }
         dispatch(
-          deleteFileAction({
-            ...fileId,
+          deleteResourcesAction({
+            ...resourcesId,
             title: ERROR,
             errorMsg,
           })
@@ -157,9 +154,9 @@ import {
 
   };
 
-  // File BY ID ACTIONS
-  const fileById = (fileId) => {
-    return API.get(`${hapyCarURL}/${fileId}`,
+  // Product BY ID ACTIONS
+  const resourcesById = (resourcesId) => {
+    return API.get(`${hapyCarURL}/${resourcesId}`,
       null,
       { suppressErrors: [400] }
     )
@@ -168,7 +165,7 @@ import {
       }) =>
 
         dispatch(
-            fileAction({
+            resourcesAction({
             ...data,
             title: SUCCESS,
           })
@@ -176,12 +173,12 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.file) {
-          const [errors] = error.response.data.file;
+        if (error.response.data.resources) {
+          const [errors] = error.response.data.eesources;
           errorMsg = errors;
         }
         dispatch(
-            fileAction({
+            resourcesAction({
             ...errorMsg,
             title: ERROR,
             errorMsg,
@@ -191,10 +188,10 @@ import {
       
   };
   return {
-    addFile,
-    updateFile,
-    deleteFile,
-    getFile,
-    fileById,
+    addResources,
+    updateResources,
+    deleteResources,
+    getResources,
+    resourcesById,
   };
 }

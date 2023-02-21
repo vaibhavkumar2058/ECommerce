@@ -6,6 +6,9 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
+import Select from 'react-select';
+import Addresses from "../../pages/Address";
+
 
 export default function AddressModel({
   onAddAddress,
@@ -17,6 +20,10 @@ export default function AddressModel({
   id,
   onClose,
   addressData,
+  countries,
+  states,
+  addressTypes,
+  //recordStatus,
 }) {
   const [newAddress, setNewAddress] = useState({
     countryId:null,
@@ -29,8 +36,33 @@ export default function AddressModel({
     landMark:"",
     isDefault:"",
     defaultAddressTypeId:null,
+    recordStatusId:null,
     
   });
+  const [countryOptions, setCountryOptions] = useState(countries.map((country, i) => (
+    {
+      key: i,
+      label: country.countryName,
+      value: country.countryId,
+    })).filter((item) => item));
+    const [stateOptions, setStateOptions] = useState(states.map((state, j) => (
+      {
+        key: j,
+        label: state.stateName,
+        value: state.stateId,
+      })).filter((item) => item));
+      const [addressTypeOptions, setAddressTypeOptions] = useState(addressTypes.map((addressType, k) => (
+        {
+          key: k,
+          label:addressType.addressTypeName,
+          value: addressType.addressTypeId,
+        })).filter((item) => item));
+        // const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatus.map((recordStatus, L) => (
+        //   {
+        //     key: L,
+        //     label: recordStatus.recordStatusName,
+        //     value: recordStatus.recordStatusId,
+        //   })).filter((item) => item));
 
   const [fileSelected, setFileSelected] = useState();
 
@@ -57,7 +89,13 @@ export default function AddressModel({
       [e.target.name]: e.target.value,
     });
   };
-
+  const selectChangeHandler = (e) => {
+    debugger;
+    setNewAddress({
+      ...newAddress,
+      "addressId": e.value,
+    });
+  };
   
 
   const saveHandler = async () => {
@@ -106,7 +144,41 @@ export default function AddressModel({
       })
     }
   };
+  useEffect(() => {
+    setCountryOptions(countries.map((country, i) => (
+      {
+        key: i,
+        label: country.countryName,
+        value: country.countryId,
+      })).filter((item) => item));
 
+  }, [countries]);
+  useEffect(() => {
+    setStateOptions(states.map((state, j) => (
+      {
+        key: j,
+        label: state.stateName,
+        value: state.stateId,
+      })).filter((item) => item));
+
+  }, [states]);
+  useEffect(() => {
+    setAddressTypeOptions(addressTypes.map((addressType, k) => (
+      {
+        key: k,
+        label: addressType.addressTypeName,
+        value: addressType.addressTypeId,
+      })).filter((item) => item));
+
+  }, [addressTypes]);
+  // useEffect(() => {
+  //   setRecordStatusOptions(recordStatus.map((recordStatus, L) => (
+  //     {
+  //       key: L,
+  //       label: recordStatus.recordStatusName,
+  //       value: recordStatus.recordStatusId,
+  //     })).filter((item) => item));
+  // }, [recordStatus]);
   useEffect(() => {
     if (isEdit) {
       setNewAddress(addressData);
@@ -118,7 +190,7 @@ export default function AddressModel({
       setButtonType("Update");
     }
     debugger;
-    const isEnable = !newAddress?.city || !newAddress?.town  || !newAddress?.locality || !newAddress?.pincode|| !newAddress?.landMark ;
+    const isEnable = !newAddress?.city || !newAddress?.town  || !newAddress?.locality || !newAddress?.pincode|| !newAddress?.landMark|| !newAddress?.recordStatusId ;
     setSaveDisabled(isEnable);
   }, [newAddress]);
 
@@ -144,30 +216,31 @@ export default function AddressModel({
       )}
       {!isDelete && (
         <Form>
-          <Form.Group
-            className={styles.stFormContainer}
-            controlId="formAddress"
-          >
-            <Form.Label>CountryId</Form.Label>
-            <Form.Control
-              type="text"
-              name="countryId"
-              placeholder="CountryId"
+           <Form.Group className="mb-3" controlId="countryId">
+            <Form.Label>Country</Form.Label>
+            <Select options={countryOptions} name="countryId"
               value={newAddress?.countryId}
-              onChange={changeHandler}
-            />
+              onChange={selectChangeHandler} />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="state">
-            <Form.Label>StateId</Form.Label>
-            <Form.Control
-              type="text"
-              name="stateId"
-              placeholder="StateId"
+        
+           <Form.Group className="mb-3" controlId="stateId">
+            <Form.Label>State</Form.Label>
+            <Select options={stateOptions} name="stateId"
               value={newAddress?.stateId}
-              onChange={changeHandler}
-            />
+              onChange={selectChangeHandler} />
           </Form.Group>
-
+          <Form.Group className="mb-3" controlId="addressTypeId">
+            <Form.Label>AddressType</Form.Label>
+            <Select options={addressTypeOptions} name="addressTypeId"
+              value={newAddress?.addressTypeId}
+              onChange={selectChangeHandler} />
+          </Form.Group>
+          {/* <Form.Group className="mb-3" controlId="recordStatusId">
+            <Form.Label>RecordStatus</Form.Label>
+            <Select options={recordStatusOptions} name="recordStatusId"
+              value={newAddress?.recordStatusId}
+              onChange={selectChangeHandler} />
+          </Form.Group> */}
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>City</Form.Label>
@@ -213,17 +286,6 @@ export default function AddressModel({
           </Form.Group>
 
 
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>AddressTypeId</Form.Label>
-            <Form.Control
-              type="text"
-              name="addressTypeId"
-              placeholder="AddressTypeId"
-              value={newAddress?.addressTypeId}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-
           <Form.Group className="mb-3" controlId="isDefault">
             <Form.Label>IsDefault</Form.Label>
             <Form.Control
@@ -254,6 +316,7 @@ export default function AddressModel({
               value={newAddress?.defaultAddressTypeId}
               onChange={changeHandler}
             />
+            </Form.Group>
              <Form.Group className="mb-3" controlId="description">
             <Form.Label>Description</Form.Label>
             <Form.Control
@@ -264,8 +327,6 @@ export default function AddressModel({
               onChange={changeHandler}
             />
           </Form.Group>
-            
-          
           
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
@@ -276,7 +337,7 @@ export default function AddressModel({
               {buttonType}
             </Button>
           </Modal.Footer>
-          </Form.Group>
+          
         </Form>
       )}
     </>
@@ -320,6 +381,22 @@ AddressModel.propTypes = {
  * addressData for object type
  */
   addressData: PropTypes.any,
+  /**
+* countries for object type
+*/
+countries: PropTypes.any,
+/**
+* states for object type
+*/
+states: PropTypes.any,
+/**
+* addressTypes for object type
+*/
+addressTypes: PropTypes.any,
+// /**
+// * recordStatuss for object type
+// */
+// recordStatuss: PropTypes.any,
 };
 
 AddressModel.defaultProps = {
@@ -332,5 +409,9 @@ AddressModel.defaultProps = {
   onClose: null,
   id: null,
   addressData: null,
+  countries: null,
+  states: null,
+  addressTypes: null,
+  //recordStatuss: null,
 };
 
