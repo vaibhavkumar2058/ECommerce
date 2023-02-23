@@ -44,11 +44,12 @@ export default function Invoices() {
   const [invoice, setInvoice] = useState({
     resourcesId:null,
     productId:null,
-    cost:"",
-    costInclude:"",
-    quantity:"",
-    total:"",
-    description:""
+    cost:null,
+    totalIncludeTax:null,
+    quantity:null,
+    total:null,
+    description:"",
+    //invoiceDate:null,
 
       });
 
@@ -74,9 +75,10 @@ export default function Invoices() {
     { dataField: 'resourcesId', text: 'ResourcesId', sort: true  },
     { dataField: 'productId', text: ' ProductId', sort: true },
     { dataField: 'cost', text: 'Cost', sort: true },
-    { dataField: 'costInclude', text: 'CostInclude', sort: true },
+    { dataField: 'totalIncludeTax', text: 'totalIncludeTax', sort: true },
     { dataField: 'quantity', text: 'Quantity', sort: true },
-    { dataField: 'total', text: 'total', sort: true },
+    { dataField: 'total', text: 'Total', sort: true },
+    //{ dataField: 'invoiceDate', text: 'InvoiceDate', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
     // columns follow dataField and text structure
     {

@@ -21,11 +21,12 @@ export default function InvoiceModel({
   const [newInvoice, setNewInvoice] = useState({
     resourcesId:null,
     productId:null,
-    cost:"",
-    costInclude:"",
-    quantity:"",
-    total:"",
-    description:""
+    cost:null,
+    totalIncludeTax:null,
+    quantity:null,
+    total:null,
+    description:"",
+    //invoiceDate:""
     
     
   });
@@ -116,7 +117,7 @@ export default function InvoiceModel({
       setButtonType("Update");
     }
     debugger;
-    const isEnable = !newInvoice?.resourcesId || !newInvoice?.productId  || !newInvoice?.cost || !newInvoice?.costInclude || !newInvoice?.quantity||  !newInvoice?.total || !newInvoice?.description;
+    const isEnable = !newInvoice?.resourcesId || !newInvoice?.productId  || !newInvoice?.cost || !newInvoice?.totalIncludeTax || !newInvoice?.quantity||  !newInvoice?.total || !newInvoice?.description;
     setSaveDisabled(isEnable);
   }, [newInvoice]);
 
@@ -178,16 +179,26 @@ export default function InvoiceModel({
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="costInclude">
-            <Form.Label>CostInclude</Form.Label>
+          <Form.Group className="mb-3" controlId="totalIncludeTax">
+            <Form.Label>TotalIncludeTax</Form.Label>
             <Form.Control
               type="text"
-              name="costInclude"
-              placeholder="CostInclude"
-              value={newInvoice?.costInclude}
+              name="totalIncludeTax"
+              placeholder="TotalIncludeTax"
+              value={newInvoice?.totalIncludeTax}
               onChange={changeHandler}
             />
           </Form.Group>
+          {/* <Form.Group className="mb-3" controlId="invoiceDate">
+            <Form.Label>InvoiceDate</Form.Label>
+            <Form.Control
+              type="text"
+              name="invoiceDate"
+              placeholder="InvoiceDate"
+              value={newInvoice?.invoiceDate}
+              onChange={changeHandler}
+            />
+          </Form.Group> */}
 
           <Form.Group className="mb-3" controlId="Quantity">
             <Form.Label>Quantity</Form.Label>
@@ -248,7 +259,7 @@ InvoiceModel.propTypes = {
   /**
    * Callback function for Update Invoice
    */
-  onUpdateInVve: PropTypes.func,
+  onUpdateInvoice: PropTypes.func,
   /**
    * Callback function for Delete Invoice
    */

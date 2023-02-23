@@ -14,7 +14,7 @@ import {
 
   export default function useFetchInvoices() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/invoice";
+  const hapyCarURL = "https://localhost:7062/controller/invoice";
 
   const API = useAPI();
   const SUCCESS = "Success";
