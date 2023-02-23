@@ -8,17 +8,17 @@ import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
 
 export default function InVoiceModel({
-  onAddInVoice,
-  onUpdateInVoice,
-  onDeleteInVoice,
+  onAddInvoice,
+  onUpdateInvoice,
+  onDeleteInvoice,
   isEdit,
   isDelete,
-  onGetInVoice,
+  onGetInvoice,
   id,
   onClose,
-  inVoiceData,
+  invoiceData,
 }) {
-  const [newInVoice, setNewInVoice] = useState({
+  const [newInvoice, setNewInvoice] = useState({
     resourcesId:null,
     productId:null,
     cost:"",
@@ -50,8 +50,8 @@ export default function InVoiceModel({
   };
 
   const changeHandler = (e) => {
-    setNewInVoice({
-      ...newInVoice,
+    setNewInvoice({
+      ...newInvoice,
       [e.target.name]: e.target.value,
     });
   };
@@ -59,9 +59,9 @@ export default function InVoiceModel({
   
 
   const saveHandler = async () => {
-    newInVoice.file = fileSelected;
+    newInvoice.file = fileSelected;
     if (isEdit) {
-      const response = await onUpdateInVoice(id, newInVoice);
+      const response = await onUpdateInvoice(id, newInvoice);
       if (response.payload.title == "Success") {
         onClose(true);
       }
@@ -74,11 +74,11 @@ export default function InVoiceModel({
     }
     else {
       debugger;
-      const response = await onAddInVoice(newInVoice);
+      const response = await onAddInvoice(newInvoice);
       if (response.payload.title == "Success") {
         setMessageStatus({
           mode: 'success',
-          message: 'InVoice Record Saved Succefully.'
+          message: 'Invoice Record Saved Succefully.'
         })
         onClose(true);
         console.log(response.payload);
@@ -86,28 +86,28 @@ export default function InVoiceModel({
       else {
         setMessageStatus({
           mode: 'danger',
-          message: 'InVoice Save Failed.'
+          message: 'Invoice Save Failed.'
         })
       }
     }
   };
 
   const deleteHandler = async () => {
-    const response = await onDeleteInVoice(id);
+    const response = await onDeleteInvoice(id);
     if (response.payload.title == "Success") {
       onClose(true);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'InVoice Delete Failed.'
+        message: 'Invoice Delete Failed.'
       })
     }
   };
 
   useEffect(() => {
     if (isEdit) {
-      setNewInVoice(inVoiceData);
+      setNewInvoice(invoiceData);
     }
   }, []);
 
@@ -116,9 +116,9 @@ export default function InVoiceModel({
       setButtonType("Update");
     }
     debugger;
-    const isEnable = !newInVoice?.resourcesId || !newInVoice?.productId  || !newInVoice?.cost || !newInVoice?.costInclude || !newInVoice?.quantity||  !newInVoice?.total || !newInVoice?.description;
+    const isEnable = !newInvoice?.resourcesId || !newInvoice?.productId  || !newInvoice?.cost || !newInvoice?.costInclude || !newInvoice?.quantity||  !newInvoice?.total || !newInvoice?.description;
     setSaveDisabled(isEnable);
-  }, [newInVoice]);
+  }, [newInvoice]);
 
   return (
     <>
@@ -144,14 +144,14 @@ export default function InVoiceModel({
         <Form>
           <Form.Group
             className={styles.stFormContainer}
-            controlId="formInVoice"
+            controlId="formInvoice"
           >
             <Form.Label>ResorcesId</Form.Label>
             <Form.Control
               type="text"
               name="resourcesId"
               placeholder="ResourcesId"
-              value={newInVoice?.resourcesId}
+              value={newInvoice?.resourcesId}
               onChange={changeHandler}
             />
           </Form.Group>
@@ -161,7 +161,7 @@ export default function InVoiceModel({
               type="text"
               name="productId"
               placeholder="ProductId"
-              value={newInVoice?.productId}
+              value={newInvoice?.productId}
               onChange={changeHandler}
             />
           </Form.Group>
@@ -173,7 +173,7 @@ export default function InVoiceModel({
               type="text"
               name="cost"
               placeholder="Cost"
-              value={newInVoice?.cost}
+              value={newInvoice?.cost}
               onChange={changeHandler}
             />
           </Form.Group>
@@ -184,7 +184,7 @@ export default function InVoiceModel({
               type="text"
               name="costInclude"
               placeholder="CostInclude"
-              value={newInVoice?.costInclude}
+              value={newInvoice?.costInclude}
               onChange={changeHandler}
             />
           </Form.Group>
@@ -195,7 +195,7 @@ export default function InVoiceModel({
               type="text"
               name="quantity"
               placeholder="Quantity"
-              value={newInVoice?.quantity}
+              value={newInvoice?.quantity}
               onChange={changeHandler}
             />
             
@@ -207,7 +207,7 @@ export default function InVoiceModel({
               type="text"
               name="total"
               placeholder="Total"
-              value={newInVoice?.total}
+              value={newInvoice?.total}
               onChange={changeHandler}
             />
           </Form.Group>
@@ -217,7 +217,7 @@ export default function InVoiceModel({
               type="text"
               name="description"
               placeholder="Description"
-              value={newInVoice?.description}
+              value={newInvoice?.description}
               onChange={changeHandler}
             />
           </Form.Group>
@@ -240,23 +240,23 @@ export default function InVoiceModel({
   );
 }
 
-InVoiceModel.propTypes = {
+InvoiceModel.propTypes = {
   /**
-   * Callback function for Add InVoice
+   * Callback function for Add Invoice
    */
-  onAddInVoice: PropTypes.func,
+  onAddInvoice: PropTypes.func,
   /**
-   * Callback function for Update InVoice
+   * Callback function for Update Invoice
    */
-  onUpdateInVoice: PropTypes.func,
+  onUpdateInvoice: PropTypes.func,
   /**
-   * Callback function for Delete InVoice
+   * Callback function for Delete Invoice
    */
-  onDeleteInVoice: PropTypes.func,
+  onDeleteInvoice: PropTypes.func,
   /**
-   * Callback function for Get InVoice
+   * Callback function for Get Invoice
    */
-  onGetInVoice: PropTypes.func,
+  onGetInvoice: PropTypes.func,
   /**
    * isEdit for bool type
    */
@@ -266,7 +266,7 @@ InVoiceModel.propTypes = {
    */
   isDelete: PropTypes.bool,
   /**
-   * Callback function for Get InVoice
+   * Callback function for Get Invoice
    */
   onClose: PropTypes.func,
   /**
@@ -274,20 +274,20 @@ InVoiceModel.propTypes = {
    */
   id: PropTypes.number,
   /**
- * inVoiceData for object type
+ * invoiceData for object type
  */
-  inVoiceData: PropTypes.any,
+  invoiceData: PropTypes.any,
 };
 
-InVoiceModel.defaultProps = {
-  onAddInVoice: null,
-  onUpdateInVoice: null,
-  onDeleteInVoice: null,
-  onGetInVoice: null,
+InvoiceModel.defaultProps = {
+  onAddInvoice: null,
+  onUpdateInvoice: null,
+  onDeleteInvoice: null,
+  onGetInvoice: null,
   isEdit: false,
   isDelete: false,
   onClose: null,
   id: null,
-  inVoiceData: null,
+  invoiceData: null,
 };
 
