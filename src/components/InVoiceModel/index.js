@@ -7,11 +7,7 @@ import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
 
-<<<<<<< HEAD
-export default function InVoiceModel({
-=======
 export default function InvoiceModel({
->>>>>>> 3799329804d90a6d76310dc384249c6d5e7c23aa
   onAddInvoice,
   onUpdateInvoice,
   onDeleteInvoice,

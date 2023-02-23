@@ -18,7 +18,7 @@ import Security from "../pages/Security";
 import AddressType from "../pages/AddressType";
 import Address from "../pages/Address";
 import Cart from "../pages/Cart";
-import InVoice from "../pages/InVoice";
+import Invoice from "../pages/Invoice";
 import Country from "../pages/Country";
 import Gender from "../pages/Gender";
 import GMT from "../pages/GMT";
@@ -76,6 +76,7 @@ const NavbarComp = () => {
           <Route exact path="/productAttachments" element={<ProductAttachments />} />
           <Route exact path="/shoppingList" element={<ShoppingList />} />
           <Route exact path="/itemList" element={<ItemList />} />
+          <Route exact path="/invoice" element={<Invoice />} />
           <Route exact path="/map" element={<ZMap />} />
           <Route exact path="/dashboard" element={<Dashboard />} />
           <Route path="/" element={<Navigate replace to="/dashboard" />} />

@@ -3,33 +3,33 @@ import { useSelector, useDispatch } from "react-redux";
 import { useAPI } from "../services";
 
 import {
-    addInVoiceAction,
-    updateInVoiceAction,   
-    deleteInVoiceAction,
-    getInVoiceBeginAction,
-    getInVoiceSuccessAction,
-    getInVoiceFailureAction,
-    inVoiceAction,
-  } from "../actions/inVoiceActions";
+    addInvoiceAction,
+    updateInvoiceAction,   
+    deleteInvoiceAction,
+    getInvoiceBeginAction,
+    getInvoiceSuccessAction,
+    getInvoiceFailureAction,
+    invoiceAction,
+  } from "../actions/invoiceActions";
 
-  export default function useFetchInVoices() {
+  export default function useFetchInvoices() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/inVoice";
+  const hapyCarURL = "https://localhost:7062/invoice";
 
   const API = useAPI();
   const SUCCESS = "Success";
   const ERROR = "Error";
 
-  // InVoice GET  ACTIONS
-  const getInVoice = () => {
-    dispatch(getInVoiceBeginAction());
+  // Invoice GET  ACTIONS
+  const getInvoice = () => {
+    dispatch(getInvoiceBeginAction());
     return API.get(hapyCarURL,
       null,
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          getInVoiceSuccessAction({
+          getInvoiceSuccessAction({
             ...data,
             title: SUCCESS,
           })
@@ -37,12 +37,12 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.inVoice) {
-          const [errors] = error.response.data.inVoice;
+        if (error.response.data.invoice) {
+          const [errors] = error.response.data.invoice;
           errorMsg = errors;
         }
         dispatch(
-          getInVoiceFailureAction({
+          getInvoiceFailureAction({
             ...errorMsg,
             title: ERROR,
             errorMsg,
@@ -52,16 +52,16 @@ import {
 
   };
 
-  // InVoice ADD  ACTIONS
-  const addInVoice = (inVoice) => {
+  // Invoice ADD  ACTIONS
+  const addInvoice = (invoice) => {
     return API.post(
       hapyCarURL,
-      { data: inVoice },
+      { data: invoice },
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          addInVoiceAction({
+          addInvoiceAction({
             ...data,
             title: SUCCESS,
           })
@@ -70,13 +70,13 @@ import {
 
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.inVoice) {
-          const [errors] = error.response.data.inVoice;
+        if (error.response.data.invoice) {
+          const [errors] = error.response.data.invoice;
           errorMsg = errors;
         }
         dispatch(
-          addInVoiceAction({
-            ...inVoice,
+          addInvoiceAction({
+            ...invoice,
             title: ERROR,
             errorMsg,
           })
@@ -89,10 +89,10 @@ import {
   };
 
   // InVoice UPDATE  ACTIONS
-  const updateInVoice = (inVoiceId, inVoice) => {
+  const updateInvoice = (invoiceId, invoice) => {
 
-    return API.put(`${hapyCarURL}/${inVoiceId}`,
-      { data: inVoice },
+    return API.put(`${hapyCarURL}/${invoiceId}`,
+      { data: invoice },
       { suppressErrors: [400] }
     )
       .then(({ data
@@ -100,7 +100,7 @@ import {
       }) =>
 
         dispatch(
-          updateInVoiceAction({
+          updateInvoiceAction({
             ...data,
             title: SUCCESS,
           })
@@ -108,13 +108,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.inVoice) {
-          const [errors] = error.response.data.inVoice;
+        if (error.response.data.invoice) {
+          const [errors] = error.response.data.invoice;
           errorMsg = errors;
         }
         dispatch(
-          updateInVoiceAction({
-            ...inVoice,
+          updateInvoiceAction({
+            ...invoice,
             title: ERROR,
             errorMsg,
           })
@@ -123,15 +123,15 @@ import {
 
   };
 
-  // InVoice DELETE  ACTIONS
-  const deleteInVoice = (inVoiceId) => {
-    return API.delete(`${hapyCarURL}/${inVoiceId}`,
+  // Invoice DELETE  ACTIONS
+  const deleteInvoice = (invoiceId) => {
+    return API.delete(`${hapyCarURL}/${invoiceId}`,
       null,
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          deleteInVoiceAction({
+          deleteInvoiceAction({
             ...data,
             title: SUCCESS,
           })
@@ -139,13 +139,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.inVoice) {
-          const [errors] = error.response.data.inVoice;
+        if (error.response.data.invoice) {
+          const [errors] = error.response.data.invoice;
           errorMsg = errors;
         }
         dispatch(
-          deleteInVoiceAction({
-            ...inVoiceId,
+          deleteInvoiceAction({
+            ...invoiceId,
             title: ERROR,
             errorMsg,
           })
@@ -154,9 +154,9 @@ import {
 
   };
 
-  // InVoice BY ID ACTIONS
-  const inVoiceById = (inVoiceId) => {
-    return API.get(`${hapyCarURL}/${inVoiceId}`,
+  // Invoice BY ID ACTIONS
+  const invoiceById = (invoiceId) => {
+    return API.get(`${hapyCarURL}/${invoiceId}`,
       null,
       { suppressErrors: [400] }
     )
@@ -165,7 +165,7 @@ import {
       }) =>
 
         dispatch(
-          inVoiceAction({
+          invoiceAction({
             ...data,
             title: SUCCESS,
           })
@@ -173,12 +173,12 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.inVoice) {
-          const [errors] = error.response.data.inVoice;
+        if (error.response.data.invoice) {
+          const [errors] = error.response.data.invoice;
           errorMsg = errors;
         }
         dispatch(
-          inVoiceAction({
+          invoiceAction({
             ...errorMsg,
             title: ERROR,
             errorMsg,
@@ -188,10 +188,10 @@ import {
       
   };
   return {
-    addInVoice,
-    updateInVoice,
-    deleteInVoice,
-    getInVoice,
-    inVoiceById,
+    addInvoice,
+    updateInvoice,
+    deleteInvoice,
+    getInvoice,
+    invoiceById,
   };
 }

@@ -6,7 +6,7 @@ import {
     FETCH_INVOICE_SUCCESS,
     FETCH_INVOICE_FAILURE,
     INVOICE,
-  } from "../actions/inVoiceActions";
+  } from "../actions/invoiceActions";
   
   const initialState = {
     loading: true,
@@ -14,14 +14,14 @@ import {
     data: null,
   };
   
-  export function inVoiceReducer(state = initialState, action) {
+  export function inioiceReducer(state = initialState, action) {
     switch (action.type) {
   
       case FETCH_INVOICE_SUCCESS:
         return {
           ...state,
-          inVoice: {
-            ...state.inVoice,
+          invoice: {
+            ...state.invoice,
             data: action.payload,
           },
         };
@@ -31,8 +31,8 @@ import {
       case ADD_INVOICE:
         return {
           ...state,
-          inVoice: {
-            ...state.inVoice,
+          invoice: {
+            ...state.invoice,
             data: action.payload,
           },
         };
@@ -40,8 +40,8 @@ import {
         case UPDATE_INVOICE:
         return {
           ...state,
-          inVoice: {
-            ...state.inVoice,
+          invoice: {
+            ...state.invoice,
             data: action.payload,
           },
         };
@@ -49,8 +49,8 @@ import {
         case INVOICE:
         return {
           ...state,
-          inVoice: {
-            ...state.inVoice,
+          invoice: {
+            ...state.invoice,
             data: action.payload,
           },
         };
@@ -58,8 +58,8 @@ import {
         case DELETE_INVOICE:
           return {
             ...state,
-            inVoice: {
-              ...state.inVoice,
+            invoice: {
+              ...state.invoice,
               data: action.payload,
             },
           };
