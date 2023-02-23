@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
-import useFetchInVoice from "../hooks/useFetchInVoice";
-import InVoiceModel from "../components/InVoiceModel";
+import useFetchInvoice from "../hooks/useFetchInvoice";
+import InvoiceModel from "../components/InvoiceModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
@@ -24,16 +24,16 @@ const MyExportCSV = (props) => {
   );
 };
 
-export default function InVoices() {
+export default function Invoices() {
 
-  const [inVoices, setInVoices] = useState([]);
+  const [invoices, setInvoices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
   const handleClose = () => {
-    getAllInVoices();
+    getAllInvoices();
     setIsEdit(false);
     setIsDelete(false);
     setShow(false);
@@ -41,7 +41,7 @@ export default function InVoices() {
   const handleShow = () => setShow(true);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-  const [inVoice, setInVoice] = useState({
+  const [invoice, setInvoice] = useState({
     resourcesId:null,
     productId:null,
     cost:"",
@@ -62,15 +62,15 @@ export default function InVoices() {
   });
 
   const { 
-    addInVoice,
-    updateInVoice,
-    deleteInVoice,
-    getInVoice,
-    inVoiceById,
-  } = useFetchInVoice();
+    addInvoice,
+    updateInvoice,
+    deleteInvoice,
+    getInvoice,
+    invoiceById,
+  } = useFetchInvoice();
 
   const columns = [
-    { dataField: 'inVoiceId', text: 'inVoiceId', sort: true, hidden: true },
+    { dataField: 'invoiceId', text: 'invoiceId', sort: true, hidden: true },
     { dataField: 'resourcesId', text: 'ResourcesId', sort: true  },
     { dataField: 'productId', text: ' ProductId', sort: true },
     { dataField: 'cost', text: 'Cost', sort: true },
@@ -86,18 +86,18 @@ export default function InVoices() {
         return (
           <><button
             className="btn btn-primary btn-xs"
-            onClick={() => handleView(row.inVoiceId, row.name)}
+            onClick={() => handleView(row.invoiceId, row.name)}
           >
             View
           </button>
             <button
               className="btn btn-primary btn-xs"
-              onClick={() => handleEdit(row.inVoiceId, row)}
+              onClick={() => handleEdit(row.invoiceId, row)}
             >
               Edit
             </button><button
               className="btn btn-danger btn-xs"
-              onClick={() => handleDelete(row.inVoiceId, row.name)}
+              onClick={() => handleDelete(row.invoiceId, row.name)}
             >
               Delete
             </button></>
@@ -107,15 +107,15 @@ export default function InVoices() {
   ];
 
   useEffect(() => {
-    if (inVoices.length == 0) {
-      getAllInVoices();
+    if (invoices.length == 0) {
+      getAllInvoices();
       setLoading(false)
     }
-  }, [inVoices]);
+  }, [invoices]);
 
 
   const defaultSorted = [{
-    dataField: 'inVoiceId',
+    dataField: 'invoiceId',
     order: 'desc'
   }];
 
@@ -129,8 +129,8 @@ export default function InVoices() {
   };
 
   const handleEdit = (rowId, row) => {
-    setInVoice(row);
-    //getInVoicesById(rowId);
+    setInvoice(row);
+    //getInvoicesById(rowId);
     setId(rowId);
     setIsEdit(true);
     setShow(true);
@@ -162,12 +162,12 @@ export default function InVoices() {
   });
 
 
-  const getAllInVoices = async () => {
-    const response = await getInVoice();
+  const getAllInvoices = async () => {
+    const response = await getInvoice();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',
-        message: 'InVoices Record Fetch Succefully.'
+        message: 'Invoices Record Fetch Succefully.'
       })
 
       var arr = [];
@@ -175,25 +175,25 @@ export default function InVoices() {
         arr.push(response.payload[key]);
       }
 
-      setInVoices(arr);
+      setInvoices(arr);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'InVoice Fetch Failed.'
+        message: 'Invoice Fetch Failed.'
       })
     }
   };
 
-  const getInVoiceById = async (id) => {
-    const response = await inVoiceById(id);
+  const getInvoiceById = async (id) => {
+    const response = await invoiceById(id);
     if (response.payload.title == "Success") {
-      setInVoice(response.payload);
+      setInvoice(response.payload);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'InVoice Get Failed.'
+        message: 'Invoice Get Failed.'
       })
     }
   };
@@ -220,11 +220,11 @@ export default function InVoices() {
     <>
       <div className="m-t-40">
         {loading && <div>A moment please...</div>}
-        {inVoices && (<div>
+        {invoices && (<div>
           <ToolkitProvider
             bootstrap4
-            keyField='inVoiceId'
-            data={inVoices}
+            keyField='invoiceId'
+            data={invoices}
             columns={columns}
             search
           >
@@ -242,7 +242,7 @@ export default function InVoices() {
                           <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
                           <Button variant="primary" onClick={handleShow}>
-                            Add InVoice
+                            Add Invoice
                           </Button>
                           </div>
                         </div>
@@ -273,19 +273,19 @@ export default function InVoices() {
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Add InVoice</Modal.Title>
+              <Modal.Title>Add Invoice</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <InVoiceModel
-                onAddInVoice={addInVoice}
-                onUpdateInVoice={updateInVoice}
-                onDeleteInVoice={deleteInVoice}
-                onGetInVoice={inVoiceById}
+              <InvoiceModel
+                onAddInvoice={addInvoice}
+                onUpdateInvoice={updateInvoice}
+                onDeleteInvoice={deleteInvoice}
+                onGetInvoice={invoiceById}
                 onClose={handleClose}
                 isEdit={isEdit}
                 isDelete={isDelete}
                 id={id}
-                inVoiceData={inVoice}
+                invoiceData={invoice}
               />
             </Modal.Body>
 
