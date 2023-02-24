@@ -83,8 +83,8 @@ const NavbarComp = () => {
           <Route exact path="/orderPlacedList" element={<OrderPlacedList/>} />
           <Route exact path="/map" element={<ZMap />} />
           <Route exact path="/dashboard" element={<Dashboard />} />
-          <Route path="/" element={<Navigate replace to="/dashboard" />} />
-          <Route path="/" element={<Navigate replace to="/dashboard" />} />
+          <Route path="/" element ={<Navigate replace to="/dashboard" />} />
+          <Route path="/" element ={<Navigate replace to="/dashboard" />} />
           <Route exact path="/changepassword" element={<ChangePassword/>} />
           
         </Routes>
