@@ -66,6 +66,7 @@ export default function Orders() {
     deleteOrder,
     getOrder,
     orderById,
+    placeOrder,
   } = useFetchOrder();
 
   const columns = [
@@ -286,6 +287,7 @@ debugger;
                 isDelete={isDelete}
                 id={id}
                 orderData={order}
+                onPlaceOrder={placeOrder}
               />
             </Modal.Body>
 

@@ -10,11 +10,13 @@ import {
     getOrderSuccessAction,
     getOrderFailureAction,
     orderAction,
+    PlaceOrderAction,
   } from "../actions/orderActions";
 
   export default function useFetchOrders() {
     const dispatch = useDispatch();
   const hapyCarURL = "https://localhost:7062/order";
+  const placeOrdersURL = "https://localhost:7062/placeorders";
 
   const API = useAPI();
   const SUCCESS = "Success";
@@ -83,10 +85,6 @@ import {
           })
         );
       });
-
-
-
-
   };
 
   // Order UPDATE  ACTIONS
@@ -186,13 +184,54 @@ import {
           })
         );
       });
+
+      
       
   };
+   // Order PLACE_ORDER  ACTIONS
+   const placeOrder = (orders) => {
+    debugger;
+    return API.post(
+      placeOrdersURL,
+      { data: orders },
+      { suppressErrors: [400] }
+    )
+      .then(({ data }) =>
+        dispatch(
+          PlaceOrderAction({
+            ...data,
+            title: SUCCESS,
+          })
+        )
+      )
+
+      .catch((error) => {
+        let errorMsg = "error msg from copy file";
+        debugger;
+        if (error.response.data.order) {
+          const [errors] = error.response.data.order;
+          errorMsg = errors;
+        }
+        dispatch(
+          addOrderAction({
+            ...orders,
+            title: ERROR,
+            errorMsg,
+          })
+        );
+      });
+
+
+
+
+  };
+  
   return {
     addOrder,
     updateOrder,
     deleteOrder,
     getOrder,
     orderById,
+    placeOrder,
   };
 }

@@ -17,6 +17,7 @@ export default function OrderModel({
   id,
   onClose,
   orderData,
+  onPlaceOrder,
 }) {
   const [newOrder, setNewOrder] = useState({
     categoryTypeId : null,
@@ -84,6 +85,7 @@ export default function OrderModel({
       }
     }
   };
+  
 
   const deleteHandler = async () => {
     const response = await onDeleteOrder(id);
@@ -97,7 +99,23 @@ export default function OrderModel({
       })
     }
   };
-
+  const placeOrderHandler = async () => {
+  const response = await onAddOrder(newOrder);
+  if (response.payload.title == "Success") {
+    setMessageStatus({
+      mode: 'success',
+      message: 'Order Record Saved Succefully.'
+    })
+    onClose(true);
+    console.log(response.payload);
+  }
+  else {
+    setMessageStatus({
+      mode: 'danger',
+      message: 'Order Save Failed.'
+    })
+  }
+};
   useEffect(() => {
     if (isEdit) {
       setNewOrder(orderData);
@@ -286,6 +304,12 @@ OrderModel.propTypes = {
  * orderData for object type
  */
   orderData: PropTypes.any,
+  
+  /**
+ * onPlaceOrder for object type
+ */
+  onPlaceOrder: PropTypes.any,
+
 };
 
 OrderModel.defaultProps = {
@@ -298,5 +322,6 @@ OrderModel.defaultProps = {
   onClose: null,
   id: null,
   orderData: null,
+  onPlaceOrder:null,
 };
 

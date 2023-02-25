@@ -6,6 +6,7 @@ import {
     FETCH_ORDER_SUCCESS,
     FETCH_ORDER_FAILURE,
     ORDER,
+    PLACEORDER_ORDER,
   } from "../actions/orderActions";
   
   const initialState = {
@@ -63,6 +64,14 @@ import {
               data: action.payload,
             },
           };
+          case PLACEORDER_ORDER:
+        return {
+          ...state,
+          order: {
+            ...state.order,
+            data: action.payload,
+          },
+        };
   
   
   
