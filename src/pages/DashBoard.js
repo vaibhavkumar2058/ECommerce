@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import useFetchGMT from "../hooks/useFetchGMT";
+import Resources from "../pages/Resources";
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart,
     Area, BarChart, Bar, PieChart, Pie, Cell
 } from 'recharts';
+
 
 export default function Dashboard() {
 
@@ -138,7 +140,6 @@ export default function Dashboard() {
 
     return (
         <>
-            Dashboard
             <div className="row">
                 <div className="col-md-6">
                     <PieChart width={500} height={300}>
@@ -173,11 +174,16 @@ export default function Dashboard() {
                             strokeWidth={4} activeDot={{ r: 8 }} />
                         <XAxis dataKey="name" interval={'preserveStartEnd'} tickFormatter={(value) => value} />
                         <YAxis />
-                        <Tooltip contentStyle={{ backgroundColor: 'yellow' }} />
+                        <Tooltip contentStyle={{ backgroundColor: 'maroon' }} />
                         <Legend />
                     </LineChart>
                 </div>
 
+            </div>
+            <div className="row">
+                <div className="col-md-12">
+                    <Resources></Resources>
+                </div>
             </div>
         </>
     );

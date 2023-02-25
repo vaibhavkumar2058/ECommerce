@@ -28,33 +28,33 @@ export default function ResourcesModel({
     firstName: "",
     middleName: "",
     lastName: "",
-    roleId:null,
-    genderId:null,
-    mobileNumber:null,
-    addressId:null,
+    roleId: null,
+    genderId: null,
+    mobileNumber: null,
+    addressId: null,
     bloodGroup: "",
     email: "",
     password: "",
     isEmailVerified: true,
     isMobileVerified: true,
-    recordStatusId:null,
-    
-attachment: null,
-   
+    recordStatusId: null,
+
+    attachment: null,
+
   });
-  
-    const [roleOptions, setRoleOptions] = useState(roles.map((role, i) => (
-      {
-        key: i,
-        label: role.roleName,
-        value: role.roleId,
-      })).filter((item) => item));
-      const [genderOptions, setGenderOptions] = useState(genders.map((gender, i) => (
-        {
-          key: i,
-          label: gender.genderName,
-          value: gender.genderId,
-        })).filter((item) => item));
+
+  const [roleOptions, setRoleOptions] = useState(roles.map((role, i) => (
+    {
+      key: i,
+      label: role.roleName,
+      value: role.roleId,
+    })).filter((item) => item));
+  const [genderOptions, setGenderOptions] = useState(genders.map((gender, i) => (
+    {
+      key: i,
+      label: gender.genderName,
+      value: gender.genderId,
+    })).filter((item) => item));
 
 
   const [fileSelected, setFileSelected] = useState();
@@ -87,7 +87,7 @@ attachment: null,
     debugger;
     setNewResources({
       ...newResources,
-      "resourcesId": e.value,
+      "roleId": e.value,
     });
   };
 
@@ -149,7 +149,7 @@ attachment: null,
       {
         key: i,
         label: role.roleName,
-      value: role.roleId,
+        value: role.roleId,
       })).filter((item) => item));
 
   }, [roles]);
@@ -158,7 +158,7 @@ attachment: null,
       {
         key: i,
         label: gender.genderName,
-      value: gender.genderId,
+        value: gender.genderId,
       })).filter((item) => item));
 
   }, [genders]);
@@ -176,7 +176,7 @@ attachment: null,
       setButtonType("Update");
     }
     const isEnable =
-      !newResources?.firstName || !newResources?.middleName || !newResources?.lastName || !newResources?.roleId|| !newResources?.genderId|| !newResources?.mobileNumber|| !newResources?.addressId|| !newResources?.bloodGroup|| !newResources?.email|| !newResources?.password|| !newResources?.isEmailVerified|| !newResources?.isMobileVerified|| !newResources?.recordStatusId;
+      !newResources?.firstName || !newResources?.middleName || !newResources?.lastName || !newResources?.roleId || !newResources?.genderId || !newResources?.mobileNumber || !newResources?.addressId || !newResources?.bloodGroup || !newResources?.email || !newResources?.password || !newResources?.isEmailVerified || !newResources?.isMobileVerified || !newResources?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newResources]);
 
@@ -201,12 +201,13 @@ attachment: null,
         </>
       )}
       {!isDelete && (
-        
+
         <Form>
 
-<Form.Group className="mb-3" controlId="roleId">
+          <Form.Group className="mb-3" controlId="roleId">
             <Form.Label>Role</Form.Label>
-            <Select options={roleOptions} name="roleId"
+            <Select options={roleOptions} 
+              name="roleId"
               value={newResources?.roleId}
               onChange={selectChangeHandler} />
           </Form.Group>
@@ -218,7 +219,7 @@ attachment: null,
           </Form.Group>
 
 
-               <Form.Group
+          <Form.Group
             className={styles.stFormContainer}
             controlId="formResources"
           >
@@ -251,8 +252,8 @@ attachment: null,
               onChange={changeHandler}
             />
           </Form.Group>
-          
-          
+
+
           <Form.Group className="mb-3" controlId="mobileNumber">
             <Form.Label>MobileNumber</Form.Label>
             <Form.Control
@@ -333,14 +334,14 @@ attachment: null,
               onChange={changeHandler}
             />
           </Form.Group>
-         
+
           <Form.Group>
             <Form.Label>Resources Image</Form.Label>
           </Form.Group>
           <Form.Group>
             <input type="file" onChange={saveFileSelected} />
           </Form.Group>
-          
+
           <Form.Group>
 
           </Form.Group>
@@ -399,11 +400,11 @@ ResourcesModel.propTypes = {
   /**
 * roles for object type
 */
-roles: PropTypes.any,
-/**
-* genders for object type
-*/
-genders: PropTypes.any,
+  roles: PropTypes.any,
+  /**
+  * genders for object type
+  */
+  genders: PropTypes.any,
 
 
 };
@@ -418,7 +419,7 @@ ResourcesModel.defaultProps = {
   onClose: null,
   id: null,
   resourcesData: null,
-  roles:null,
-  genders:null,
+  roles: null,
+  genders: null,
 
 };
