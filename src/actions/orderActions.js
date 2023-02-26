@@ -35,7 +35,7 @@ export const deleteOrderAction = (data) => ({
     type: DELETE_ORDER,
     payload: data,
 })
-export const PlaceOrderAction = (data) => ({
+export const placeOrderAction = (data) => ({
     type: PLACEORDER_ORDER,
     payload: data,
 })

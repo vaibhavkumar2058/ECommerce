@@ -74,7 +74,6 @@ export default function InvoiceModel({
       }
     }
     else {
-      debugger;
       const response = await onAddInvoice(newInvoice);
       if (response.payload.title == "Success") {
         setMessageStatus({
@@ -116,7 +115,6 @@ export default function InvoiceModel({
     if (isEdit) {
       setButtonType("Update");
     }
-    debugger;
     const isEnable = !newInvoice?.resourcesId || !newInvoice?.productId  || !newInvoice?.cost || !newInvoice?.totalIncludeTax || !newInvoice?.quantity||  !newInvoice?.total || !newInvoice?.description;
     setSaveDisabled(isEnable);
   }, [newInvoice]);

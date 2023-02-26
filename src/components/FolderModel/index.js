@@ -36,7 +36,6 @@ export default function FolderModel({
     status: false,
     message: "",
   });
-debugger;
   const [saveDisabled, setSaveDisabled] = useState(true);
   const [buttonType, setButtonType] = useState("Save");
 
@@ -75,7 +74,6 @@ debugger;
       }
     }
     else {
-      debugger;
       const response = await onAddFolder(newFolder);
       if (response.payload.title == "Success") {
         setMessageStatus({

@@ -68,7 +68,6 @@ export default function ItemCostModel({
       }
     }
     else {
-      debugger;
       const response = await onAddItemCost(newItemCost);
       if (response.payload.title == "Success") {
         setMessageStatus({

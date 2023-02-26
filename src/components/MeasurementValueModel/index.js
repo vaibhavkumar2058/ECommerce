@@ -65,7 +65,6 @@ export default function MeasurementValueModel({
       }
     }
     else {
-      debugger;
       const response = await onAddMeasurementValue(newMeasurementValue);
       if (response.payload.title == "Success") {
         setMessageStatus({

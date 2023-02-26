@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import useFetchGMT from "../hooks/useFetchGMT";
+import useFetchOrder from "../hooks/useFetchOrder";
+import useFetchProduct from "../hooks/useFetchProduct";
 import Resources from "../pages/Resources";
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart,
@@ -18,60 +20,78 @@ export default function Dashboard() {
         recordStatusId: 1,
     });
 
-    const pdata = [
-        {
-            name: 'Python',
-            student: 13,
-            fees: 10
-        },
-        {
-            name: 'Javascript',
-            student: 15,
-            fees: 12
-        },
-        {
-            name: 'PHP',
-            student: 5,
-            fees: 10
-        },
-        {
-            name: 'Java',
-            student: 10,
-            fees: 5
-        },
-        {
-            name: 'C#',
-            student: 9,
-            fees: 4
-        }
-    ];
-
-    const pieData = [
-        {
-            name: "Detergent Soaps",
-            value: 54
-        },
-        {
-            name: "Detergent Liquids",
-            value: 47
-        },
-        {
-            name: "Dishwash Liquids",
-            value: 16
-        },
-        {
-            name: "Dishwash Soaps",
-            value: 16
-        },
-        {
-            name: "Adipranav Agarbathi",
-            value: 10
-        }
-    ];
-
+    const [productOrders, setProductOrders] = useState([]);
+    const [productSales, setProductSales] = useState([]);
     const {
         addGMT,
     } = useFetchGMT();
+
+    const {
+        productOrderList,
+    } = useFetchOrder();
+
+    const {
+        productSalesList,
+    } = useFetchProduct();
+
+    useEffect(() => {
+        if (productOrders.length == 0) {
+            getProductOrders();
+        }
+    }, [productOrders]);
+
+    console.log("info", productOrders);
+
+    useEffect(() => {
+        if (productSales.length == 0) {
+            getProductSales();
+        }
+    }, [productSales]);
+
+    console.log("info", productSales);
+
+    const getProductSales = async () => {
+        const response = await productSalesList();
+        if (response.payload.title == "Success") {
+            const dataFormatter = (rawData) => {
+                const curedData = {};
+                return curedData;
+            }
+
+            var arr = [];
+            for (var key in response.payload) {
+                if (key !== 'title')
+                    arr.push(response.payload[key]);
+            }
+
+            setProductSales(arr);
+        }
+        else {
+        }
+    };
+
+    const getProductOrders = async () => {
+        const response = await productOrderList();
+        if (response.payload.title == "Success") {
+            const dataFormatter = (rawData) => {
+                const curedData = {};
+                curedData.productName = rawData?.productName;
+                curedData.orders = rawData?.orders;
+                curedData.orderDate = new Date(rawData.orderDate).getDate();
+                return curedData;
+            }
+
+            var arr = [];
+            for (var key in response.payload) {
+                if (key !== 'title')
+                    arr.push(dataFormatter(response.payload[key]));
+            }
+
+            setProductOrders(arr);
+        }
+        else {
+        }
+    };
 
     const [messageStatus, setMessageStatus] = useState({
         mode: "",
@@ -89,7 +109,6 @@ export default function Dashboard() {
     // }, 100000);
 
     const saveHandler = async () => {
-        debugger;
         const response = await addGMT(newGMT);
         if (response.payload.title == "Success") {
             setMessageStatus({
@@ -144,10 +163,10 @@ export default function Dashboard() {
                 <div className="col-md-6">
                     <PieChart width={500} height={300}>
                         <Pie
-                            data={pieData}
+                            data={productSales}
                             color="#000000"
-                            dataKey="value"
-                            nameKey="name"
+                            dataKey="ordersCount"
+                            nameKey="productName"
                             cx="50%"
                             cy="50%"
                             labelLine={false}
@@ -155,7 +174,7 @@ export default function Dashboard() {
                             fill="#8884d8"
                             label={renderCustomizedLabel}
                         >
-                            {pieData.map((entry, index) => (
+                            {productSales.map((entry, index) => (
                                 <Cell
                                     key={`cell-${index}`}
                                     fill={COLORS[index % COLORS.length]}
@@ -167,13 +186,13 @@ export default function Dashboard() {
                     </PieChart>
                 </div>
                 <div className="col-md-6">
-                    <LineChart width={500} height={300} data={pdata}>
-                        <Line type="monotone" dataKey="student" stroke="#8884d8"
+                    <LineChart width={500} height={300} data={productOrders}>
+                        <Line type="monotone" dataKey="productName" stroke="#8884d8"
                             strokeWidth={4} activeDot={{ r: 8 }} />
-                        <Line type="monotone" dataKey="fees" stroke="orange"
+                        <Line type="monotone" dataKey="orders" stroke="orange"
                             strokeWidth={4} activeDot={{ r: 8 }} />
-                        <XAxis dataKey="name" interval={'preserveStartEnd'} tickFormatter={(value) => value} />
-                        <YAxis />
+                        <XAxis dataKey="orderDate" interval={'preserveStartEnd'} tickFormatter={(value) => value} />
+                        <YAxis  />
                         <Tooltip contentStyle={{ backgroundColor: 'maroon' }} />
                         <Legend />
                     </LineChart>

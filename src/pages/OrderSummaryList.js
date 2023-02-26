@@ -65,7 +65,6 @@ export default function ShoppingList() {
         message: 'Carts Record Fetch Succefully.'
       })
       const dataFormatter = (rawData) => {
-        debugger
         const curedData = {};
         curedData.categoryTypeId = rawData?.categoryTypeId;
         curedData.resourcesId = rawData?.resourcesId;

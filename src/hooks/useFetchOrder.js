@@ -10,14 +10,14 @@ import {
     getOrderSuccessAction,
     getOrderFailureAction,
     orderAction,
-    PlaceOrderAction,
+    placeOrderAction,
   } from "../actions/orderActions";
 
   export default function useFetchOrders() {
     const dispatch = useDispatch();
   const hapyCarURL = "https://localhost:7062/order";
   const placeOrdersURL = "https://localhost:7062/placeorders";
-
+  const productOrderListURL = "https://localhost:7062/productorderlist";
   const API = useAPI();
   const SUCCESS = "Success";
   const ERROR = "Error";
@@ -72,7 +72,6 @@ import {
 
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        debugger;
         if (error.response.data.order) {
           const [errors] = error.response.data.order;
           errorMsg = errors;
@@ -183,14 +182,42 @@ import {
             errorMsg,
           })
         );
-      });
-
-      
-      
+      });   
   };
+
+    // Order GET  ACTIONS
+    const productOrderList = () => {
+      dispatch(getOrderBeginAction());
+      return API.get(productOrderListURL,
+        null,
+        { suppressErrors: [400] }
+      )
+        .then(({ data }) =>
+          dispatch(
+            getOrderSuccessAction({
+              ...data,
+              title: SUCCESS,
+            })
+          )
+        )
+        .catch((error) => {
+          let errorMsg = "error msg from product OrderList";
+          if (error.response.data.order) {
+            const [errors] = error.response.data.order;
+            errorMsg = errors;
+          }
+          dispatch(
+            getOrderFailureAction({
+              ...errorMsg,
+              title: ERROR,
+              errorMsg,
+            })
+          );
+        });
+    };
+
    // Order PLACE_ORDER  ACTIONS
    const placeOrder = (orders) => {
-    debugger;
     return API.post(
       placeOrdersURL,
       { data: orders },
@@ -198,7 +225,7 @@ import {
     )
       .then(({ data }) =>
         dispatch(
-          PlaceOrderAction({
+          placeOrderAction({
             ...data,
             title: SUCCESS,
           })
@@ -207,13 +234,12 @@ import {
 
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        debugger;
         if (error.response.data.order) {
           const [errors] = error.response.data.order;
           errorMsg = errors;
         }
         dispatch(
-          addOrderAction({
+          placeOrderAction({
             ...orders,
             title: ERROR,
             errorMsg,
@@ -233,5 +259,6 @@ import {
     getOrder,
     orderById,
     placeOrder,
+    productOrderList,
   };
 }

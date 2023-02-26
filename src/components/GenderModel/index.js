@@ -48,10 +48,8 @@ export default function GenderModel({
       [e.target.name]: e.target.value,
     });
   };
-
-  
+ 
   const saveHandler = async () => {
-   debugger;
     if (isEdit) {
       const response = await onUpdateGender(id, newGender);
       if (response.payload.title == "Success") {

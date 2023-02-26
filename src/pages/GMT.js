@@ -125,7 +125,6 @@ export default function GMTs() {
     console.log(rowId, name);
     //1 YourCellName
   };
-debugger;
   const handleEdit = (rowId, row) => {
     setGMT(row);
     //getGMTById(rowId);

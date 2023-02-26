@@ -90,7 +90,6 @@ export default function AddressModel({
     });
   };
   const selectChangeHandler = (e) => {
-    debugger;
     setNewAddress({
       ...newAddress,
       "addressId": e.value,
@@ -113,7 +112,6 @@ export default function AddressModel({
       }
     }
     else {
-      debugger;
       const response = await onAddAddress(newAddress);
       if (response.payload.title == "Success") {
         setMessageStatus({
@@ -189,7 +187,6 @@ export default function AddressModel({
     if (isEdit) {
       setButtonType("Update");
     }
-    debugger;
     const isEnable = !newAddress?.city || !newAddress?.town  || !newAddress?.locality || !newAddress?.pincode|| !newAddress?.landMark|| !newAddress?.recordStatusId ;
     setSaveDisabled(isEnable);
   }, [newAddress]);

@@ -54,7 +54,6 @@ import {
 
   // Categorytype ADD  ACTIONS
   const addCategoryType = (categoryType) => {
-    debugger;
     return API.post( 
       hapyCarURL,
       { data: categoryType}

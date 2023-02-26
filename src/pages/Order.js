@@ -162,7 +162,6 @@ export default function Orders() {
     }
   });
 
-debugger;
   const getAllOrders = async () => {
     const response = await getOrder();
     if (response.payload.title == "Success") {

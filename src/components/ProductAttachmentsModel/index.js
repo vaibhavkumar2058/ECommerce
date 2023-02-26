@@ -52,7 +52,6 @@ export default function ProductAttachmentsModel({
   };
 
   const changeHandler = (e) => {
-    debugger;
     setNewProductAttachments({
       ...newProductAttachments,
       [e.target.name]: e.target.value,
@@ -60,7 +59,6 @@ export default function ProductAttachmentsModel({
   };
 
   const selectChangeHandler = (e) => {
-    debugger;
     setNewProductAttachments({
       ...newProductAttachments,
       "productId": e.value,
@@ -76,7 +74,6 @@ export default function ProductAttachmentsModel({
 
   const saveHandler = async () => {
     newProductAttachments.attachment = fileSelected;
-    debugger;
     if (isEdit) {
       const response = await onUpdateProductAttachments(id, newProductAttachments);
       if (response.payload.title == "Success") {

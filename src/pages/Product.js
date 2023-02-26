@@ -192,7 +192,6 @@ export default function Products() {
       })
 
       const dataFormatter = (rawData) => {
-        debugger
         const curedData = {};
         curedData.productId = rawData?.productId;
         curedData.productName = rawData?.productName;

@@ -42,7 +42,6 @@ export default function NotificationModel({
     `,
     stFormControl: css``,
   };
-debugger;
   const changeHandler = (e) => {
     setNewNotification({
       ...newNotification,

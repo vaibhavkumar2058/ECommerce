@@ -66,7 +66,6 @@ export default function RecordStatusModel({
       }
     }
     else {
-      debugger;
       const response = await onAddRecordStatus(newRecordStatus);
       if (response.payload.title == "Success") {
         setMessageStatus({

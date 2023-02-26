@@ -62,7 +62,6 @@ export default function OrderTrackingModel({
     });
   };
   const selectChangeHandler = (e) => {
-    debugger;
     setNewOrderTracking({
       ...newOrderTracking,
       "orderTrackingId": e.value,
@@ -86,7 +85,6 @@ export default function OrderTrackingModel({
       }
     }
     else {
-      debugger;
       const response = await onAddOrderTracking(newOrderTracking);
       if (response.payload.title == "Success") {
         setMessageStatus({
@@ -128,7 +126,6 @@ export default function OrderTrackingModel({
     if (isEdit) {
       setButtonType("Update");
     }
-    debugger;
     const isEnable = !newOrderTracking?.orderId || !newOrderTracking?.orderStatusId  || !newOrderTracking?.description ;
     setSaveDisabled(isEnable);
   }, [newOrderTracking]);

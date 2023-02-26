@@ -56,7 +56,6 @@ export default function GMTModel({
   
 
   const saveHandler = async () => {
-    debugger;
     if (isEdit) {
       const response = await onUpdateGMT(id, newGMT);
       if (response.payload.title == "Success") {
@@ -70,7 +69,6 @@ export default function GMTModel({
       }
     }
     else {
-      debugger;
       const response = await onAddGMT(newGMT);
       if (response.payload.title == "Success") {
         setMessageStatus({

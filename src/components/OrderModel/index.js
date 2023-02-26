@@ -67,7 +67,6 @@ export default function OrderModel({
       }
     }
     else {
-      debugger;
       const response = await onAddOrder(newOrder);
       if (response.payload.title == "Success") {
         setMessageStatus({

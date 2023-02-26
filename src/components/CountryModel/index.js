@@ -64,7 +64,6 @@ export default function CountryModel({
       }
     }
     else {
-      debugger;
       const response = await onAddCountry(newCountry);
       if (response.payload.title == "Success") {
         setMessageStatus({

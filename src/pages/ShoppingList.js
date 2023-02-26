@@ -44,7 +44,6 @@ export default function ShoppingList() {
       })
 
       const dataFormatter = (rawData) => {
-        debugger
         const curedData = {};
         curedData.productName = rawData?.product?.productName;
         curedData.description = rawData?.product?.description;

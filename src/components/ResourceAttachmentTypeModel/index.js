@@ -54,7 +54,6 @@ export default function ResourceAttachmentTypeModel({
   
 
   const saveHandler = async () => {
-    debugger
     if (isEdit) {
       const response = await onUpdateResourceAttachmentType(id, newResourceAttachmentType);
       if (response.payload.title == "Success") {
@@ -68,7 +67,6 @@ export default function ResourceAttachmentTypeModel({
       }
     }
     else {
-      debugger;
       const response = await onAddResourceAttachmentType(newResourceAttachmentType);
       if (response.payload.title == "Success") {
         setMessageStatus({

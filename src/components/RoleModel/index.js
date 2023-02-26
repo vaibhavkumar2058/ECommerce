@@ -67,7 +67,6 @@ export default function RoleModel({
       }
     }
     else {
-      debugger;
       const response = await onAddRole(newRole);
       if (response.payload.title == "Success") {
         setMessageStatus({

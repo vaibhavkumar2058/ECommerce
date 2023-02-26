@@ -126,7 +126,6 @@ export default function MeasurementTypes() {
     setId(rowId);
     setIsEdit(true);
     setShow(true);
-    debugger;
     console.log(measurementType)
   };
 

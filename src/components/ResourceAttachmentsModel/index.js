@@ -73,7 +73,6 @@ export default function ResourceAttachmentsModel({
       }
     }
     else {
-      debugger;
       const response = await onAddResourceAttachments(newResourceAttachments);
       if (response.payload.title == "Success") {
         setMessageStatus({
@@ -112,7 +111,6 @@ export default function ResourceAttachmentsModel({
   }, []);
 
   useEffect(() => {
-debugger;
     if (isEdit) {
       setButtonType("Update");
     }
