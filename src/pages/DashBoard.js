@@ -4,6 +4,7 @@ import useFetchGMT from "../hooks/useFetchGMT";
 import useFetchOrder from "../hooks/useFetchOrder";
 import useFetchProduct from "../hooks/useFetchProduct";
 import Resources from "../pages/Resources";
+import Product from "../pages/Product";
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart,
     Area, BarChart, Bar, PieChart, Pie, Cell
@@ -200,7 +201,10 @@ export default function Dashboard() {
 
             </div>
             <div className="row">
-                <div className="col-md-12">
+                <div className="col-md-6">
+                    <Product></Product>
+                </div>       
+                <div className="col-md-6">
                     <Resources></Resources>
                 </div>
             </div>

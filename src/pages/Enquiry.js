@@ -13,6 +13,14 @@ class MapView extends Component {
     this.state = {
       name: "React"
     };
+    this.locations = {
+      lat: "13.8186936572",
+      lng: "77.4849162184"
+    };
+  //   navigator.geolocation.getCurrentPosition((position) => {
+  //     this.locations.lat = position.coords.latitude;
+  //     this.locations.lng = position.coords.longitude;
+  // });
   }
 
   render() {
@@ -20,8 +28,8 @@ class MapView extends Component {
       <div>
         <div style={{ width: 300, height: 300 }}>
           <CustomMap google={this.props.google} locations={[{
-            lat: "13.8186936572",
-            lng: "77.4849162184"
+            lat: this.locations.lat,
+            lng: this.locations.lng
           },{
             lat: "13.8195340000",
             lng: "77.4872130000"

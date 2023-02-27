@@ -198,9 +198,6 @@ function App() {
           </Provider>
          
         </div>
-        <div className="container-fluid kanban-container py-4 px-0">
-
-        </div>
         <footer className="ftr bg-white rounded shadow p-5 mb-4 mt-4">
           <div className="row">
             <div className="col-12 col-md-6 col-xl-6 mb-md-0">

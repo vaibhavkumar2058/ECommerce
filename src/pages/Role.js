@@ -28,11 +28,23 @@ const MyExportCSV = (props) => {
 
 export default function Roles() {
 
+  const [newGMT, setNewGMT] = useState({
+    resourcesId: 6,
+    longitude: 0,
+    latitude: 0,
+    description: "logged coordinates",
+    recordStatusId: 1,
+});
   
   Geocode.setApiKey("AIzaSyAf_G4R_GlpOOoGIDJ8WLvyAFjuq8F2jYc");
 Geocode.enableDebug();
 
-Geocode.fromLatLng("12.9800000000", "77.5927000000").then(
+        navigator.geolocation.getCurrentPosition((position) => {
+            newGMT.latitude = position.coords.latitude;
+            newGMT.longitude = position.coords.longitude;
+        });
+
+Geocode.fromLatLng(newGMT.latitude, newGMT.longitude).then(
   response => {
     var addressComponent = response.pincode;
     console.log('pincode', response.results[5].address_components[0].long_name);
