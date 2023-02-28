@@ -3,33 +3,33 @@ import { useSelector, useDispatch } from "react-redux";
 import { useAPI } from "../services";
 
 import {
-    addCategoryTypeAction,
-    updateCategoryTypeAction,   
-    deleteCategoryTypeAction,
-    getCategoryTypeBeginAction,
-    getCategoryTypeSuccessAction,
-    getCategoryTypeFailureAction,
-    categoryTypeAction,
-  } from "../actions/categoryTypeActions";
+    addTaxAction,
+    updateTaxAction,   
+    deleteTaxAction,
+    getTaxBeginAction,
+    getTaxSuccessAction,
+    getTaxFailureAction,
+    taxAction,
+  } from "../actions/taxActions";
 
-  export default function useFetchCategorytype() {
+  export default function useFetchTax() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/categoryType";
+  const hapyCarURL = "https://localhost:7062/tax";
 
   const API = useAPI();
   const SUCCESS = "Success";
   const ERROR = "Error";
 
-  // Categorytype GET  ACTIONS
-  const getCategoryTypes = () => {
-    dispatch(getCategoryTypeBeginAction());
+  // Tax GET  ACTIONS
+  const getTaxs = () => {
+    dispatch(getTaxBeginAction());
     return API.get(hapyCarURL,
       null,
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          getCategoryTypeSuccessAction({
+          getTaxSuccessAction({
             ...data,
             title: SUCCESS,
           })
@@ -37,12 +37,12 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.categoryType) {
-          const [errors] = error.response.data.categoryType;
+        if (error.response.data.tax) {
+          const [errors] = error.response.data.tax;
           errorMsg = errors;
         }
         dispatch(
-          getCategoryTypeFailureAction({
+          getTaxFailureAction({
             ...errorMsg,
             title: ERROR,
             errorMsg,
@@ -52,29 +52,31 @@ import {
 
   };
 
-  // Categorytype ADD  ACTIONS
-  const addCategoryType = (categoryType) => {
-    return API.post( 
+  // Tax ADD  ACTIONS
+  const addTax = (tax) => {
+    return API.post(
       hapyCarURL,
-      { data: categoryType}
+      { data: tax },
+      { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          addCategoryTypeAction({
+          addTaxAction({
             ...data,
             title: SUCCESS,
           })
         )
       )
+
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.categoryType) {
-          const [errors] = error.response.data.categoryType;
+        if (error.response.data.tax) {
+          const [errors] = error.response.data.tax;
           errorMsg = errors;
         }
         dispatch(
-          addCategoryTypeAction({
-            ...categoryType,
+          addTaxAction({
+            ...tax,
             title: ERROR,
             errorMsg,
           })
@@ -86,11 +88,11 @@ import {
 
   };
 
-  // Categorytype UPDATE  ACTIONS
-  const updateCategoryType = (categoryTypeId, categoryType) => {
+  // Tax UPDATE  ACTIONS
+  const updateTax = (taxId, tax) => {
 
-    return API.put(`${hapyCarURL}/${categoryTypeId}`,
-      { data: categoryType },
+    return API.put(`${hapyCarURL}/${taxId}`,
+      { data: tax },
       { suppressErrors: [400] }
     )
       .then(({ data
@@ -98,7 +100,7 @@ import {
       }) =>
 
         dispatch(
-          updateCategoryTypeAction({
+          updateTaxAction({
             ...data,
             title: SUCCESS,
           })
@@ -106,13 +108,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.categoryType) {
-          const [errors] = error.response.data.categoryType;
+        if (error.response.data.tax) {
+          const [errors] = error.response.data.tax;
           errorMsg = errors;
         }
         dispatch(
-          updateCategoryTypeAction({
-            ...categoryType,
+          updateTaxAction({
+            ...tax,
             title: ERROR,
             errorMsg,
           })
@@ -121,15 +123,15 @@ import {
 
   };
 
-  // Categorytype DELETE  ACTIONS
-  const deleteCategoryType = (categoryTypeId) => {
-    return API.delete(`${hapyCarURL}/${categoryTypeId}`,
+  // Tax DELETE  ACTIONS
+  const deleteTax = (taxId) => {
+    return API.delete(`${hapyCarURL}/${taxId}`,
       null,
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          deleteCategoryTypeAction({
+          deleteTaxAction({
             ...data,
             title: SUCCESS,
           })
@@ -137,13 +139,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.categoryType) {
-          const [errors] = error.response.data.categoryType;
+        if (error.response.data.tax) {
+          const [errors] = error.response.data.tax;
           errorMsg = errors;
         }
         dispatch(
-          deleteCategoryTypeAction({
-            ...categoryTypeId,
+          deleteTaxAction({
+            ...taxId,
             title: ERROR,
             errorMsg,
           })
@@ -152,9 +154,9 @@ import {
 
   };
 
-  // Categorytype BY ID ACTIONS
-  const categoryTypeById = (categoryTypeId) => {
-    return API.get(`${hapyCarURL}/${categoryTypeId}`,
+  // Tax BY ID ACTIONS
+  const taxById = (taxId) => {
+    return API.get(`${hapyCarURL}/${taxId}`,
       null,
       { suppressErrors: [400] }
     )
@@ -163,7 +165,7 @@ import {
       }) =>
 
         dispatch(
-            categoryTypeAction({
+            taxAction({
             ...data,
             title: SUCCESS,
           })
@@ -171,12 +173,12 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.categoryType) {
-          const [errors] = error.response.data.categoryType;
+        if (error.response.data.tax) {
+          const [errors] = error.response.data.tax;
           errorMsg = errors;
         }
         dispatch(
-            categoryTypeAction({
+            taxAction({
             ...errorMsg,
             title: ERROR,
             errorMsg,
@@ -186,10 +188,10 @@ import {
       
   };
   return {
-    addCategoryType,
-    updateCategoryType,
-    deleteCategoryType,
-    getCategoryTypes,
-    categoryTypeById ,
+    addTax,
+    updateTax,
+    deleteTax,
+    getTaxs,
+    taxById,
   };
 }

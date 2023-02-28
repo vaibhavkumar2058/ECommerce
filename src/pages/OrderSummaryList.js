@@ -1,23 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
-import useFetchItemCost from "../hooks/useFetchItemCost";
+import useFetchCart from "../hooks/useFetchCart";
+import useFetchOrder from "../hooks/useFetchOrder";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-export default function ItemList() {
-
-  const [itemcosts, setItemCosts] = useState([]);
+export default function ShoppingList() {
+  const [carts, setCarts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [itemcost, setItemCost] = useState({
-    productId: null,
-    measurementTypeId: null,
-    measurementValueId: null,
-    customTypeId: null,
-    price: null,
-    description: "",
-    recordStatusId: null,
-  });
 
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
@@ -27,35 +18,62 @@ export default function ItemList() {
   });
 
   const {
-    getItemCosts,
-  } = useFetchItemCost();
+    placeOrder,
+  } = useFetchOrder();
+
+  const {
+    getCarts,
+  } = useFetchCart();
 
   useEffect(() => {
-    if (itemcosts.length == 0) {
-      getAllItemCosts();
+    if (carts.length == 0) {
+      getAllCarts();
       setLoading(false)
     }
-  }, [itemcosts]);
+  }, [carts]);
 
-  const getAllItemCosts = async () => {
-    const response = await getItemCosts();
+  const PlaceOrder = async () => {
+    const response = await placeOrder(carts);
+    if (response.payload.title == "Success") {
+      alert("Order Placed Successfully..");
+      setCarts([]);
+    }
+    else {
+    }
+  };
+
+  const getAllCarts = async () => {
+
+    const response = await getCarts();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',
-        message: 'ItemCosts Record Fetch Succefully.'
+        message: 'Carts Record Fetch Succefully.'
       })
+      const dataFormatter = (rawData) => {
+        const curedData = {};
+        curedData.categoryTypeId = rawData?.product.categoryTypeId;
+        curedData.resourcesId = rawData?.resourcesId;
+        curedData.productId = rawData?.product.productId;
+        curedData.productName = rawData?.product?.productName;
+        curedData.quantity = rawData?.quantity;
+        curedData.cost = rawData?.cost;
+        curedData.orderPrice = rawData?.cost;
+        curedData.total = rawData?.total;
+        return curedData;
+      }
 
       var arr = [];
       for (var key in response.payload) {
-        arr.push(response.payload[key]);
+        if (key !== 'title')
+          arr.push(dataFormatter(response.payload[key]));
       }
-
-      setItemCosts(arr);
+      setCarts(arr);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'ItemCost Fetch Failed.'
+        message: 'Cart Fetch Failed.'
       })
     }
   };
@@ -63,48 +81,50 @@ export default function ItemList() {
   return (
     <>
       <div className="m-t-40">
-        <div class="row">
-          <div class=" col-md-6 col-lg-3"></div>
-          <div class=" col-md-6 col-lg-6"><b><h3>Order Summary</h3></b></div>
-          <div class=" col-md-6 col-lg-3"></div>
-        </div>
-        <div class="row">
-          <div class=" col-md-2 col-lg-2"></div>
-          <div class=" col-md-5 col-lg-5">Manthra Soap</div>
-          <div class=" col-md-1 col-lg-1"><b>Qty1|</b></div>
-          <div class=" col-md-2 col-lg-2"><b>price:20</b></div>
-          <div class=" col-md-1 col-lg-1"><b>Total:20.00</b></div>
-          <div class=" col-md-1 col-lg-1"></div>
-        </div>
+        {loading && <div>A moment please...</div>}
+        {carts && (<div>
+          <div class="row">
+            <div class=" col-md-6 col-lg-3"></div>
+            <div class=" col-md-6 col-lg-6"><b><h3>Order Summary</h3></b></div>
+            <div class=" col-md-6 col-lg-3"></div>
+          </div>
+          <div class="row">
 
-        <div class="row">
-          <div class=" col-md-2 col-lg-2"></div>
-          <div class=" col-md-5 col-lg-5">Dishwash Bar</div>
-          <div class=" col-md-1 col-lg-1"><b>Qty2|</b></div>
-          <div class=" col-md-2 col-lg-2"><b>price:40</b></div>
-          <div class=" col-md-1 col-lg-1"><b>Total:80.00</b></div>
-          <div class=" col-md-1 col-lg-1"></div>
-        </div>
-        
-        
+
+            <div class=" col-md-2 col-lg-2"></div>
+            <div class=" col-md-5 col-lg-5"><b>Product Name</b></div>
+            <div class=" col-md-1 col-lg-1"><b>Quantity</b></div>
+            <div class=" col-md-2 col-lg-2"><b>cost</b></div>
+            <div class=" col-md-1 col-lg-1"><b>Total</b></div>
+            <div class=" col-md-1 col-lg-1"></div>
+          </div>
+          {carts.map((cart) =>
+            <div>
+              <div class="row">
+                <div class=" col-md-2 col-lg-2"><img height={50} width={50} ></img></div>
+                <div class=" col-md-5 col-lg-5">{cart.productName}</div>
+                <div class=" col-md-1 col-lg-1">{cart.quantity}</div>
+                <div class=" col-md-2 col-lg-2">{cart.cost}</div>
+                <div class=" col-md-1 col-lg-1">{cart.quantity * cart.cost}</div>
+                <div class=" col-md-1 col-lg-1"></div>
+              </div>
+            </div>
+          )}
+
           <div class="row">
             <div class=" col-md-2 col-lg-2"></div>
             <div class=" col-md-4 col-lg-4"></div>
             <div class=" col-md-1 col-lg-1"></div>
             <div class=" col-md-2 col-lg-2"><Button variant="primary">Cancel Order</Button>{' '}</div>
-            <div class=" col-md-2 col-lg-2"> <Button variant="primary">Confirm Order</Button>{' '}</div>
+            <div class=" col-md-2 col-lg-2">
+              <Button variant="secondary"
+                onClick={() => PlaceOrder()}
+              >
+                Place Order
+              </Button>
+            </div>
             <div class=" col-md-1 col-lg-1"></div>
           </div>
-       
-
-
-
-
-
-
-        {loading && <div>A moment please...</div>}
-        {itemcosts && (<div>
-
 
         </div>)}
       </div>

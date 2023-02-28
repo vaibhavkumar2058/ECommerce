@@ -53,7 +53,6 @@ export default function VehicleTypeModel({
     //console.log(e.target.files[0]);
     setFileSelected(e.target.files[0]);
   };
-debugger;
   const saveHandler = async () => {
     newVehicleType.file = fileSelected;
     if (isEdit) {

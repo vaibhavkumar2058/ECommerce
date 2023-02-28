@@ -7,23 +7,26 @@ import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
 
-export default function CountryModel({
-  onAddCountry,
-  onUpdateCountry,
-  onDeleteCountry,
+export default function TaxModel({
+  onAddTax,
+  onUpdateTax,
+  onDeleteTax,
   isEdit,
   isDelete,
-  onGetCountry,
+  onGetTax,
   id,
   onClose,
-  countryData,
-}) {
-  const [newCountry, setNewCountry] = useState({
-    countryName: "",
-    regionCode: null,
-    description: "",
-    recordStatusId:null,
-     });
+  taxData,
+}) 
+{
+  const [newTax, setNewTax] = useState({
+    productId:null,
+    taxValue:"",
+    taxDescription:"",
+
+ });
+
+  const [fileSelected, setFileSelected] = useState();
 
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
@@ -43,16 +46,18 @@ export default function CountryModel({
   };
 
   const changeHandler = (e) => {
-    setNewCountry({
-      ...newCountry,
+    setNewTax({
+      ...newTax,
       [e.target.name]: e.target.value,
     });
   };
 
+  
+
   const saveHandler = async () => {
-    
+    newTax.file = fileSelected;
     if (isEdit) {
-      const response = await onUpdateCountry(id, newCountry);
+      const response = await onUpdateTax(id, newTax);
       if (response.payload.title == "Success") {
         onClose(true);
       }
@@ -64,11 +69,11 @@ export default function CountryModel({
       }
     }
     else {
-      const response = await onAddCountry(newCountry);
+      const response = await onAddTax(newTax);
       if (response.payload.title == "Success") {
         setMessageStatus({
           mode: 'success',
-          message: 'Country Record Saved Succefully.'
+          message: 'Tax Record Saved Succefully.'
         })
         onClose(true);
         console.log(response.payload);
@@ -76,28 +81,28 @@ export default function CountryModel({
       else {
         setMessageStatus({
           mode: 'danger',
-          message: 'Country Save Failed.'
+          message: 'Tax Save Failed.'
         })
       }
     }
   };
 
   const deleteHandler = async () => {
-    const response = await onDeleteCountry(id);
+    const response = await onDeleteTax(id);
     if (response.payload.title == "Success") {
       onClose(true);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Country Delete Failed.'
+        message: 'Tax Delete Failed.'
       })
     }
   };
 
   useEffect(() => {
     if (isEdit) {
-      setNewCountry(countryData);
+      setNewTax(taxData);
     }
   }, []);
 
@@ -106,9 +111,9 @@ export default function CountryModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newCountry?.countryName || !newCountry?.regionCode || !newCountry?.description || !newCountry?.recordStatusId;
+       !newTax?.productId  || !newTax?.taxValue || !newTax?.taxDescription; 
     setSaveDisabled(isEnable);
-  }, [newCountry]);
+  }, [newTax]);
 
   return (
     <>
@@ -134,47 +139,36 @@ export default function CountryModel({
         <Form>
           <Form.Group
             className={styles.stFormContainer}
-            controlId="formCountry"
+            controlId="formTax"
           >
-            <Form.Label>Country</Form.Label>
+            <Form.Label>ProductId</Form.Label>
             <Form.Control
               type="text"
-              name="countryName"
-              placeholder="Enter Country"
-              value={newCountry?.countryName}
+              name="productId"
+              placeholder="Enter ProductId"
+              value={newTax?.productId}
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="regioncode">
-            <Form.Label>Region</Form.Label>
+          <Form.Group className="mb-3" controlId="TaxValue">
+            <Form.Label>TaxValue</Form.Label>
             <Form.Control
               type="text"
-              name="regionCode"
-              placeholder="regioncode"
-              value={newCountry?.regionCode}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-
-
-          <Form.Group className="mb-3" controlId="description">
-            <Form.Label>Description</Form.Label>
-            <Form.Control
-              type="text"
-              name="description"
-              placeholder="Description"
-              value={newCountry?.description}
+              name="taxValue"
+              placeholder="TaxValue"
+              value={newTax?.taxValue}
               onChange={changeHandler}
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="recordStatusId">
-            <Form.Label>RecordStatusId</Form.Label>
+
+          <Form.Group className="mb-3" controlId="TaxDescription">
+            <Form.Label>TaxDescription</Form.Label>
             <Form.Control
               type="text"
-              name="recordStatusId"
-              placeholder="RecordStatusId"
-              value={newCountry?.recordStatusId}
+              name="taxDescription"
+              placeholder="TaxDescription"
+              value={newTax?.taxDescription}
               onChange={changeHandler}
             />
           </Form.Group>
@@ -193,23 +187,23 @@ export default function CountryModel({
   );
 }
 
-CountryModel.propTypes = {
+TaxModel.propTypes = {
   /**
-   * Callback function for Add Country
+   * Callback function for Add Tax
    */
-  onAddCountry: PropTypes.func,
+  onAddTax: PropTypes.func,
   /**
-   * Callback function for Update Country
+   * Callback function for Update Tax
    */
-  onUpdateCountry: PropTypes.func,
+  onUpdateTax: PropTypes.func,
   /**
-   * Callback function for Delete Country
+   * Callback function for Delete Tax
    */
-  onDeleteCountry: PropTypes.func,
+  onDeleteTax: PropTypes.func,
   /**
-   * Callback function for Get Country
+   * Callback function for Get Tax
    */
-  onGetCountry: PropTypes.func,
+  onGetTax: PropTypes.func,
   /**
    * isEdit for bool type
    */
@@ -219,7 +213,7 @@ CountryModel.propTypes = {
    */
   isDelete: PropTypes.bool,
   /**
-   * Callback function for Get Country
+   * Callback function for Get Tax
    */
   onClose: PropTypes.func,
   /**
@@ -227,20 +221,20 @@ CountryModel.propTypes = {
    */
   id: PropTypes.number,
   /**
- * countryData for object type
+ * taxData for object type
  */
-  countryData: PropTypes.any,
+  taxData: PropTypes.any,
 };
 
-CountryModel.defaultProps = {
-  onAddCountry: null,
-  onUpdateCountry: null,
-  onDeleteCountry: null,
-  onGetCountry: null,
+TaxModel.defaultProps = {
+  onAddTax: null,
+  onUpdateTax: null,
+  onDeleteTax: null,
+  onGetTax: null,
   isEdit: false,
   isDelete: false,
   onClose: null,
   id: null,
-  countryData: null,
+  taxData: null,
 };
 

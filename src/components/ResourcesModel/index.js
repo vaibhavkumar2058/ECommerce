@@ -84,7 +84,6 @@ export default function ResourcesModel({
   };
 
   const selectChangeHandler = (e) => {
-    debugger;
     setNewResources({
       ...newResources,
       "roleId": e.value,

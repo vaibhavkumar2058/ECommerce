@@ -44,7 +44,6 @@ export default function ShoppingList() {
       })
 
       const dataFormatter = (rawData) => {
-        debugger
         const curedData = {};
         curedData.productName = rawData?.product?.productName;
         curedData.description = rawData?.product?.description;
@@ -79,18 +78,18 @@ export default function ShoppingList() {
           </div>
           <div class="row">
 
-<div class="col-md-2 col-lg-2">
-</div>
-<div class="col-md-3 col-lg-3"><b>Product Name </b></div>
-<div class="col-md-2 col-lg-2"><b>Description</b></div>
-<div class="col-md-1 col-lg-1"><b>Cost</b></div>
-<div class="col-md-1 col-lg-1"><b>Quantity</b></div>
-<div class="col-md-1 col-lg-1"><b>Total</b></div>
+            <div class="col-md-2 col-lg-2">
+            </div>
+            <div class="col-md-3 col-lg-3"><b>Product Name </b></div>
+            <div class="col-md-2 col-lg-2"><b>Description</b></div>
+            <div class="col-md-1 col-lg-1"><b>Cost</b></div>
+            <div class="col-md-1 col-lg-1"><b>Quantity</b></div>
+            <div class="col-md-1 col-lg-1"><b>Total</b></div>
 
-</div>
+          </div>
           {carts.map((cart) =>
             <div>
-             
+
               <div class="row">
 
                 <div class="col-md-2 col-lg-2"><img width="50" src="data:image/png;base64,

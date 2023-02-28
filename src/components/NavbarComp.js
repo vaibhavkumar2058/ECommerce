@@ -43,6 +43,7 @@ import Dashboard from "../pages/DashBoard"
 import ChangePassword from "../pages/login";
 import OrderSummaryList from"../pages/OrderSummaryList";
 import OrderPlacedList from"../pages/OrderPlacedList";
+import Tax from"../pages/Tax";
 
 const NavbarComp = () => {
   return (
@@ -86,7 +87,8 @@ const NavbarComp = () => {
           <Route path="/" element ={<Navigate replace to="/dashboard" />} />
           <Route path="/" element ={<Navigate replace to="/dashboard" />} />
           <Route exact path="/changepassword" element={<ChangePassword/>} />
-          
+          <Route exact path="/tax" element={<Tax/>} />
+
         </Routes>
       </div>
     </Router>

@@ -66,6 +66,7 @@ export default function Orders() {
     deleteOrder,
     getOrder,
     orderById,
+    placeOrder,
   } = useFetchOrder();
 
   const columns = [
@@ -161,7 +162,6 @@ export default function Orders() {
     }
   });
 
-debugger;
   const getAllOrders = async () => {
     const response = await getOrder();
     if (response.payload.title == "Success") {
@@ -286,6 +286,7 @@ debugger;
                 isDelete={isDelete}
                 id={id}
                 orderData={order}
+                onPlaceOrder={placeOrder}
               />
             </Modal.Body>
 

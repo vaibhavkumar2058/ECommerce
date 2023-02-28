@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
-import useFetchGMT from "../hooks/useFetchGMT";
-import GMTModel from "../components/GMTModel";
+import useFetchTax from "../hooks/useFetchTax";
+import TaxModel from "../components/TaxModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit';
+import { getTaxs } from "@testing-library/react";
+import Geocode from "react-geocode";
 
 
 const { SearchBar, ClearSearchButton } = Search;
@@ -24,16 +26,32 @@ const MyExportCSV = (props) => {
   );
 };
 
-export default function GMTs() {
+export default function Taxs() {
 
-  const [GMTs, setGMTs] = useState([]);
+  
+  Geocode.setApiKey("AIzaSyAf_G4R_GlpOOoGIDJ8WLvyAFjuq8F2jYc");
+Geocode.enableDebug();
+
+Geocode.fromLatLng("12.9800000000", "77.5927000000").then(
+  response => {
+    var addressComponent = response.pincode;
+    console.log('pincode', response.results[5].address_components[0].long_name);
+    const address = response.results[0].formatted_address;
+    console.log(address);
+  },
+  error => {
+    console.error(error);
+  }
+);
+
+  const [taxs, setTaxs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
   const handleClose = () => {
-    getAllGMTs();
+    getAllTaxs();
     setIsEdit(false);
     setIsDelete(false);
     setShow(false);
@@ -41,15 +59,11 @@ export default function GMTs() {
   const handleShow = () => setShow(true);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-  const [GMT, setGMT] = useState({
-    resourceId:null,
-    longitude:null,
-    latitude:null,
-    //trackTime:null ,
-    description:"",
-    recordStatusId:null,
+  const [tax, setTax] = useState({
     
-      });
+    productId:null,
+    taxDescription:"",
+  });
 
   const [id, setId] = useState(null);
 
@@ -61,22 +75,19 @@ export default function GMTs() {
   });
 
   const { 
-    addGMT,
-    updateGMT,
-    deleteGMT,
-    getGMTs,
-    GMTById,
-  } = useFetchGMT();
+    addTax,
+    updateTax,
+    deleteTax,
+    getTaxs,
+    taxById,
+  } = useFetchTax();
 
   const columns = [
-    { dataField: 'gmtId', text: 'GMT', sort: true, hidden: true },
-    { dataField: 'resourceId', text: 'Resource', sort: true },
-    { dataField: 'longitude', text: ' Longitude', sort: true },
-    { dataField: 'latitude', text: 'Latitude', sort: true },
-    //{ dataField: 'trackTime', text: 'TrackTime', sort: true },
-    { dataField: 'description', text: 'Description', sort: true },
-    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true },
-        // columns follow dataField and text structure
+
+    { dataField: 'productId', text: '  ProductId', sort: true},
+    { dataField: 'taxValue', text: ' TaxValue', sort: true},
+    { dataField: 'taxDescription', text: 'TaxDescription', sort: true },
+    // columns follow dataField and text structure
     {
       dataField: "Actions",
       text: "Actions",
@@ -84,18 +95,18 @@ export default function GMTs() {
         return (
           <><button
             className="btn btn-primary btn-xs"
-            onClick={() => handleView(row.gmtId, row.name)}
+            onClick={() => handleView(row.taxId, row.name)}
           >
             View
           </button>
             <button
               className="btn btn-primary btn-xs"
-              onClick={() => handleEdit(row.gmtId, row)}
+              onClick={() => handleEdit(row.taxId, row)}
             >
               Edit
             </button><button
               className="btn btn-danger btn-xs"
-              onClick={() => handleDelete(row.gmtId, row.name)}
+              onClick={() => handleDelete(row.taxId, row.name)}
             >
               Delete
             </button></>
@@ -105,15 +116,15 @@ export default function GMTs() {
   ];
 
   useEffect(() => {
-    if (GMTs.length == 0) {
-      getAllGMTs();
+    if (taxs.length == 0) {
+      getAllTaxs();
       setLoading(false)
     }
-  }, [GMTs]);
+  }, [taxs]);
 
 
   const defaultSorted = [{
-    dataField: 'GMTId',
+    dataField: 'taxId',
     order: 'desc'
   }];
 
@@ -125,9 +136,10 @@ export default function GMTs() {
     console.log(rowId, name);
     //1 YourCellName
   };
+
   const handleEdit = (rowId, row) => {
-    setGMT(row);
-    //getGMTById(rowId);
+    setTax(row);
+    //getTaxsById(rowId);
     setId(rowId);
     setIsEdit(true);
     setShow(true);
@@ -159,12 +171,12 @@ export default function GMTs() {
   });
 
 
-  const getAllGMTs = async () => {
-    const response = await getGMTs();
+  const getAllTaxs = async () => {
+    const response = await getTaxs();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',
-        message: 'GMTs Record Fetch Succefully.'
+        message: 'Taxs Record Fetch Succefully.'
       })
 
       var arr = [];
@@ -172,25 +184,25 @@ export default function GMTs() {
         arr.push(response.payload[key]);
       }
 
-      setGMTs(arr);
+      setTaxs(arr);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'GMT Fetch Failed.'
+        message: 'Tax Fetch Failed.'
       })
     }
   };
 
-  const getGMTById = async (id) => {
-    const response = await GMTById(id);
+  const getTaxById = async (id) => {
+    const response = await taxById(id);
     if (response.payload.title == "Success") {
-      setGMT(response.payload);
+      setTax(response.payload);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'GMT Get Failed.'
+        message: 'Tax Get Failed.'
       })
     }
   };
@@ -217,11 +229,11 @@ export default function GMTs() {
     <>
       <div className="m-t-40">
         {loading && <div>A moment please...</div>}
-        {GMTs && (<div>
+        {taxs && (<div>
           <ToolkitProvider
             bootstrap4
-            keyField='GMTId'
-            data={GMTs}
+            keyField='taxId'
+            data={taxs}
             columns={columns}
             search
           >
@@ -239,7 +251,7 @@ export default function GMTs() {
                           <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
                           <Button variant="primary" onClick={handleShow}>
-                            Add GMT
+                            Add Tax
                           </Button>
                           </div>
                         </div>
@@ -270,19 +282,19 @@ export default function GMTs() {
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Add GMT</Modal.Title>
+              <Modal.Title>Add Tax</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <GMTModel
-                onAddGMT={addGMT}
-                onUpdateGMT={updateGMT}
-                onDeleteGMT={deleteGMT}
-                onGetGMT={GMTById}
+              <TaxModel
+                onAddTax={addTax}
+                onUpdateTax={updateTax}
+                onDeleteTax={deleteTax}
+                onGetTax={taxById}
                 onClose={handleClose}
                 isEdit={isEdit}
                 isDelete={isDelete}
                 id={id}
-                GMTData={GMT}
+                taxData={tax}
               />
             </Modal.Body>
 

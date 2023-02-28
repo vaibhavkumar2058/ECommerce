@@ -7,7 +7,6 @@ class ZMap extends React.Component {
   };
 
   componentDidMount() {
-    debugger;
     // Get current location and update the state every 5 seconds
     navigator.geolocation.watchPosition((position) => {
       this.setState({
@@ -19,7 +18,6 @@ class ZMap extends React.Component {
     });
 
     this.interval = setInterval(() => {
-      debugger;
       navigator.geolocation.getCurrentPosition((position) => {
         this.setState({
           currentPosition: {

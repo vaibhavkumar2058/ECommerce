@@ -71,7 +71,6 @@ export default function FileModel({
       }
     }
     else {
-      debugger;
       const response = await onAddFile(newFile);
       if (response.payload.title == "Success") {
         setMessageStatus({
@@ -91,7 +90,6 @@ export default function FileModel({
   };
 
   const deleteHandler = async () => {
-    debugger;
     const response = await onDeleteFile(id);
     if (response.payload.title == "Success") {
       onClose(true);

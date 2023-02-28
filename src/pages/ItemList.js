@@ -51,9 +51,9 @@ export default function ItemList() {
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',
-        message: 'Cart Record Saved Succefully.'
+        message: 'Cart Record Saved Successfully.'
       })
-      alert("Add To Cart Succefully.");
+      alert("Add To Cart Successfully.");
     }
     else {
       setMessageStatus({

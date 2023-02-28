@@ -73,13 +73,13 @@ export default function Products() {
   const columns = [
 
     { dataField: 'productId', text: 'Product Id', sort: true, hidden: true },
-    { dataField: 'productName', text: ' Product Name', sort: true },
-    { dataField: 'categoryTypeId', text: ' Category Type Id', sort: true },
-    { dataField: 'fileName', text: 'File Name', sort: true },
     // columns follow dataField and text structure
     {
       dataField: "productImage",
-      text: "Product",
+      text: "",
+      headerStyle: () => {
+        return { width: "60px" };
+      },
       formatter: (cellContent, row) => {
         return (
           <>
@@ -89,16 +89,30 @@ export default function Products() {
         );
       },
     },
-
+    {
+      dataField: 'productName',
+      headerStyle: () => {
+        return { width: "100px" };
+      }, text: ' Category', sort: true
+    },
+    {
+      dataField: 'productName',
+      headerStyle: () => {
+        return { width: "100px" };
+      }, text: ' Product', sort: true
+    },
     // columns follow dataField and text structure
     {
       dataField: "Actions",
       text: "Actions",
+      headerStyle: () => {
+        return { width: "80px" };
+      },
       formatter: (cellContent, row) => {
         return (
           <><button
             className="btn btn-primary btn-xs"
-            onClick={() => handleView(row.productId, row.name)}
+            onClick={() => handleView(row.productId, row)}
           >
             View
           </button>
@@ -109,7 +123,7 @@ export default function Products() {
               Edit
             </button><button
               className="btn btn-danger btn-xs"
-              onClick={() => handleDelete(row.productId, row.name)}
+              onClick={() => handleDelete(row.productId, row)}
             >
               Delete
             </button></>
@@ -181,9 +195,9 @@ export default function Products() {
 
       if (categoryList.payload.title == "Success") {
         var carr = [];
-      for (var key in categoryList.payload) {
-        carr.push(categoryList.payload[key]);
-      }
+        for (var key in categoryList.payload) {
+          carr.push(categoryList.payload[key]);
+        }
         setCategories(carr);
       }
       setMessageStatus({
@@ -192,7 +206,6 @@ export default function Products() {
       })
 
       const dataFormatter = (rawData) => {
-        debugger
         const curedData = {};
         curedData.productId = rawData?.productId;
         curedData.productName = rawData?.productName;
@@ -318,7 +331,7 @@ export default function Products() {
                 isDelete={isDelete}
                 id={id}
                 productData={product}
-                categories = {categories}
+                categories={categories}
               />
             </Modal.Body>
 

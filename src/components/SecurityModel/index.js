@@ -63,7 +63,6 @@ export default function SecurityModel({
       }
     }
     else {
-      debugger;
       const response = await onAddSecurity(newSecurity);
       if (response.payload.title == "Success") {
         setMessageStatus({
@@ -82,8 +81,7 @@ export default function SecurityModel({
     }
   };
 
-  const deleteHandler = async () => {
-    debugger; 
+  const deleteHandler = async () => { 
     const response = await onDeleteSecurity(id);
     if (response.payload.title == "Success") {
       onClose(true);

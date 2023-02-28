@@ -106,23 +106,23 @@ export default function Resourcess() {
       },
     },
     { dataField: 'resourceName', text: 'Name', sort: true , headerStyle: () => {
-      return { width: "150px" };
+      return { width: "120px" };
     }},
     { dataField: 'mobileNumber', text: 'Contact', sort: true , headerStyle: () => {
-      return { width: "120px  " };
+      return { width: "80px  " };
     }},
-    { dataField: 'email', text: 'Email', sort: true, headerStyle: () => {
-      return { width: "150px" };
-    } },
-    { dataField: 'isEmailVerified', text: 'Verified', sort: true, headerStyle: () => {
-      return { width: "80px" };
+    // { dataField: 'email', text: 'Email', sort: true, headerStyle: () => {
+    //   return { width: "150px" };
+    // } },
+    // { dataField: 'isEmailVerified', text: 'Verified', sort: true, headerStyle: () => {
+    //   return { width: "80px" };
     // } },
     // { dataField: 'isMobileVerified ', text: 'IsMobileVerified', sort: true, headerStyle: () => {
     //   return { width: "150px" };
-    } },  
-    { dataField: 'role', text: 'Role', sort: true, headerStyle: () => {
-      return { width: "100px" };
-    } },
+    // } },  
+    // { dataField: 'role', text: 'Role', sort: true, headerStyle: () => {
+    //   return { width: "100px" };
+    // } },
     // columns follow dataField and text structure
 
     // columns follow dataField and text structure
@@ -130,7 +130,7 @@ export default function Resourcess() {
       dataField: "Actions",
       text: "Actions",
       headerStyle: () => {
-        return { width: "150px" };
+        return { width: "80px" };
       },
       formatter: (cellContent, row) => {
         return (
@@ -238,7 +238,6 @@ export default function Resourcess() {
         message: 'Resources Record Fetch Succefully.'
       })
       const dataFormatter = (rawData) => {
-        debugger
         const curedData = {};
         curedData.resourcesId = rawData?.resourcesId;
         curedData.resourceName= rawData?.firstName + rawData?.middleName + rawData?.lastName;
@@ -327,8 +326,8 @@ export default function Resourcess() {
                     <div className="col-lg-6">
                       <div className="row">
                         <div className="app-right col-lg-12">
-                          <div className="app-float-right p-1">
-                            <MyExportCSV {...props.csvProps} /></div>
+                          {/* <div className="app-float-right p-1">
+                            <MyExportCSV {...props.csvProps} /></div> */}
                           <div className="app-float-right p-1">
                             <Button variant="primary" onClick={handleShow}>
                               Add Resources
