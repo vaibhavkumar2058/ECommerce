@@ -148,7 +148,7 @@ export default function GMTModel({
             <Form.Control
               type="text"
               name="resourceId"
-              placeholder="Enter resourceId"
+              placeholder="Enter ResourceId"
               value={newGMT?.resourceId}
               onChange={changeHandler}
             />
@@ -181,7 +181,7 @@ export default function GMTModel({
             <Form.Control
               type="text"
               name="latitude"
-              placeholder="latitude"
+              placeholder="Latitude"
               value={newGMT?.latitude}
               onChange={changeHandler}
             />
@@ -191,7 +191,7 @@ export default function GMTModel({
             <Form.Control
               type="text"
               name="recordStatusId"
-              placeholder="Enter recordStatusId"
+              placeholder="Enter RecordStatusId"
               value={newGMT?.recordStatusId}
               onChange={changeHandler}
             />

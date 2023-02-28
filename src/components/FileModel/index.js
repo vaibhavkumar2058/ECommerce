@@ -185,19 +185,19 @@ export default function FileModel({
 
 FileModel.propTypes = {
   /**
-   * Callback function for Add Enquiry
+   * Callback function for Add File
    */
   onAddFile: PropTypes.func,
   /**
-   * Callback function for Update Enquiry
+   * Callback function for Update File
    */
   onUpdateFile: PropTypes.func,
   /**
-   * Callback function for Delete Enquiry
+   * Callback function for Delete File
    */
   onDeleteFile: PropTypes.func,
   /**
-   * Callback function for Get Enquiry
+   * Callback function for Get File
    */
   onGetFile: PropTypes.func,
   /**
@@ -209,7 +209,7 @@ FileModel.propTypes = {
    */
   isDelete: PropTypes.bool,
   /**
-   * Callback function for Get Enquiry
+   * Callback function for Get File
    */
   onClose: PropTypes.func,
   /**
@@ -217,7 +217,7 @@ FileModel.propTypes = {
    */
   id: PropTypes.number,
   /**
- * enquiryData for object type
+ * fileData for object type
  */
   FileData: PropTypes.any,
 };

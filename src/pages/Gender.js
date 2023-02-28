@@ -44,7 +44,8 @@ export default function Gender() {
   const [gender, setGender] = useState({
     genderName: "",
     description:"",
-          });
+    recordStatusId:null,
+    });
 
   const [id, setId] = useState(null);
 
@@ -67,6 +68,7 @@ export default function Gender() {
 
      { dataField: 'genderId', text: 'GenderId', sort: true,hidden:true },
      { dataField: 'genderName', text: ' GenderName', sort: true },
+     { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true },
       { dataField: 'description', text: 'Description', sort: true },
     
     // columns follow dataField and text structure

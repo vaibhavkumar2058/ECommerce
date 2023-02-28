@@ -21,6 +21,7 @@ export default function MeasurementTypeModel({
     const [newMeasurementType, setNewMeasurementType] = useState({
         name: "",
         description: "",
+        recordStatusId:1,
     });
 
     const [fileSelected, setFileSelected] = useState();
