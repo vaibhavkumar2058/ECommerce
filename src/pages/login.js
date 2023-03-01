@@ -1,58 +1,95 @@
 import React, { useState } from "react";
+import useFetchLogins from "../hooks/useFetchLoginUtility";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import ZMap from "./ZMap";
+import { useNavigate } from "react-router-dom";
+import Dashboard from "./DashBoard";
+function SignIn() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+  // const [showNavbar, setShowNavbar] = useState(true);
+  const {
+    login,
+  } = useFetchLogins();
 
-const ChangePassword = () => {
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmNewPassword, setConfirmNewPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [newLogin, setNewLogin] = useState({
+    email:"",
+    password:"",
+  });
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // perform API call to update password
-    if (newPassword !== confirmNewPassword) {
-      setErrorMessage("New password and confirm password do not match");
-    } else {
-      // perform API call to update password
-      console.log("Password updated successfully");
+  const changeHandler = (e) => {
+    setNewLogin({
+      ...newLogin,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const [messageStatus, setMessageStatus] = useState({
+    mode: "",
+    title: "",
+    status: false,
+    message: "",
+  });
+
+  const saveHandler = async () => {
+    // setShowNavbar(!showNavbar)
+    debugger;
+    const response = await login(newLogin);
+    if (response.payload.title == "Success") {
+      setError({ status: true, msg: "Login Success", type: 'success' })
+      navigate('/dashboard')
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'Un-Known Error Occured.'
+        
+      })
+      
     }
   };
 
   return (
+    <>
+    <div><h3>LogIn</h3></div>
     <div>
-    <div><h3>ChangePassword</h3></div>
-    <form onSubmit={handleSubmit}>
-      {errorMessage && <div>{errorMessage}</div>}
-      <label>
-        OldPassWord:
-        <input
-          type="password"
-          value={currentPassword}
-          onChange={(event) => setCurrentPassword(event.target.value)}
-        />
-      </label>
-      <br />
-      <label>
-        New Password:
-        <input
-          type="password"
-          value={newPassword}
-          onChange={(event) => setNewPassword(event.target.value)}
-        />
-      </label>
-      <br />
-      <label>
-        Confirm New Password:
-        <input
-          type="password"
-          value={confirmNewPassword}
-          onChange={(event) => setConfirmNewPassword(event.target.value)}
-        />
-      </label>
-      <br />
-      <button type="submit">Change Password</button>
-    </form>
-    </div>
+  
+      <Form>
+        <Form.Group className="mb-3" controlId="email">
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            type="text"
+            name="email"
+            placeholder="email"
+            value={newLogin?.email}
+            onChange={changeHandler}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="password">
+          <Form.Label> Password</Form.Label>
+          <Form.Control
+            type="text"
+            name="password"
+            placeholder="password"
+            value={newLogin?.password}
+            onChange={changeHandler}
+          />
+        </Form.Group>
+        <div>
+        <Button variant="primary" onClick={saveHandler}>
+          Login
+        </Button>
+        </div>
+      </Form>
+   
+      </div>
+   
+    </>
+ 
   );
-};
+}
 
-export default ChangePassword;
+export default SignIn;

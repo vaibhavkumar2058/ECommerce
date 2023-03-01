@@ -47,6 +47,9 @@ import Tax from "../pages/Tax";
 import ProtectedRoute from "../pages/ProtectedRoute";
 import Signin from "../pages/PublicPages/Signin";
 import NotFound from "../pages/PublicPages/NotFound";
+import ChangePassword from "../pages/ChangePassword";
+import ResetPassword from "../pages/Resetpassword";
+import Login from "../pages/LogIn";
 
 const NavbarComp = () => {
   const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
@@ -92,6 +95,10 @@ const NavbarComp = () => {
           <Route exact path="/changepassword" element={<ChangePassword />} />
           <Route exact path="/tax" element={<Tax />} />
           <Route exact path="/signin" element={<Signin />} />
+          <Route path="/" element={<Navigate replace to="/login" />} />
+          <Route exact path="/changepassword" element={<ChangePassword/>} />
+          <Route exact path="/resetpassword" element={<ResetPassword/>} />
+          <Route exact path="/login" element={<Login/>}/>
           <Route exact path="/*" element={<NotFound />} />
         </Routes>
       </div>

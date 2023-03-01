@@ -6,7 +6,7 @@ import {
     FETCH_LOGIN_SUCCESS,
     FETCH_LOGIN_FAILURE,
     LOGIN,
-  } from "../actions/loginAction";
+  } from "../actions/loginUtilityAction";
   
   const initialState = {
     loading: true,
