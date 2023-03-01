@@ -18,8 +18,8 @@ import Security from "../pages/Security";
 import AddressType from "../pages/AddressType";
 import Address from "../pages/Address";
 import Cart from "../pages/Cart";
-import Invoice from "../pages/InVoice";
-import Country from "../pages/country";
+import Invoice from "../pages/Invoice";
+import Country from "../pages/Country";
 import Gender from "../pages/Gender";
 import GMT from "../pages/GMT";
 import ItemCost from "../pages/ItemCost";
@@ -40,7 +40,6 @@ import ShoppingList from "../pages/ShoppingList"
 import ItemList from "../pages/ItemList"
 import ZMap from "../pages/ZMap"
 import Dashboard from "../pages/DashBoard"
-import ChangePassword from "../pages/login";
 import OrderSummaryList from "../pages/OrderSummaryList";
 import OrderPlacedList from "../pages/OrderPlacedList";
 import Tax from "../pages/Tax";
@@ -49,7 +48,7 @@ import Signin from "../pages/PublicPages/Signin";
 import NotFound from "../pages/PublicPages/NotFound";
 import ChangePassword from "../pages/ChangePassword";
 import ResetPassword from "../pages/Resetpassword";
-import Login from "../pages/LogIn";
+import Login from "../pages/Login";
 
 const NavbarComp = () => {
   const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
