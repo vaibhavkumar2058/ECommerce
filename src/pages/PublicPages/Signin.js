@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 export default () => {
   const resource = {
-    role: { admin:false , agent: false ,dealer:true,customer:false},
+    role: { admin: true, agent: false ,dealer:false,customer:false},
     loggedIn: true,
   };
   // Login Failed Scenario

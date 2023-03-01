@@ -11,10 +11,10 @@ import './volt.css';
 
 function App() {
   const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
-  const admin=userInfo?.role?.admin;
-  const agent=userInfo?.role?.agent;
-  const dealer=userInfo?.role?.dealer;
-  const customer=userInfo?.role?.customer;
+  const admin = userInfo?.role?.admin;
+  const agent = userInfo?.role?.agent;
+  const dealer = userInfo?.role?.dealer;
+  const customer = userInfo?.role?.customer;
   return (
     <div>
       <nav className="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none"><a className="navbar-brand me-lg-5" href="https://demo.themesberg.com/volt-pro/index.html"><img src="http://manthrasoaps.co.in/image/catalog/logo.png" height="50" width="150" alt="Manthra Soaps"></img></a>
@@ -38,25 +38,36 @@ function App() {
 
              {(admin && <li className="nav-item active"><a href="dashboard" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
              </span><span className="sidebar-text">Dashboard </span></span></a></li>)}
-             {(admin &&<li className="nav-item">
-              <a href="role" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> </span><span className="sidebar-text">Role </span></span></a></li> )} 
-               {(admin &&<li className="nav-item"><a href="state" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> </span><span className="sidebar-text">State </span></span></a></li>)}
-               {(admin &&<li className="nav-item"><a href="vehicleType" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> </span><span className="sidebar-text">VehicleType
-                </span></span></a></li> )}
-                {((admin||agent||dealer||customer) &&<li className="nav-item"><a href="resources" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> </span><span className="sidebar-text">Resources </span></span></a></li>)} 
-                {((admin||agent||dealer||customer) &&<li className="nav-item"><a href="order" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> </span><span className="sidebar-text">Order </span></span></a></li>)}
-                {((admin||agent||dealer||customer)  && <li className="nav-item"><a href="cart" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> </span><span className="sidebar-text">Cart </span></span></a></li>)}  
-                   {(admin && <li className="nav-item"><a href="itemCost" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> </span><span className="sidebar-text">ItemCost </span></span></a></li> )}
-                   {(admin &&<li className="nav-item"><a href="GMT" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> </span><span className="sidebar-text">GMT </span></span></a></li> )}
-                   {(admin &&<li className="nav-item"><a href="invoice" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> </span><span className="sidebar-text">Invoice </span></span></a></li>)}
-                   {((admin||agent||dealer||customer)&&<li className="nav-item"><a href="orderTracking" className="nav-link d-flex align-items-center justify-content-between">
-                        <span><span className="sidebar-icon"> </span>
-                        <span className="sidebar-text">OrderTracking </span></span></a></li>)}
-                        {((admin||agent||dealer) && <li className="nav-item"><a href="recordStatus" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> </span><span className="sidebar-text">RecordStatus 
-                        </span></span></a></li>)}
-                        {(admin && <li className="nav-item"><a href="tax" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> </span><span className="sidebar-text">Tax</span></span></a></li>)}
-          
-           
+             {(admin && <li className="nav-item active"><a href="addressType" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
+             </span><span className="sidebar-text">AddressType </span></span></a></li>)}
+             {(admin && <li className="nav-item active"><a href="country" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
+             </span><span className="sidebar-text">Country </span></span></a></li>)}
+             {(admin && <li className="nav-item active"><a href="product" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
+             </span><span className="sidebar-text">Product </span></span></a></li>)}
+
+
+             {(admin && <li className="nav-item active"><a href="measurementValue" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
+             </span><span className="sidebar-text">MeasurementValue </span></span></a></li>)}
+             
+
+             {(admin && <li className="nav-item active"><a href="orderStatus" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
+             </span><span className="sidebar-text">OrderStatus </span></span></a></li>)}
+
+
+             {(admin && <li className="nav-item active"><a href="productAttachments" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
+             </span><span className="sidebar-text">ProductAttachments </span></span></a></li>)}
+
+
+
+            {(admin && <li className="nav-item"><a href="address" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> </span><span className="sidebar-text">Resources </span></span></a></li>)}
+            {(admin &&<li className="nav-item"><a href="categoryType" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> </span><span className="sidebar-text">Tax</span></span></a></li>)}
+            {(admin &&<li className="nav-item"><a href="measurementType" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> </span><span className="sidebar-text">Order Tracking</span></span></a></li>)}
+            <li className="nav-item"><a href="product" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"><svg className="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z">
+              </path>
+              <path d="M3 5a2 2 0 012-2h1a1 1 0 010 2H5v7h2l1 2h4l1-2h2V5h-1a1 1 0 110-2h1a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5z">
+              </path>
+            </svg> </span><span className="sidebar-text">Product</span> </span><span className="badge badge-sm bg-danger badge-pill notification-count">4</span></a></li>
             <li className="nav-item"><a href="enquiry" className="nav-link"><span className="sidebar-icon"><svg className="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
               <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
               <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd" />
