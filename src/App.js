@@ -11,10 +11,10 @@ import './volt.css';
 
 function App() {
   const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
-  const admin=userInfo?.role?.admin;
-  const agent=userInfo?.role?.agent;
-  const dealer=userInfo?.role?.dealer;
-  const customer=userInfo?.role?.customer;
+  const admin = userInfo?.role?.admin;
+  const agent = userInfo?.role?.agent;
+  const dealer = userInfo?.role?.dealer;
+  const customer = userInfo?.role?.customer;
   return (
     <div>
       <nav className="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none"><a className="navbar-brand me-lg-5" href="https://demo.themesberg.com/volt-pro/index.html"><img src="http://manthrasoaps.co.in/image/catalog/logo.png" height="50" width="150" alt="Manthra Soaps"></img></a>
@@ -36,15 +36,12 @@ function App() {
               <img src="http://manthrasoaps.co.in/image/catalog/logo.png" height={50} width={150} alt="Volt Logo">
               </img></span></a></li>
 
-             {(admin && <li className="nav-item active"><a href="dashboard" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
-             </span><span className="sidebar-text">Dashboard </span></span></a></li>)}
+            {(admin && <li className="nav-item active"><a href="dashboard" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
+            </span><span className="sidebar-text">Dashboard </span></span></a></li>)}
 
-            <li className="nav-item"><a href="resources" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> </span><span className="sidebar-text">Resources </span></span></a></li>
-            <li className="nav-item"><a href="tax" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> </span><span className="sidebar-text">Tax</span></span></a></li>
-            <li className="nav-item"><a href="ordertracking" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"><svg className="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z">
-              </path>
-            </svg> </span><span className="sidebar-text">Order Tracking</span></span></a></li>
+            {(admin && <li className="nav-item"><a href="address" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> </span><span className="sidebar-text">Resources </span></span></a></li>)}
+            {(admin &&<li className="nav-item"><a href="categoryType" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> </span><span className="sidebar-text">Tax</span></span></a></li>)}
+            {(admin &&<li className="nav-item"><a href="measurementType" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> </span><span className="sidebar-text">Order Tracking</span></span></a></li>)}
             <li className="nav-item"><a href="product" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"><svg className="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
               <path d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z">
               </path>
