@@ -68,7 +68,7 @@ export default function Carts() {
     addCart,
     updateCart,
     deleteCart,
-    getCart,
+    getCarts,
     cartById,
   } = useFetchCart();
   const {
@@ -173,7 +173,7 @@ export default function Carts() {
 
 
   const getAllCarts = async () => {
-    const response = await getCart();
+    const response = await getCarts();
     if (response.payload.title == "Success") {
       const productList = await getProducts();
       if (productList.payload.title == "Success") {

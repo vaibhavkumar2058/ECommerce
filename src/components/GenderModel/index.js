@@ -21,6 +21,7 @@ export default function GenderModel({
   const [newGender, setNewGender] = useState({
     genderName: "",
     description:"",
+    recordStatusId: null,
   });
 
   const [fileSelected, setFileSelected] = useState();
@@ -106,7 +107,7 @@ export default function GenderModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newGender?.genderName || !newGender?.description ;
+      !newGender?.genderName || !newGender?.recordStatusId|| !newGender?.description  ;
     setSaveDisabled(isEnable);
   }, [newGender]);
 
@@ -142,6 +143,17 @@ export default function GenderModel({
               name="genderName"                                                                                                                                   
               placeholder="Enter GenderName"
               value={newGender?.genderName}
+              onChange={changeHandler}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="recordStatusId">
+            <Form.Label>RecordStatusId</Form.Label>
+            <Form.Control
+              type="text"
+              name="recordStatusId"
+              placeholder="RecordStatusId"
+              value={newGender?.recordStatusId}
               onChange={changeHandler}
             />
           </Form.Group>
