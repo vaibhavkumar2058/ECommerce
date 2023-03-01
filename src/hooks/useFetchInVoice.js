@@ -10,7 +10,7 @@ import {
     getInvoiceSuccessAction,
     getInvoiceFailureAction,
     invoiceAction,
-  } from "../actions/invoiceActions";
+  } from "../actions/inVoiceActions";
 
   export default function useFetchInvoices() {
     const dispatch = useDispatch();
