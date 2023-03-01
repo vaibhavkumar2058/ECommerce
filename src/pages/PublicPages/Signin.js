@@ -15,7 +15,6 @@ export default () => {
       <section className="d-flex align-items-center my-5 mt-lg-6 mb-lg-5">
         <Container>
           <p className="text-center">
-
           </p>
           <Row className="justify-content-center form-bg-image" style={{}}>
             <Col xs={12} className="d-flex align-items-center justify-content-center">
