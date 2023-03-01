@@ -39,6 +39,20 @@ function App() {
              {(admin && <li className="nav-item active"><a href="dashboard" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
              </span><span className="sidebar-text">Dashboard </span></span></a></li>)}
 
+
+             {(admin && <li className="nav-item active"><a href="measurementValue" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
+             </span><span className="sidebar-text">MeasurementValue </span></span></a></li>)}
+             
+
+             {(admin && <li className="nav-item active"><a href="orderStatus" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
+             </span><span className="sidebar-text">OrderStatus </span></span></a></li>)}
+
+
+             {(admin && <li className="nav-item active"><a href="productAttachments" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
+             </span><span className="sidebar-text">ProductAttachments </span></span></a></li>)}
+
+
+
             <li className="nav-item"><a href="resources" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> </span><span className="sidebar-text">Resources </span></span></a></li>
             <li className="nav-item"><a href="tax" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> </span><span className="sidebar-text">Tax</span></span></a></li>
             <li className="nav-item"><a href="ordertracking" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"><svg className="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
