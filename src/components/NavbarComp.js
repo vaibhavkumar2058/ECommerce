@@ -18,8 +18,8 @@ import Security from "../pages/Security";
 import AddressType from "../pages/AddressType";
 import Address from "../pages/Address";
 import Cart from "../pages/Cart";
-import Invoice from "../pages/Invoice";
-import Country from "../pages/Country";
+import Invoice from "../pages/InVoice";
+import Country from "../pages/country";
 import Gender from "../pages/Gender";
 import GMT from "../pages/GMT";
 import ItemCost from "../pages/ItemCost";
@@ -47,6 +47,9 @@ import Tax from "../pages/Tax";
 import ProtectedRoute from "../pages/ProtectedRoute";
 import Signin from "../pages/PublicPages/Signin";
 import NotFound from "../pages/PublicPages/NotFound";
+import ChangePassword from "../pages/ChangePassword";
+import ResetPassword from "../pages/Resetpassword";
+import Login from "../pages/LogIn";
 
 const NavbarComp = () => {
   const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
@@ -104,6 +107,10 @@ const NavbarComp = () => {
           <Route path="/" element={<Navigate replace to="/dashboard" />} />
           <Route exact path="/changepassword" element={<ChangePassword />} />
           <Route exact path="/signin" element={<Signin />} />
+          <Route path="/" element={<Navigate replace to="/login" />} />
+          <Route exact path="/changepassword" element={<ChangePassword/>} />
+          <Route exact path="/resetpassword" element={<ResetPassword/>} />
+          <Route exact path="/login" element={<Login/>}/>
           <Route exact path="/*" element={<NotFound />} />
         </Routes>
       </div>
