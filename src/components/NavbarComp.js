@@ -39,9 +39,14 @@ import ShoppingList from "../pages/ShoppingList"
 import ItemList from "../pages/ItemList"
 import ZMap from "../pages/ZMap"
 import Dashboard from "../pages/DashBoard"
-import ChangePassword from "../pages/login";
+import ChangePassword from "../pages/ChangePassword";
+import ResetPassword from "../pages/Resetpassword";
+import SignIn from "../pages/LogIn";
+import { App } from "react-bootstrap-icons";
+
 
 const NavbarComp = () => {
+  
   return (
     <Router>
       <div>
@@ -77,9 +82,10 @@ const NavbarComp = () => {
           <Route exact path="/itemList" element={<ItemList />} />
           <Route exact path="/map" element={<ZMap />} />
           <Route exact path="/dashboard" element={<Dashboard />} />
-          <Route path="/" element={<Navigate replace to="/dashboard" />} />
-          <Route path="/" element={<Navigate replace to="/dashboard" />} />
+          <Route path="/" element={<Navigate replace to="/login" />} />
           <Route exact path="/changepassword" element={<ChangePassword/>} />
+          <Route exact path="/resetpassword" element={<ResetPassword/>} />
+          <Route exact path="/login" element={<SignIn/>}/>
         </Routes>
       </div>
     </Router>
