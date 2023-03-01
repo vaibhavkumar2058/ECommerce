@@ -50,47 +50,59 @@ import NotFound from "../pages/PublicPages/NotFound";
 
 const NavbarComp = () => {
   const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
+  const admin=userInfo?.role?.admin;
+  const agent=userInfo?.role?.agent;
+  const dealer=userInfo?.role?.dealer;
+  const customer=userInfo?.role?.customer;
+  debugger;
+
   return (
     <Router>
       <div>
         <Routes>
-          {(userInfo?.role?.admin && <Route exact path="/enquiry" element={<ProtectedRoute><Enquiry /></ProtectedRoute>} />)}
-          {(userInfo?.role?.admin && <Route exact path="/state" element={<State />} />)}
-          {(userInfo?.role?.admin && <Route exact path="/vehicleType" element={<VehicleType />} />)}
-          <Route exact path="/categoryType" element={<CategoryType />} />
-          <Route exact path="/product" element={<Product />} />
+          {(admin && <Route exact path="/role" element={<ProtectedRoute><Role /></ProtectedRoute>} />)}
+          {(admin && <Route exact path="/state" element={<ProtectedRoute><State /></ProtectedRoute>} />)}
+          {(admin && <Route exact path="/vehicleType" element={<ProtectedRoute><VehicleType /></ProtectedRoute>} />)}
+          {((admin||agent||dealer||customer) && <Route exact path="/resources" element={<ProtectedRoute><Resources/></ProtectedRoute>}/>)}
+          {((admin||agent||dealer||customer) && <Route exact path="/order" element={<ProtectedRoute><Order/></ProtectedRoute>}/>)}
+          {(admin && <Route exact path="/itemCost" element={<ProtectedRoute><ItemCost/></ProtectedRoute>}/>)}
+          {((admin||agent||dealer||customer)  && <Route exact path="/cart" element={<ProtectedRoute><Cart/></ProtectedRoute>}/>)}
+          {(admin && <Route exact path="/GMT" element={<ProtectedRoute><GMT/></ProtectedRoute>}/>)}
+          {(admin && <Route exact path="/invoice" element={<ProtectedRoute><Invoice/></ProtectedRoute>}/>)}
+          {/* {(agent||admin  && <Route exact path="/orderItem" element={<ProtectedRoute><OrderItem/></ProtectedRoute>}/>)} */}
+          {((admin||agent||dealer||customer) && <Route exact path="/orderTracking" element={<ProtectedRoute><OrderTracking/></ProtectedRoute>}/>)}
+          {((admin||agent||dealer) && <Route exact path="/recordStatus" element={<ProtectedRoute><RecordStatus/></ProtectedRoute>}/>)}
+          {/* {(admin && <Route exact path="/tax" element={<ProtectedRoute><Tax/></ProtectedRoute>}/>)} */}
+          {(admin && <Route exact path="/tax" element={<ProtectedRoute><Tax /></ProtectedRoute>}/>)}
+          {(admin && <Route exact path="/product" element={<ProtectedRoute><Product/></ProtectedRoute>}/>)}
+          {(admin && <Route exact path="/country" element={<ProtectedRoute><Country/></ProtectedRoute>}/>)}
+          {(admin && <Route exact path="/addressType" element={<ProtectedRoute><AddressType/></ProtectedRoute>}/>)}
+          {(admin && <Route exact path="/address" element={<ProtectedRoute><Address/></ProtectedRoute>}/>)}
+          {(admin && <Route exact path="/categoryType" element={<ProtectedRoute><CategoryType/></ProtectedRoute>}/>)}
+          {(admin && <Route exact path="/measurementType" element={<ProtectedRoute><MeasurementType/></ProtectedRoute>}/>)}
+          {(admin && <Route exact path="/measurementValue" element={<ProtectedRoute><MeasurementValue/></ProtectedRoute>}/>)}
+          {(admin && <Route exact path="/orderStatus" element={<ProtectedRoute><OrderStatus/></ProtectedRoute>}/>)}
+          {(admin && <Route exact path="/productAttachments" element={<ProtectedRoute><ProductAttachments/></ProtectedRoute>}/>)}
+
+
+
+          
+      
           <Route exact path="/file" element={<File />} />
           <Route exact path="/security" element={<Security />} />
-          <Route exact path="/addressType" element={<AddressType />} />
-          <Route exact path="/address" element={<Address />} />
-          <Route exact path="/cart" element={<Cart />} />
           <Route exact path="/gender" element={<Gender />} />
-          <Route exact path="/country" element={<Country />} />
-          <Route exact path="/GMT" element={<GMT />} />
-          <Route exact path="/itemCost" element={<ItemCost />} />
-          <Route exact path="/measurementType" element={<MeasurementType />} />
-          <Route exact path="/measurementValue" element={<MeasurementValue />} />
           <Route exact path="/notifications" element={<Notification />} />
-          <Route exact path="/orders" element={<Order />} />
-          <Route exact path="/orderTracking" element={<OrderTracking />} />
-          <Route exact path="/recordStatus" element={<RecordStatus />} />
           <Route exact path="/resourceAttachmentType" element={<ResourceAttachmentType />} />
           <Route exact path="/resourceAttachments" element={<ResourceAttachments />} />
-          <Route exact path="/role" element={<Role />} />
           <Route exact path="/folder" element={<Folder />} />
-          <Route exact path="/resources" element={<Resources />} />
-          <Route exact path="/orderStatus" element={<OrderStatus />} />
-          <Route exact path="/productAttachments" element={<ProductAttachments />} />
           <Route exact path="/shoppingList" element={<ShoppingList />} />
           <Route exact path="/itemList" element={<ItemList />} />
-          <Route exact path="/invoice" element={<Invoice />} />
           <Route exact path="/orderSummaryList" element={<OrderSummaryList />} />
           <Route exact path="/orderPlacedList" element={<OrderPlacedList />} />
           <Route exact path="/map" element={<ZMap />} />
-          <Route exact path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          {(admin && <Route exact path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>}/>)}
           <Route path="/" element={<Navigate replace to="/dashboard" />} />
           <Route exact path="/changepassword" element={<ChangePassword />} />
-          <Route exact path="/tax" element={<Tax />} />
           <Route exact path="/signin" element={<Signin />} />
           <Route exact path="/*" element={<NotFound />} />
         </Routes>

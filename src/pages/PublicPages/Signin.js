@@ -6,9 +6,14 @@ import { Link } from 'react-router-dom';
 
 export default () => {
   const resource = {
-    role: { admin: true, user: true },
-    loggedIn: false,
+    role: { admin: false, agent: false ,dealer:false,customer:true},
+    loggedIn: true,
   };
+  // Login Failed Scenario
+  // const resource = {
+  //   role: null,
+  //   loggedIn: false,
+  // };
   localStorage.setItem("loggedIn", JSON.stringify(resource))
   return (
     <main>
