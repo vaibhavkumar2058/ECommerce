@@ -62,7 +62,6 @@ export default function OrderStatusModel({
     });
   };
   const selectChangeHandler = (e) => {
-    debugger;
     setNewOrderStatus({
       ...newOrderStatus,
       "orderStatusId": e.value,
@@ -86,7 +85,6 @@ export default function OrderStatusModel({
       }
     }
     else {
-      debugger;
       const response = await onAddOrderStatus(newOrderStatus);
       if (response.payload.title == "Success") {
         setMessageStatus({
@@ -128,7 +126,6 @@ export default function OrderStatusModel({
     if (isEdit) {
       setButtonType("Update");
     }
-    debugger;
     const isEnable = !newOrderStatus?.orderStatusName || !newOrderStatus?.recordStatusId  || !newOrderStatus?.description ;
     setSaveDisabled(isEnable);
   }, [newOrderStatus]);

@@ -24,12 +24,9 @@ import {
             ...state.categoryType,
             data: action.payload,
           },
-        };
-  
-  
+        };  
   
       case ADD_CATEGORYTYPE:
-        debugger;
         return {
           ...state,
           categoryType: {

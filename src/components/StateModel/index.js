@@ -61,7 +61,6 @@ export default function StateModel({
       }
     }
     else {
-
       const response = await onAddState(newState);
       if (response.payload.title == "Success") {
         setMessageStatus({

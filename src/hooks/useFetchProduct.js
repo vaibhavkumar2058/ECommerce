@@ -15,6 +15,7 @@ import {
   export default function useFetchProducts() {
     const dispatch = useDispatch();
   const hapyCarURL = "https://localhost:7062/product";
+  const productSalesListURL = "https://localhost:7062/productsales";
 
   const API = useAPI();
   const SUCCESS = "Success";
@@ -182,13 +183,46 @@ import {
           })
         );
       });
-      
+
   };
+
+  // Order GET  ACTIONS
+  const productSalesList = () => {
+    dispatch(getProductBeginAction());
+    return API.get(productSalesListURL,
+      null,
+      { suppressErrors: [400] }
+    )
+      .then(({ data }) =>
+        dispatch(
+          getProductSuccessAction({
+            ...data,
+            title: SUCCESS,
+          })
+        )
+      )
+      .catch((error) => {
+        let errorMsg = "error msg from product sales";
+        if (error.response.data.order) {
+          const [errors] = error.response.data.order;
+          errorMsg = errors;
+        }
+        dispatch(
+          getProductFailureAction({
+            ...errorMsg,
+            title: ERROR,
+            errorMsg,
+          })
+        );
+      });
+  };
+
   return {
     addProduct,
     updateProduct,
     deleteProduct,
     getProducts,
     productById,
+    productSalesList,
   };
 }

@@ -21,6 +21,7 @@ export default function MeasurementTypeModel({
     const [newMeasurementType, setNewMeasurementType] = useState({
         name: "",
         description: "",
+        recordStatusId:1,
     });
 
     const [fileSelected, setFileSelected] = useState();
@@ -66,7 +67,6 @@ export default function MeasurementTypeModel({
             }
         }
         else {
-            debugger;
             const response = await onAddMeasurementType(newMeasurementType);
             if (response.payload.title == "Success") {
                 setMessageStatus({

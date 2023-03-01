@@ -45,7 +45,8 @@ export default function Country() {
     countryname: "",
     region:null,
     description:"",
-      });
+    recordStatusId:null,
+    });
 
   const [id, setId] = useState(null);
 
@@ -70,6 +71,7 @@ export default function Country() {
     { dataField: 'countryName', text: ' CountryName', sort: true },
     { dataField: 'regionCode', text: 'RegionCode', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
+    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true },
         // columns follow dataField and text structure
     {
       dataField: "Actions",

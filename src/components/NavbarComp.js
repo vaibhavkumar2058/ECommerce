@@ -18,7 +18,8 @@ import Security from "../pages/Security";
 import AddressType from "../pages/AddressType";
 import Address from "../pages/Address";
 import Cart from "../pages/Cart";
-import Country from "../pages/Country";
+import Invoice from "../pages/InVoice";
+import Country from "../pages/country";
 import Gender from "../pages/Gender";
 import GMT from "../pages/GMT";
 import ItemCost from "../pages/ItemCost";
@@ -39,21 +40,26 @@ import ShoppingList from "../pages/ShoppingList"
 import ItemList from "../pages/ItemList"
 import ZMap from "../pages/ZMap"
 import Dashboard from "../pages/DashBoard"
+import ChangePassword from "../pages/login";
+import OrderSummaryList from "../pages/OrderSummaryList";
+import OrderPlacedList from "../pages/OrderPlacedList";
+import Tax from "../pages/Tax";
+import ProtectedRoute from "../pages/ProtectedRoute";
+import Signin from "../pages/PublicPages/Signin";
+import NotFound from "../pages/PublicPages/NotFound";
 import ChangePassword from "../pages/ChangePassword";
 import ResetPassword from "../pages/Resetpassword";
-import SignIn from "../pages/LogIn";
-import { App } from "react-bootstrap-icons";
-
+import Login from "../pages/LogIn";
 
 const NavbarComp = () => {
-  
+  const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
   return (
     <Router>
       <div>
         <Routes>
-          <Route exact path="/enquiry" element={<Enquiry />} />
-          <Route exact path="/state" element={<State />} />
-          <Route exact path="/vehicleType" element={<VehicleType />} />
+          {(userInfo?.role?.admin && <Route exact path="/enquiry" element={<ProtectedRoute><Enquiry /></ProtectedRoute>} />)}
+          {(userInfo?.role?.admin && <Route exact path="/state" element={<State />} />)}
+          {(userInfo?.role?.admin && <Route exact path="/vehicleType" element={<VehicleType />} />)}
           <Route exact path="/categoryType" element={<CategoryType />} />
           <Route exact path="/product" element={<Product />} />
           <Route exact path="/file" element={<File />} />
@@ -80,12 +86,20 @@ const NavbarComp = () => {
           <Route exact path="/productAttachments" element={<ProductAttachments />} />
           <Route exact path="/shoppingList" element={<ShoppingList />} />
           <Route exact path="/itemList" element={<ItemList />} />
+          <Route exact path="/invoice" element={<Invoice />} />
+          <Route exact path="/orderSummaryList" element={<OrderSummaryList />} />
+          <Route exact path="/orderPlacedList" element={<OrderPlacedList />} />
           <Route exact path="/map" element={<ZMap />} />
-          <Route exact path="/dashboard" element={<Dashboard />} />
+          <Route exact path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path="/" element={<Navigate replace to="/dashboard" />} />
+          <Route exact path="/changepassword" element={<ChangePassword />} />
+          <Route exact path="/tax" element={<Tax />} />
+          <Route exact path="/signin" element={<Signin />} />
           <Route path="/" element={<Navigate replace to="/login" />} />
           <Route exact path="/changepassword" element={<ChangePassword/>} />
           <Route exact path="/resetpassword" element={<ResetPassword/>} />
-          <Route exact path="/login" element={<SignIn/>}/>
+          <Route exact path="/login" element={<Login/>}/>
+          <Route exact path="/*" element={<NotFound />} />
         </Routes>
       </div>
     </Router>

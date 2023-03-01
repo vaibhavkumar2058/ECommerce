@@ -74,7 +74,6 @@ export default function EnquiryModel({
       }
     }
     else {
-      debugger;
       const response = await onAddEnquiry(newEnquiry);
       if (response.payload.title == "Success") {
         setMessageStatus({

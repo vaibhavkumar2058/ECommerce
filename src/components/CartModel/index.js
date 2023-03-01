@@ -72,7 +72,6 @@ export default function CartModel({
     });
   };
   const selectChangeHandler = (e) => {
-    debugger;
     setNewCart({
       ...newCart,
       "cartId": e.value,
@@ -96,7 +95,6 @@ export default function CartModel({
       }
     }
     else {
-      debugger;
       const response = await onAddCart(newCart);
       if (response.payload.title == "Success") {
         setMessageStatus({

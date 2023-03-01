@@ -62,7 +62,6 @@ export default function ProductModel({
   };
 
   const selectChangeHandler = (e) => {
-    debugger;
     setNewProduct({
       ...newProduct,
       "productId": e.value,

@@ -65,7 +65,7 @@ export default function Files() {
     addFile,
     updateFile,
     deleteFile,
-    getFile,
+    getFiles,
     fileById,
   } = useFetchFiles();
 
@@ -162,7 +162,7 @@ export default function Files() {
 
 
   const getAllFiles = async () => {
-    const response = await getFile();
+    const response = await getFiles();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',

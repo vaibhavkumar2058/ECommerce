@@ -56,7 +56,6 @@ export default function GMTModel({
   
 
   const saveHandler = async () => {
-    debugger;
     if (isEdit) {
       const response = await onUpdateGMT(id, newGMT);
       if (response.payload.title == "Success") {
@@ -70,7 +69,6 @@ export default function GMTModel({
       }
     }
     else {
-      debugger;
       const response = await onAddGMT(newGMT);
       if (response.payload.title == "Success") {
         setMessageStatus({
@@ -148,7 +146,7 @@ export default function GMTModel({
             <Form.Control
               type="text"
               name="resourceId"
-              placeholder="Enter resourceId"
+              placeholder="Enter ResourceId"
               value={newGMT?.resourceId}
               onChange={changeHandler}
             />
@@ -181,7 +179,7 @@ export default function GMTModel({
             <Form.Control
               type="text"
               name="latitude"
-              placeholder="latitude"
+              placeholder="Latitude"
               value={newGMT?.latitude}
               onChange={changeHandler}
             />
@@ -191,7 +189,7 @@ export default function GMTModel({
             <Form.Control
               type="text"
               name="recordStatusId"
-              placeholder="Enter recordStatusId"
+              placeholder="Enter RecordStatusId"
               value={newGMT?.recordStatusId}
               onChange={changeHandler}
             />

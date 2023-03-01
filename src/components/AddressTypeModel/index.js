@@ -66,7 +66,6 @@ export default function AddressTypeModel({
       }
     }
     else {
-      debugger;
       const response = await onAddAddressType(newAddressType);
       if (response.payload.title == "Success") {
         setMessageStatus({

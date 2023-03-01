@@ -22,6 +22,7 @@ export default function CountryModel({
     countryName: "",
     regionCode: null,
     description: "",
+    recordStatusId:null,
      });
 
   const [messageStatus, setMessageStatus] = useState({
@@ -63,7 +64,6 @@ export default function CountryModel({
       }
     }
     else {
-      debugger;
       const response = await onAddCountry(newCountry);
       if (response.payload.title == "Success") {
         setMessageStatus({
@@ -106,7 +106,7 @@ export default function CountryModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newCountry?.countryName || !newCountry?.regionCode || !newCountry?.description ;
+      !newCountry?.countryName || !newCountry?.regionCode || !newCountry?.description || !newCountry?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newCountry]);
 
@@ -164,6 +164,17 @@ export default function CountryModel({
               name="description"
               placeholder="Description"
               value={newCountry?.description}
+              onChange={changeHandler}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="recordStatusId">
+            <Form.Label>RecordStatusId</Form.Label>
+            <Form.Control
+              type="text"
+              name="recordStatusId"
+              placeholder="RecordStatusId"
+              value={newCountry?.recordStatusId}
               onChange={changeHandler}
             />
           </Form.Group>

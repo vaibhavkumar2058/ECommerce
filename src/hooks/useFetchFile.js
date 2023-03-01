@@ -21,7 +21,7 @@ import {
   const ERROR = "Error";
 
   // File GET  ACTIONS
-  const getFile = () => {
+  const getFiles = () => {
     dispatch(getFileBeginAction());
     return API.get(hapyCarURL,
       null,
@@ -194,7 +194,7 @@ import {
     addFile,
     updateFile,
     deleteFile,
-    getFile,
+    getFiles,
     fileById,
   };
 }
