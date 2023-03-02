@@ -44,6 +44,20 @@ function App() {
              </span><span className="sidebar-text">Country </span></span></a></li>)}
              {(admin && <li className="nav-item active"><a href="product" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
              </span><span className="sidebar-text">Product </span></span></a></li>)}
+             {((admin||agent||dealer) && <li className="nav-item active"><a href="recordStatus" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
+             </span><span className="sidebar-text">RecordStatus </span></span></a></li>)}
+             {((admin||agent||dealer||customer) && <li className="nav-item active"><a href="orderTracking" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
+             </span><span className="sidebar-text">OrderTracking </span></span></a></li>)}
+             {(admin && <li className="nav-item active"><a href="invoice" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
+             </span><span className="sidebar-text">Invoice </span></span></a></li>)}
+             {(admin && <li className="nav-item active"><a href="GMT" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
+             </span><span className="sidebar-text">GMT </span></span></a></li>)}
+             {((admin||agent||dealer||customer) && <li className="nav-item active"><a href="cart" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
+             </span><span className="sidebar-text">Cart </span></span></a></li>)}
+             {(admin && <li className="nav-item active"><a href="itemCost" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
+             </span><span className="sidebar-text">ItemCost </span></span></a></li>)}
+             {((admin||agent||dealer||customer)  && <li className="nav-item active"><a href="order" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
+             </span><span className="sidebar-text">Order </span></span></a></li>)}
 
 
              {(admin && <li className="nav-item active"><a href="measurementValue" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
