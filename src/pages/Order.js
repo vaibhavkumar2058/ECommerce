@@ -96,7 +96,8 @@ export default function Orders() {
               onClick={() => handleEdit(row.orderId, row)}
             >
               Edit
-            </button><button
+            </button>
+            <button
               className="btn btn-danger btn-xs"
               onClick={() => handleDelete(row.orderId, row.name)}
             >

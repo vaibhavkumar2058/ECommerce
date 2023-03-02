@@ -20,12 +20,11 @@ export default function InvoiceModel({
 }) {
   const [newInvoice, setNewInvoice] = useState({
     resourcesId:null,
-    productId:null,
-    cost:null,
+    orderId:null,
     totalIncludeTax:null,
-    quantity:null,
     total:null,
     description:"",
+    recordStatusId:"1"
     //invoiceDate:""
     
     
@@ -115,7 +114,7 @@ export default function InvoiceModel({
     if (isEdit) {
       setButtonType("Update");
     }
-    const isEnable = !newInvoice?.resourcesId || !newInvoice?.productId  || !newInvoice?.cost || !newInvoice?.totalIncludeTax || !newInvoice?.quantity||  !newInvoice?.total || !newInvoice?.description;
+    const isEnable = !newInvoice?.resourcesId || !newInvoice?.orderId   || !newInvoice?.totalIncludeTax ||  !newInvoice?.total || !newInvoice?.description;
     setSaveDisabled(isEnable);
   }, [newInvoice]);
 
@@ -145,7 +144,7 @@ export default function InvoiceModel({
             className={styles.stFormContainer}
             controlId="formInvoice"
           >
-            <Form.Label>ResorcesId</Form.Label>
+            <Form.Label>ResourcesId</Form.Label>
             <Form.Control
               type="text"
               name="resourcesId"
@@ -154,29 +153,19 @@ export default function InvoiceModel({
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="product">
-            <Form.Label>ProductId</Form.Label>
+          <Form.Group className="mb-3" controlId="orderId">
+            <Form.Label>OrderId</Form.Label>
             <Form.Control
               type="text"
-              name="productId"
-              placeholder="ProductId"
-              value={newInvoice?.productId}
+              name="orderId"
+              placeholder="OrderId"
+              value={newInvoice?.orderId}
               onChange={changeHandler}
             />
           </Form.Group>
 
 
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Cost</Form.Label>
-            <Form.Control
-              type="text"
-              name="cost"
-              placeholder="Cost"
-              value={newInvoice?.cost}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-
+          
           <Form.Group className="mb-3" controlId="totalIncludeTax">
             <Form.Label>TotalIncludeTax</Form.Label>
             <Form.Control
@@ -198,15 +187,7 @@ export default function InvoiceModel({
             />
           </Form.Group> */}
 
-          <Form.Group className="mb-3" controlId="Quantity">
-            <Form.Label>Quantity</Form.Label>
-            <Form.Control
-              type="text"
-              name="quantity"
-              placeholder="Quantity"
-              value={newInvoice?.quantity}
-              onChange={changeHandler}
-            />
+          
             
 
 
@@ -242,7 +223,7 @@ export default function InvoiceModel({
               {buttonType}
             </Button>
           </Modal.Footer>
-          </Form.Group>
+          
         </Form>
       )}
     </>

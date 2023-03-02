@@ -25,6 +25,11 @@ const MyExportCSV = (props) => {
 };
 
 export default function Invoices() {
+  const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
+  const admin=userInfo?.role?.admin;
+  const agent=userInfo?.role?.agent;
+  const dealer=userInfo?.role?.dealer;
+  const customer=userInfo?.role?.customer;
 
   const [invoices, setInvoices] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -43,12 +48,11 @@ export default function Invoices() {
   const [isDelete, setIsDelete] = useState(false);
   const [invoice, setInvoice] = useState({
     resourcesId:null,
-    productId:null,
-    cost:null,
+    orderId:null,
     totalIncludeTax:null,
-    quantity:null,
     total:null,
     description:"",
+    recordStatusId:"1",
     //invoiceDate:null,
 
       });
@@ -73,10 +77,8 @@ export default function Invoices() {
   const columns = [
     { dataField: 'invoiceId', text: 'invoiceId', sort: true, hidden: true },
     { dataField: 'resourcesId', text: 'ResourcesId', sort: true  },
-    { dataField: 'productId', text: ' ProductId', sort: true },
-    { dataField: 'cost', text: 'Cost', sort: true },
+    { dataField: 'orderId', text: ' OrderId', sort: true },
     { dataField: 'totalIncludeTax', text: 'totalIncludeTax', sort: true },
-    { dataField: 'quantity', text: 'Quantity', sort: true },
     { dataField: 'total', text: 'Total', sort: true },
     //{ dataField: 'invoiceDate', text: 'InvoiceDate', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
@@ -84,6 +86,9 @@ export default function Invoices() {
     {
       dataField: "Actions",
       text: "Actions",
+      headerStyle:()=>{
+        return { width:"80px"};
+      },
       formatter: (cellContent, row) => {
         return (
           <><button
@@ -92,17 +97,19 @@ export default function Invoices() {
           >
             View
           </button>
-            <button
+            {admin &&<button
               className="btn btn-primary btn-xs"
               onClick={() => handleEdit(row.invoiceId, row)}
             >
               Edit
-            </button><button
+            </button>}
+            {admin &&<button
               className="btn btn-danger btn-xs"
               onClick={() => handleDelete(row.invoiceId, row.name)}
             >
               Delete
-            </button></>
+            </button>}
+            </>
         );
       },
     },

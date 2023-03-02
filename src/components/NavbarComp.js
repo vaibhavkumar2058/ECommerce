@@ -70,13 +70,13 @@ const NavbarComp = () => {
           {(admin && <Route exact path="/itemCost" element={<ProtectedRoute><ItemCost/></ProtectedRoute>}/>)}
           {((admin||agent||dealer||customer)  && <Route exact path="/cart" element={<ProtectedRoute><Cart/></ProtectedRoute>}/>)}
           {(admin && <Route exact path="/GMT" element={<ProtectedRoute><GMT/></ProtectedRoute>}/>)}
-          {(admin && <Route exact path="/invoice" element={<ProtectedRoute><Invoice/></ProtectedRoute>}/>)}
+          {((admin||dealer) && <Route exact path="/invoice" element={<ProtectedRoute><Invoice/></ProtectedRoute>}/>)}
           {/* {(agent||admin  && <Route exact path="/orderItem" element={<ProtectedRoute><OrderItem/></ProtectedRoute>}/>)} */}
           {((admin||agent||dealer||customer) && <Route exact path="/orderTracking" element={<ProtectedRoute><OrderTracking/></ProtectedRoute>}/>)}
           {((admin||agent||dealer) && <Route exact path="/recordStatus" element={<ProtectedRoute><RecordStatus/></ProtectedRoute>}/>)}
           {/* {(admin && <Route exact path="/tax" element={<ProtectedRoute><Tax/></ProtectedRoute>}/>)} */}
           {(admin && <Route exact path="/tax" element={<ProtectedRoute><Tax /></ProtectedRoute>}/>)}
-          {(admin && <Route exact path="/product" element={<ProtectedRoute><Product/></ProtectedRoute>}/>)}
+          {((admin||dealer) && <Route exact path="/product" element={<ProtectedRoute><Product/></ProtectedRoute>}/>)}
           {(admin && <Route exact path="/country" element={<ProtectedRoute><Country/></ProtectedRoute>}/>)}
           {(admin && <Route exact path="/addressType" element={<ProtectedRoute><AddressType/></ProtectedRoute>}/>)}
           {(admin && <Route exact path="/address" element={<ProtectedRoute><Address/></ProtectedRoute>}/>)}
