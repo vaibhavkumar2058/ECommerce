@@ -56,7 +56,7 @@ const NavbarComp = () => {
   const agent=userInfo?.role?.agent;
   const dealer=userInfo?.role?.dealer;
   const customer=userInfo?.role?.customer;
-  debugger;
+
 
   return (
     <Router>
@@ -65,7 +65,7 @@ const NavbarComp = () => {
           {(admin && <Route exact path="/role" element={<ProtectedRoute><Role /></ProtectedRoute>} />)}
           {(admin && <Route exact path="/state" element={<ProtectedRoute><State /></ProtectedRoute>} />)}
           {(admin && <Route exact path="/vehicleType" element={<ProtectedRoute><VehicleType /></ProtectedRoute>} />)}
-          {((admin||agent||dealer||customer) && <Route exact path="/resources" element={<ProtectedRoute><Resources/></ProtectedRoute>}/>)}
+          {(admin && <Route exact path="/resources" element={<ProtectedRoute><Resources/></ProtectedRoute>}/>)}
           {((admin||agent||dealer||customer) && <Route exact path="/order" element={<ProtectedRoute><Order/></ProtectedRoute>}/>)}
           {(admin && <Route exact path="/itemCost" element={<ProtectedRoute><ItemCost/></ProtectedRoute>}/>)}
           {((admin||agent||dealer||customer)  && <Route exact path="/cart" element={<ProtectedRoute><Cart/></ProtectedRoute>}/>)}

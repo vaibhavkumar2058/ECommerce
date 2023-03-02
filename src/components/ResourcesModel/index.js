@@ -174,6 +174,7 @@ export default function ResourcesModel({
     if (isEdit) {
       setButtonType("Update");
     }
+    
     const isEnable =
       !newResources?.firstName || !newResources?.middleName || !newResources?.lastName || !newResources?.roleId || !newResources?.genderId || !newResources?.mobileNumber || !newResources?.addressId || !newResources?.bloodGroup || !newResources?.email || !newResources?.password || !newResources?.isEmailVerified || !newResources?.isMobileVerified || !newResources?.recordStatusId;
     setSaveDisabled(isEnable);
