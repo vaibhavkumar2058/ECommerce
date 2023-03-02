@@ -47,6 +47,7 @@ export default function SecurityModel({
       [e.target.name]: e.target.value,
     });
   };
+  
 
   const saveHandler = async () => {
    
@@ -105,7 +106,7 @@ export default function SecurityModel({
       setButtonType("Update");
     }
     const isEnable =
-    !newSecurity?.questionId ||!newSecurity?.answerId || !newSecurity?.description ;
+    !newSecurity?.questionId ||!newSecurity?.answerId || !newSecurity?.description;
     setSaveDisabled(isEnable);
   }, [newSecurity]);
 
@@ -139,7 +140,7 @@ export default function SecurityModel({
             <Form.Control
               type="text"
               name="questionId"
-              placeholder="Enter QuestionId"
+              placeholder="QuestionId"
               value={newSecurity?.questionId}
               onChange={changeHandler}
             />
