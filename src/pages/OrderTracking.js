@@ -24,7 +24,7 @@ const MyExportCSV = (props) => {
   );
 };
 
-export default function OrderTracking() {
+export default function OrderTrackinges() {
 
   const [orderTrackinges, setOrderTrackinges] = useState([]);
   const [loading, setLoading] = useState(true);

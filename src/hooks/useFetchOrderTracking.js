@@ -12,7 +12,7 @@ import {
     orderTrackingAction ,
   } from "../actions/orderTrackingActions";
 
-  export default function useFetchOrderTrackings() {
+  export default function useFetchOrderTrackinges() {
     const dispatch = useDispatch();
   const hapyCarURL = "https://localhost:7062/orderTracking";
 

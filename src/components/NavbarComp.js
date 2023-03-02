@@ -89,7 +89,7 @@ const NavbarComp = () => {
 
 
           
-      
+          
           <Route exact path="/file" element={<File />} />
           <Route exact path="/security" element={<Security />} />
           <Route exact path="/gender" element={<Gender />} />

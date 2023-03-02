@@ -179,7 +179,7 @@ export default function ProductAttachments() {
     }
   };
 
-  const getProductAttachmentssById = async (id) => {
+  const getProductAttachmentsById = async (id) => {
     const response = await productAttachmentsById(id);
     if (response.payload.title == "Success") {
       setProductAttachments(response.payload);
