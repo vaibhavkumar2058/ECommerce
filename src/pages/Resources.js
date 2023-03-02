@@ -237,6 +237,7 @@ export default function Resourcess() {
         mode: 'success',
         message: 'Resources Record Fetch Succefully.'
       })
+      debugger;
       const dataFormatter = (rawData) => {
         const curedData = {};
         curedData.resourcesId = rawData?.resourcesId;
