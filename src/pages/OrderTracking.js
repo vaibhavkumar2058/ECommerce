@@ -24,7 +24,17 @@ const MyExportCSV = (props) => {
   );
 };
 
+<<<<<<< HEAD
 export default function OrderTrackinges() {
+=======
+export default function OrderTracking() {
+  const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
+  const admin=userInfo?.role?.admin;
+  const agent=userInfo?.role?.agent;
+  const dealer=userInfo?.role?.dealer;
+  const customer=userInfo?.role?.customer;
+
+>>>>>>> 8835af59f5b1e4b83a81a5e6d2a2c026e3f3b649
 
   const [orderTrackinges, setOrderTrackinges] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -85,17 +95,18 @@ export default function OrderTrackinges() {
           >
             View
           </button>
-            <button
+            {admin && <button
               className="btn btn-primary btn-xs"
               onClick={() => handleEdit(row.orderTrackingId, row)}
             >
               Edit
-            </button><button
+            </button>}
+            {admin && <button
               className="btn btn-danger btn-xs"
               onClick={() => handleDelete(row.orderTrackingId, row.name)}
             >
               Delete
-            </button></>
+            </button>}</>
         );
       },
     },
