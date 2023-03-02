@@ -131,13 +131,13 @@ function App() {
                     </a></div>
                   </div>
                 </li>
-                <li className="nav-item dropdown">
+                {/* <li className="nav-item dropdown">
                   <Button variant="secondary"
                   onClick={Signout}>
                   Signout
                 </Button>
       
-                </li>
+                </li> */}
                 <li className="nav-item dropdown"><a href="signin" className="nav-link text-dark signin-bell unread dropdown-toggle" data-unread-signin="true" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">Signin</a>
                   <div className="dropdown-menu dropdown-menu-lg dropdown-menu-center mt-2 py-0">
                     <div className="list-group list-group-flush"><a href="signin" className="text-center text-primary fw-bold border-bottom border-light py-3">Signin</a> <a href="calendar.html" className="list-group-item list-group-item-action border-bottom">
