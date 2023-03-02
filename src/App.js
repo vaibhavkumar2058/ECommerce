@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import { ToastProvider } from "react-toast-notifications";
 import './volt.css';
 import { useNavigate } from "react-router-dom";
+import Button from "react-bootstrap/Button";
 //import 'semantic-ui-css/semantic.min.css'
 
 
