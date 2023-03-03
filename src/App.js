@@ -23,6 +23,9 @@ function App() {
     localStorage.setItem("loggedIn", JSON.stringify(resource))
     window.location.href = "/signin";
   };
+  const MyProfile = () => {
+    window.location.href = "/myProfile";
+  };
 
   useEffect(() => {
     setMenu(hideMenu?.hidden);
@@ -180,12 +183,18 @@ function App() {
                     </a></div>
                   </div>
                 </li>
+                <li className="nav-item dropdown"><a href="myProfile" className="nav-link text-dark myProfile-bell unread dropdown-toggle" data-unread-myProfile="true" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">MyProfile</a>
+                  <div className="dropdown-menu dropdown-menu-lg dropdown-menu-center mt-2 py-0">
+                    <div className="list-group list-group-flush"><a href="myProfile" className="text-center text-primary fw-bold border-bottom border-light py-3">MyProfile</a> <a href="calendar.html" className="list-group-item list-group-item-action border-bottom">
+                    </a></div>
+                  </div>
+                </li>
 
 
                 <ul className="navbar-nav align-items-center">
-                  <li className="nav-item dropdown"><a href="changePassword" className="nav-link text-dark changePassword-bell unread dropdown-toggle" data-unread-changePassword="true" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">ChangePassword</a>
+                  <li className="nav-item dropdown"><a href="resetPassword" className="nav-link text-dark resetPassword-bell unread dropdown-toggle" data-unread-resetPassword="true" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">ResetPassword</a>
                     <div className="dropdown-menu dropdown-menu-lg dropdown-menu-center mt-2 py-0">
-                      <div className="list-group list-group-flush"><a href="changePassword" className="text-center text-primary fw-bold border-bottom border-light py-3">ChangePassword</a> <a href="calendar.html" className="list-group-item list-group-item-action border-bottom">
+                      <div className="list-group list-group-flush"><a href="resetPassword" className="text-center text-primary fw-bold border-bottom border-light py-3">ResetPassword</a> <a href="calendar.html" className="list-group-item list-group-item-action border-bottom">
                       </a></div>
                     </div>
                   </li>

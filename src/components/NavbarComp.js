@@ -104,6 +104,7 @@ const NavbarComp = () => {
           <Route exact path="/resetpassword" element={<ResetPassword/>} />
           <Route exact path="/successpage" element={<Successpage/>} />
           <Route exact path="/forgotpassword" element={<ForgotPassword/>} />
+          <Route exact path="/myProfile" element={<MyProfile />} />
           <Route exact path="/*" element={<NotFound />} />
         </Routes>
       </div>
