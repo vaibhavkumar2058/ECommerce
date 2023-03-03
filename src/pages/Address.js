@@ -24,7 +24,7 @@ const MyExportCSV = (props) => {
   );
 };
 
-export default function Address() {
+export default function Addresses() {
 
   const [addresses, setAddresses] = useState([]);
   const [loading, setLoading] = useState(true);

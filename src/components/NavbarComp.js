@@ -48,6 +48,7 @@ import Signin from "../pages/PublicPages/Signin";
 import NotFound from "../pages/PublicPages/NotFound";
 import ForgotPassword from "../pages/PublicPages/ForgotPassword";
 import ResetPassword from "../pages/PublicPages/ResetPassword";
+
 const NavbarComp = () => {
   const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
   const admin=userInfo?.role?.admin;
@@ -66,7 +67,7 @@ const NavbarComp = () => {
           {(admin && <Route exact path="/resources" element={<ProtectedRoute><Resources/></ProtectedRoute>}/>)}
           {((admin||agent||dealer||customer) && <Route exact path="/order" element={<ProtectedRoute><Order/></ProtectedRoute>}/>)}
           {(admin && <Route exact path="/itemCost" element={<ProtectedRoute><ItemCost/></ProtectedRoute>}/>)}
-          {((admin||agent||dealer||customer)  && <Route exact path="/cart" element={<ProtectedRoute><Cart/></ProtectedRoute>}/>)}
+          {((admin||agent||dealer)  && <Route exact path="/cart" element={<ProtectedRoute><Cart/></ProtectedRoute>}/>)}
           {(admin && <Route exact path="/GMT" element={<ProtectedRoute><GMT/></ProtectedRoute>}/>)}
           {((admin||agent) && <Route exact path="/invoice" element={<ProtectedRoute><Invoice/></ProtectedRoute>}/>)}
           {/* {(agent||admin  && <Route exact path="/orderItem" element={<ProtectedRoute><OrderItem/></ProtectedRoute>}/>)} */}
@@ -100,6 +101,7 @@ const NavbarComp = () => {
           <Route exact path="/signin" element={<Signin />} />
           <Route path="/" element={<Navigate replace to="/login" />} />
           <Route exact path="/resetpassword" element={<ResetPassword/>} />
+        
           <Route exact path="/forgotpassword" element={<ForgotPassword/>} />
           <Route exact path="/*" element={<NotFound />} />
         </Routes>

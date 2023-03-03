@@ -143,11 +143,11 @@ export default function StateModel({
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="mobile">
-            <Form.Label>Country ID</Form.Label>
+            <Form.Label>CountryID</Form.Label>
             <Form.Control
               type="text"
               name="countryId"
-              placeholder="Country Id"
+              placeholder="CountryId"
               value={newState?.countryId}
               onChange={changeHandler}
             />

@@ -139,11 +139,11 @@ export default function VehicleTypeModel({
             className={styles.stFormContainer}
             controlId="formVehicleType"
           >
-            <Form.Label>VehicleType</Form.Label>
+            <Form.Label>VehicleTypeName</Form.Label>
             <Form.Control
               type="text"
               name="vehicleTypeName"
-              placeholder="Enter VehicleType"
+              placeholder="Enter VehicleTypeName"
               value={newVehicleType?.vehicleTypeName}
               onChange={changeHandler}
             />
