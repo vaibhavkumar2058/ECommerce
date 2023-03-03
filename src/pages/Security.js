@@ -24,7 +24,7 @@ const MyExportCSV = (props) => {
   );
 };
 
-export default function Securitys() {
+export default function Securities() {
 
   const [securities, setSecurities] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -42,11 +42,9 @@ export default function Securitys() {
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [security, setSecurity] = useState({
-
     questionId:null,
     answerId:null,
     description:"",
- 
       });
 
   const [id, setId] = useState(null);
@@ -62,13 +60,13 @@ export default function Securitys() {
     addSecurity,
     updateSecurity,
     deleteSecurity,
-    getSecurity,
+    getSecurities,
     securityById,
   } = useFetchSecurity();
 
   const columns = [
 
-    { dataField: 'securityId', text: 'Security Id', sort: true},
+    { dataField: 'securityId', text: ' SecurityId', sort: true },
     { dataField: 'questionId', text: ' QuestionId', sort: true },
     { dataField: 'answerId', text: ' AnswerId', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
@@ -157,7 +155,7 @@ export default function Securitys() {
   });
 
   const getAllSecurities = async () => {
-    const response = await getSecurity();
+    const response = await getSecurities();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',

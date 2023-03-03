@@ -14,9 +14,17 @@ function App() {
   //let navigate = useNavigate();
   const [menu, setMenu] = useState(true);
   const hideMenu = JSON.parse(localStorage.getItem('hidemenu'));
-
   const Signout = () => {
+   
+    const resource = {
+      role: null,
+      loggedIn: false,
+    };
+    localStorage.setItem("loggedIn", JSON.stringify(resource))
     window.location.href = "/signin";
+  };
+  const MyProfile = () => {
+    window.location.href = "/myProfile";
   };
 
   useEffect(() => {
@@ -56,7 +64,7 @@ function App() {
             </span><span className="sidebar-text">AddressType </span></span></a></li>)}
             {(admin && <li className="nav-item active"><a href="country" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
             </span><span className="sidebar-text">Country </span></span></a></li>)}
-            {((admin || agent) && <li className="nav-item "><a href="product" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
+            {((admin || agent||dealer) && <li className="nav-item "><a href="product" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
             </span><span className="sidebar-text">Product </span></span></a></li>)}
 
             {((admin || agent || dealer || customer) && <li className="nav-item "><a href="order" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
@@ -67,6 +75,24 @@ function App() {
             </span><span className="sidebar-text">OrderPlacedList </span></span></a></li>)}
             
 
+             {(admin && <li className="nav-item "><a href="recordStatus" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
+             </span><span className="sidebar-text">RecordStatus </span></span></a></li>)}
+             {((admin||agent||dealer||customer) && <li className="nav-item"><a href="orderTracking" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
+             </span><span className="sidebar-text">OrderTracking </span></span></a></li>)}
+             {((admin||agent||dealer) && <li className="nav-item "><a href="invoice" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
+             </span><span className="sidebar-text">Invoice </span></span></a></li>)}
+             {(admin && <li className="nav-item active"><a href="GMT" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
+             </span><span className="sidebar-text">GMT </span></span></a></li>)}
+             {(admin && <li className="nav-item active"><a href="cart" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
+             </span><span className="sidebar-text">Cart </span></span></a></li>)}
+             {(admin && <li className="nav-item active"><a href="itemCost" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
+             </span><span className="sidebar-text">ItemCost </span></span></a></li>)}
+             {((admin||agent||dealer||customer)  && <li className="nav-item"><a href="order" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
+             </span><span className="sidebar-text">Order </span></span></a></li>)}
+             {(admin && <li className="nav-item active"><a href="measurementValue" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
+             </span><span className="sidebar-text">MeasurementValue </span></span></a></li>)}
+             {(admin && <li className="nav-item active"><a href="orderStatus" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
+             </span><span className="sidebar-text">OrderStatus </span></span></a></li>)}
             {(admin && <li className="nav-item "><a href="recordStatus" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
             </span><span className="sidebar-text">RecordStatus </span></span></a></li>)}
             {((admin || agent || dealer || customer) && <li className="nav-item"><a href="orderTracking" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
@@ -144,12 +170,18 @@ function App() {
                     </a></div>
                   </div>
                 </li>
+                <li className="nav-item dropdown"><a href="myProfile" className="nav-link text-dark myProfile-bell unread dropdown-toggle" data-unread-myProfile="true" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">MyProfile</a>
+                  <div className="dropdown-menu dropdown-menu-lg dropdown-menu-center mt-2 py-0">
+                    <div className="list-group list-group-flush"><a href="myProfile" className="text-center text-primary fw-bold border-bottom border-light py-3">MyProfile</a> <a href="calendar.html" className="list-group-item list-group-item-action border-bottom">
+                    </a></div>
+                  </div>
+                </li>
 
 
                 <ul className="navbar-nav align-items-center">
-                  <li className="nav-item dropdown"><a href="changePassword" className="nav-link text-dark changePassword-bell unread dropdown-toggle" data-unread-changePassword="true" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">ChangePassword</a>
+                  <li className="nav-item dropdown"><a href="resetPassword" className="nav-link text-dark resetPassword-bell unread dropdown-toggle" data-unread-resetPassword="true" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">ResetPassword</a>
                     <div className="dropdown-menu dropdown-menu-lg dropdown-menu-center mt-2 py-0">
-                      <div className="list-group list-group-flush"><a href="changePassword" className="text-center text-primary fw-bold border-bottom border-light py-3">ChangePassword</a> <a href="calendar.html" className="list-group-item list-group-item-action border-bottom">
+                      <div className="list-group list-group-flush"><a href="resetPassword" className="text-center text-primary fw-bold border-bottom border-light py-3">ResetPassword</a> <a href="calendar.html" className="list-group-item list-group-item-action border-bottom">
                       </a></div>
                     </div>
                   </li>

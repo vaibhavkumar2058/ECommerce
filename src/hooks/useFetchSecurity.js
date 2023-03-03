@@ -12,7 +12,7 @@ import {
     securityAction,
   } from "../actions/securityActions";
 
-  export default function useFetchSecuritys() {
+  export default function useFetchSecurities() {
     const dispatch = useDispatch();
   const hapyCarURL = "https://localhost:7062/security";
 
@@ -21,7 +21,7 @@ import {
   const ERROR = "Error";
 
   // Security GET  ACTIONS
-  const getSecuritys = () => {
+  const getSecurities = () => {
     dispatch(getSecurityBeginAction());
     return API.get(hapyCarURL,
       null,
@@ -92,7 +92,7 @@ import {
   const updateSecurity = (securityId, security) => {
 
     return API.put(`${hapyCarURL}/${securityId}`,
-      { data: security },
+      { data:security},
       { suppressErrors: [400] }
     )
       .then(({ data
@@ -191,7 +191,7 @@ import {
     addSecurity,
     updateSecurity,
     deleteSecurity,
-    getSecuritys,
+    getSecurities,
     securityById,
   };
 }
