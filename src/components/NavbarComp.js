@@ -48,6 +48,7 @@ import Signin from "../pages/PublicPages/Signin";
 import NotFound from "../pages/PublicPages/NotFound";
 import ForgotPassword from "../pages/PublicPages/ForgotPassword";
 import ResetPassword from "../pages/PublicPages/ResetPassword";
+import Successpage from "../pages/PublicPages/Successpage";
 
 const NavbarComp = () => {
   const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
@@ -101,7 +102,7 @@ const NavbarComp = () => {
           <Route exact path="/signin" element={<Signin />} />
           <Route path="/" element={<Navigate replace to="/login" />} />
           <Route exact path="/resetpassword" element={<ResetPassword/>} />
-        
+          <Route exact path="/successpage" element={<Successpage/>} />
           <Route exact path="/forgotpassword" element={<ForgotPassword/>} />
           <Route exact path="/*" element={<NotFound />} />
         </Routes>

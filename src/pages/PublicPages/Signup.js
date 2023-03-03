@@ -5,12 +5,68 @@ import { faAngleLeft, faEnvelope, faUnlockAlt } from "@fortawesome/free-solid-sv
 import { faFacebookF, faGithub, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { Col, Row, Form, Card, Button, FormCheck, Container, InputGroup } from '@themesberg/react-bootstrap';
 import { Link } from 'react-router-dom';
-
+import useFetchResources from "../../hooks/useFetchResources";
 import { Routes } from "../../routes";
 import BgImage from "../../assets/img/illustrations/signin.svg";
 
 
 export default () => {
+  const resource = {
+    role: { admin: true, agent: false, dealer: false, customer: false },
+    loggedIn: true,
+  };
+  const menu = {
+    hidden: !true,
+  };
+  localStorage.setItem("hidemenu", JSON.stringify(menu))
+  localStorage.setItem("loggedIn", JSON.stringify(resource))
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [message, setMessage] = useState("");
+
+  const {
+    addResources,
+  } = useFetchResources();
+
+  const [newSignup, setNewSignup] = useState({
+    firstName: "",
+    middleName: "",
+    lastName: "",
+    roleId:null,
+    genderId:null,
+    mobileNumber:null,
+    addressId:null,
+    bloodGroup: "",
+    email: "",
+    password: "",
+    isEmailVerified: true,
+    isMobileVerified: true,
+    recordStatusId:null,
+  });
+  const changeHandler = (e) => {
+    setNewLogin({
+      ...newLogin,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const navigate = useNavigate();
+  const saveHandler = async () => {
+    // setShowNavbar(!showNavbar)
+
+    const response = await addResources(newSignup);
+    if (response.payload.title == "Success") {
+      setError({ status: true, msg: "Login Success", type: 'success' })
+      navigate('/dashboard')
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'Un-Known Error Occured.'
+
+      })
+
+    }
+  };
   return (
     <main>
       <section className="d-flex align-items-center my-5 mt-lg-6 mb-lg-5">
