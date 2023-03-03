@@ -1,13 +1,9 @@
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import { useNavigate } from 'react-router-dom';
+
 
 function UncontrolledExample() {
-  const navigate =useNavigate();
-  const changeHandler = (e) => {
-    navigate('/signin')
-  };
-
+  
   return (
     <Tabs
       defaultActiveKey="profile"
@@ -15,7 +11,7 @@ function UncontrolledExample() {
       className="mb-3"
     >
       
-      <Tab eventKey="profile" title="Profile" onClick={changeHandler}>
+      <Tab eventKey="profile" title="Profile" >
       <div>Profile
       
       </div>

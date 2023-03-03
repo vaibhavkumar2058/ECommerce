@@ -49,6 +49,7 @@ import NotFound from "../pages/PublicPages/NotFound";
 import ForgotPassword from "../pages/PublicPages/ForgotPassword";
 import ResetPassword from "../pages/PublicPages/ResetPassword";
 import Successpage from "../pages/PublicPages/Successpage";
+import MyProfile from "../pages/MyProfile";
 
 const NavbarComp = () => {
   const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
