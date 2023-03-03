@@ -12,11 +12,6 @@ import {
 
 
 export default function Dashboard() {
-    const menu = {
-        hidden: !false,
-      };
-    
-      localStorage.setItem("hidemenu", JSON.stringify(menu))
     const [newGMT, setNewGMT] = useState({
         resourcesId: 6,
         longitude: 0,

@@ -28,6 +28,10 @@
   display: none;
 }
 
+.w-p-80 {
+  width: 80%!important;
+}
+
 .m-t-40 {
   margin-top: 40px;
 }

@@ -284,7 +284,7 @@ export default function ItemCosts() {
           <Modal
             show={show}
             onHide={handleClose}
-            backdrop="static"
+            dialogClassName="w-p-80"
             keyboard={false}
           >
             <Modal.Header closeButton>
