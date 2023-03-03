@@ -92,7 +92,7 @@ import {
   const updateSecurity = (securityId, security) => {
 
     return API.put(`${hapyCarURL}/${securityId}`,
-      { data: security },
+      { data:security},
       { suppressErrors: [400] }
     )
       .then(({ data

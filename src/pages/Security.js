@@ -42,11 +42,9 @@ export default function Securities() {
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [security, setSecurity] = useState({
-
     questionId:null,
     answerId:null,
     description:"",
- 
       });
 
   const [id, setId] = useState(null);
@@ -68,7 +66,7 @@ export default function Securities() {
 
   const columns = [
 
-   
+    { dataField: 'securityId', text: ' SecurityId', sort: true },
     { dataField: 'questionId', text: ' QuestionId', sort: true },
     { dataField: 'answerId', text: ' AnswerId', sort: true },
     { dataField: 'description', text: 'Description', sort: true },

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { css } from "@emotion/react";
-
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
@@ -50,7 +49,6 @@ export default function SecurityModel({
   
 
   const saveHandler = async () => {
-   
     if (isEdit) {
       const response = await onUpdateSecurity(id, newSecurity);
       if (response.payload.title == "Success") {
@@ -100,11 +98,12 @@ export default function SecurityModel({
       setNewSecurity(SecurityData);
     }
   }, []);
-
+  debugger;
   useEffect(() => {
     if (isEdit) {
       setButtonType("Update");
     }
+   
     const isEnable =
     !newSecurity?.questionId ||!newSecurity?.answerId || !newSecurity?.description;
     setSaveDisabled(isEnable);
