@@ -61,7 +61,7 @@ function App() {
             </span><span className="sidebar-text">AddressType </span></span></a></li>)}
             {(admin && <li className="nav-item active"><a href="country" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
             </span><span className="sidebar-text">Country </span></span></a></li>)}
-            {((admin || agent) && <li className="nav-item "><a href="product" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
+            {((admin || agent||dealer) && <li className="nav-item "><a href="product" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
             </span><span className="sidebar-text">Product </span></span></a></li>)}
 
             {((admin || agent || dealer || customer) && <li className="nav-item "><a href="order" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
@@ -71,7 +71,7 @@ function App() {
              </span><span className="sidebar-text">RecordStatus </span></span></a></li>)}
              {((admin||agent||dealer||customer) && <li className="nav-item"><a href="orderTracking" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
              </span><span className="sidebar-text">OrderTracking </span></span></a></li>)}
-             {(admin||agent && <li className="nav-item "><a href="invoice" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
+             {((admin||agent||dealer) && <li className="nav-item "><a href="invoice" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
              </span><span className="sidebar-text">Invoice </span></span></a></li>)}
              {(admin && <li className="nav-item active"><a href="GMT" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
              </span><span className="sidebar-text">GMT </span></span></a></li>)}
