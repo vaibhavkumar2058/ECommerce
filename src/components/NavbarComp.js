@@ -67,7 +67,7 @@ const NavbarComp = () => {
           {(admin && <Route exact path="/resources" element={<ProtectedRoute><Resources/></ProtectedRoute>}/>)}
           {((admin||agent||dealer||customer) && <Route exact path="/order" element={<ProtectedRoute><Order/></ProtectedRoute>}/>)}
           {(admin && <Route exact path="/itemCost" element={<ProtectedRoute><ItemCost/></ProtectedRoute>}/>)}
-          {((admin||agent||dealer||customer)  && <Route exact path="/cart" element={<ProtectedRoute><Cart/></ProtectedRoute>}/>)}
+          {((admin||agent||dealer)  && <Route exact path="/cart" element={<ProtectedRoute><Cart/></ProtectedRoute>}/>)}
           {(admin && <Route exact path="/GMT" element={<ProtectedRoute><GMT/></ProtectedRoute>}/>)}
           {((admin||agent) && <Route exact path="/invoice" element={<ProtectedRoute><Invoice/></ProtectedRoute>}/>)}
           {/* {(agent||admin  && <Route exact path="/orderItem" element={<ProtectedRoute><OrderItem/></ProtectedRoute>}/>)} */}
