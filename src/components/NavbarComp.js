@@ -107,5 +107,4 @@ const NavbarComp = () => {
     </Router>
   );
 };
-
 export default NavbarComp;
