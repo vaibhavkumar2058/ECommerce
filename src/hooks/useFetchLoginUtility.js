@@ -11,7 +11,7 @@ import {
 export default function useFetchLogins() {
   const dispatch = useDispatch();
   const changePasswordURL = "https://localhost:7062/changepassword";
-  const forgotPasswordURL = "https://localhost:7062/forgotPassword?emails=jarks.d4%40outlook.com";
+  const forgotPasswordURL = "https://localhost:7062/forgotPassword?emails=";
   const loginURL = "https://localhost:7062/login";
   const API = useAPI();
   const SUCCESS = "Success";
@@ -20,8 +20,8 @@ export default function useFetchLogins() {
   // Login GET  ACTIONS
   const forgotPassword = (email) => {
     dispatch(getLoginBeginAction());
-    return API.get(`${forgotPasswordURL}`,
-      
+    return API.get(`${forgotPasswordURL}${email}`,
+      null,
       { suppressErrors: [400] }
     )
       .then(({ data }) =>

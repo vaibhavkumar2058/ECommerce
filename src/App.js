@@ -14,8 +14,13 @@ function App() {
   //let navigate = useNavigate();
   const [menu, setMenu] = useState(true);
   const hideMenu = JSON.parse(localStorage.getItem('hidemenu'));
-
   const Signout = () => {
+   
+    const resource = {
+      role: null,
+      loggedIn: false,
+    };
+    localStorage.setItem("loggedIn", JSON.stringify(resource))
     window.location.href = "/signin";
   };
 

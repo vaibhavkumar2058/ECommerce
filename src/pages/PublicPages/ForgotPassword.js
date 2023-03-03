@@ -29,7 +29,7 @@ export default () => {
   });
   const saveHandler = async () => {
    debugger;
-    const response = await forgotPassword(newReset);
+    const response = await forgotPassword(newReset.email);
     if (response.payload.title == "Success") {
       alert("success")
     }
