@@ -63,6 +63,7 @@ const NavbarComp = () => {
     <Router>
       <div>
         <Routes>
+        
           {(admin && <Route exact path="/role" element={<ProtectedRoute><Role /></ProtectedRoute>} />)}
           {(admin && <Route exact path="/state" element={<ProtectedRoute><State /></ProtectedRoute>} />)}
           {(admin && <Route exact path="/vehicleType" element={<ProtectedRoute><VehicleType /></ProtectedRoute>} />)}
@@ -86,6 +87,9 @@ const NavbarComp = () => {
           {(admin && <Route exact path="/measurementValue" element={<ProtectedRoute><MeasurementValue/></ProtectedRoute>}/>)}
           {(admin && <Route exact path="/orderStatus" element={<ProtectedRoute><OrderStatus/></ProtectedRoute>}/>)}
           {(admin && <Route exact path="/productAttachments" element={<ProtectedRoute><ProductAttachments/></ProtectedRoute>}/>)}
+          {(admin||agent||dealer||customer && <Route exact path="/orderPlacedList" element={<ProtectedRoute><OrderPlacedList/></ProtectedRoute>}/>)}
+          {(admin||agent||dealer||customer && <Route exact path="/itemList" element={<ProtectedRoute><ItemList/></ProtectedRoute>}/>)}
+
           <Route exact path="/file" element={<File />} />
           <Route exact path="/security" element={<Security />} />
           <Route exact path="/gender" element={<Gender />} />
@@ -112,5 +116,4 @@ const NavbarComp = () => {
     </Router>
   );
 };
-
 export default NavbarComp;

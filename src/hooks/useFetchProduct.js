@@ -186,7 +186,7 @@ import {
 
   };
 
-  // Order GET  ACTIONS
+  // Product GET  ACTIONS
   const productSalesList = () => {
     dispatch(getProductBeginAction());
     return API.get(productSalesListURL,
