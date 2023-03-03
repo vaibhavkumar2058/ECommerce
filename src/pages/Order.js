@@ -25,7 +25,12 @@ const MyExportCSV = (props) => {
 };
 
 export default function Orders() {
-  
+  const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
+  const admin=userInfo?.role?.admin;
+  const agent=userInfo?.role?.agent;
+  const dealer=userInfo?.role?.dealer;
+  const customer=userInfo?.role?.customer;
+
 
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -97,12 +102,13 @@ export default function Orders() {
               onClick={() => handleEdit(row.orderId, row)}
             >
               Edit
-            </button><button
+            </button>
+            { admin && <button
               className="btn btn-danger btn-xs"
               onClick={() => handleDelete(row.orderId, row.name)}
             >
               Delete
-            </button></>
+            </button>}</>
         );
       },
     },

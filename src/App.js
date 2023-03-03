@@ -10,13 +10,18 @@ import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 //import 'semantic-ui-css/semantic.min.css'
 
-
 function App() {
+  //let navigate = useNavigate();
   const [menu, setMenu] = useState(true);
   const hideMenu = JSON.parse(localStorage.getItem('hidemenu'));
+
+  const Signout = () => {
+    window.location.href = "/signin";
+  };
+
   useEffect(() => {
     setMenu(hideMenu?.hidden);
-}, [menu]);
+  }, [menu]);
 
   const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
   const admin = userInfo?.role?.admin;
@@ -29,7 +34,7 @@ function App() {
       <nav className="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none"><a className="navbar-brand me-lg-5" href="https://demo.themesberg.com/volt-pro/index.html"><img src="http://manthrasoaps.co.in/image/catalog/logo.png" height="50" width="150" alt="Manthra Soaps"></img></a>
         <div className="d-flex align-items-center"><button className="navbar-toggler d-lg-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation"><span className="navbar-toggler-icon" /></button></div>
       </nav>
-     {(menu && <nav id="sidebarMenu" className="sidebar d-lg-block bg-gray-800 text-white collapse" data-simplebar>
+      {(menu && <nav id="sidebarMenu" className="sidebar d-lg-block bg-gray-800 text-white collapse" data-simplebar>
         <div className="sidebar-inner px-4 pt-3">
           <div className="user-card d-flex d-md-none justify-content-between justify-content-md-center pb-4">
             <div className="d-flex align-items-center">
@@ -45,40 +50,48 @@ function App() {
               <img src="http://manthrasoaps.co.in/image/catalog/logo.png" height={50} width={150} alt="Volt Logo">
               </img></span></a></li>
 
-             {(admin && <li className="nav-item active"><a href="dashboard" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
-             </span><span className="sidebar-text">Dashboard </span></span></a></li>)}
-             {(admin && <li className="nav-item active"><a href="addressType" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
-             </span><span className="sidebar-text">AddressType </span></span></a></li>)}
-             {(admin && <li className="nav-item active"><a href="country" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
-             </span><span className="sidebar-text">Country </span></span></a></li>)}
-             {(admin && <li className="nav-item active"><a href="product" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
-             </span><span className="sidebar-text">Product </span></span></a></li>)}
-             {((admin||agent||dealer) && <li className="nav-item active"><a href="recordStatus" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
-             </span><span className="sidebar-text">RecordStatus </span></span></a></li>)}
-             {((admin||agent||dealer||customer) && <li className="nav-item active"><a href="orderTracking" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
-             </span><span className="sidebar-text">OrderTracking </span></span></a></li>)}
-             {(admin && <li className="nav-item active"><a href="invoice" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
-             </span><span className="sidebar-text">Invoice </span></span></a></li>)}
-             {(admin && <li className="nav-item active"><a href="GMT" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
-             </span><span className="sidebar-text">GMT </span></span></a></li>)}
-             {((admin||agent||dealer||customer) && <li className="nav-item active"><a href="cart" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
-             </span><span className="sidebar-text">Cart </span></span></a></li>)}
-             {(admin && <li className="nav-item active"><a href="itemCost" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
-             </span><span className="sidebar-text">ItemCost </span></span></a></li>)}
-             {((admin||agent||dealer||customer)  && <li className="nav-item active"><a href="order" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
-             </span><span className="sidebar-text">Order </span></span></a></li>)}
-             {(admin && <li className="nav-item active"><a href="measurementValue" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
-             </span><span className="sidebar-text">MeasurementValue </span></span></a></li>)}
-             {(admin && <li className="nav-item active"><a href="orderStatus" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
-             </span><span className="sidebar-text">OrderStatus </span></span></a></li>)}
-             {(admin && <li className="nav-item active"><a href="role" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
-             </span><span className="sidebar-text">Role </span></span></a></li>)}
-             {(admin && <li className="nav-item active"><a href="state" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
-             </span><span className="sidebar-text">State </span></span></a></li>)}
-             {(admin && <li className="nav-item active"><a href="vehicleType" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
-             </span><span className="sidebar-text">VehicleType </span></span></a></li>)}
-             {((admin||agent||dealer) &&<li className="nav-item active"><a href="resources" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
-             </span><span className="sidebar-text">Resources </span></span></a></li>)}
+            {(admin && <li className="nav-item active"><a href="dashboard" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
+            </span><span className="sidebar-text">Dashboard </span></span></a></li>)}
+            {(admin && <li className="nav-item active"><a href="addressType" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
+            </span><span className="sidebar-text">AddressType </span></span></a></li>)}
+            {(admin && <li className="nav-item active"><a href="country" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
+            </span><span className="sidebar-text">Country </span></span></a></li>)}
+            {((admin || agent) && <li className="nav-item "><a href="product" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
+            </span><span className="sidebar-text">Product </span></span></a></li>)}
+
+            {((admin || agent || dealer || customer) && <li className="nav-item "><a href="order" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
+            </span><span className="sidebar-text">Order </span></span></a></li>)}
+
+            {(admin && <li className="nav-item "><a href="recordStatus" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
+            </span><span className="sidebar-text">RecordStatus </span></span></a></li>)}
+            {((admin || agent || dealer || customer) && <li className="nav-item"><a href="orderTracking" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
+            </span><span className="sidebar-text">OrderTracking </span></span></a></li>)}
+            {(admin || agent && <li className="nav-item "><a href="invoice" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
+            </span><span className="sidebar-text">Invoice </span></span></a></li>)}
+            {(admin && <li className="nav-item active"><a href="GMT" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
+            </span><span className="sidebar-text">GMT </span></span></a></li>)}
+            {(admin && <li className="nav-item active"><a href="cart" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
+            </span><span className="sidebar-text">Cart </span></span></a></li>)}
+            {(admin && <li className="nav-item active"><a href="itemCost" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
+            </span><span className="sidebar-text">ItemCost </span></span></a></li>)}
+            {((admin || agent || dealer || customer) && <li className="nav-item active"><a href="order" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
+            </span><span className="sidebar-text">Order </span></span></a></li>)}
+            {(admin && <li className="nav-item active"><a href="measurementValue" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
+            </span><span className="sidebar-text">MeasurementValue </span></span></a></li>)}
+            {(admin && <li className="nav-item active"><a href="orderStatus" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
+            </span><span className="sidebar-text">OrderStatus </span></span></a></li>)}
+
+            {(admin && <li className="nav-item active"><a href="role" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
+            </span><span className="sidebar-text">Role </span></span></a></li>)}
+
+            {(admin && <li className="nav-item active"><a href="state" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
+            </span><span className="sidebar-text">State </span></span></a></li>)}
+
+            {(admin && <li className="nav-item active"><a href="vehicleType" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
+            </span><span className="sidebar-text">VehicleType </span></span></a></li>)}
+
+            {(admin && <li className="nav-item active"><a href="resources" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
+            </span><span className="sidebar-text">Resources </span></span></a></li>)}
 
 
             {(admin && <li className="nav-item active"><a href="orderStatus" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
@@ -89,7 +102,7 @@ function App() {
             </span><span className="sidebar-text">State </span></span></a></li>)}
             {(admin && <li className="nav-item active"><a href="vehicleType" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
             </span><span className="sidebar-text">VehicleType </span></span></a></li>)}
-            {(admin  && <li className="nav-item active"><a href="resources" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
+            {(admin && <li className="nav-item active"><a href="resources" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
             </span><span className="sidebar-text">Resources </span></span></a></li>)}
 
 
@@ -133,10 +146,10 @@ function App() {
                 </li>
                 <li className="nav-item dropdown">
                   <Button variant="secondary"
-                  onClick={Signout}>
-                  Signout
-                </Button>
-      
+                    onClick={Signout}>
+                    Signout
+                  </Button>
+
                 </li>
                 <li className="nav-item dropdown"><a href="signin" className="nav-link text-dark signin-bell unread dropdown-toggle" data-unread-signin="true" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">Signin</a>
                   <div className="dropdown-menu dropdown-menu-lg dropdown-menu-center mt-2 py-0">
@@ -154,25 +167,23 @@ function App() {
                     </div>
                   </li>
                 </ul>
-
-
-
-
                 <ul className="navbar-nav align-items-center">
                   <li className="nav-item dropdown"><a href="cart" className="https://th.bing.com/th/id/OIP.M31hF2VEksZBMHT1DCpkmgHaHa?w=176&h=180&c=7&r=0&o=5&pid=1.7" data-unread-cart="true" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">Cart</a>
                     <div className="dropdown-menu dropdown-menu-lg dropdown-menu-center mt-2 py-0">
-                      <div className="list-group list-group-flush"><a href="cart" className="text-center text-primary fw-bold border-bottom border-light py-3">Cart</a> <a href="calendar.html" className="list-group-item list-group-item-action border-bottom">
-
-                      </a></div>
+                      <div className="list-group list-group-flush"><a href="cart" className="text-center text-primary fw-bold border-bottom border-light py-3">Cart</a>
+                      </div>
                     </div>
                   </li>
                 </ul>
                 <li className="nav-item dropdown ms-lg-3"><a className="nav-link dropdown-toggle pt-1 px-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  <div className="media d-flex align-items-center"><img className="avatar rounded-circle" alt="Image placeholder" src="base64" />
+                  <div className="media d-flex align-items-center">
                     <div className="media-body ms-2 text-dark align-items-center d-none d-lg-block"><span className="mb-0 font-small fw-bold text-gray-900">Bonnie Green</span></div>
                   </div>
                 </a>
-                  <div className="dropdown-menu dashboard-dropdown dropdown-menu-end mt-2 py-1"><a className="dropdown-item d-flex align-items-center" href="#"> My Profile </a><a className="dropdown-item d-flex align-items-center" href="#"> Settings </a><a className="dropdown-item d-flex align-items-center" href="#"> Messages </a>
+                  <div className="dropdown-menu dashboard-dropdown dropdown-menu-end mt-2 py-1">
+                    <a className="dropdown-item d-flex align-items-center" href="#"> My Profile </a>
+                    <a className="dropdown-item d-flex align-items-center" href="#"> Settings </a>
+                    <a className="dropdown-item d-flex align-items-center" href="#"> Messages </a>
                     <a className="dropdown-item d-flex align-items-center" href="#"> Support</a>
                     <div role="separator" className="dropdown-divider my-1" />
                     <a className="dropdown-item d-flex align-items-center" href="#">
