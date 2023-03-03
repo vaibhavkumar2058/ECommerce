@@ -46,17 +46,15 @@ import Tax from "../pages/Tax";
 import ProtectedRoute from "../pages/ProtectedRoute";
 import Signin from "../pages/PublicPages/Signin";
 import NotFound from "../pages/PublicPages/NotFound";
-import ChangePassword from "../pages/ChangePassword";
-import ResetPassword from "../pages/Resetpassword";
-import Login from "../pages/Login";
-
+import ForgotPassword from "../pages/PublicPages/ForgotPassword";
+import ResetPassword from "../pages/PublicPages/ResetPassword";
 const NavbarComp = () => {
   const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
   const admin=userInfo?.role?.admin;
   const agent=userInfo?.role?.agent;
   const dealer=userInfo?.role?.dealer;
   const customer=userInfo?.role?.customer;
-  debugger;
+
 
   return (
     <Router>
@@ -65,7 +63,7 @@ const NavbarComp = () => {
           {(admin && <Route exact path="/role" element={<ProtectedRoute><Role /></ProtectedRoute>} />)}
           {(admin && <Route exact path="/state" element={<ProtectedRoute><State /></ProtectedRoute>} />)}
           {(admin && <Route exact path="/vehicleType" element={<ProtectedRoute><VehicleType /></ProtectedRoute>} />)}
-          {((admin||agent||dealer) && <Route exact path="/resources" element={<ProtectedRoute><Resources/></ProtectedRoute>}/>)}
+          {(admin && <Route exact path="/resources" element={<ProtectedRoute><Resources/></ProtectedRoute>}/>)}
           {((admin||agent||dealer||customer) && <Route exact path="/order" element={<ProtectedRoute><Order/></ProtectedRoute>}/>)}
           {(admin && <Route exact path="/itemCost" element={<ProtectedRoute><ItemCost/></ProtectedRoute>}/>)}
           {((admin||agent||dealer)  && <Route exact path="/cart" element={<ProtectedRoute><Cart/></ProtectedRoute>}/>)}
@@ -85,11 +83,6 @@ const NavbarComp = () => {
           {(admin && <Route exact path="/measurementValue" element={<ProtectedRoute><MeasurementValue/></ProtectedRoute>}/>)}
           {(admin && <Route exact path="/orderStatus" element={<ProtectedRoute><OrderStatus/></ProtectedRoute>}/>)}
           {(admin && <Route exact path="/productAttachments" element={<ProtectedRoute><ProductAttachments/></ProtectedRoute>}/>)}
-
-
-
-          
-      
           <Route exact path="/file" element={<File />} />
           <Route exact path="/security" element={<Security />} />
           <Route exact path="/gender" element={<Gender />} />
@@ -104,12 +97,10 @@ const NavbarComp = () => {
           <Route exact path="/map" element={<ZMap />} />
           {(admin && <Route exact path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>}/>)}
           <Route path="/" element={<Navigate replace to="/dashboard" />} />
-          <Route exact path="/changepassword" element={<ChangePassword />} />
           <Route exact path="/signin" element={<Signin />} />
           <Route path="/" element={<Navigate replace to="/login" />} />
-          <Route exact path="/changepassword" element={<ChangePassword/>} />
           <Route exact path="/resetpassword" element={<ResetPassword/>} />
-          <Route exact path="/login" element={<Login/>}/>
+          <Route exact path="/forgotpassword" element={<ForgotPassword/>} />
           <Route exact path="/*" element={<NotFound />} />
         </Routes>
       </div>

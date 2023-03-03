@@ -4,6 +4,11 @@ import { Col, Row, Card, Image, Button, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 export default () => {
+  const menu = {
+    hidden: !true,
+  };
+
+  localStorage.setItem("hidemenu", JSON.stringify(menu))
   return (
     <main>
       <section className="vh-100 d-flex align-items-center justify-content-center">

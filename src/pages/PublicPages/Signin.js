@@ -1,20 +1,64 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Col, Row, Form, Card, Button, FormCheck, Container, InputGroup } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import useFetchLogins from "../../hooks/useFetchLoginUtility";
 
 
 export default () => {
   const resource = {
-    role: { admin: true, agent: false ,dealer:false,customer:false},
+    role: { admin: true, agent: false, dealer: false, customer: false },
     loggedIn: true,
   };
-  // Login Failed Scenario
-  // const resource = {
-  //   role: null,
-  //   loggedIn: false,
-  // };
+  const menu = {
+    hidden: !true,
+  };
+  localStorage.setItem("hidemenu", JSON.stringify(menu))
   localStorage.setItem("loggedIn", JSON.stringify(resource))
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [message, setMessage] = useState("");
+
+  const navigate = useNavigate();
+  const {
+    login,
+  } = useFetchLogins();
+
+  const [newLogin, setNewLogin] = useState({
+    email: "",
+    password: "",
+  });
+  const [messageStatus, setMessageStatus] = useState({
+    mode: "",
+    title: "",
+    status: false,
+    message: "",
+  });
+  const changeHandler = (e) => {
+    setNewLogin({
+      ...newLogin,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const saveHandler = async () => {
+    // setShowNavbar(!showNavbar)
+
+    const response = await login(newLogin);
+    if (response.payload.title == "Success") {
+      setError({ status: true, msg: "Login Success", type: 'success' })
+      navigate('/dashboard')
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'Un-Known Error Occured.'
+
+      })
+
+    }
+  };
+
   return (
     <main>
       <section className="d-flex align-items-center my-5 mt-lg-6 mb-lg-5">
@@ -33,7 +77,13 @@ export default () => {
                     <InputGroup>
                       <InputGroup.Text>
                       </InputGroup.Text>
-                      <Form.Control autoFocus required type="email" placeholder="example@company.com" />
+                      <Form.Control
+                        type="text"
+                        name="email"
+                        placeholder="email"
+                        value={newLogin?.email}
+                        onChange={changeHandler}
+                      />
                     </InputGroup>
                   </Form.Group>
                   <Form.Group>
@@ -41,9 +91,14 @@ export default () => {
                       <Form.Label>Your Password</Form.Label>
                       <InputGroup>
                         <InputGroup.Text>
-
                         </InputGroup.Text>
-                        <Form.Control required type="password" placeholder="Password" />
+                        <Form.Control
+                          type="password"
+                          name="password"
+                          placeholder="password"
+                          value={newLogin?.password}
+                          onChange={changeHandler}
+                        />
                       </InputGroup>
                     </Form.Group>
                     <div className="d-flex justify-content-between align-items-center mb-4">
@@ -54,9 +109,11 @@ export default () => {
                       <Card.Link className="small text-end">Lost password?</Card.Link>
                     </div>
                   </Form.Group>
-                  <Button variant="primary" type="submit" className="w-100">
-                    Sign in
-                  </Button>
+                  <div>
+                    <Button variant="primary" onClick={saveHandler}>
+                      SignIn
+                    </Button>
+                  </div>
                 </Form>
 
                 <div className="mt-3 mb-4 text-center">
