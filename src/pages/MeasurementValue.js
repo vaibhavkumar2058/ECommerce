@@ -44,6 +44,7 @@ export default function MeasurementValues() {
   const [measurementValue, setMeasurementValue] = useState({
     value: "",
     description:"",
+    RecordStatusId:"1",
       });
 
   const [id, setId] = useState(null);

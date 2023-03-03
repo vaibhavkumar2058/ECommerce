@@ -12,7 +12,7 @@ import {
     addressAction,
   } from "../actions/addressActions";
 
-  export default function useFetchAddresss() {
+  export default function useFetchAddresses() {
     const dispatch = useDispatch();
   const hapyCarURL = "https://localhost:7062/address";
 
