@@ -26,6 +26,12 @@ const MyExportCSV = (props) => {
 };
 
 export default function Products() {
+  const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
+  const admin=userInfo?.role?.admin;
+  const agent=userInfo?.role?.agent;
+  const dealer=userInfo?.role?.dealer;
+  const customer=userInfo?.role?.customer;
+
 
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState();
@@ -116,17 +122,19 @@ export default function Products() {
           >
             View
           </button>
-            <button
+            { admin && <button
               className="btn btn-primary btn-xs"
               onClick={() => handleEdit(row.productId, row)}
             >
               Edit
-            </button><button
+            </button>}
+            { admin && <button
               className="btn btn-danger btn-xs"
               onClick={() => handleDelete(row.productId, row)}
             >
               Delete
-            </button></>
+            </button>}
+            </>
         );
       },
     },
