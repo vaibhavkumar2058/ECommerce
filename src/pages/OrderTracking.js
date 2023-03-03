@@ -24,9 +24,6 @@ const MyExportCSV = (props) => {
   );
 };
 
-<<<<<<< HEAD
-export default function OrderTrackinges() {
-=======
 export default function OrderTracking() {
   const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
   const admin=userInfo?.role?.admin;
@@ -34,7 +31,6 @@ export default function OrderTracking() {
   const dealer=userInfo?.role?.dealer;
   const customer=userInfo?.role?.customer;
 
->>>>>>> 8835af59f5b1e4b83a81a5e6d2a2c026e3f3b649
 
   const [orderTrackinges, setOrderTrackinges] = useState([]);
   const [loading, setLoading] = useState(true);

@@ -83,14 +83,6 @@ const NavbarComp = () => {
           {(admin && <Route exact path="/measurementValue" element={<ProtectedRoute><MeasurementValue/></ProtectedRoute>}/>)}
           {(admin && <Route exact path="/orderStatus" element={<ProtectedRoute><OrderStatus/></ProtectedRoute>}/>)}
           {(admin && <Route exact path="/productAttachments" element={<ProtectedRoute><ProductAttachments/></ProtectedRoute>}/>)}
-<<<<<<< HEAD
-
-
-
-          
-          
-=======
->>>>>>> 8835af59f5b1e4b83a81a5e6d2a2c026e3f3b649
           <Route exact path="/file" element={<File />} />
           <Route exact path="/security" element={<Security />} />
           <Route exact path="/gender" element={<Gender />} />
