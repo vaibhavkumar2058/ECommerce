@@ -61,6 +61,11 @@ function App() {
 
             {((admin || agent || dealer || customer) && <li className="nav-item "><a href="order" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
             </span><span className="sidebar-text">Order </span></span></a></li>)}
+            {((admin || agent || dealer || customer) && <li className="nav-item "><a href="itemList" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
+            </span><span className="sidebar-text">ItemList </span></span></a></li>)}
+            {((admin || agent || dealer || customer) && <li className="nav-item "><a href="orderPlacedList" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
+            </span><span className="sidebar-text">OrderPlacedList </span></span></a></li>)}
+            
 
             {(admin && <li className="nav-item "><a href="recordStatus" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
             </span><span className="sidebar-text">RecordStatus </span></span></a></li>)}
@@ -70,7 +75,7 @@ function App() {
             </span><span className="sidebar-text">Invoice </span></span></a></li>)}
             {(admin && <li className="nav-item active"><a href="GMT" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
             </span><span className="sidebar-text">GMT </span></span></a></li>)}
-            {(admin && <li className="nav-item active"><a href="cart" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
+            {(admin||agent||dealer||customer && <li className="nav-item active"><a href="cart" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
             </span><span className="sidebar-text">Cart </span></span></a></li>)}
             {(admin && <li className="nav-item active"><a href="itemCost" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
             </span><span className="sidebar-text">ItemCost </span></span></a></li>)}
