@@ -14,8 +14,13 @@ function App() {
   //let navigate = useNavigate();
   const [menu, setMenu] = useState(true);
   const hideMenu = JSON.parse(localStorage.getItem('hidemenu'));
-
   const Signout = () => {
+   
+    const resource = {
+      role: null,
+      loggedIn: false,
+    };
+    localStorage.setItem("loggedIn", JSON.stringify(resource))
     window.location.href = "/signin";
   };
   const MyProfile = () => {
@@ -59,12 +64,30 @@ function App() {
             </span><span className="sidebar-text">AddressType </span></span></a></li>)}
             {(admin && <li className="nav-item active"><a href="country" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
             </span><span className="sidebar-text">Country </span></span></a></li>)}
-            {((admin || agent) && <li className="nav-item "><a href="product" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
+            {((admin || agent||dealer) && <li className="nav-item "><a href="product" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
             </span><span className="sidebar-text">Product </span></span></a></li>)}
 
             {((admin || agent || dealer || customer) && <li className="nav-item "><a href="order" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
             </span><span className="sidebar-text">Order </span></span></a></li>)}
 
+             {(admin && <li className="nav-item "><a href="recordStatus" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
+             </span><span className="sidebar-text">RecordStatus </span></span></a></li>)}
+             {((admin||agent||dealer||customer) && <li className="nav-item"><a href="orderTracking" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
+             </span><span className="sidebar-text">OrderTracking </span></span></a></li>)}
+             {((admin||agent||dealer) && <li className="nav-item "><a href="invoice" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
+             </span><span className="sidebar-text">Invoice </span></span></a></li>)}
+             {(admin && <li className="nav-item active"><a href="GMT" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
+             </span><span className="sidebar-text">GMT </span></span></a></li>)}
+             {(admin && <li className="nav-item active"><a href="cart" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
+             </span><span className="sidebar-text">Cart </span></span></a></li>)}
+             {(admin && <li className="nav-item active"><a href="itemCost" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
+             </span><span className="sidebar-text">ItemCost </span></span></a></li>)}
+             {((admin||agent||dealer||customer)  && <li className="nav-item"><a href="order" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
+             </span><span className="sidebar-text">Order </span></span></a></li>)}
+             {(admin && <li className="nav-item active"><a href="measurementValue" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
+             </span><span className="sidebar-text">MeasurementValue </span></span></a></li>)}
+             {(admin && <li className="nav-item active"><a href="orderStatus" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
+             </span><span className="sidebar-text">OrderStatus </span></span></a></li>)}
             {(admin && <li className="nav-item "><a href="recordStatus" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
             </span><span className="sidebar-text">RecordStatus </span></span></a></li>)}
             {((admin || agent || dealer || customer) && <li className="nav-item"><a href="orderTracking" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">

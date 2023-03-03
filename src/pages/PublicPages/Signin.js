@@ -7,7 +7,7 @@ import useFetchLogins from "../../hooks/useFetchLoginUtility";
 
 export default () => {
   const resource = {
-    role: { admin: true, agent: false, dealer: false, customer: false },
+    role: { admin: false, agent: false, dealer: true, customer: false },
     loggedIn: true,
   };
   const menu = {

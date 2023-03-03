@@ -13,7 +13,7 @@ export default () => {
   } = useFetchLogins();
 
   const [newPassword, setNewPassword] = useState({
-    resourcesId: null,
+    resourcesId: 6,
     oldPassword: "",
     newPassword: "",
     newConfirmPassword: "",
@@ -61,19 +61,7 @@ export default () => {
               <div className="bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
                 <h3 className="mb-4">Reset password</h3>
                 <Form>
-                  <Form.Group id="resourcesId" className="mb-4">
-                    <Form.Label>ResourcesId</Form.Label>
-                    <InputGroup>
-
-                      <Form.Control
-                        type="text"
-                        name="resourcesId"
-                        placeholder="resourcesId"
-                        value={newPassword?.resourcesId}
-                        onChange={changeHandler}
-                      />
-                    </InputGroup>
-                  </Form.Group>
+          
                   <Form.Group id="oldPassword" className="mb-4">
                     <Form.Label>oldPassword</Form.Label>
                     <InputGroup>

@@ -65,7 +65,7 @@ export default function VehicleType() {
 
   const columns = [
 
-    { dataField: 'vehicleTypeId', text: ' vehicleTypeId', sort: true, hidden: true},
+    { dataField: 'vehicleTypeId', text: ' VehicleTypeId', sort: true, hidden: true},
     { dataField: 'vehicleTypeName', text: ' VehicleTypeName', sort: true  },
     { dataField: 'description', text: 'Description', sort: true },
    
@@ -107,7 +107,7 @@ export default function VehicleType() {
 
   const defaultSorted = [{
     dataField: 'vehicleTypeId',
-    order: 'desc'
+    order: 'description'
   }];
 
 
