@@ -64,7 +64,8 @@ const NavbarComp = () => {
     <Router>
       <div>
         <Routes>      
-          {(admin && <Route exact path="/role" element={<ProtectedRoute><Sidebar/> <Role /></ProtectedRoute>} />)}
+          {(admin && <Route exact path="/role" element={<ProtectedRoute>]
+             <Role /></ProtectedRoute>} />)}
           {(admin && <Route exact path="/state" element={<ProtectedRoute><State /></ProtectedRoute>} />)}
           {(admin && <Route exact path="/vehicleType" element={<ProtectedRoute><VehicleType /></ProtectedRoute>} />)}
           {(admin && <Route exact path="/resources" element={<ProtectedRoute><Resources/></ProtectedRoute>}/>)}
@@ -102,12 +103,12 @@ const NavbarComp = () => {
           <Route exact path="/map" element={<ZMap />} />
           {(admin && <Route exact path="/dashboard" element={<ProtectedRoute><Sidebar/><Dashboard /></ProtectedRoute>}/>)}
           <Route path="/" element={<Navigate replace to="/dashboard" />} />
-          <Route exact path="/signin" element={<Signin />} />
-          <Route path="/" element={<Navigate replace to="/login" />} />
-          <Route exact path="/resetpassword" element={<ResetPassword/>} />
-          <Route exact path="/successpage" element={<Successpage/>} />
-          <Route exact path="/forgotpassword" element={<ForgotPassword/>} />
           <Route exact path="/myProfile" element={<MyProfile />} />
+          
+          <Route exact path="/signin" element={<Signin />} />
+          <Route path="/" element={<Navigate replace to="/signin" />} />
+          <Route exact path="/resetpassword" element={<ResetPassword/>} />
+          <Route exact path="/forgotpassword" element={<ForgotPassword/>} />
           <Route exact path="/*" element={<NotFound />} />
         </Routes>
       </div>
