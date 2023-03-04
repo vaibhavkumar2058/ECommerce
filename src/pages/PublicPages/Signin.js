@@ -6,18 +6,6 @@ import useFetchLogins from "../../hooks/useFetchLoginUtility";
 
 
 export default () => {
-<<<<<<< HEAD
-  const resource = {
-    role: { admin: true, agent: false, dealer: false, customer: false },
-    loggedIn: true,
-  };
-  const menu = {
-    hidden: !true,
-  };
-  localStorage.setItem("hidemenu", JSON.stringify(menu))
-  localStorage.setItem("loggedIn", JSON.stringify(resource))
-=======
->>>>>>> c32d16992ef84de6c4198bd9e12e96449606f2a6
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState("");
