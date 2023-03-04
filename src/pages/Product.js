@@ -96,8 +96,7 @@ export default function Products() {
       },
     },
     {
-      dataField: 'productName',
-      headerStyle: () => {
+      dataField: 'productName',headerStyle: () => {
         return { width: "100px" };
       }, text: ' Category', sort: true
     },
@@ -110,7 +109,7 @@ export default function Products() {
     // columns follow dataField and text structure
     {
       dataField: "Actions",
-      text: "Actions",
+      // text: "Actions",
       headerStyle: () => {
         return { width: "80px" };
       },

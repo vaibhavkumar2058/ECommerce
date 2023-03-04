@@ -51,6 +51,7 @@ export default function Resourcess() {
     lastName: "",
     roleId:null,
     genderId:null,
+    filesId:null,
     mobileNumber:null,
     addressId:null,
     bloodGroup: "",
@@ -89,6 +90,9 @@ export default function Resourcess() {
   const columns = [
 
     { dataField: 'resourcesId', text: 'resourcesId', sort: true, hidden: true },
+    { dataField: 'filesId', text: 'FilesId', sort: true,headerStyle: () => {
+      return { width: "60px" };
+    }, },
     {
       dataField: "resourcesImage",
       text: "Photo",
@@ -128,7 +132,7 @@ export default function Resourcess() {
     // columns follow dataField and text structure
     {
       dataField: "Actions",
-      text: "Actions",
+      // text: "Actions",
       headerStyle: () => {
         return { width: "80px" };
       },

@@ -102,7 +102,7 @@ Geocode.fromLatLng(newGMT.latitude, newGMT.longitude).then(
     // columns follow dataField and text structure
     {
       dataField: "Actions",
-      text: "Actions",
+      // text: "Actions",
       formatter: (cellContent, row) => {
         return (
           <><button

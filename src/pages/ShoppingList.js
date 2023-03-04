@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import useFetchCart from "../hooks/useFetchCart";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate } from "react-router-dom";
+
 
 export default function ShoppingList() {
   const [carts, setCarts] = useState([]);
@@ -15,6 +17,9 @@ export default function ShoppingList() {
     description: "",
     recordStatusId: null,
   });
+  const Placetoorder = () => {
+    window.location.href = "/orderSummaryList";
+  }
 
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
@@ -24,19 +29,19 @@ export default function ShoppingList() {
   });
 
   const {
-    getCarts,
+    getCartListByResourcesId,
   } = useFetchCart();
 
   useEffect(() => {
     if (carts.length == 0) {
-      getAllCarts();
+      getAllCarts(6);
       setLoading(false)
     }
   }, [carts]);
 
-  const getAllCarts = async () => {
+  const getAllCarts = async (resourcesId) => {
 
-    const response = await getCarts();
+    const response = await getCartListByResourcesId(resourcesId);
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',
@@ -107,8 +112,13 @@ export default function ShoppingList() {
           )}
           <div class="row">
             <div class="col-md-8 col-lg-8"></div>
-            <div class="col-md-4 col-lg-4"><Button variant="secondary">Place to order
+            <div class="col-md-4 col-lg-4"><Button variant="secondary"
+             onClick={() => Placetoorder()}
+            >
+              Place to order
+            
             </Button></div>
+            
             <div class="col-md-2 col-lg-2"></div>
           </div>
         </div>)}
