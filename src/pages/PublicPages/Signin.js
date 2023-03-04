@@ -6,6 +6,7 @@ import useFetchLogins from "../../hooks/useFetchLoginUtility";
 
 
 export default () => {
+<<<<<<< HEAD
   const resource = {
     role: { admin: true, agent: false, dealer: false, customer: false },
     loggedIn: true,
@@ -15,6 +16,8 @@ export default () => {
   };
   localStorage.setItem("hidemenu", JSON.stringify(menu))
   localStorage.setItem("loggedIn", JSON.stringify(resource))
+=======
+>>>>>>> c32d16992ef84de6c4198bd9e12e96449606f2a6
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState("");
@@ -45,9 +48,28 @@ export default () => {
     // setShowNavbar(!showNavbar)
 
     const response = await login(newLogin);
-    if (response.payload.title == "Success") {
+    if (response.payload.success) {
+      debugger;
       setError({ status: true, msg: "Login Success", type: 'success' })
+      const role = response?.payload?.result?.role?.roleName;
+      const resource = {
+        role: { 
+          admin: (role =='SuperAdmin' ? true:false), 
+          agent: (role =='Agent' ? true:false), 
+          dealer: (role =='Dealer' ? true:false), 
+          customer: (role =='Customer' ? true:false) 
+        },
+        loggedIn: true,
+      };
+      localStorage.setItem("loggedIn", JSON.stringify(resource))
+      if(role =='SuperAdmin')
+      {
       navigate('/dashboard')
+      }
+      else
+      {
+        navigate('/order')
+      }
     }
     else {
       setMessageStatus({

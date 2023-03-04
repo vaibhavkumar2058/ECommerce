@@ -50,6 +50,8 @@ import ForgotPassword from "../pages/PublicPages/ForgotPassword";
 import ResetPassword from "../pages/PublicPages/ResetPassword";
 import Successpage from "../pages/PublicPages/Successpage";
 import MyProfile from "../pages/MyProfile";
+import Sidebar from "../pages/Sidebar";
+
 
 const NavbarComp = () => {
   const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
@@ -58,25 +60,21 @@ const NavbarComp = () => {
   const dealer=userInfo?.role?.dealer;
   const customer=userInfo?.role?.customer;
 
-
   return (
     <Router>
       <div>
-        <Routes>
-        
-          {(admin && <Route exact path="/role" element={<ProtectedRoute><Role /></ProtectedRoute>} />)}
+        <Routes>      
+          {(admin && <Route exact path="/role" element={<ProtectedRoute><Sidebar/> <Role /></ProtectedRoute>} />)}
           {(admin && <Route exact path="/state" element={<ProtectedRoute><State /></ProtectedRoute>} />)}
           {(admin && <Route exact path="/vehicleType" element={<ProtectedRoute><VehicleType /></ProtectedRoute>} />)}
           {(admin && <Route exact path="/resources" element={<ProtectedRoute><Resources/></ProtectedRoute>}/>)}
-          {((admin||agent||dealer||customer) && <Route exact path="/order" element={<ProtectedRoute><Order/></ProtectedRoute>}/>)}
+          {((admin||agent||dealer||customer) && <Route exact path="/order" element={<ProtectedRoute><Sidebar/><Order/></ProtectedRoute>}/>)}
           {(admin && <Route exact path="/itemCost" element={<ProtectedRoute><ItemCost/></ProtectedRoute>}/>)}
           {((admin||agent||dealer)  && <Route exact path="/cart" element={<ProtectedRoute><Cart/></ProtectedRoute>}/>)}
           {(admin && <Route exact path="/GMT" element={<ProtectedRoute><GMT/></ProtectedRoute>}/>)}
           {((admin||agent||dealer) && <Route exact path="/invoice" element={<ProtectedRoute><Invoice/></ProtectedRoute>}/>)}
-          {/* {(agent||admin  && <Route exact path="/orderItem" element={<ProtectedRoute><OrderItem/></ProtectedRoute>}/>)} */}
           {((admin||agent||dealer||customer) && <Route exact path="/orderTracking" element={<ProtectedRoute><OrderTracking/></ProtectedRoute>}/>)}
           {((admin||agent||dealer) && <Route exact path="/recordStatus" element={<ProtectedRoute><RecordStatus/></ProtectedRoute>}/>)}
-          {/* {(admin && <Route exact path="/tax" element={<ProtectedRoute><Tax/></ProtectedRoute>}/>)} */}
           {(admin && <Route exact path="/tax" element={<ProtectedRoute><Tax /></ProtectedRoute>}/>)}
           {((admin||agent||dealer) && <Route exact path="/product" element={<ProtectedRoute><Product/></ProtectedRoute>}/>)}
           {(admin && <Route exact path="/country" element={<ProtectedRoute><Country/></ProtectedRoute>}/>)}
@@ -102,7 +100,7 @@ const NavbarComp = () => {
           <Route exact path="/orderSummaryList" element={<OrderSummaryList />} />
           <Route exact path="/orderPlacedList" element={<OrderPlacedList />} />
           <Route exact path="/map" element={<ZMap />} />
-          {(admin && <Route exact path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>}/>)}
+          {(admin && <Route exact path="/dashboard" element={<ProtectedRoute><Sidebar/><Dashboard /></ProtectedRoute>}/>)}
           <Route path="/" element={<Navigate replace to="/dashboard" />} />
           <Route exact path="/signin" element={<Signin />} />
           <Route path="/" element={<Navigate replace to="/login" />} />
