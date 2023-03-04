@@ -90,7 +90,7 @@ Geocode.fromLatLng("12.9800000000", "77.5927000000").then(
     // columns follow dataField and text structure
     {
       dataField: "Actions",
-      text: "Actions",
+      // text: "Actions",
       formatter: (cellContent, row) => {
         return (
           <><button

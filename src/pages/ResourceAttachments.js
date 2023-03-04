@@ -85,7 +85,7 @@ export default function ResourceAttachments() {
     // columns follow dataField and text structure
     {
       dataField: "Actions",
-      text: "Actions",
+      // text: "Actions",
       formatter: (cellContent, row) => {
         return (
           <><button
