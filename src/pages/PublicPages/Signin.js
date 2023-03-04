@@ -40,6 +40,7 @@ export default () => {
       debugger;
       setError({ status: true, msg: "Login Success", type: 'success' })
       const role = response?.payload?.result?.role?.roleName;
+
       const resource = {
         role: { 
           admin: (role =='SuperAdmin' ? true:false), 
@@ -48,6 +49,7 @@ export default () => {
           customer: (role =='Customer' ? true:false) 
         },
         loggedIn: true,
+        resourcesId:response?.payload?.result?.resourcesId,
       };
       localStorage.setItem("loggedIn", JSON.stringify(resource))
       if(role =='SuperAdmin')

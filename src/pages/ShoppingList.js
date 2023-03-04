@@ -34,7 +34,9 @@ export default function ShoppingList() {
 
   useEffect(() => {
     if (carts.length == 0) {
-      getAllCarts(6);
+      const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
+
+      getAllCarts(userInfo.resourcesId);
       setLoading(false)
     }
   }, [carts]);

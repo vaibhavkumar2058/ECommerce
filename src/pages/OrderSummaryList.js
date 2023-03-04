@@ -10,19 +10,21 @@ export default function ShoppingList() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const ConfirmOrder = () => {
-    window.location.href = "/orderPlacedList";
-  }
-
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
     title: "",
     status: false,
     message: "",
+  });  
+  const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
+  
+  const [placeOrders, setPlaceOrders] = useState({
+    resourcesId: userInfo?.resourcesId,
+    orderItems: null,
   });
 
   const {
-    // ConfirmOrder,
+    placeOrder,
   } = useFetchOrder();
 
   const {
@@ -32,15 +34,19 @@ export default function ShoppingList() {
 
   useEffect(() => {
     if (carts.length == 0) {
-      getAllCarts();
+      const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
+
+      getAllCarts(userInfo.resourcesId);
       setLoading(false)
     }
   }, [carts]);
 
-  const  Confirmorder = async () => {
-    const response = await  Confirmorder(carts);
+  const  ConfirmOrders = async () => {
+    placeOrders.orderItems = carts;
+    const response = await  placeOrder(placeOrders);
     if (response.payload.title == "Success") {
       alert("Order Placed Successfully..");
+      window.location.href = "/orderPlacedList";
       setCarts([]);
     }
     else {
@@ -57,9 +63,9 @@ export default function ShoppingList() {
       })
       const dataFormatter = (rawData) => {
         const curedData = {};
-        curedData.categoryTypeId = rawData?.product.categoryTypeId;
+        debugger;
         curedData.resourcesId = rawData?.resourcesId;
-        curedData.productId = rawData?.product.productId;
+        curedData.productId = rawData?.productId;
         curedData.productName = rawData?.product?.productName;
         curedData.quantity = rawData?.quantity;
         curedData.cost = rawData?.cost;
@@ -123,8 +129,8 @@ export default function ShoppingList() {
             <div class=" col-md-2 col-lg-2"><Button variant="primary">Cancel Order</Button>{' '}</div>
             <div class=" col-md-2 col-lg-2">
               <Button variant="secondary"
-                onClick={() => ConfirmOrder()}
-              >
+                onClick={() => ConfirmOrders()}
+>
                 Confirm Order
               </Button>
               

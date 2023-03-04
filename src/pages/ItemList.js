@@ -33,9 +33,9 @@ export default function ItemList() {
     status: false,
     message: "",
   });
-
+  const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
   const [newCart, setNewCart] = useState({
-    resourcesId: 6,
+    resourcesId: userInfo.resourcesId,
     productId: null,
     cost: null,
     quantity: "1",
@@ -44,6 +44,7 @@ export default function ItemList() {
   });
 
   const addToCart = async (item) => {
+    newCart.resourcesId = userInfo.resourcesId;
     newCart.productId = item.productId;
     newCart.description = item.description;
     newCart.cost = item.price.toString();;
