@@ -242,6 +242,6 @@ ResourceAttachmentsModel.defaultProps = {
   isDelete: false,
   onClose: null,
   id: null,
-  eesourceAttachmentsModelData: null,
+  resourceAttachmentsModelData: null,
 };
 

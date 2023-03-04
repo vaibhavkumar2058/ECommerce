@@ -38,10 +38,11 @@ export default function ResourcesModel({
     isEmailVerified: true,
     isMobileVerified: true,
     recordStatusId: null,
-
     attachment: null,
+    filesId:null,
 
   });
+  
 
   const [roleOptions, setRoleOptions] = useState(roles.map((role, i) => (
     {
@@ -97,7 +98,7 @@ export default function ResourcesModel({
   };
 
   const saveHandler = async () => {
-    newResources.file = fileSelected;
+    newResources.attachment = fileSelected;
     if (isEdit) {
       const response = await onUpdateResources(id, newResources);
       if (response.payload.title == "Success") {
@@ -174,9 +175,9 @@ export default function ResourcesModel({
     if (isEdit) {
       setButtonType("Update");
     }
-    
+    debugger
     const isEnable =
-      !newResources?.firstName || !newResources?.middleName || !newResources?.lastName || !newResources?.roleId || !newResources?.genderId || !newResources?.mobileNumber || !newResources?.addressId || !newResources?.bloodGroup || !newResources?.email || !newResources?.password || !newResources?.isEmailVerified || !newResources?.isMobileVerified || !newResources?.recordStatusId;
+      !newResources?.firstName || !newResources?.middleName || !newResources?.lastName || !newResources?.roleId || !newResources?.genderId || !newResources?.mobileNumber || !newResources?.addressId || !newResources?.bloodGroup || !newResources?.email || !newResources?.password || !newResources?.isEmailVerified || !newResources?.isMobileVerified || !newResources?.recordStatusId|| !newResources?.filesId;
     setSaveDisabled(isEnable);
   }, [newResources]);
 
@@ -301,6 +302,16 @@ export default function ResourcesModel({
               name="password"
               placeholder="Password"
               value={newResources?.password}
+              onChange={changeHandler}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="filesId">
+            <Form.Label>FilesId</Form.Label>
+            <Form.Control
+              type="text"
+              name="filesId"
+              placeholder="FilesId"
+              value={newResources?.filesId}
               onChange={changeHandler}
             />
           </Form.Group>
