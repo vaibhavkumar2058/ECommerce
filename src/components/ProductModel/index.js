@@ -64,7 +64,7 @@ export default function ProductModel({
   const selectChangeHandler = (e) => {
     setNewProduct({
       ...newProduct,
-      "productId": e.value,
+      "categoryTypeId": e.value,
     });
   };
 
@@ -75,7 +75,7 @@ export default function ProductModel({
   };
 
   const saveHandler = async () => {
-    newProduct.file = fileSelected;
+    newProduct.attachment = fileSelected;
     if (isEdit) {
       const response = await onUpdateProduct(id, newProduct);
       if (response.payload.title == "Success") {
