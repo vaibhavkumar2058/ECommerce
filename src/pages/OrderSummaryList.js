@@ -10,6 +10,10 @@ export default function ShoppingList() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const ConfirmOrder = () => {
+    window.location.href = "/orderPlacedList";
+  }
+
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
     title: "",
@@ -18,7 +22,7 @@ export default function ShoppingList() {
   });
 
   const {
-    placeOrder,
+    // ConfirmOrder,
   } = useFetchOrder();
 
   const {
@@ -33,8 +37,8 @@ export default function ShoppingList() {
     }
   }, [carts]);
 
-  const PlaceOrder = async () => {
-    const response = await placeOrder(carts);
+  const  Confirmorder = async () => {
+    const response = await  Confirmorder(carts);
     if (response.payload.title == "Success") {
       alert("Order Placed Successfully..");
       setCarts([]);
@@ -119,10 +123,12 @@ export default function ShoppingList() {
             <div class=" col-md-2 col-lg-2"><Button variant="primary">Cancel Order</Button>{' '}</div>
             <div class=" col-md-2 col-lg-2">
               <Button variant="secondary"
-                onClick={() => PlaceOrder()}
+                onClick={() => ConfirmOrder()}
               >
-                Place Order
+                Confirm Order
               </Button>
+              
+
             </div>
             <div class=" col-md-1 col-lg-1"></div>
           </div>
