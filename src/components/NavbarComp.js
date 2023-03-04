@@ -102,7 +102,7 @@ const NavbarComp = () => {
           {(admin &&<Route exact path="/map" element={<ProtectedRoute><Sidebar/><ZMap /></ProtectedRoute>} />)}
           {(admin && <Route exact path="/dashboard" element={<ProtectedRoute><Sidebar/><Dashboard /></ProtectedRoute>}/>)}
           <Route path="/" element={<Navigate replace to="/dashboard" />} />
-          {(admin||agent||dealer||customer &&<Route exact path="/signin" element={<ProtectedRoute><Sidebar/><Signin /></ProtectedRoute>}/>)}
+          <Route exact path="/signin" element={<Signin />}/>
           <Route path="/" element={<Navigate replace to="/login" />} />
           {(admin||agent||dealer||customer &&<Route exact path="/resetpassword" element={<ProtectedRoute><Sidebar/><ResetPassword/></ProtectedRoute>}/>)}
           {(admin||agent||dealer||customer &&<Route exact path="/successpage" element={<ProtectedRoute><Sidebar/><Successpage/></ProtectedRoute>}/>)}
