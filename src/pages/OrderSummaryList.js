@@ -22,7 +22,8 @@ export default function ShoppingList() {
   } = useFetchOrder();
 
   const {
-    getCarts,
+    getCartListByResourcesId,
+
   } = useFetchCart();
 
   useEffect(() => {
@@ -42,9 +43,9 @@ export default function ShoppingList() {
     }
   };
 
-  const getAllCarts = async () => {
+  const getAllCarts = async (resourcesId) => {
 
-    const response = await getCarts();
+    const response = await getCartListByResourcesId(resourcesId);
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',

@@ -24,19 +24,19 @@ export default function ShoppingList() {
   });
 
   const {
-    getCarts,
+    getCartListByResourcesId,
   } = useFetchCart();
 
   useEffect(() => {
     if (carts.length == 0) {
-      getAllCarts();
+      getAllCarts(6);
       setLoading(false)
     }
   }, [carts]);
 
-  const getAllCarts = async () => {
+  const getAllCarts = async (resourcesId) => {
 
-    const response = await getCarts();
+    const response = await getCartListByResourcesId(resourcesId);
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',

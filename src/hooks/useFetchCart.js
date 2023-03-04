@@ -187,11 +187,44 @@ import {
       });
       
   };
+  // Cart GET  ACTIONS
+  const getCartListByResourcesId = (resourcesId) => {
+    dispatch(getCartBeginAction());
+    return API.get(`${hapyCarURL}/list/${resourcesId}`,
+      null,
+      { suppressErrors: [400] }
+    )
+      .then(({ data }) =>
+        dispatch(
+          getCartSuccessAction({
+            ...data,
+            title: SUCCESS,
+          })
+        )
+      )
+      .catch((error) => {
+        let errorMsg = "error msg from copy file";
+        if (error.response.data.cart) {
+          const [errors] = error.response.data.cart;
+          errorMsg = errors;
+        }
+        dispatch(
+          getCartFailureAction({
+            ...errorMsg,
+            title: ERROR,
+            errorMsg,
+          })
+        );
+      });
+
+  };
+
   return {
     addCart,
     updateCart,
     deleteCart,
     getCarts,
+    getCartListByResourcesId,
     cartById,
   };
 }
