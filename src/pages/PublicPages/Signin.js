@@ -52,14 +52,7 @@ export default () => {
         resourcesId:response?.payload?.result?.resourcesId,
       };
       localStorage.setItem("loggedIn", JSON.stringify(resource))
-      if(role =='SuperAdmin')
-      {
-      navigate('/dashboard')
-      }
-      else
-      {
-        navigate('/order')
-      }
+      navigate('/dashboard');
     }
     else {
       setMessageStatus({
