@@ -48,7 +48,6 @@ import Signin from "../pages/PublicPages/Signin";
 import NotFound from "../pages/PublicPages/NotFound";
 import ForgotPassword from "../pages/PublicPages/ForgotPassword";
 import ResetPassword from "../pages/PublicPages/ResetPassword";
-import Successpage from "../pages/PublicPages/Successpage";
 import MyProfile from "../pages/MyProfile";
 import Sidebar from "../pages/Sidebar";
 
@@ -70,7 +69,6 @@ const NavbarComp = () => {
           {(admin && <Route exact path="/resources" element={<ProtectedRoute><Sidebar/> <Resources/></ProtectedRoute>}/>)}
           {((admin||agent||dealer||customer) && <Route exact path="/order" element={<ProtectedRoute><Sidebar/><Order/></ProtectedRoute>}/>)}
           {((admin||agent||dealer||customer) &&<Route exact path="/shoppinglist" element={<ProtectedRoute><Sidebar/> <ShoppingList /></ProtectedRoute>} />)}
-
           {(admin && <Route exact path="/itemCost" element={<ProtectedRoute><Sidebar/> <ItemCost/></ProtectedRoute>}/>)}
           {((admin||agent||dealer||customer)  && <Route exact path="/cart" element={<ProtectedRoute><Sidebar/> <Cart/></ProtectedRoute>}/>)}
           {(admin && <Route exact path="/GMT" element={<ProtectedRoute><Sidebar/> <GMT/></ProtectedRoute>}/>)}
@@ -101,10 +99,9 @@ const NavbarComp = () => {
           {((admin||agent||dealer||customer) &&<Route exact path="/orderSummaryList" element={<ProtectedRoute><Sidebar/><OrderSummaryList /></ProtectedRoute>} />)}
           {((admin||agent||dealer||customer) &&<Route exact path="/orderPlacedList" element={<ProtectedRoute><Sidebar/><OrderPlacedList /></ProtectedRoute>} />)}
           {(admin &&<Route exact path="/map" element={<ProtectedRoute><Sidebar/><ZMap /></ProtectedRoute>} />)}
-          {(admin && <Route exact path="/dashboard" element={<ProtectedRoute><Sidebar/><Dashboard /></ProtectedRoute>}/>)}
-          <Route path="/" element={<Navigate replace to="/dashboard" />} />
+          <Route exact path="/dashboard" element={<ProtectedRoute><Sidebar/><Dashboard /></ProtectedRoute>}/>
           <Route exact path="/signin" element={<Signin />}/>
-          <Route path="/" element={<Navigate replace to="/login" />} />
+          <Route path="/" element={<Navigate replace to="/signin" />} />
           {((admin||agent||dealer||customer) &&<Route exact path="/resetpassword" element={<ProtectedRoute><Sidebar/><ResetPassword/></ProtectedRoute>}/>)}
           <Route exact path="/forgotpassword" element={<ForgotPassword/>}/>
           {((admin||agent||dealer||customer) &&<Route exact path="/myProfile" element={<ProtectedRoute><Sidebar/><MyProfile /></ProtectedRoute>}/>)}

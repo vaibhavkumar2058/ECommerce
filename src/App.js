@@ -7,6 +7,8 @@ import { Provider } from "react-redux";
 import { ToastProvider } from "react-toast-notifications";
 import './volt.css';
 import { useNavigate } from "react-router-dom";
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import { Navbar, Nav, Container } from 'react-bootstrap';
 import Button from "react-bootstrap/Button";
 //import 'semantic-ui-css/semantic.min.css'
 
@@ -72,13 +74,14 @@ function App() {
                   </li>
                 </ul>
                 <ul className="navbar-nav align-items-center">
-                  <li className="nav-item dropdown"><a href="cart" className="https://th.bing.com/th/id/OIP.M31hF2VEksZBMHT1DCpkmgHaHa?w=176&h=180&c=7&r=0&o=5&pid=1.7" data-unread-cart="true" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">Cart</a>
+                  <li className="nav-item dropdown"><a href="Shoppinglist" className="https://th.bing.com/th/id/OIP.M31hF2VEksZBMHT1DCpkmgHaHa?w=176&h=180&c=7&r=0&o=5&pid=1.7" data-unread-cart="true" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">Cart</a>
                     <div className="dropdown-menu dropdown-menu-lg dropdown-menu-center mt-2 py-0">
                       <div className="list-group list-group-flush"><a href="cart" className="text-center text-primary fw-bold border-bottom border-light py-3">Cart</a>
                       </div>
                     </div>
                   </li>
                 </ul>
+                
                 <li className="nav-item dropdown ms-lg-3"><a className="nav-link dropdown-toggle pt-1 px-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <div className="media d-flex align-items-center">
                     <div className="media-body ms-2 text-dark align-items-center d-none d-lg-block"><span className="mb-0 font-small fw-bold text-gray-900">Bonnie Green</span></div>

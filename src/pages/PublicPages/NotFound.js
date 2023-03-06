@@ -2,6 +2,7 @@
 import React from "react";
 import { Col, Row, Card, Image, Button, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import "./public.css";
 
 export default () => {
   const menu = {
