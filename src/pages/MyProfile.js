@@ -11,10 +11,6 @@ import React, { useState,useEffect } from "react";
     const [message, setMessage] = useState("");
   
   
-   const [resourceAttachmentes, setResourceAttachments] = useState({
-    
-      });
-  
   return (
     <Tabs
       defaultActiveKey="profile"
