@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import Button from "react-bootstrap/Button";
+import Dropdown from 'react-bootstrap/Dropdown';
 //import 'semantic-ui-css/semantic.min.css'
 
 function App() {
@@ -44,34 +45,9 @@ function App() {
                     </a></div>
                   </div>
                 </li>
-                <li className="nav-item dropdown">
-                  <Button variant="secondary"
-                    onClick={Signout}>
-                    Signout
-                  </Button>
-
-                </li>
-                <li className="nav-item dropdown"><a href="signin" className="nav-link text-dark signin-bell unread dropdown-toggle" data-unread-signin="true" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">Signin</a>
-                  <div className="dropdown-menu dropdown-menu-lg dropdown-menu-center mt-2 py-0">
-                    <div className="list-group list-group-flush"><a href="signin" className="text-center text-primary fw-bold border-bottom border-light py-3">Signin</a> <a href="calendar.html" className="list-group-item list-group-item-action border-bottom">
-                    </a></div>
-                  </div>
-                </li>
-                <li className="nav-item dropdown"><a href="myProfile" className="nav-link text-dark myProfile-bell unread dropdown-toggle" data-unread-myProfile="true" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">MyProfile</a>
-                  <div className="dropdown-menu dropdown-menu-lg dropdown-menu-center mt-2 py-0">
-                    <div className="list-group list-group-flush"><a href="myProfile" className="text-center text-primary fw-bold border-bottom border-light py-3">MyProfile</a> <a href="calendar.html" className="list-group-item list-group-item-action border-bottom">
-                    </a></div>
-                  </div>
-                </li>
-
-
+               
                 <ul className="navbar-nav align-items-center">
-                  <li className="nav-item dropdown"><a href="resetPassword" className="nav-link text-dark resetPassword-bell unread dropdown-toggle" data-unread-resetPassword="true" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">ResetPassword</a>
-                    <div className="dropdown-menu dropdown-menu-lg dropdown-menu-center mt-2 py-0">
-                      <div className="list-group list-group-flush"><a href="resetPassword" className="text-center text-primary fw-bold border-bottom border-light py-3">ResetPassword</a> <a href="calendar.html" className="list-group-item list-group-item-action border-bottom">
-                      </a></div>
-                    </div>
-                  </li>
+                  
                 </ul>
                 <ul className="navbar-nav align-items-center">
                   <li className="nav-item dropdown"><a href="Shoppinglist" className="https://th.bing.com/th/id/OIP.M31hF2VEksZBMHT1DCpkmgHaHa?w=176&h=180&c=7&r=0&o=5&pid=1.7" data-unread-cart="true" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">Cart</a>
@@ -83,9 +59,21 @@ function App() {
                 </ul>
                 
                 <li className="nav-item dropdown ms-lg-3"><a className="nav-link dropdown-toggle pt-1 px-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  <div className="media d-flex align-items-center">
-                    <div className="media-body ms-2 text-dark align-items-center d-none d-lg-block"><span className="mb-0 font-small fw-bold text-gray-900">Bonnie Green</span></div>
-                  </div>
+                <Dropdown>
+      <Dropdown.Toggle variant="success" id="dropdown-basic">
+        Dropdown Button
+      </Dropdown.Toggle>
+
+      <Dropdown.Menu>
+        <Dropdown.Item href="myProfile">MyProfile</Dropdown.Item>
+        <Dropdown.Item href="changePassword">ChangePassword</Dropdown.Item>
+        <Dropdown.Item href="signin"><Button variant="secondary"
+                    onClick={Signout}>
+                    Signout
+                  </Button>
+</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
                 </a>
                   <div className="dropdown-menu dashboard-dropdown dropdown-menu-end mt-2 py-1">
                     <a className="dropdown-item d-flex align-items-center" href="#"> My Profile </a>

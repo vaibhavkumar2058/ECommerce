@@ -67,7 +67,7 @@ export default () => {
             </p>
             <Col xs={12} className="d-flex align-items-center justify-content-center">
               <div className="bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
-                <h3 className="mb-4">Reset password</h3>
+                <h3 className="mb-4">Change password</h3>
                 <Form>
                   <Form.Group id="resourcesId" className="mb-4">
                     <Form.Label>ResourcesId</Form.Label>

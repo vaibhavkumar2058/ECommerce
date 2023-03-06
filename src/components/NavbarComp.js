@@ -47,7 +47,7 @@ import ProtectedRoute from "../pages/ProtectedRoute";
 import Signin from "../pages/PublicPages/Signin";
 import NotFound from "../pages/PublicPages/NotFound";
 import ForgotPassword from "../pages/PublicPages/ForgotPassword";
-import ResetPassword from "../pages/PublicPages/ResetPassword";
+import ChangePassword from "../pages/PublicPages/ChangePassword";
 import MyProfile from "../pages/MyProfile";
 import Sidebar from "../pages/Sidebar";
 
@@ -102,7 +102,7 @@ const NavbarComp = () => {
           <Route exact path="/dashboard" element={<ProtectedRoute><Sidebar/><Dashboard /></ProtectedRoute>}/>
           <Route exact path="/signin" element={<Signin />}/>
           <Route path="/" element={<Navigate replace to="/signin" />} />
-          {((admin||agent||dealer||customer) &&<Route exact path="/resetpassword" element={<ProtectedRoute><Sidebar/><ResetPassword/></ProtectedRoute>}/>)}
+          {((admin||agent||dealer||customer) &&<Route exact path="/changepassword" element={<ProtectedRoute><Sidebar/><ChangePassword/></ProtectedRoute>}/>)}
           <Route exact path="/forgotpassword" element={<ForgotPassword/>}/>
           {((admin||agent||dealer||customer) &&<Route exact path="/myProfile" element={<ProtectedRoute><Sidebar/><MyProfile /></ProtectedRoute>}/>)}
           <Route exact path="/*" element={<NotFound />} />
