@@ -42,7 +42,7 @@ export default function ItemList() {
     description: null,
     recordStatusId: 1,
   });
-
+debugger;
   const addToCart = async (item) => {
     newCart.resourcesId = userInfo.resourcesId;
     newCart.productId = item.productId;

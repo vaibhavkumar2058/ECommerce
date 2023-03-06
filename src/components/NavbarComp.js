@@ -59,7 +59,7 @@ const NavbarComp = () => {
   const agent=userInfo?.role?.agent;
   const dealer=userInfo?.role?.dealer;
   const customer=userInfo?.role?.customer;
-debugger;
+
   return (
     <Router>
       <div>
