@@ -39,24 +39,14 @@ function App() {
               <div className="d-flex align-items-center"><button id="sidebar-toggle" className="sidebar-toggle me-3 btn btn-icon-only d-none d-lg-inline-block align-items-center justify-content-center"></button>
               </div>
               <ul className="navbar-nav align-items-center">
-                <li className="nav-item dropdown"><a href="notifications" className="nav-link text-dark notification-bell unread dropdown-toggle" data-unread-notifications="true" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">Notifications</a>
-                  <div className="dropdown-menu dropdown-menu-lg dropdown-menu-center mt-2 py-0">
-                    <div className="list-group list-group-flush"><a href="notifications" className="text-center text-primary fw-bold border-bottom border-light py-3">Notifications</a> <a href="calendar.html" className="list-group-item list-group-item-action border-bottom">
-                    </a></div>
-                  </div>
+                <li className="nav-item dropdown"><a href="notifications" >
+                  <img src="https://png.pngtree.com/png-clipart/20190705/original/pngtree-vvector-notification-icon-png-image_4232478.jpg" width="30" height="30"></img>
+                   </a>
                 </li>
-               
-                <ul className="navbar-nav align-items-center">
-                  
-                </ul>
-                <ul className="navbar-nav align-items-center">
-                  <li className="nav-item dropdown"><a href="Shoppinglist" className="https://th.bing.com/th/id/OIP.M31hF2VEksZBMHT1DCpkmgHaHa?w=176&h=180&c=7&r=0&o=5&pid=1.7" data-unread-cart="true" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">Cart</a>
-                    <div className="dropdown-menu dropdown-menu-lg dropdown-menu-center mt-2 py-0">
-                      <div className="list-group list-group-flush"><a href="cart" className="text-center text-primary fw-bold border-bottom border-light py-3">Cart</a>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
+                <li className="nav-item dropdown"><a href="Shoppinglist" >
+                  <img src="https://cdn-icons-png.flaticon.com/512/1413/1413908.png" width="30" height="30"></img>
+                   </a>
+                </li>
                 
                 <li className="nav-item dropdown ms-lg-3"><a className="nav-link dropdown-toggle pt-1 px-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <Dropdown>
