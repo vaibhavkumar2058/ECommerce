@@ -18,8 +18,8 @@ import Security from "../pages/Security";
 import AddressType from "../pages/AddressType";
 import Address from "../pages/Address";
 import Cart from "../pages/Cart";
-import Invoice from "../pages/Invoice";
-import Country from "../pages/Country";
+import Invoice from "../pages/InVoice";
+import Country from "../pages/country";
 import Gender from "../pages/Gender";
 import GMT from "../pages/GMT";
 import ItemCost from "../pages/ItemCost";
@@ -50,7 +50,7 @@ import ForgotPassword from "../pages/PublicPages/ForgotPassword";
 import ChangePassword from "../pages/PublicPages/ChangePassword";
 import MyProfile from "../pages/MyProfile";
 import Sidebar from "../pages/Sidebar";
-
+import Signup from "../pages/PublicPages/Signup";
 
 const NavbarComp = () => {
   const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
@@ -101,11 +101,13 @@ const NavbarComp = () => {
           {(admin &&<Route exact path="/map" element={<ProtectedRoute><Sidebar/><ZMap /></ProtectedRoute>} />)}
           <Route exact path="/dashboard" element={<ProtectedRoute><Sidebar/><Dashboard /></ProtectedRoute>}/>
           <Route exact path="/signin" element={<Signin />}/>
+          <Route exact path="/signup" element={<Signup/>}/>
           <Route path="/" element={<Navigate replace to="/signin" />} />
           {((admin||agent||dealer||customer) &&<Route exact path="/changepassword" element={<ProtectedRoute><Sidebar/><ChangePassword/></ProtectedRoute>}/>)}
           <Route exact path="/forgotpassword" element={<ForgotPassword/>}/>
           {((admin||agent||dealer||customer) &&<Route exact path="/myProfile" element={<ProtectedRoute><Sidebar/><MyProfile /></ProtectedRoute>}/>)}
           <Route exact path="/*" element={<NotFound />} />
+          
         </Routes>
       </div>
     </Router>
