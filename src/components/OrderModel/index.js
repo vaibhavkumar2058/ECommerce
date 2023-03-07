@@ -23,6 +23,7 @@ export default function OrderModel({
     categoryTypeId : null,
     productId : null,
     orderPrice : null,
+    orderDate:null,
     location : "",
     customerNumber : null,
     email:"",
@@ -126,7 +127,7 @@ export default function OrderModel({
       setButtonType("Update");
     }
     const isEnable =
-    !newOrder?.categoryTypeId || !newOrder?.productId|| !newOrder?.orderPrice || !newOrder?.location  || !newOrder?.customerNumber    || !newOrder?.description|| !newOrder?.email;
+    !newOrder?.categoryTypeId || !newOrder?.productId|| !newOrder?.orderPrice || !newOrder?.location || !newOrder?.orderDate || !newOrder?.customerNumber || !newOrder?.description|| !newOrder?.email;
     setSaveDisabled(isEnable);
   }, [newOrder]);
 
@@ -195,7 +196,7 @@ export default function OrderModel({
           </Form.Group>
 
 
-          {/* <Form.Group className="mb-3" controlId="orderDate">
+           <Form.Group className="mb-3" controlId="orderDate">
             <Form.Label>OrderDate</Form.Label>
             <Form.Control
               type="text"
@@ -204,7 +205,7 @@ export default function OrderModel({
               value={newOrder?.orderDate}
               onChange={changeHandler}
             />
-          </Form.Group> */}
+          </Form.Group> 
 
 
           <Form.Group className="mb-3" controlId="orderPrice">

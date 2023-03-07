@@ -51,6 +51,7 @@ export default function Orders() {
     categoryTypeId:null,
     productId:null,
     orderPrice:null,
+    orderDate:null,
     location:"",
     customerNumber:null,
     email:"",
@@ -85,6 +86,7 @@ export default function Orders() {
     { dataField: 'customerNumber', text: 'CustomerNumber', sort: true },
     { dataField: 'email', text: 'Email', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
+    { dataField: 'orderDate', text: 'OrderDate', sort: true },
     // columns follow dataField and text structure
     {
       dataField: "Actions",
