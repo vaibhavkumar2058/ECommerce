@@ -18,6 +18,7 @@ import {
   const hapyCarURL = "https://localhost:7062/order";
   const placeOrdersURL = "https://localhost:7062/placeorders";
   const productOrderListURL = "https://localhost:7062/productorderlist";
+  const orderReportsURL = "https://localhost:7062/orderreports";
   const API = useAPI();
   const SUCCESS = "Success";
   const ERROR = "Error";
@@ -85,7 +86,36 @@ import {
         );
       });
   };
+  const getOrderReport = (reports) => {
+    return API.put(`${hapyCarURL}/${reports}`,
+      { data: null },
+      { suppressErrors: [400] }
+    )
+ 
+      .then(({ data }) =>
+        dispatch(
+          getOrderSuccessAction({
+            ...data,
+            title: SUCCESS,
+          })
+        )
+      )
 
+      .catch((error) => {
+        let errorMsg = "error msg from copy file";
+        if (error.response.data.order) {
+          const [errors] = error.response.data.order;
+          errorMsg = errors;
+        }
+        dispatch(
+          addOrderAction({
+            ...reports,
+            title: ERROR,
+            errorMsg,
+          })
+        );
+      });
+  };
   // Order UPDATE  ACTIONS
   const updateOrder = (orderId, order) => {
 
@@ -246,6 +276,7 @@ import {
           })
         );
       });
+      
 
 
 
@@ -260,5 +291,6 @@ import {
     orderById,
     placeOrder,
     productOrderList,
+    getOrderReport,
   };
 }

@@ -3,6 +3,7 @@ export const FETCH_ORDER_SUCCESS = "FETCH_ORDER_SUCCESS";
 export const FETCH_ORDER_FAILURE = "FETCH_ORDER_FAILURE";
 export const ADD_ORDER = "ADD_ORDER";
 export const PLACEORDER_ORDER = "PLACEORDER_ORDER";
+export const ORDERREPORTS_ORDER = "ORDERREPORTS_ORDER";
 export const UPDATE_ORDER = "UPDATE_ORDER";
 export const DELETE_ORDER = "DELETE_ORDER";
 export const ORDER = "ORDER";
@@ -37,6 +38,10 @@ export const deleteOrderAction = (data) => ({
 })
 export const placeOrderAction = (data) => ({
     type: PLACEORDER_ORDER,
+    payload: data,
+})
+export const orderReportsAction = (data) => ({
+    type: ORDERREPORTS_ORDER,
     payload: data,
 })
 

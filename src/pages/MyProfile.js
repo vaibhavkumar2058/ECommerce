@@ -13,7 +13,7 @@ export default () => {
   const [error, setError] = useState(null);
   const [message, setMessage] = useState("");
 
-  
+
   return (
     <Tabs
       defaultActiveKey="profile"
@@ -69,32 +69,32 @@ export default () => {
                 />
               </Form.Group></div>
               <div class="col-md-4 col-lg-4"><Dropdown>
-      <Dropdown.Toggle  >
-      
-                Gender
-                <Form.Control
-                  type="text"
-                  name="gender"
-                  placeholder="Gender"
-                />
-             
-      </Dropdown.Toggle>
+                <Dropdown.Toggle  >
 
-      <Dropdown.Menu>
-        <Dropdown.Item href="#/action-1">Female</Dropdown.Item>
-        <Dropdown.Item href="#/action-2">Male </Dropdown.Item>
-       
-      </Dropdown.Menu>
-    </Dropdown></div>
-             
+                  Gender
+                  <Form.Control
+                    type="text"
+                    name="gender"
+                    placeholder="Gender"
+                  />
+
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item href="#/action-1">Female</Dropdown.Item>
+                  <Dropdown.Item href="#/action-2">Male </Dropdown.Item>
+
+                </Dropdown.Menu>
+              </Dropdown></div>
+
 
             </div>
             <div class="row">
 
-            <div class="col-md-8 col-lg-8"><Form.Group>
-            
-            <Form.Label>Address</Form.Label>
-        <Form.Control as="textarea" rows={3} />
+              <div class="col-md-8 col-lg-8"><Form.Group>
+
+                <Form.Label>Address</Form.Label>
+                <Form.Control as="textarea" rows={3} />
               </Form.Group></div>
 
               <div class="col-md-4 col-lg-4"><Form.Group>
@@ -106,11 +106,11 @@ export default () => {
                 />
               </Form.Group></div>
               <div class="row">
-            <div class="col-md-8 col-lg-8"></div>
-            <div class="col-md-4 col-lg-4"><Button variant="secondary">
-              Update Profile </Button></div>
-            <div class="col-md-2 col-lg-2"></div>
-          </div>
+                <div class="col-md-8 col-lg-8"></div>
+                <div class="col-md-4 col-lg-4"><Button variant="secondary">
+                  Update Profile </Button></div>
+                <div class="col-md-2 col-lg-2"></div>
+              </div>
 
 
             </div>
