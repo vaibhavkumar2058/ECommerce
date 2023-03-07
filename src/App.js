@@ -11,6 +11,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import Button from "react-bootstrap/Button";
 import Dropdown from 'react-bootstrap/Dropdown';
+import Badge from 'react-bootstrap/Badge';
 //import 'semantic-ui-css/semantic.min.css'
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
     window.location.href = "/myProfile";
   };
   
+  
   return (
     <div>
       <nav className="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none"><a className="navbar-brand me-lg-5" href="https://demo.themesberg.com/volt-pro/index.html"><img src="http://manthrasoaps.co.in/image/catalog/logo.png" height="50" width="150" alt="Manthra Soaps"></img></a>
@@ -40,7 +42,7 @@ function App() {
               </div>
               <ul className="navbar-nav align-items-center">
                 <li className="nav-item dropdown"><a href="notifications" >
-                  <img src="https://png.pngtree.com/png-clipart/20190705/original/pngtree-vvector-notification-icon-png-image_4232478.jpg" width="30" height="30"></img>
+                  <img src="https://png.pngtree.com/png-clipart/20190705/original/pngtree-vvector-notification-icon-png-image_4232478.jpg" width="30" height="30"></img><Badge bg="secondary">9</Badge>
                    </a>
                 </li>
                 <li className="nav-item dropdown"><a href="Shoppinglist" >
@@ -51,7 +53,7 @@ function App() {
                 <li className="nav-item dropdown ms-lg-3"><a className="nav-link dropdown-toggle pt-1 px-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <Dropdown>
       <Dropdown.Toggle variant="success" id="dropdown-basic">
-        Dropdown Button
+      User
       </Dropdown.Toggle>
 
       <Dropdown.Menu>

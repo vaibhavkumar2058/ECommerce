@@ -187,12 +187,44 @@ import {
       });
       
   };
+  const getNotificationListByResourcesId = (resourcesId) => {
+    dispatch(getNotificationBeginAction());
+    return API.get(`${hapyCarURL}/list/${resourcesId}`,
+      null,
+      { suppressErrors: [400] }
+    )
+      .then(({ data }) =>
+        dispatch(
+          getNotificationSuccessAction({
+            ...data,
+            title: SUCCESS,
+          })
+        )
+      )
+      .catch((error) => {
+        let errorMsg = "error msg from copy file";
+        if (error.response.data.notification) {
+          const [errors] = error.response.data.notification;
+          errorMsg = errors;
+        }
+        dispatch(
+          getNotificationFailureAction({
+            ...errorMsg,
+            title: ERROR,
+            errorMsg,
+          })
+        );
+      });
+
+  };
+
   return {
     
     addNotification,
     updateNotification,
     deleteNotification,
     getNotifications,
+    getNotificationListByResourcesId,
     notificationById,
   };
 }
