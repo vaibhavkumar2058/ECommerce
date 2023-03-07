@@ -50,6 +50,7 @@ import ForgotPassword from "../pages/PublicPages/ForgotPassword";
 import ChangePassword from "../pages/PublicPages/ChangePassword";
 import MyProfile from "../pages/MyProfile";
 import Sidebar from "../pages/Sidebar";
+import OrderReports from "../pages/OrderReports";
 
 
 const NavbarComp = () => {
@@ -106,6 +107,7 @@ const NavbarComp = () => {
           <Route exact path="/forgotpassword" element={<ForgotPassword/>}/>
           {((admin||agent||dealer||customer) &&<Route exact path="/myProfile" element={<ProtectedRoute><Sidebar/><MyProfile /></ProtectedRoute>}/>)}
           <Route exact path="/*" element={<NotFound />} />
+          {((admin||agent||dealer||customer) &&<Route exact path="/orderReports" element={<ProtectedRoute><Sidebar/><OrderReports /></ProtectedRoute>} />)}
         </Routes>
       </div>
     </Router>
