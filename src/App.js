@@ -12,6 +12,9 @@ import { Navbar, Nav, Container } from 'react-bootstrap';
 import Button from "react-bootstrap/Button";
 import Dropdown from 'react-bootstrap/Dropdown';
 import Badge from 'react-bootstrap/Badge';
+ import useFetchNotifications from "./hooks/useFetchNotification";
+
+
 //import 'semantic-ui-css/semantic.min.css'
 
 function App() {
@@ -27,8 +30,32 @@ function App() {
   const MyProfile = () => {
     window.location.href = "/myProfile";
   };
+  const [notifications, setNotifications] = useState([]);
   
-  
+   const {
+    getNotificationListByResourcesId,
+   } = useFetchNotifications();
+
+   useEffect(() => {
+    if (notifications.length == 0) {
+      getNotificationsByResourcesId(6);
+     
+    }
+  }, [notifications]);
+
+  const getNotificationsByResourcesId = async (id) => {
+    const response = await getNotificationListByResourcesId(id);
+    debugger
+    if (response.payload.title == "Success") {
+      setNotifications(response.payload);
+    }
+    else {
+     
+    }
+  };
+
+
+    
   return (
     <div>
       <nav className="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none"><a className="navbar-brand me-lg-5" href="https://demo.themesberg.com/volt-pro/index.html"><img src="http://manthrasoaps.co.in/image/catalog/logo.png" height="50" width="150" alt="Manthra Soaps"></img></a>
@@ -42,11 +69,11 @@ function App() {
               </div>
               <ul className="navbar-nav align-items-center">
                 <li className="nav-item dropdown"><a href="notifications" >
-                  <img src="https://png.pngtree.com/png-clipart/20190705/original/pngtree-vvector-notification-icon-png-image_4232478.jpg" width="30" height="30"></img><Badge bg="secondary">9</Badge>
+                <Badge className="notification" bg="secondary">9</Badge><img src="https://png.pngtree.com/png-clipart/20190705/original/pngtree-vvector-notification-icon-png-image_4232478.jpg" width="35" height="35"></img>
                    </a>
                 </li>
                 <li className="nav-item dropdown"><a href="Shoppinglist" >
-                  <img src="https://cdn-icons-png.flaticon.com/512/1413/1413908.png" width="30" height="30"></img>
+                <Badge className="notification" bg="secondary">9</Badge><img src="https://cdn-icons-png.flaticon.com/512/1413/1413908.png" width="35" height="35"></img>
                    </a>
                 </li>
                 
