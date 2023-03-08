@@ -12,7 +12,7 @@ import { Navbar, Nav, Container } from 'react-bootstrap';
 import Button from "react-bootstrap/Button";
 import Dropdown from 'react-bootstrap/Dropdown';
 import Badge from 'react-bootstrap/Badge';
- import useFetchNotifications from "./hooks/useFetchNotification";
+import useFetchNotifications from "./hooks/useFetchNotification";
 
 
 //import 'semantic-ui-css/semantic.min.css'
@@ -31,15 +31,15 @@ function App() {
     window.location.href = "/myProfile";
   };
   const [notifications, setNotifications] = useState([]);
-  
-   const {
-    getNotificationListByResourcesId,
-   } = useFetchNotifications();
 
-   useEffect(() => {
+  const {
+    getNotificationListByResourcesId,
+  } = useFetchNotifications();
+
+  useEffect(() => {
     if (notifications.length == 0) {
       getNotificationsByResourcesId(6);
-     
+
     }
   }, [notifications]);
 
@@ -47,15 +47,20 @@ function App() {
     const response = await getNotificationListByResourcesId(id);
     debugger
     if (response.payload.title == "Success") {
-      setNotifications(response.payload);
+      var arr = [];
+      for (var key in response.payload) {
+        if (key !== 'title')
+        arr.push(response.payload[key]);
+      }
+      setNotifications(arr);
     }
     else {
-     
+
     }
   };
 
 
-    
+
   return (
     <div>
       <nav className="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none"><a className="navbar-brand me-lg-5" href="https://demo.themesberg.com/volt-pro/index.html"><img src="http://manthrasoaps.co.in/image/catalog/logo.png" height="50" width="150" alt="Manthra Soaps"></img></a>
@@ -69,30 +74,30 @@ function App() {
               </div>
               <ul className="navbar-nav align-items-center">
                 <li className="nav-item dropdown"><a href="notifications" >
-                <Badge className="notification" bg="secondary">9</Badge><img src="https://png.pngtree.com/png-clipart/20190705/original/pngtree-vvector-notification-icon-png-image_4232478.jpg" width="35" height="35"></img>
-                   </a>
+                  <Badge className="notification" bg="secondary">{notifications?.length}</Badge><img src="https://png.pngtree.com/png-clipart/20190705/original/pngtree-vvector-notification-icon-png-image_4232478.jpg" width="35" height="35"></img>
+                </a>
                 </li>
                 <li className="nav-item dropdown"><a href="Shoppinglist" >
-                <Badge className="notification" bg="secondary">9</Badge><img src="https://cdn-icons-png.flaticon.com/512/1413/1413908.png" width="35" height="35"></img>
-                   </a>
+                  <Badge className="notification" bg="secondary">9</Badge><img src="https://cdn-icons-png.flaticon.com/512/1413/1413908.png" width="35" height="35"></img>
+                </a>
                 </li>
-                
-                <li className="nav-item dropdown ms-lg-3"><a className="nav-link dropdown-toggle pt-1 px-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <Dropdown>
-      <Dropdown.Toggle variant="success" id="dropdown-basic">
-      User
-      </Dropdown.Toggle>
 
-      <Dropdown.Menu>
-        <Dropdown.Item href="myProfile">MyProfile</Dropdown.Item>
-        <Dropdown.Item href="changePassword">ChangePassword</Dropdown.Item>
-        <Dropdown.Item href="signin"><Button variant="secondary"
-                    onClick={Signout}>
-                    Signout
-                  </Button>
-</Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
+                <li className="nav-item dropdown ms-lg-3"><a className="nav-link dropdown-toggle pt-1 px-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <Dropdown>
+                    <Dropdown.Toggle variant="success" id="dropdown-basic">
+                      User
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      <Dropdown.Item href="myProfile">MyProfile</Dropdown.Item>
+                      <Dropdown.Item href="changePassword">ChangePassword</Dropdown.Item>
+                      <Dropdown.Item href="signin"><Button variant="secondary"
+                        onClick={Signout}>
+                        Signout
+                      </Button>
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
                 </a>
                   <div className="dropdown-menu dashboard-dropdown dropdown-menu-end mt-2 py-1">
                     <a className="dropdown-item d-flex align-items-center" href="#"> My Profile </a>
