@@ -90,9 +90,6 @@ export default function Resourcess() {
   const columns = [
 
     { dataField: 'resourcesId', text: 'resourcesId', sort: true, hidden: true },
-    { dataField: 'filesId', text: 'FilesId', sort: true,headerStyle: () => {
-      return { width: "60px" };
-    }, },
     {
       dataField: "resourcesImage",
       text: "Photo",
@@ -258,7 +255,8 @@ export default function Resourcess() {
         curedData.isEmailVerified=rawData?.isEmailVerified ? 'YES':'NO';
         curedData.isMobileVerified=rawData?.isMobileVerified;
         curedData.recordStatusId = rawData.recordStatusId;
-        curedData.resourcesImage = rawData?.resourceAttachment?.files?.base64;
+        if(rawData?.resourceAttachment?.resourceAttachmentTypeId =="3" )
+        curedData.resourcesImage = 'data:image/jpeg;base64,'+ rawData?.resourceAttachment?.files?.base64;
         return curedData;
       }
 
