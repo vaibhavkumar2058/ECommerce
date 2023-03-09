@@ -40,6 +40,8 @@ export default () => {
       getResourcesById(23);
 
     }
+
+    
   }, [resource]);
 
   const getResourcesById = async (id) => {
