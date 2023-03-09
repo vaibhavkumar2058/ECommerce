@@ -38,12 +38,12 @@ function App() {
     getNotificationListByResourcesId,
   } = useFetchNotifications();
 
-  useEffect(() => {
-    if (notifications.length == 0) {
-      getNotificationsByResourcesId(6);
+  // useEffect(() => {
+  //   if (notifications.length == 0) {
+  //     getNotificationsByResourcesId(6);
 
-    }
-  }, [notifications]);
+  //   }
+  // }, [notifications]);
 
   const getNotificationsByResourcesId = async (id) => {
     const response = await getNotificationListByResourcesId(id);
@@ -64,16 +64,14 @@ function App() {
     getCartListByResourcesId,
   } = useFetchCart();
 
-  useEffect(() => {
-    if (cart.length == 0) {
-      getCartByResourcesId(6);
-
-    }
-  }, [cart]);
+  // useEffect(() => {
+  //   if (cart.length == 0) {
+  //     getCartByResourcesId(6);
+  //   }
+  // }, [cart]);
 
   const getCartByResourcesId = async (id) => {
     const response = await getCartListByResourcesId(id);
-    debugger
     if (response.payload.title == "Success") {
       var arr = [];
       for (var key in response.payload) {

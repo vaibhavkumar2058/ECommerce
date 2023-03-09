@@ -54,9 +54,13 @@ import {
 
   // Resources ADD  ACTIONS
   const addResources = (resources) => {
+
+    const formData = new FormData();
+    Object.keys(resources).forEach((key) => formData.append(key,resources[key]));
+
     return API.post(
       hapyCarURL,
-      { data: resources },
+      { data: formData },
       { suppressErrors: [400] }
     )
       .then(({ data }) =>

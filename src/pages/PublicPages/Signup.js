@@ -49,13 +49,11 @@ export default () => {
     const response = await addResources(newSignup);
     if (response.payload.title == "Success") {
       setError({ status: true, msg: "Login Success", type: 'success' })
-      navigate('/dashboard')
     }
     else {
       setMessageStatus({
         mode: 'danger',
         message: 'Un-Known Error Occured.'
-
       })
 
     }
