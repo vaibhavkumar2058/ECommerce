@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
 import useFetchState from "../hooks/useFetchState";
+import useFetchCountry from "../hooks/useFetchCountry";
 import StateModel from "../components/StateModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
@@ -9,7 +10,6 @@ import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.m
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit';
-
 
 const { SearchBar, ClearSearchButton } = Search;
 
@@ -27,6 +27,7 @@ const MyExportCSV = (props) => {
 export default function States() {
 
   const [states, setStates] = useState([]);
+  const [countryList, setCountryList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -64,6 +65,10 @@ export default function States() {
     stateById,
   } = useFetchState();
 
+  const { 
+    getCountries,
+  } = useFetchCountry();
+
   const columns = [
 
     { dataField: 'stateId', text: 'State Id', sort: true, hidden: true },
@@ -99,6 +104,7 @@ export default function States() {
   ];
 
   useEffect(() => {
+    getCountryList();
     if (states.length == 0) {
       getAllStates();
       setLoading(false)
@@ -152,6 +158,24 @@ export default function States() {
       console.log('sizePerPage', sizePerPage);
     }
   });
+
+  const getCountryList = async () => {
+    const response = await getCountries();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setCountryList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'State Fetch Failed.'
+      })
+    }
+  };
 
 
   const getAllStates = async () => {
@@ -278,6 +302,7 @@ export default function States() {
                 isDelete={isDelete}
                 id={id}
                 stateData={state}
+                countryList={countryList}
               />
             </Modal.Body>
 
