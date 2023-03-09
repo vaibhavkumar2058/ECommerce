@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
+import { Dropdown } from 'semantic-ui-react'
 
 export default function StateModel({
   onAddState,
@@ -16,6 +17,7 @@ export default function StateModel({
   id,
   onClose,
   stateData,
+  countryList = [],
 }) {
   const [newState, setNewState] = useState({
     stateName: "",
@@ -29,6 +31,14 @@ export default function StateModel({
     status: false,
     message: "",
   });
+  debugger;
+
+  const [countryOptions, setCountryOptions] = useState(countryList.map((country,item) =>(
+    {
+    key: item,
+    text: country.countryName,
+    value: country.countryId,
+  })).filter((item) => item));
 
   const [saveDisabled, setSaveDisabled] = useState(true);
   const [buttonType, setButtonType] = useState("Save");
@@ -92,11 +102,24 @@ export default function StateModel({
     }
   };
 
+  const dropdownHandler = (event,{value}) => {
+    setNewState((currentState) => ({...currentState, countryId: value}));
+  }
+
   useEffect(() => {
     if (isEdit) {
       setNewState(stateData);
     }
   }, []);
+  
+  useEffect(() => { 
+  setCountryOptions(countryList.map((country,item) =>(
+    {
+    key: item,
+    text: country.countryName,
+    value: country.countryId,
+  })).filter((item) => item));
+  }, [countryList]);
 
   useEffect(() => {
     if (isEdit) {
@@ -144,13 +167,17 @@ export default function StateModel({
           </Form.Group>
           <Form.Group className="mb-3" controlId="mobile">
             <Form.Label>CountryID</Form.Label>
-            <Form.Control
-              type="text"
-              name="countryId"
-              placeholder="CountryId"
-              value={newState?.countryId}
-              onChange={changeHandler}
+            <Dropdown
+              name="countryName"
+              placeholder='Select Country'
+              fluid
+              search
+              selection
+              options={countryOptions}
+              value = {newState?.countryId}
+              onChange={dropdownHandler}
             />
+           
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -215,6 +242,10 @@ StateModel.propTypes = {
  * stateData for object type
  */
   stateData: PropTypes.any,
+    /**
+ * countryList for object type
+ */
+    countryList: PropTypes.any,
 };
 
 StateModel.defaultProps = {
@@ -227,5 +258,6 @@ StateModel.defaultProps = {
   onClose: null,
   id: null,
   stateData: null,
+  countryList:null,
 };
 

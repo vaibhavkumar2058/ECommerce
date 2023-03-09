@@ -42,14 +42,15 @@ export default function ItemList() {
     description: null,
     recordStatusId: 1,
   });
-debugger;
+
   const addToCart = async (item) => {
     newCart.resourcesId = userInfo.resourcesId;
     newCart.productId = item.productId;
     newCart.description = item.description;
-    newCart.cost = item.price.toString();;
+    newCart.cost = item.price.toString();
     const response = await addCart(newCart);
     if (response.payload.title == "Success") {
+      debugger;
       setMessageStatus({
         mode: 'success',
         message: 'Cart Record Saved Successfully.'
