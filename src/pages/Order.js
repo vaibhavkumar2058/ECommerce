@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
 import useFetchOrder from "../hooks/useFetchOrder";
+import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
 import OrderModel from "../components/OrderModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
@@ -32,6 +33,7 @@ export default function Orders() {
   const customer=userInfo?.role?.customer;
 
 
+  const [recordStatusList, setRecordStatusList] = useState([]);
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -55,6 +57,7 @@ export default function Orders() {
     location:"",
     customerNumber:null,
     email:"",
+    recordStatusId:null,
     description:"",
       });
 
@@ -75,6 +78,10 @@ export default function Orders() {
     orderById,
     placeOrder,
   } = useFetchOrder();
+  const { 
+    getRecordStatuss,
+  } = useFetchRecordStatus();
+
 
   const columns = [
 
@@ -86,6 +93,7 @@ export default function Orders() {
     { dataField: 'customerNumber', text: 'CustomerNumber', sort: true },
     { dataField: 'email', text: 'Email', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
+    { dataField: 'recordStatusId', text: ' RecordStatus', sort: true },
     { dataField: 'orderDate', text: 'OrderDate', sort: true },
     // columns follow dataField and text structure
     {
@@ -117,6 +125,7 @@ export default function Orders() {
   ];
 
   useEffect(() => {
+    getRecordStatusList();
     if (orders.length == 0) {
       getAllOrders();
       setLoading(false)
@@ -170,6 +179,25 @@ export default function Orders() {
       console.log('sizePerPage', sizePerPage);
     }
   });
+
+  const getRecordStatusList = async () => {
+    const response = await getRecordStatuss();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setRecordStatusList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'State Fetch Failed.'
+      })
+    }
+  };
+
 
   const getAllOrders = async () => {
     const response = await getOrder();
@@ -296,6 +324,7 @@ export default function Orders() {
                 id={id}
                 orderData={order}
                 onPlaceOrder={placeOrder}
+                recordStatusList={recordStatusList}
               />
             </Modal.Body>
 

@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
 import useFetchProducts from "../hooks/useFetchProduct";
 import useFetchCategoryType from "../hooks/useFetchCategoryType";
+import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
 import ProductModel from "../components/ProductModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
@@ -33,6 +34,7 @@ export default function Products() {
   const customer=userInfo?.role?.customer;
 
 
+  const [recordStatusList, setRecordStatusList] = useState([]);
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState();
   const [loading, setLoading] = useState(true);
@@ -53,6 +55,8 @@ export default function Products() {
     productName: "",
     categoryTypeId: null,
     description: "",
+    recordStatusId:null,
+
   });
 
   const [id, setId] = useState(null);
@@ -75,6 +79,10 @@ export default function Products() {
   const {
     getCategoryTypes,
   } = useFetchCategoryType();
+
+  const { 
+    getRecordStatuss,
+  } = useFetchRecordStatus();
 
   const columns = [
 
@@ -140,6 +148,7 @@ export default function Products() {
   ];
 
   useEffect(() => {
+    getRecordStatusList();
     if (products.length == 0) {
       getAllProducts();
       setLoading(false)
@@ -194,6 +203,23 @@ export default function Products() {
     }
   });
 
+  const getRecordStatusList = async () => {
+    const response = await getRecordStatuss();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setRecordStatusList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'State Fetch Failed.'
+      })
+    }
+  };
 
   const getAllProducts = async () => {
     const response = await getProducts();
@@ -339,6 +365,8 @@ export default function Products() {
                 id={id}
                 productData={product}
                 categories={categories}
+                recordStatusList={recordStatusList}
+
               />
             </Modal.Body>
 

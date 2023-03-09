@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { css } from "@emotion/react";
-
+import { Dropdown } from 'semantic-ui-react'
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
@@ -20,12 +20,15 @@ export default function ProductModel({
   onClose,
   productData,
   categories,
+  recordStatusList = [],
+
 }) {
   const [newProduct, setNewProduct] = useState({
     productName: "",
     categoryTypeId: null,
     attachment: null,
     description: "",
+    recordStatusId:null,
   });
 
   const [categoryOptions, setCategoryOptions] = useState(categories.map((category, i) => (
@@ -34,6 +37,14 @@ export default function ProductModel({
       label: category.categoryTypeName,
       value: category.categoryTypeId,
     })).filter((item) => item));
+
+    const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus,item) =>(
+      {
+      key: item,
+      text: recordStatus.actionName,
+      value: recordStatus.recordStatusId,
+    })).filter((item) => item));
+  
 
   const [fileSelected, setFileSelected] = useState();
 
@@ -121,6 +132,10 @@ export default function ProductModel({
     }
   };
 
+  const dropdownHandler = (event,{value}) => {
+    setNewProduct((currentProduct) => ({...currentProduct, recordStatusId: value}));
+  }
+
   useEffect(() => {
     setCategoryOptions(categories.map((category, i) => (
       {
@@ -137,12 +152,22 @@ export default function ProductModel({
     }
   }, []);
 
+  useEffect(() => { 
+    setRecordStatusOptions(recordStatusList.map((recordStatus,item) =>(
+      {
+      key: item,
+      text: recordStatus.actionName,
+    value: recordStatus.recordStatusId,
+    })).filter((item) => item));
+    }, [recordStatusList]);
+  
+
   useEffect(() => {
     if (isEdit) {
       setButtonType("Update");
     }
     const isEnable =
-      !newProduct?.productName || !newProduct?.categoryTypeId || !newProduct?.description;
+      !newProduct?.productName || !newProduct?.categoryTypeId || !newProduct?.description || !newProduct?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newProduct]);
 
@@ -205,8 +230,18 @@ export default function ProductModel({
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group>
-
+          <Form.Group className="mb-3" controlId="recordStatus">
+            <Form.Label>RecordStatus</Form.Label>
+            <Dropdown
+              name="actionName"
+              placeholder='Select Action'
+              fluid
+              search
+              selection
+              options={recordStatusOptions}
+              value = {newProduct?.recordStatusId}
+              onChange={dropdownHandler}
+            />
           </Form.Group>
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
@@ -264,6 +299,10 @@ ProductModel.propTypes = {
 * categories for object type
 */
   categories: PropTypes.any,
+   /**
+ * recordStatusData for object type
+ */
+   recordStatusList: PropTypes.any,
 };
 
 ProductModel.defaultProps = {
@@ -277,5 +316,7 @@ ProductModel.defaultProps = {
   id: null,
   productData: null,
   categories: null,
+  recordStatusList:null,
+
 };
 

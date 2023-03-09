@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { css } from "@emotion/react";
-
+import { Dropdown } from 'semantic-ui-react'
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
@@ -17,13 +17,14 @@ export default function AddressTypeModel({
   id,
   onClose,
   addressTypeData,
+  recordStatusList = [],
  }) {
   const [newAddressType, setNewAddressType] = useState({
     addressTypeName:"",
     description:"",
+    recordStatusId:null,
   });
 
-  const [fileSelected, setFileSelected] = useState();
 
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
@@ -31,6 +32,14 @@ export default function AddressTypeModel({
     status: false,
     message: "",
   });
+
+  const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus,item) =>(
+    {
+    key: item,
+    text: recordStatus.actionName,
+    value: recordStatus.recordStatusId,
+  })).filter((item) => item));
+
 
   const [saveDisabled, setSaveDisabled] = useState(true);
   const [buttonType, setButtonType] = useState("Save");
@@ -52,7 +61,7 @@ export default function AddressTypeModel({
   
 
   const saveHandler = async () => {
-    newAddressType.file = fileSelected;
+
     if (isEdit) {
       const response = await onUpdateAddressType(id, newAddressType);
       if (response.payload.title == "Success") {
@@ -97,18 +106,32 @@ export default function AddressTypeModel({
     }
   };
 
+  const dropdownHandler = (event,{value}) => {
+    setNewAddressType((currentAddressType) => ({...currentAddressType, recordStatusId: value}));
+  }
+
   useEffect(() => {
     if (isEdit) {
       setNewAddressType(addressTypeData);
     }
   }, []);
 
+  useEffect(() => { 
+    setRecordStatusOptions(recordStatusList.map((recordStatus,item) =>(
+      {
+      key: item,
+      text: recordStatus.actionName,
+    value: recordStatus.recordStatusId,
+    })).filter((item) => item));
+    }, [recordStatusList]);
+  
+
   useEffect(() => {
     if (isEdit) {
       setButtonType("Update");
     }
     const isEnable =
-      !newAddressType?.addressTypeName || !newAddressType?.description ;
+      !newAddressType?.addressTypeName || !newAddressType?.description || !newAddressType?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newAddressType]);
 
@@ -157,6 +180,20 @@ export default function AddressTypeModel({
               onChange={changeHandler}
             />
           </Form.Group>
+          <Form.Group className="mb-3" controlId="recordStatus">
+            <Form.Label>RecordStatus</Form.Label>
+            <Dropdown
+              name="actionName"
+              placeholder='Select Action'
+              fluid
+              search
+              selection
+              options={recordStatusOptions}
+              value = {newAddressType?.recordStatusId}
+              onChange={dropdownHandler}
+            />
+          </Form.Group>
+
 
 
           
@@ -213,6 +250,10 @@ AddressTypeModel.propTypes = {
  * addressTypeData for object type
  */
   addressTypeData: PropTypes.any,
+  /**
+ * recordStatusData for object type
+ */
+  recordStatusList: PropTypes.any,
 };
 
 AddressTypeModel.defaultProps = {
@@ -225,5 +266,6 @@ AddressTypeModel.defaultProps = {
   onClose: null,
   id: null,
   addressTypeData: null,
+  recordStatusList:null,
 };
 

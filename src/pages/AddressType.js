@@ -2,6 +2,7 @@
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
 import useFetchAddressType from "../hooks/useFetchAddressType";
+import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
 import AddressTypeModel from "../components/AddressTypeModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
@@ -25,7 +26,7 @@ const MyExportCSV = (props) => {
 };
 
 export default function AddressTypes() {
-
+  const [recordStatusList, setRecordStatusList] = useState([]);
   const [addressTypes, setAddressTypes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -44,6 +45,7 @@ export default function AddressTypes() {
   const [addressType, setAddressType] = useState({
     addressTypeName: "",
     description:"",
+    recordStatusId:null,
     
       });
 
@@ -64,11 +66,16 @@ export default function AddressTypes() {
     addressTypeById,
   } = useFetchAddressType();
 
+  const { 
+    getRecordStatuss,
+  } = useFetchRecordStatus();
+
   const columns = [
 
     { dataField: 'addressTypeId', text: 'AddressType Id', sort: true, hidden: true },
     { dataField: 'addressTypeName', text: 'AddressTypeName', sort: true, },
     { dataField: 'description', text: ' Description', sort: true },
+    { dataField: 'recordStatusId', text: ' RecordStatus', sort: true },
     
     // columns follow dataField and text structure
     {
@@ -99,6 +106,7 @@ export default function AddressTypes() {
   ];
 
   useEffect(() => {
+    getRecordStatusList();
     if (addressTypes.length == 0) {
       getAllAddressTypes();
       setLoading(false)
@@ -152,6 +160,24 @@ export default function AddressTypes() {
       console.log('sizePerPage', sizePerPage);
     }
   });
+
+  const getRecordStatusList = async () => {
+    const response = await getRecordStatuss();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setRecordStatusList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'State Fetch Failed.'
+      })
+    }
+  };
 
 
   const getAllAddressTypes = async () => {
@@ -278,6 +304,7 @@ export default function AddressTypes() {
                 isDelete={isDelete}
                 id={id}
                 addressTypeData={addressType}
+                recordStatusList={recordStatusList}
               />
             </Modal.Body>
 

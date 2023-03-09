@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { css } from "@emotion/react";
-
+import { Dropdown } from 'semantic-ui-react'
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
@@ -18,6 +18,7 @@ export default function OrderModel({
   onClose,
   orderData,
   onPlaceOrder,
+  recordStatusList = [],
 }) {
   const [newOrder, setNewOrder] = useState({
     categoryTypeId : null,
@@ -28,6 +29,8 @@ export default function OrderModel({
     customerNumber : null,
     email:"",
     description : "",
+    recordStatusId:null,
+
   });
 
   const [messageStatus, setMessageStatus] = useState({
@@ -36,6 +39,13 @@ export default function OrderModel({
     status: false,
     message: "",
   });
+  const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus,item) =>(
+    {
+    key: item,
+    text: recordStatus.actionName,
+    value: recordStatus.recordStatusId,
+  })).filter((item) => item));
+
 
   const [saveDisabled, setSaveDisabled] = useState(true);
   const [buttonType, setButtonType] = useState("Save");
@@ -116,18 +126,31 @@ export default function OrderModel({
     })
   }
 };
+
+const dropdownHandler = (event,{value}) => {
+  setNewOrder((currentOrder) => ({...currentOrder, recordStatusId: value}));
+}
   useEffect(() => {
     if (isEdit) {
       setNewOrder(orderData);
     }
   }, []);
 
+  useEffect(() => { 
+    setRecordStatusOptions(recordStatusList.map((recordStatus,item) =>(
+      {
+      key: item,
+      text: recordStatus.actionName,
+    value: recordStatus.recordStatusId,
+    })).filter((item) => item));
+    }, [recordStatusList]);
+
   useEffect(() => {
     if (isEdit) {
       setButtonType("Update");
     }
     const isEnable =
-    !newOrder?.categoryTypeId || !newOrder?.productId|| !newOrder?.orderPrice || !newOrder?.location || !newOrder?.orderDate || !newOrder?.customerNumber || !newOrder?.description|| !newOrder?.email;
+    !newOrder?.categoryTypeId || !newOrder?.productId|| !newOrder?.orderPrice || !newOrder?.location || !newOrder?.orderDate || !newOrder?.customerNumber || !newOrder?.description|| !newOrder?.email || !newOrder?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newOrder]);
 
@@ -251,6 +274,22 @@ export default function OrderModel({
               onChange={changeHandler}
             />
           </Form.Group>
+
+          <Form.Group className="mb-3" controlId="recordStatus">
+            <Form.Label>RecordStatus</Form.Label>
+            <Dropdown
+              name="actionName"
+              placeholder='Select Action'
+              fluid
+              search
+              selection
+              options={recordStatusOptions}
+              value = {newOrder?.recordStatusId}
+              onChange={dropdownHandler}
+            />
+          </Form.Group>
+
+
           
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
@@ -309,7 +348,10 @@ OrderModel.propTypes = {
  * onPlaceOrder for object type
  */
   onPlaceOrder: PropTypes.any,
-
+ /**
+ * recordStatusData for object type
+ */
+ recordStatusList: PropTypes.any,
 };
 
 OrderModel.defaultProps = {
@@ -323,5 +365,6 @@ OrderModel.defaultProps = {
   id: null,
   orderData: null,
   onPlaceOrder:null,
+  recordStatusList:null,
 };
 
