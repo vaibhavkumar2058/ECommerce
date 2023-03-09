@@ -20,26 +20,28 @@ export default () => {
     resourcesById,
   } = useFetchResources();
 
-  const UpdateResource= () =>{
+  const UpdateResource = () => {
     const saveHandler = async () => {
-     
-     
-        const response = await updateResources(6, resource);
-        if (response.payload.title == "Success") {
-          
-        }
-        else {
-          
-        }
+
+
+      const response = await updateResources(6, resource);
+      if (response.payload.title == "Success") {
+
       }
-    
+      else {
+
+      }
+    }
+
   }
 
   useEffect(() => {
     if (resource == null) {
-      getResourcesById(6);
-     
+      getResourcesById(23);
+
     }
+
+    
   }, [resource]);
 
   const getResourcesById = async (id) => {
@@ -48,12 +50,12 @@ export default () => {
       setResource(response.payload);
     }
     else {
-      
+
     }
   };
 
 
-  
+
   return (
     <Tabs
       defaultActiveKey="profile"
@@ -113,41 +115,73 @@ export default () => {
                   value={resource?.email}
                 />
               </Form.Group></div>
-              <div class="col-md-4 col-lg-4"><Dropdown>
-      <Dropdown.Toggle  >
-      
-                Gender
-                <Form.Control
-                  type="text"
-                  name="genderId"
-                  placeholder="Gender"
-                  value={resource?.genderId}
-                />
-             
-      </Dropdown.Toggle>
+              <div class="col-md-4 col-lg-4">
+                <Dropdown>
+                <Dropdown.Toggle  >
 
-      <Dropdown.Menu>
-        <Dropdown.Item href="#/action-1">Female</Dropdown.Item>
-        <Dropdown.Item href="#/action-2">Male </Dropdown.Item>
-       
-      </Dropdown.Menu>
-    </Dropdown></div>
-             
+                  Gender
+                  <Form.Control
+                    type="text"
+                    name="genderId"
+                    placeholder="Gender"
+                    value={resource?.genderId}
+                  />
+
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item href="#/action-1">Female</Dropdown.Item>
+                  <Dropdown.Item href="#/action-2">Male </Dropdown.Item>
+
+                </Dropdown.Menu>
+              </Dropdown></div>
+
 
             </div>
             <div class="row">
 
-            <div class="col-md-8 col-lg-8"><Form.Group>
-            
-            <Form.Label>Address</Form.Label>
-        <Form.Control as="textarea" rows={3}
-        type="text"
-        name="addressId"
-        placeholder="Address"
-        value={resource?.addressId} />
+              <div class="col-md-2 col-lg-2"><Form.Group>
+              <div class="row">
+                <Form.Label>Address</Form.Label>
+                <Form.Control as="textarea" rows={1} 
+                  type="text"
+                  name="addressId"
+                  placeholder="Address"
+                  value={resource?.address.city}/>
+       
+
+                  <div class="col-md-2 col-lg-2"><Form.Control as="textarea" rows={1}
+                  type="text"
+                  name="addressId"
+                  placeholder="Address"
+                  value={resource?.address.town } /></div>
+
+                  <div class="col-md-2 col-lg-2"><Form.Control as="textarea" rows={1}
+                  type="text"
+                  name="addressId"
+                  placeholder="Address"
+                  value={resource?.address.locality} /></div>
+
+                  <div class="col-md-2 col-lg-2"><Form.Control as="textarea" rows={1}
+                  type="text"
+                  name="addressId"
+                  placeholder="Address"
+                  value={resource?.address.pincode} /></div>
+                  
+                  <div class="col-md-2 col-lg-2"><Form.Control as="textarea" rows={1}
+                  type="text"
+                  name="addressId"
+                  placeholder="Address"
+                  value={resource?.address.landMark} />
+                  </div>
+                  </div>
+
+                  
+
+                  
               </Form.Group></div>
 
-              <div class="col-md-4 col-lg-4"><Form.Group>
+              <div class="col-md-2 col-lg-2"><Form.Group>
                 <Form.Label>BloodGroup</Form.Label>
                 <Form.Control
                   type="text"
@@ -157,19 +191,14 @@ export default () => {
                 />
               </Form.Group></div>
               <div class="row">
-            <div class="col-md-8 col-lg-8"></div>
-            <div class="col-md-4 col-lg-4"><Button variant="secondary" onClick={() => UpdateResource()}>
-              Update Profile </Button></div>
-            <div class="col-md-2 col-lg-2"></div>
-          </div>
+                <div class="col-md-8 col-lg-8"></div>
+                <div class="col-md-4 col-lg-4"><Button variant="secondary" onClick={() => UpdateResource()}>
+                  Update Profile </Button></div>
+                <div class="col-md-2 col-lg-2"></div>
+              </div>
 
 
             </div>
-
-
-
-
-
 
           </form>
 

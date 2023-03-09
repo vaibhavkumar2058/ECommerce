@@ -83,7 +83,7 @@ export default function Orders() {
   } = useFetchRecordStatus();
 
 
-  const columns = [
+  const columns = [ 
 
     { dataField: 'orderId', text: 'OrderId', sort: true},
     { dataField: 'categoryTypeId', text: ' CategoryTypeId', sort: true },

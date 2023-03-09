@@ -18,7 +18,7 @@ import {
   const hapyCarURL = "https://localhost:7062/order";
   const placeOrdersURL = "https://localhost:7062/placeorders";
   const productOrderListURL = "https://localhost:7062/productorderlist";
-  const orderReportsURL = "https://localhost:7062/orderreports";
+  const orderReportsURL = "https://localhost:7062/order/reports";
   const API = useAPI();
   const SUCCESS = "Success";
   const ERROR = "Error";
@@ -219,6 +219,36 @@ import {
     const productOrderList = () => {
       dispatch(getOrderBeginAction());
       return API.get(productOrderListURL,
+        null,
+        { suppressErrors: [400] }
+      )
+        .then(({ data }) =>
+          dispatch(
+            getOrderSuccessAction({
+              ...data,
+              title: SUCCESS,
+            })
+          )
+        )
+        .catch((error) => {
+          let errorMsg = "error msg from product OrderList";
+          if (error.response.data.order) {
+            const [errors] = error.response.data.order;
+            errorMsg = errors;
+          }
+          dispatch(
+            getOrderFailureAction({
+              ...errorMsg,
+              title: ERROR,
+              errorMsg,
+            })
+          );
+        });
+    };
+    // OrderReports GET  ACTIONS
+    const orderReports = () => {
+      dispatch(getOrderBeginAction());
+      return API.get(orderReportsURL,
         null,
         { suppressErrors: [400] }
       )
