@@ -15,7 +15,7 @@ import Badge from 'react-bootstrap/Badge';
 import useFetchNotifications from "./hooks/useFetchNotification";
 
 
-//import 'semantic-ui-css/semantic.min.css'
+import 'semantic-ui-css/semantic.min.css'
 
 function App() {
   //let navigate = useNavigate();
@@ -45,7 +45,6 @@ function App() {
 
   const getNotificationsByResourcesId = async (id) => {
     const response = await getNotificationListByResourcesId(id);
-    debugger
     if (response.payload.title == "Success") {
       var arr = [];
       for (var key in response.payload) {
