@@ -33,7 +33,7 @@ function App() {
     window.location.href = "/myProfile";
   };
   const [notifications, setNotifications] = useState([]);
-
+  const [cart, setCart] = useState([]);
   const {
     getNotificationListByResourcesId,
   } = useFetchNotifications();
@@ -59,7 +59,6 @@ function App() {
 
     }
   };
-  const [cart, setCart] = useState([]);
 
   const {
     getCartListByResourcesId,
@@ -67,7 +66,7 @@ function App() {
 
   useEffect(() => {
     if (cart.length == 0) {
-      getCartByResourcesId(23);
+      getCartByResourcesId(6);
 
     }
   }, [cart]);
@@ -109,8 +108,8 @@ function App() {
                 </a>
                 </li>
                 <li className="nav-item dropdown"><a href="Shoppinglist" >
-                  <Badge className="cart" bg="secondary">{cart?.length}</Badge><img src="https://cdn-icons-png.flaticon.com/512/1413/1413908.png" width="35" height="35"></img>
-                </a>
+                  <Badge className="notification cart" bg="secondary">{cart?.length}</Badge><img src="https://cdn-icons-png.flaticon.com/512/1413/1413908.png" width="35" height="35"></img>
+                </a> 
                 </li>
 
                 <li className="nav-item dropdown ms-lg-3"><a className="nav-link dropdown-toggle pt-1 px-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
