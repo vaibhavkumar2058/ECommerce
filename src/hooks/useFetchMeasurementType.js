@@ -21,7 +21,7 @@ import {
   const ERROR = "Error";
 
   // MeasurementType GET  ACTIONS
-  const getMeasurementType = () => {
+  const getMeasurementTypes = () => {
     dispatch(getMeasurementTypeBeginAction());
     return API.get(hapyCarURL,
       null,
@@ -191,7 +191,7 @@ import {
     addMeasurementType,
     updateMeasurementType,
     deleteMeasurementType,
-    getMeasurementType,
+    getMeasurementTypes,
     measurementTypeById,
   };
 }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
 import useFetchVehicleType from "../hooks/useFetchVehicleType";
+import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
 import VehicleTypeModel from "../components/VehicleTypeModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
@@ -27,6 +28,7 @@ const MyExportCSV = (props) => {
 export default function VehicleType() {
 
   const [vehicleTypes, setVehicleTypes] = useState([]);
+  const [recordStatusList, setRecordStatusList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -63,6 +65,11 @@ export default function VehicleType() {
     vehicleTypeById,
   } = useFetchVehicleType();
 
+  const { 
+    getRecordStatuss,
+  } = useFetchRecordStatus();
+
+
   const columns = [
 
     { dataField: 'vehicleTypeId', text: ' VehicleTypeId', sort: true, hidden: true},
@@ -98,6 +105,7 @@ export default function VehicleType() {
   ];
 
   useEffect(() => {
+    getRecordStatusList();
     if ( vehicleTypes.length == 0) {
       getAllVehicleType();
       setLoading(false)
@@ -151,6 +159,25 @@ export default function VehicleType() {
       console.log('sizePerPage', sizePerPage);
     }
   });
+
+  const getRecordStatusList = async () => {
+    const response = await getRecordStatuss();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setRecordStatusList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'State Fetch Failed.'
+      })
+    }
+  };
+
 
 
   const getAllVehicleType = async () => {
@@ -277,6 +304,7 @@ export default function VehicleType() {
                 isDelete={isDelete}
                 id={id}
                 vehicleTypeData={vehicleType}
+                recordStatusList={recordStatusList}
               />
             </Modal.Body>
 

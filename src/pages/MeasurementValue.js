@@ -62,7 +62,7 @@ export default function MeasurementValues() {
     addMeasurementValue,
     updateMeasurementValue,
     deleteMeasurementValue,
-    getMeasurementValue,
+    getMeasurementValues,
     measurementValueById,
   } = useFetchMeasurementValue();
   const { 
@@ -179,7 +179,7 @@ export default function MeasurementValues() {
 
 
   const getAllMeasurementValues = async () => {
-    const response = await getMeasurementValue();
+    const response = await getMeasurementValues();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',

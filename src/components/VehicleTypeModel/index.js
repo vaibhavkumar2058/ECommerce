@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { css } from "@emotion/react";
-
+import { Dropdown } from 'semantic-ui-react'
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
@@ -16,11 +16,20 @@ export default function VehicleTypeModel({
   id,
   onClose,
   vehicleTypeData,
+  recordStatusList = [],
 }) {
   const [newVehicleType, setNewVehicleType] = useState({
     vehicleTypeName: "",
     description: "",
   });
+
+  const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus,item) =>(
+    {
+    key: item,
+    text: recordStatus.actionName,
+    value: recordStatus.recordStatusId,
+  })).filter((item) => item));
+
 
   const [fileSelected, setFileSelected] = useState();
 
@@ -96,11 +105,25 @@ export default function VehicleTypeModel({
     }
   };
 
+  const dropdownHandler = (event,{value}) => {
+    setNewVehicleType((currentVehicleType) => ({...currentVehicleType, recordStatusId: value}));
+  }
+
+
   useEffect(() => {
     if (isEdit) {
       setNewVehicleType(vehicleTypeData);
     }
   }, []);
+
+  useEffect(() => { 
+    setRecordStatusOptions(recordStatusList.map((recordStatus,item) =>(
+      {
+      key: item,
+      text: recordStatus.actionName,
+    value: recordStatus.recordStatusId,
+    })).filter((item) => item));
+    }, [recordStatusList]);
 
   useEffect(() => {
     if (isEdit) {
@@ -157,6 +180,20 @@ export default function VehicleTypeModel({
               placeholder="Description"
               value={newVehicleType?.description}
               onChange={changeHandler}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="recordStatus">
+            <Form.Label>RecordStatus</Form.Label>
+            <Dropdown
+              name="actionName"
+              placeholder='Select Action'
+              fluid
+              search
+              selection
+              options={recordStatusOptions}
+              value = {newVehicleType?.recordStatusId}
+              onChange={dropdownHandler}
             />
           </Form.Group>
           {/* <Form.Group>
@@ -221,6 +258,10 @@ VehicleTypeModel.propTypes = {
    * VehicleTypeData for object type
    */
   VehicleTypeData: PropTypes.any,
+   /**
+ * recordStatusData for object type
+ */
+   recordStatusList: PropTypes.any,
 };
 
 VehicleTypeModel.defaultProps = {
@@ -233,4 +274,5 @@ VehicleTypeModel.defaultProps = {
   onClose: null,
   id: null,
   VehicleTypeData: null,
+  recordStatusList:null,
 };
