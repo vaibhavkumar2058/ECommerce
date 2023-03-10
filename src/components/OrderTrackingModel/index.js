@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { css } from "@emotion/react";
-
+import { Dropdown } from 'semantic-ui-react'
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
@@ -19,13 +19,14 @@ export default function OrderTrackingModel({
   onClose,
   orderTrackingData,
   //orderStatuss,
-
+  recordStatusList = [],
 
 }) {
   const [newOrderTracking, setNewOrderTracking] = useState({
     orderId:null,
     orderStatusId:null,
     description:"",
+    recordStatusId:null,
     
   });
   
@@ -35,6 +36,13 @@ export default function OrderTrackingModel({
   //     label: orderStatus.actionName,
   //     value: orderStatus.orderStatusId,
   //   })).filter((item) => item));
+
+  const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus,item) =>(
+    {
+    key: item,
+    text: recordStatus.actionName,
+    value: recordStatus.recordStatusId,
+  })).filter((item) => item));
 
   const [fileSelected, setFileSelected] = useState();
 
@@ -115,12 +123,26 @@ export default function OrderTrackingModel({
       })
     }
   };
+  const dropdownHandler = (event,{value}) => {
+    setNewOrderTracking((currentOrderTracking) => ({...currentOrderTracking, recordStatusId: value}));
+  }
+
 
   useEffect(() => {
     if (isEdit) {
       setNewOrderTracking(orderTrackingData);
     }
   }, []);
+
+  useEffect(() => { 
+    setRecordStatusOptions(recordStatusList.map((recordStatus,item) =>(
+      {
+      key: item,
+      text: recordStatus.actionName,
+    value: recordStatus.recordStatusId,
+    })).filter((item) => item));
+    }, [recordStatusList]);
+  
 
   useEffect(() => {
     if (isEdit) {
@@ -163,6 +185,19 @@ export default function OrderTrackingModel({
               placeholder="OrderId"
               value={newOrderTracking?.orderId}
               onChange={changeHandler}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="recordStatus">
+            <Form.Label>RecordStatus</Form.Label>
+            <Dropdown
+              name="actionName"
+              placeholder='Select Action'
+              fluid
+              search
+              selection
+              options={recordStatusOptions}
+              value = {newOrderTracking?.recordStatusId}
+              onChange={dropdownHandler}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="state">
@@ -241,7 +276,12 @@ OrderTrackingModel.propTypes = {
  * orderTrackingData for object type
  */
   orderTrackingData: PropTypes.any,
+   /**
+ * recordStatusData for object type
+ */
+   recordStatusList: PropTypes.any,
 };
+
 
 OrderTrackingModel.defaultProps = {
   onAddOrderTracking: null,
@@ -253,5 +293,6 @@ OrderTrackingModel.defaultProps = {
   onClose: null,
   id: null,
   orderTrackingData: null,
-};
+  recordStatusList:null,
 
+};

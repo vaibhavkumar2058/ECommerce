@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
 import useFetchMeasurementType from "../hooks/useFetchMeasurementType";
 import MeasurementTypeModel from "../components/MeasurementTypeModel";
+import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
@@ -27,6 +28,7 @@ const MyExportCSV = (props) => {
 export default function MeasurementTypes() {
 
   const [measurementTypes, setMeasurementTypes] = useState([]);
+  const [recordStatusList, setRecordStatusList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -44,6 +46,8 @@ export default function MeasurementTypes() {
   const [measurementType, setMeasurementType] = useState({
     name: "",
     description:"",
+    recordStatusId:null,
+
       });
 
   const [id, setId] = useState(null);
@@ -61,8 +65,11 @@ export default function MeasurementTypes() {
     deleteMeasurementType,
     getMeasurementType,
     measurementTypeById,
-
   } = useFetchMeasurementType();
+
+  const { 
+    getRecordStatuss,
+  } = useFetchRecordStatus();
 
   const columns = [
 
@@ -97,13 +104,16 @@ export default function MeasurementTypes() {
       },
     },
   ];
-
   useEffect(() => {
-    if (measurementTypes.length == 0) {
+    getRecordStatusList();
+    if (measurementType.length == 0) {
       getAllMeasurementTypes();
       setLoading(false)
     }
-  }, [measurementTypes]);
+  }, [MeasurementTypes]);
+
+
+ 
 
 
   const defaultSorted = [{
@@ -153,6 +163,23 @@ export default function MeasurementTypes() {
       console.log('sizePerPage', sizePerPage);
     }
   });
+  const getRecordStatusList = async () => {
+    const response = await getRecordStatuss();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setRecordStatusList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'MeasurementType Fetch Failed.'
+      })
+    }
+  };
 
 
   const getAllMeasurementTypes = async () => {
@@ -279,6 +306,7 @@ export default function MeasurementTypes() {
                 isDelete={isDelete}
                 id={id}
                 measurementTypeData={measurementType}
+                recordStatusList={recordStatusList}
               />
             </Modal.Body>
 

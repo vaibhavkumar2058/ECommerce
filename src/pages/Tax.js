@@ -3,6 +3,8 @@ import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
 import useFetchTax from "../hooks/useFetchTax";
 import TaxModel from "../components/TaxModel";
+import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
+import useFetchProduct from "../hooks/useFetchProduct";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
@@ -45,6 +47,8 @@ Geocode.fromLatLng("12.9800000000", "77.5927000000").then(
 );
 
   const [taxs, setTaxs] = useState([]);
+  const [recordStatusList, setRecordStatusList] = useState([]);
+  const [productList, setProductList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -63,6 +67,8 @@ Geocode.fromLatLng("12.9800000000", "77.5927000000").then(
     
     productId:null,
     taxDescription:"",
+    recordStatusId:null,
+
   });
 
   const [id, setId] = useState(null);
@@ -81,6 +87,14 @@ Geocode.fromLatLng("12.9800000000", "77.5927000000").then(
     getTaxs,
     taxById,
   } = useFetchTax();
+
+  const { 
+    getRecordStatuss,
+  } = useFetchRecordStatus();
+  
+  const { 
+    getProducts,
+  } = useFetchProduct();
 
   const columns = [
 
@@ -114,15 +128,15 @@ Geocode.fromLatLng("12.9800000000", "77.5927000000").then(
       },
     },
   ];
-
   useEffect(() => {
-    if (taxs.length == 0) {
+    getRecordStatusList();
+    getProductList();
+    if (tax.length == 0) {
       getAllTaxs();
       setLoading(false)
     }
-  }, [taxs]);
-
-
+  }, [tax]);
+  
   const defaultSorted = [{
     dataField: 'taxId',
     order: 'desc'
@@ -169,6 +183,40 @@ Geocode.fromLatLng("12.9800000000", "77.5927000000").then(
       console.log('sizePerPage', sizePerPage);
     }
   });
+  const getRecordStatusList = async () => {
+    const response = await getRecordStatuss();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setRecordStatusList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'Tax Fetch Failed.'
+      })
+    }
+  };
+  const getProductList = async () => {
+    const response = await getProducts();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setProductList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'Tax Fetch Failed.'
+      })
+    }
+  };
 
 
   const getAllTaxs = async () => {
@@ -295,6 +343,9 @@ Geocode.fromLatLng("12.9800000000", "77.5927000000").then(
                 isDelete={isDelete}
                 id={id}
                 taxData={tax}
+                recordStatusList={recordStatusList}
+                productList={productList}
+
               />
             </Modal.Body>
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { css } from "@emotion/react";
-
+import { Dropdown } from 'semantic-ui-react'
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
@@ -17,16 +17,31 @@ export default function TaxModel({
   id,
   onClose,
   taxData,
-}) 
-{
+  recordStatusList = [],
+  productList = [],
+
+}) {
   const [newTax, setNewTax] = useState({
-    productId:null,
-    taxValue:"",
-    taxDescription:"",
+    productId: null,
+    taxValue: "",
+    taxDescription: "",
+    recordStatusId: null,
+  });
+  const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus, item) => (
+    {
+      key: item,
+      text: recordStatus.actionName,
+      value: recordStatus.recordStatusId,
+    })).filter((item) => item));
+    const [productOptions, setProductOptions] = useState(productList.map((product, item) => (
+      {
+        key: item,
+        text: product.productName,
+        value: product.productId,
+      })).filter((item) => item));
 
- });
 
-  const [fileSelected, setFileSelected] = useState();
+ 
 
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
@@ -52,10 +67,10 @@ export default function TaxModel({
     });
   };
 
-  
+
 
   const saveHandler = async () => {
-    newTax.file = fileSelected;
+ 
     if (isEdit) {
       const response = await onUpdateTax(id, newTax);
       if (response.payload.title == "Success") {
@@ -99,6 +114,11 @@ export default function TaxModel({
       })
     }
   };
+  const dropdownHandler = (event, { value }) => {
+    setNewTax((currentTax) => ({ ...currentTax, recordStatusId: value }));
+    setNewTax((currentTax) => ({ ...currentTax, productId: value }));
+  }
+
 
   useEffect(() => {
     if (isEdit) {
@@ -107,11 +127,31 @@ export default function TaxModel({
   }, []);
 
   useEffect(() => {
+    setRecordStatusOptions(recordStatusList.map((recordStatus, item) => (
+      {
+        key: item,
+        text: recordStatus.actionName,
+        value: recordStatus.recordStatusId,
+      })).filter((item) => item));
+  }, [recordStatusList]);
+
+  useEffect(() => {
+    setProductOptions(productList.map((product, item) => (
+      {
+        key: item,
+        text: product.productName,
+        value: product.productId,
+      })).filter((item) => item));
+  }, [productList]);
+
+
+
+  useEffect(() => {
     if (isEdit) {
       setButtonType("Update");
     }
     const isEnable =
-       !newTax?.productId  || !newTax?.taxValue || !newTax?.taxDescription; 
+      !newTax?.productId || !newTax?.taxValue || !newTax?.taxDescription;
     setSaveDisabled(isEnable);
   }, [newTax]);
 
@@ -142,12 +182,15 @@ export default function TaxModel({
             controlId="formTax"
           >
             <Form.Label>ProductId</Form.Label>
-            <Form.Control
-              type="text"
-              name="productId"
-              placeholder="Enter ProductId"
+            <Dropdown
+              name="productName"
+              placeholder='Select Product'
+              fluid
+              search
+              selection
+              options={productOptions}
               value={newTax?.productId}
-              onChange={changeHandler}
+              onChange={dropdownHandler}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="TaxValue">
@@ -160,7 +203,19 @@ export default function TaxModel({
               onChange={changeHandler}
             />
           </Form.Group>
-
+          <Form.Group className="mb-3" controlId="recordStatus">
+            <Form.Label>RecordStatus</Form.Label>
+            <Dropdown
+              name="actionName"
+              placeholder='Select Action'
+              fluid
+              search
+              selection
+              options={recordStatusOptions}
+              value={newTax?.recordStatusId}
+              onChange={dropdownHandler}
+            />
+          </Form.Group>
 
           <Form.Group className="mb-3" controlId="TaxDescription">
             <Form.Label>TaxDescription</Form.Label>
@@ -224,6 +279,14 @@ TaxModel.propTypes = {
  * taxData for object type
  */
   taxData: PropTypes.any,
+  /**
+ * recordStatusList for object type
+ */
+  recordStatusList: PropTypes.any,
+   /**
+ * productList for object type
+ */
+   productList: PropTypes.any,
 };
 
 TaxModel.defaultProps = {
@@ -236,5 +299,8 @@ TaxModel.defaultProps = {
   onClose: null,
   id: null,
   taxData: null,
+  recordStatusList:null,
+  productList:null,
+
 };
 

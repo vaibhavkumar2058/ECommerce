@@ -157,7 +157,7 @@ export default function Products() {
 
 
   const defaultSorted = [{
-    dataField: 'productId',
+    dataField: 'productId', 
     order: 'desc'
   }];
 
@@ -216,7 +216,7 @@ export default function Products() {
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'State Fetch Failed.'
+        message: 'Product Fetch Failed.'
       })
     }
   };
