@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
 import useFetchMeasurementValue from "../hooks/useFetchMeasurementValue";
+import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
 import MeasurementValueModel from "../components/MeasurementValueModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
@@ -27,6 +28,7 @@ const MyExportCSV = (props) => {
 export default function MeasurementValues() {
 
   const [measurementValues, setMeasurementValues] = useState([]);
+  const [recordStatusList, setRecordStatusList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -63,12 +65,17 @@ export default function MeasurementValues() {
     getMeasurementValue,
     measurementValueById,
   } = useFetchMeasurementValue();
+  const { 
+    getRecordStatuss,
+  } = useFetchRecordStatus();
+
 
   const columns = [
 
     { dataField: 'measurementValueId', text: 'MeasurementValue Id', sort: true, hidden: true },
     { dataField: 'value', text: ' value', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
+    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true },
     // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -98,6 +105,7 @@ export default function MeasurementValues() {
   ];
 
   useEffect(() => {
+    getRecordStatusList();
     if (measurementValues.length == 0) {
       getAllMeasurementValues();
       setLoading(false)
@@ -151,6 +159,23 @@ export default function MeasurementValues() {
       console.log('sizePerPage', sizePerPage);
     }
   });
+  const getRecordStatusList = async () => {
+    const response = await getRecordStatuss();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setRecordStatusList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'RecordStatus Fetch Failed.'
+      })
+    }
+  };
 
 
   const getAllMeasurementValues = async () => {
@@ -277,6 +302,7 @@ export default function MeasurementValues() {
                 isDelete={isDelete}
                 id={id}
                 measurementValueData={measurementValue}
+                recordStatusList={recordStatusList}
               />
             </Modal.Body>
 

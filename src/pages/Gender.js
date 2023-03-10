@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
 import useFetchGender from "../hooks/useFetchGender";
+import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
 import GenderModel from "../components/GenderModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
@@ -12,6 +13,7 @@ import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit/dist/rea
 
 
 const { SearchBar, ClearSearchButton } = Search;
+
 
 const MyExportCSV = (props) => {
   const handleClick = () => {
@@ -27,6 +29,7 @@ const MyExportCSV = (props) => {
 export default function Gender() {
 
   const [genders, setGenders] = useState([]);
+  const [recordStatusList, setRecordStatusList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -63,6 +66,9 @@ export default function Gender() {
     getGenders,
     genderById,
   } = useFetchGender();
+  const { 
+    getRecordStatuss,
+  } = useFetchRecordStatus();
 
   const columns = [
 
@@ -100,6 +106,7 @@ export default function Gender() {
   ];
 
   useEffect(() => {
+    getRecordStatusList();
     if (genders.length == 0) {
       getAllGender();
       setLoading(false)
@@ -153,6 +160,23 @@ export default function Gender() {
       console.log('sizePerPage', sizePerPage);
     }
   });
+  const getRecordStatusList = async () => {
+    const response = await getRecordStatuss();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setRecordStatusList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'State Fetch Failed.'
+      })
+    }
+  };
 
 
   const getAllGender = async () => {
@@ -279,6 +303,7 @@ export default function Gender() {
                 isDelete={isDelete}
                 id={id}
                 genderData={gender}
+                recordStatusList={recordStatusList}
               />
             </Modal.Body>
 

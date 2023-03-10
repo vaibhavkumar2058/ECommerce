@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
 import useFetchOrderStatus from "../hooks/useFetchOrderStatus";
+import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
 import OrderStatusModel from "../components/OrderStatusModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
@@ -27,6 +28,7 @@ const MyExportCSV = (props) => {
 export default function OrderStatus() {
 
   const [orderStatuses, setOrderStatuses] = useState([]);
+  const [recordStatusList, setRecordStatusList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -57,6 +59,7 @@ export default function OrderStatus() {
     status: false,
     message: "",
   });
+  
 
   const { 
     addOrderStatus,
@@ -65,6 +68,9 @@ export default function OrderStatus() {
     getOrderStatuses,
     orderStatusById,
   } = useFetchOrderStatus();
+  const { 
+    getRecordStatuss,
+  } = useFetchRecordStatus();
 
   const columns = [
     { dataField: 'orderStatusId', text: 'orderStatus Id', sort: true, hidden: true },
@@ -103,6 +109,7 @@ export default function OrderStatus() {
   ];
 
   useEffect(() => {
+    getRecordStatusList();
     if (orderStatuses.length == 0) {
       getAllOrderStatuses();
       setLoading(false)
@@ -156,6 +163,23 @@ export default function OrderStatus() {
       console.log('sizePerPage', sizePerPage);
     }
   });
+  const getRecordStatusList = async () => {
+    const response = await getRecordStatuss();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setRecordStatusList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'RecordStatus Fetch Failed.'
+      })
+    }
+  };
 
 
   const getAllOrderStatuses = async () => {
@@ -282,6 +306,7 @@ export default function OrderStatus() {
                 isDelete={isDelete}
                 id={id}
                 orderStatusData={orderStatus}
+                recordStatusList={recordStatusList}
               />
             </Modal.Body>
 
