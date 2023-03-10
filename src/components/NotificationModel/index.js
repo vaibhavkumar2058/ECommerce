@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { css } from "@emotion/react";
-
+import { Dropdown } from 'semantic-ui-react'
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
@@ -17,11 +17,13 @@ export default function NotificationModel({
   id,
   onClose,
   notificationData,
+  recordStatusList = [],
 }) {
   const [newNotification, setNewNotification] = useState({
     notificationTypeId:null,
     notificationName: "",
     description: "",
+    recordStatusId:null,
   });
 
   const [fileSelected, setFileSelected] = useState();
@@ -32,6 +34,15 @@ export default function NotificationModel({
     status: false,
     message: "",
   });
+
+  const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus,item) =>(
+    {
+    key: item,
+    text: recordStatus.actionName,
+    value: recordStatus.recordStatusId,
+  })).filter((item) => item));
+
+
 
   const [saveDisabled, setSaveDisabled] = useState(true);
   const [buttonType, setButtonType] = useState("Save");
@@ -95,18 +106,31 @@ export default function NotificationModel({
     }
   };
 
+  const dropdownHandler = (event,{value}) => {
+    setNewNotification((currentNotification) => ({...currentNotification, recordStatusId: value}));
+  }
   useEffect(() => {
     if (isEdit) {
       setNewNotification(notificationData);
     }
   }, []);
 
+  useEffect(() => { 
+    setRecordStatusOptions(recordStatusList.map((recordStatus,item) =>(
+      {
+      key: item,
+      text: recordStatus.actionName,
+    value: recordStatus.recordStatusId,
+    })).filter((item) => item));
+    }, [recordStatusList]);
+  
+
   useEffect(() => {
     if (isEdit) {
       setButtonType("Update");
     }
     const isEnable =
-      !newNotification?.notificationName|| !newNotification?.notificationTypeId|| !newNotification?.description;
+      !newNotification?.notificationName|| !newNotification?.notificationTypeId|| !newNotification?.description || !newNotification?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newNotification]);
 
@@ -168,6 +192,19 @@ export default function NotificationModel({
               onChange={changeHandler}
             />
           </Form.Group> */}
+           <Form.Group className="mb-3" controlId="recordStatus">
+            <Form.Label>RecordStatus</Form.Label>
+            <Dropdown
+              name="actionName"
+              placeholder='Select Action'
+              fluid
+              search
+              selection
+              options={recordStatusOptions}
+              value = {newNotification?.recordStatusId}
+              onChange={dropdownHandler}
+            />
+          </Form.Group>
 
           <Form.Group>
             <Form.Label>Description</Form.Label>
@@ -231,6 +268,10 @@ NotificationModel.propTypes = {
  * notificationData for object type
  */
   notificationData: PropTypes.any,
+  /**
+ * recordStatusData for object type
+ */
+  recordStatusList: PropTypes.any,
 };
 
 NotificationModel.defaultProps = {
@@ -243,5 +284,6 @@ NotificationModel.defaultProps = {
   onClose: null,
   id: null,
   notificationData: null,
+  recordStatusList:null,
 };
 
