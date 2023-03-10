@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
 import useFetchInvoice from "../hooks/useFetchInvoice";
+import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
 import InvoiceModel from "../components/InvoiceModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
@@ -31,6 +32,7 @@ export default function Invoices() {
   const dealer=userInfo?.role?.dealer;
   const customer=userInfo?.role?.customer;
 
+  const [recordStatusList, setRecordStatusList] = useState([]);
   const [invoices, setInvoices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -52,7 +54,7 @@ export default function Invoices() {
     totalIncludeTax:null,
     total:null,
     description:"",
-    recordStatusId:"1",
+    recordStatusId:null,
     //invoiceDate:null,
 
       });
@@ -74,6 +76,10 @@ export default function Invoices() {
     invoiceById,
   } = useFetchInvoice();
 
+  const { 
+    getRecordStatuss,
+  } = useFetchRecordStatus();
+
   const columns = [
     { dataField: 'invoiceId', text: 'invoiceId', sort: true, hidden: true },
     { dataField: 'resourcesId', text: 'ResourcesId', sort: true  },
@@ -82,6 +88,7 @@ export default function Invoices() {
     { dataField: 'total', text: 'Total', sort: true },
     //{ dataField: 'invoiceDate', text: 'InvoiceDate', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
+    { dataField: 'recordStatusId', text: ' RecordStatus', sort: true },
     // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -116,6 +123,7 @@ export default function Invoices() {
   ];
 
   useEffect(() => {
+    getRecordStatusList();
     if (invoices.length == 0) {
       getAllInvoices();
       setLoading(false)
@@ -169,6 +177,25 @@ export default function Invoices() {
       console.log('sizePerPage', sizePerPage);
     }
   });
+
+  const getRecordStatusList = async () => {
+    const response = await getRecordStatuss();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setRecordStatusList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'State Fetch Failed.'
+      })
+    }
+  };
+
 
 
   const getAllInvoices = async () => {
@@ -295,6 +322,7 @@ export default function Invoices() {
                 isDelete={isDelete}
                 id={id}
                 invoiceData={invoice}
+                recordStatusList={recordStatusList}
               />
             </Modal.Body>
 
