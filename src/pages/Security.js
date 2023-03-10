@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
 import useFetchSecurity from "../hooks/useFetchSecurity";
+import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
 import SecurityModel from "../components/SecurityModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
@@ -27,6 +28,7 @@ const MyExportCSV = (props) => {
 export default function Securities() {
 
   const [securities, setSecurities] = useState([]);
+  const [recordStatusList, setRecordStatusList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -45,6 +47,8 @@ export default function Securities() {
     questionId:null,
     answerId:null,
     description:"",
+    recordStatusId:null,
+
       });
 
   const [id, setId] = useState(null);
@@ -63,6 +67,10 @@ export default function Securities() {
     getSecurities,
     securityById,
   } = useFetchSecurity();
+  const { 
+    getRecordStatuss,
+  } = useFetchRecordStatus();
+
 
   const columns = [
 
@@ -98,8 +106,10 @@ export default function Securities() {
       },
     },
   ];
+  
 
   useEffect(() => {
+    getRecordStatusList();
     if (securities.length == 0) {
       getAllSecurities();
       setLoading(false)
@@ -153,6 +163,23 @@ export default function Securities() {
       console.log('sizePerPage', sizePerPage);
     }
   });
+  const getRecordStatusList = async () => {
+    const response = await getRecordStatuss();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setRecordStatusList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'Security Fetch Failed.'
+      })
+    }
+  };
 
   const getAllSecurities = async () => {
     const response = await getSecurities();
@@ -278,6 +305,8 @@ export default function Securities() {
                 isDelete={isDelete}
                 id={id}
                 securityData={security}
+                recordStatusList={recordStatusList}
+
               />
             </Modal.Body>
 

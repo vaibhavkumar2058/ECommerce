@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { css } from "@emotion/react";
-
+import { Dropdown } from 'semantic-ui-react'
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
@@ -17,12 +17,20 @@ export default function MeasurementTypeModel({
     id,
     onClose,
     measurementTypeData,
+    recordStatusList = [],
 }) {
     const [newMeasurementType, setNewMeasurementType] = useState({
         name: "",
         description: "",
-        recordStatusId:1,
+        recordStatusId: null,
     });
+
+    const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus, item) => (
+        {
+            key: item,
+            text: recordStatus.actionName,
+            value: recordStatus.recordStatusId,
+        })).filter((item) => item));
 
     const [fileSelected, setFileSelected] = useState();
 
@@ -50,7 +58,7 @@ export default function MeasurementTypeModel({
         });
     };
 
-    
+
 
     const saveHandler = async () => {
         newMeasurementType.file = fileSelected;
@@ -97,6 +105,10 @@ export default function MeasurementTypeModel({
             })
         }
     };
+    const dropdownHandler = (event, { value }) => {
+        setNewMeasurementType((currentMeasurementType) => ({ ...currentMeasurementType, recordStatusId: value }));
+    }
+
 
     useEffect(() => {
         if (isEdit) {
@@ -159,8 +171,21 @@ export default function MeasurementTypeModel({
                             onChange={changeHandler}
                         />
                     </Form.Group>
+                    <Form.Group className="mb-3" controlId="recordStatus">
+                        <Form.Label>RecordStatus</Form.Label>
+                        <Dropdown
+                            name="actionName"
+                            placeholder='Select Action'
+                            fluid
+                            search
+                            selection
+                            options={recordStatusOptions}
+                            value={newMeasurementType?.recordStatusId}
+                            onChange={dropdownHandler}
+                        />
+                    </Form.Group>
 
-                    
+
                     <Modal.Footer>
                         <Button variant="secondary" onClick={onClose}>
                             Cancel
@@ -213,6 +238,10 @@ MeasurementTypeModel.propTypes = {
    * enquiryData for object type
    */
     measurementTypeData: PropTypes.any,
+    /**
+ * recordStatusData for object type
+ */
+   recordStatusList: PropTypes.any,
 };
 
 MeasurementTypeModel.defaultProps = {
@@ -225,5 +254,7 @@ MeasurementTypeModel.defaultProps = {
     onClose: null,
     id: null,
     measurementTypeData: null,
+    recordStatusList:null,
+
 };
 

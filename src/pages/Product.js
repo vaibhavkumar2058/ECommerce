@@ -158,7 +158,7 @@ export default function Products() {
 
 
   const defaultSorted = [{
-    dataField: 'productId',
+    dataField: 'productId', 
     order: 'desc'
   }];
 

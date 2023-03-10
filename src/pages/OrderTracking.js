@@ -1,9 +1,11 @@
+	
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
 import useFetchOrderTracking from "../hooks/useFetchOrderTracking";
 import useFetchOrderStatus from "../hooks/useFetchOrderStatus";
 import OrderTrackingModel from "../components/OrderTrackingModel";
+import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
@@ -35,6 +37,7 @@ export default function OrderTracking() {
 
 
   const [orderTrackinges, setOrderTrackinges] = useState([]);
+  const [recordStatusList, setRecordStatusList] = useState([]);
   const [orderStatusList, setOrderStatusList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -54,7 +57,8 @@ export default function OrderTracking() {
     orderId:null,
     orderStatusId:null,
     description:"",
-    
+    recordStatusId:null,
+
       });
 
   const [id, setId] = useState(null);
@@ -76,6 +80,12 @@ export default function OrderTracking() {
   const { 
     getOrderStatuses,
   } = useFetchOrderStatus();
+
+  
+  const { 
+    getRecordStatuss,
+  } = useFetchRecordStatus();
+
 
   const columns = [
     { dataField: 'orderTrackingId', text: 'orderTracking Id', sort: true, hidden: true },
@@ -115,6 +125,7 @@ export default function OrderTracking() {
   ];
 
   useEffect(() => {
+    getRecordStatusList();
     getOrderStatusList();
     if (orderTrackinges.length == 0) {
       getAllOrderTrackinges();
@@ -169,10 +180,28 @@ export default function OrderTracking() {
       console.log('sizePerPage', sizePerPage);
     }
   });
+  const getRecordStatusList = async () => {
+    const response = await getRecordStatuss();
+  
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setRecordStatusList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'OrderTracking Fetch Failed.'
+        
+      })
+    }
+  };
   const getOrderStatusList = async () => {
     const response = await getOrderStatuses();
     if (response.payload.title == "Success") {
-
       var arr = [];
       for (var key in response.payload) {
         arr.push(response.payload[key]);
@@ -182,7 +211,8 @@ export default function OrderTracking() {
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'OrderStatus Fetch Failed.'
+        message: 'OrderTracking Fetch Failed.'
+       
       })
     }
   };
@@ -312,6 +342,8 @@ export default function OrderTracking() {
                 isDelete={isDelete}
                 id={id}
                 orderTrackingData={orderTracking}
+                recordStatusList={recordStatusList}
+
                 orderStatusList={orderStatusList}
               />
             </Modal.Body>
@@ -323,3 +355,20 @@ export default function OrderTracking() {
     </>
   );
 };
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
