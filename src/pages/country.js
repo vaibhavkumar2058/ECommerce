@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
 import useFetchCountry from "../hooks/useFetchCountry";
+import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
 import CountryModel from "../components/CountryModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
@@ -25,7 +26,7 @@ const MyExportCSV = (props) => {
 };
 
 export default function Country() {
-
+  const [recordStatusList, setRecordStatusList] = useState([]);
   const [countries, setCountries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -65,13 +66,17 @@ export default function Country() {
     countryById,
   } = useFetchCountry();
 
+  const { 
+    getRecordStatuss,
+  } = useFetchRecordStatus();
+
   const columns = [
 
     { dataField: 'countryId', text: 'Country Id', sort: true, hidden: true },
     { dataField: 'countryName', text: ' CountryName', sort: true },
     { dataField: 'regionCode', text: 'RegionCode', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
-    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true },
+    { dataField: 'recordStatusId', text: ' RecordStatus', sort: true },
         // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -101,6 +106,7 @@ export default function Country() {
   ];
 
   useEffect(() => {
+    getRecordStatusList();
     if (countries.length == 0) {
       getAllCountry();
       setLoading(false)
@@ -175,6 +181,24 @@ export default function Country() {
       setMessageStatus({
         mode: 'danger',
         message: 'Country Fetch Failed.'
+      })
+    }
+  };
+
+  const getRecordStatusList = async () => {
+    const response = await getRecordStatuss();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setRecordStatusList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'State Fetch Failed.'
       })
     }
   };
@@ -280,6 +304,7 @@ export default function Country() {
                 isDelete={isDelete}
                 id={id}
                 countryData={country}
+                recordStatusList={recordStatusList}
               />
             </Modal.Body>
 
