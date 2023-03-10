@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { css } from "@emotion/react";
-
+import { Dropdown } from 'semantic-ui-react'
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
+
+
 
 export default function ItemCostModel({
   onAddItemCost,
@@ -17,6 +19,10 @@ export default function ItemCostModel({
   id,
   onClose,
   itemCostData,
+  recordStatusList = [],
+  productList = [],
+  measurementValueList = [],
+  measurementTypeList =[],
 }) {
   const [newItemCost, setNewItemCost] = useState({
     productId: null,
@@ -35,6 +41,30 @@ export default function ItemCostModel({
     message: "",
   });
 
+  const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus,item) =>(
+    {
+    key: item,
+    text: recordStatus.actionName,
+    value: recordStatus.recordStatusId,
+  })).filter((item) => item));
+  const [productOptions, setProductOptions] = useState(productList.map((product,item) =>(
+    {
+    key: item,
+    text: product.productName,
+    value: product.productId,
+  })).filter((item) => item));
+  const [measurementValueOptions, setMeasurementValueOptions] = useState(measurementValueList.map((measurementValue,item) =>(
+    {
+    key: item,
+    text: measurementValue.Value,
+    value: measurementValue.measurementValueId,
+  })).filter((item) => item));
+  const [measurementTypeOptions, setMeasurementTypeOptions] = useState(measurementTypeList.map((measurementType,item) =>(
+    {
+    key: item,
+    text: measurementType.name,
+    value: measurementType.measurementTypeId,
+  })).filter((item) => item));
   const [saveDisabled, setSaveDisabled] = useState(true);
   const [buttonType, setButtonType] = useState("Save");
 
@@ -99,11 +129,57 @@ export default function ItemCostModel({
     }
   };
 
+  const dropdownHandler = (event,{value}) => {
+    setNewItemCost((currentItemCost) => ({...currentItemCost, recordStatusId: value}));
+    setNewItemCost((currentItemCost) => ({...currentItemCost, productId: value}));
+    setNewItemCost((currentItemCost) => ({...currentItemCost, measurementValueId: value}));
+    setNewItemCost((currentItemCost) => ({...currentItemCost, measurementTypeId: value}));
+  }
+
+
   useEffect(() => {
     if (isEdit) {
       setNewItemCost(itemCostData);
     }
   }, []);
+
+  useEffect(() => { 
+    setRecordStatusOptions(recordStatusList.map((recordStatus,item) =>(
+      {
+      key: item,
+      text: recordStatus.actionName,
+      value: recordStatus.recordStatusId,
+    })).filter((item) => item));
+    }, [recordStatusList]);
+    useEffect(() => { 
+      setProductOptions(productList.map((product,item) =>(
+        {
+        key: item,
+        text: product.productName,
+        value: product.productId,
+      })).filter((item) => item));
+      }, [productList]);
+
+      useEffect(() => { 
+        setMeasurementValueOptions(measurementValueList.map((measurementValue,item) =>(
+          {
+          key: item,
+          text: measurementValue.value,
+          value: measurementValue.measurementValueId,
+        })).filter((item) => item));
+        }, [measurementValueList]);
+
+        useEffect(() => { 
+          setMeasurementTypeOptions(measurementTypeList.map((measurementType,item) =>(
+            {
+            key: item,
+            text: measurementType.name,
+            value: measurementType.measurementTypeId,
+          })).filter((item) => item));
+          }, [measurementTypeList]);
+    
+  
+  
 
   useEffect(() => {
     if (isEdit) {
@@ -141,33 +217,42 @@ export default function ItemCostModel({
             controlId="formItemCost"
           >
             <Form.Label>ProductId</Form.Label>
-            <Form.Control
-              type="text"
-              name="productId"
-              placeholder="ProductId"
+            <Dropdown
+              name="productName "
+              placeholder=" Select Product"
+              fluid
+              search
+              selection
+              options={productOptions}
               value={newItemCost?.productId}
-              onChange={changeHandler}
+              onChange={dropdownHandler}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="measurementTypeId">
             <Form.Label>MeasurementTypeId</Form.Label>
-            <Form.Control
-              type="text"
-              name="measurementTypeId"
-              placeholder="MeasurementTypeId"
+            <Dropdown
+              name="name"
+              placeholder=" Select measurementTypeName"
+              fluid
+              search
+              selection
+              options={measurementTypeOptions}
               value={newItemCost?.measurementTypeId}
-              onChange={changeHandler}
+              onChange={dropdownHandler}
             />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="MeasurementValueId">
             <Form.Label>MeasurementValueId</Form.Label>
-            <Form.Control
-              type="text"
-              name="measurementValueId"
-              placeholder="MeasurementValueId"
+            <Dropdown
+              name="value "
+              placeholder="Select Value"
+              fluid
+              search
+              selection
+              options={measurementValueOptions}
               value={newItemCost?.measurementValueId}
-              onChange={changeHandler}
+              onChange={dropdownHandler}
             />
           </Form.Group>
 
@@ -204,12 +289,15 @@ export default function ItemCostModel({
           </Form.Group>
           <Form.Group className="mb-3" controlId="recordStatusId">
             <Form.Label>RecordStatusId</Form.Label>
-            <Form.Control
-              type="text"
-              name="recordStatusId"
-              placeholder="RecordStatusId"
+            <Dropdown
+              name="actionName "
+              placeholder=  'Select Action'
+              fluid
+              search
+              selection
+              options={recordStatusOptions}
               value={newItemCost?.recordStatusId}
-              onChange={changeHandler}
+              onChange={dropdownHandler}
             />
           </Form.Group>
 
@@ -265,6 +353,24 @@ ItemCostModel.propTypes = {
  * itemCostData for object type
  */
   itemCostData: PropTypes.any,
+
+    /**
+ * recordStatusList for object type
+ */
+    recordStatusList: PropTypes.any,
+    
+    /**
+ * productList for object type
+ */
+    productList: PropTypes.any,
+     /**
+ * measurementValueList for object type
+ */
+     measurementValueList: PropTypes.any,
+      /**
+ * measurementTypeList for object type
+ */
+   measurementTypeList: PropTypes.any,
 };
 
 ItemCostModel.defaultProps = {
@@ -277,5 +383,8 @@ ItemCostModel.defaultProps = {
   onClose: null,
   id: null,
   itemCostData: null,
+  recordStatusList:null,
+  productList:null,
+  measurementTypeList:null,
+  measurementValueList:null,
 };
-

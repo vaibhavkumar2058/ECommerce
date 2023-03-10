@@ -21,7 +21,7 @@ import {
   const ERROR = "Error";
 
   // MeasurementValue GET  ACTIONS
-  const getMeasurementValue = () => {
+  const getMeasurementValues = () => {
     dispatch(getMeasurementValueBeginAction());
     return API.get(hapyCarURL,
       null,
@@ -191,7 +191,7 @@ import {
     addMeasurementValue,
     updateMeasurementValue,
     deleteMeasurementValue,
-    getMeasurementValue,
+    getMeasurementValues,
     measurementValueById,
   };
 }

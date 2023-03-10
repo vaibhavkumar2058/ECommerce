@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { css } from "@emotion/react";
-
+import { Dropdown } from 'semantic-ui-react'
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
@@ -17,12 +17,29 @@ export default function FileModel({
   id,
   onClose,
   fileData,
+  recordStatusList = [],
+  folderList =[],
 }) {
   const [newFile, setNewFile] = useState({
     folderId: null,
     resourceId: null,
     attachment:null,
   });
+
+  const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus,item) =>(
+    {
+    key: item,
+    text: recordStatus.actionName,
+    value: recordStatus.recordStatusId,
+  })).filter((item) => item));
+  const [folderOptions, setFolderOptions] = useState(folderList.map((folder,item) =>(
+    {
+    key: item,
+    text: folder.folderName,
+    value: folder.folderId,
+  })).filter((item) => item));
+
+
 
   const [fileSelected, setFileSelected] = useState();
 
@@ -102,11 +119,35 @@ export default function FileModel({
     }
   };
 
+  const dropdownHandler = (event,{value}) => {
+    setNewFile((currentFile) => ({...currentFile, recordStatusId: value}));
+    setNewFile((currentFile) => ({...currentFile, folderId: value}));
+  }
+
   useEffect(() => {
     if (isEdit) {
       setNewFile(fileData);
     }
   }, []);
+
+  useEffect(() => { 
+    setRecordStatusOptions(recordStatusList.map((recordStatus,item) =>(
+      {
+      key: item,
+      text: recordStatus.actionName,
+    value: recordStatus.recordStatusId,
+    })).filter((item) => item));
+    }, [recordStatusList]);
+
+    useEffect(() => { 
+      setFolderOptions(folderList.map((folder,item) =>(
+        {
+        key: item,
+        text: folder.folderName,
+      value: folder.folderId,
+      })).filter((item) => item));
+      }, [folderList]);
+  
 
   useEffect(() => {
     if (isEdit) {
@@ -144,12 +185,15 @@ export default function FileModel({
             controlId="formFile"
           >
             <Form.Label>FolderId</Form.Label>
-            <Form.Control
-              type="text"
-              name="folderId"
-              placeholder="Enter Folder"
+            <Dropdown
+              name="folderName"
+              placeholder="Select Folder"
+              fluid
+              search
+              selection
+              options={folderOptions}
               value={newFile?.folderId}
-              onChange={changeHandler}
+              onChange={dropdownHandler}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="mobile">
@@ -160,6 +204,20 @@ export default function FileModel({
               placeholder="resourceId"
               value={newFile?.resourceId}
               onChange={changeHandler}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="recordStatus">
+            <Form.Label>RecordStatus</Form.Label>
+            <Dropdown
+              name="actionName"
+              placeholder='Select Action'
+              fluid
+              search
+              selection
+              options={recordStatusOptions}
+              value = {newFile?.recordStatusId}
+              onChange={dropdownHandler}
             />
           </Form.Group>
 
@@ -218,6 +276,14 @@ FileModel.propTypes = {
  * fileData for object type
  */
   FileData: PropTypes.any,
+  /**
+ * recordStatusData for object type
+ */
+  recordStatusList: PropTypes.any,
+  /**
+ * folderData for object type
+ */
+  folderList: PropTypes.any,
 };
 
 FileModel.defaultProps = {
@@ -230,5 +296,7 @@ FileModel.defaultProps = {
   onClose: null,
   id: null,
   fileData: null,
+  recordStatusList:null,
+  folderList:null,
 };
 

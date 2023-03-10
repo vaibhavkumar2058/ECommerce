@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
 import useFetchItemCost from "../hooks/useFetchItemCost";
+import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
+import useFetchProduct from "../hooks/useFetchProduct";
+import useFetchMeasurementValue from "../hooks/useFetchMeasurementValue";
+import useFetchMeasurementType from "../hooks/useFetchMeasurementType";
 import ItemCostModel from "../components/ItemCostModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
@@ -27,6 +31,10 @@ const MyExportCSV = (props) => {
 export default function ItemCosts() {
 
   const [itemcosts, setItemCosts] = useState([]);
+  const [recordStatusList, setRecordStatusList] = useState([]);
+  const [productList, setProductList] = useState([]);
+  const [measurementValueList, setMeasurementValueList] = useState([]);
+  const [measurementTypeList, setMeasurementTypeList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -68,6 +76,20 @@ export default function ItemCosts() {
     getItemCosts,
     itemCostById,
   } = useFetchItemCost();
+
+  const { 
+    getRecordStatuss,
+  } = useFetchRecordStatus();
+  const { 
+    getProducts,
+  } = useFetchProduct();
+  const { 
+    getMeasurementValues,
+  } = useFetchMeasurementValue();
+  const { 
+    getMeasurementTypes,
+  } = useFetchMeasurementType();
+
 
   const columns = [
 
@@ -122,6 +144,10 @@ export default function ItemCosts() {
   ];
 
   useEffect(() => {
+    getRecordStatusList();
+    getProductList();
+    getMeasurementValueList();
+    getMeasurementTypeList();
     if (itemcosts.length == 0) {
       getAllItemCosts();
       setLoading(false)
@@ -175,6 +201,75 @@ export default function ItemCosts() {
       console.log('sizePerPage', sizePerPage);
     }
   });
+
+  const getRecordStatusList = async () => {
+    const response = await getRecordStatuss();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setRecordStatusList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'State Fetch Failed.'
+      })
+    }
+  };
+  const getProductList = async () => {
+    const response = await getProducts();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setProductList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'State Fetch Failed.'
+      })
+    }
+  };
+  const getMeasurementValueList = async () => {
+    const response = await getMeasurementValues();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setMeasurementValueList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'State Fetch Failed.'
+      })
+    }
+  };
+  const getMeasurementTypeList = async () => {
+    const response = await getMeasurementTypes();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setMeasurementTypeList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'State Fetch Failed.'
+      })
+    }
+  };
 
 
   const getAllItemCosts = async () => {
@@ -301,6 +396,10 @@ export default function ItemCosts() {
                 isDelete={isDelete}
                 id={id}
                 itemcostData={itemcost}
+                recordStatusList={recordStatusList}
+                productList={productList}
+                measurementTypeList={measurementTypeList}
+                measurementValueList={measurementValueList}
               />
             </Modal.Body>
 
