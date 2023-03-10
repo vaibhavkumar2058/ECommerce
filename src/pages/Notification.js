@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
 import useFetchNotification from "../hooks/useFetchNotification";
+import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
 import NotificationModel from "../components/NotificationModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
@@ -25,7 +26,7 @@ const MyExportCSV = (props) => {
 };
 
 export default function Notifications() {
-
+  const [recordStatusList, setRecordStatusList] = useState([]);
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -45,6 +46,7 @@ export default function Notifications() {
     notificationTypeId:null,
     notificationName:"",
     description:"",
+    recordStatusId:null,
       });
 
   const [id, setId] = useState(null);
@@ -64,12 +66,17 @@ export default function Notifications() {
     notificationById,
   } = useFetchNotification();
 
+  const { 
+    getRecordStatuss,
+  } = useFetchRecordStatus();
+
   const columns = [
 
     { dataField: 'notificationTypeId', text: 'NotificationTypeId', sort: true},
     { dataField: 'notificationId', text: 'NotificationId', sort: true},
     { dataField: 'notificationName', text: ' NotificationName', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
+    { dataField: 'recordStatusId', text: ' RecordStatus', sort: true },
     // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -99,6 +106,7 @@ export default function Notifications() {
   ];
 
   useEffect(() => {
+    getRecordStatusList();
     if (notifications.length == 0) {
       getAllNotifications();
       setLoading(false)
@@ -152,6 +160,24 @@ export default function Notifications() {
       console.log('sizePerPage', sizePerPage);
     }
   });
+  const getRecordStatusList = async () => {
+    const response = await getRecordStatuss();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setRecordStatusList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'RecorStatus Fetch Failed.'
+      })
+    }
+  };
+
 
 
   const getAllNotifications = async () => {
@@ -278,6 +304,7 @@ export default function Notifications() {
                 isDelete={isDelete}
                 id={id}
                 notificationData={notification}
+                recordStatusList={recordStatusList}
               />
             </Modal.Body>
 

@@ -7,7 +7,8 @@ import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
 import Select from 'react-select';
-import Products from "../../pages/Product";
+
+
 
 export default function ProductModel({
   onAddProduct,
@@ -19,7 +20,7 @@ export default function ProductModel({
   id,
   onClose,
   productData,
-  categories,
+  categoryList =[],
   recordStatusList = [],
 
 }) {
@@ -31,10 +32,10 @@ export default function ProductModel({
     recordStatusId:null,
   });
 
-  const [categoryOptions, setCategoryOptions] = useState(categories.map((category, i) => (
+  const [categoryOptions, setCategoryOptions] = useState(categoryList.map((category, item) => (
     {
-      key: i,
-      label: category.categoryTypeName,
+      key: item,
+      text: category.categoryTypeName,
       value: category.categoryTypeId,
     })).filter((item) => item));
 
@@ -72,13 +73,7 @@ export default function ProductModel({
     });
   };
 
-  const selectChangeHandler = (e) => {
-    setNewProduct({
-      ...newProduct,
-      "categoryTypeId": e.value,
-    });
-  };
-
+  
   const saveFileSelected = (e) => {
     //in case you wan to print the file selected
     //console.log(e.target.files[0]);
@@ -134,17 +129,18 @@ export default function ProductModel({
 
   const dropdownHandler = (event,{value}) => {
     setNewProduct((currentProduct) => ({...currentProduct, recordStatusId: value}));
+    setNewProduct((currentProduct) => ({...currentProduct, categoryTypeId: value}));
   }
 
   useEffect(() => {
-    setCategoryOptions(categories.map((category, i) => (
+    setCategoryOptions(categoryList.map((category, item) => (
       {
-        key: i,
-        label: category.categoryTypeName,
+        key: item,
+        text: category.categoryTypeName,
         value: category.categoryTypeId,
       })).filter((item) => item));
 
-  }, [categories]);
+  }, [categoryList]);
 
   useEffect(() => {
     if (isEdit) {
@@ -194,12 +190,7 @@ export default function ProductModel({
       {!isDelete && (
         <Form>
 
-          <Form.Group className="mb-3" controlId="categoryTypeId">
-            <Form.Label>Category Type</Form.Label>
-            <Select options={categoryOptions} name="categoryTypeId"
-              value={newProduct?.categoryTypeId}
-              onChange={selectChangeHandler} />
-          </Form.Group>
+          
 
           <Form.Group
             className={styles.stFormContainer}
@@ -228,6 +219,19 @@ export default function ProductModel({
               placeholder="Description"
               value={newProduct?.description}
               onChange={changeHandler}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="categoryType">
+            <Form.Label>CategoryType</Form.Label>
+            <Dropdown
+              name="actionName"
+              placeholder='Select Action'
+              fluid
+              search
+              selection
+              options={categoryOptions}
+              value = {newProduct?.categoryTypeId}
+              onChange={dropdownHandler}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="recordStatus">
@@ -303,6 +307,10 @@ ProductModel.propTypes = {
  * recordStatusData for object type
  */
    recordStatusList: PropTypes.any,
+   /**
+ * categoryList for object type
+ */
+   categoryList: PropTypes.any,
 };
 
 ProductModel.defaultProps = {
@@ -317,6 +325,7 @@ ProductModel.defaultProps = {
   productData: null,
   categories: null,
   recordStatusList:null,
+  categoryList:null,
 
 };
 

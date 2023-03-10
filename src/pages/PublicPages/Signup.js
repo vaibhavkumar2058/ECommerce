@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import { Col, Row, Form, Card, Button, FormCheck, Container, InputGroup } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import useFetchResources from "../../hooks/useFetchResources";
@@ -36,6 +36,14 @@ export default () => {
     email: "",
     password: "",
   });
+  const [hide, setHide] = useState(true);
+
+  useEffect(() => {
+   
+  }, [hide]);
+  const ClickHandler = (e) => {
+   navigate('/dashboard');
+  };
   const changeHandler = (e) => {
     setNewSignup({
       ...newSignup,
@@ -49,6 +57,7 @@ export default () => {
     const response = await addResources(newSignup);
     if (response.payload.title == "Success") {
       setError({ status: true, msg: "Login Success", type: 'success' })
+      setHide(false);
     }
     else {
       setMessageStatus({
@@ -66,7 +75,7 @@ export default () => {
 
 
           </p>
-          <Row className="justify-content-center form-bg-image" >
+          {hide && (  <Row className="justify-content-center form-bg-image" >
             <Col xs={12} className="d-flex align-items-center justify-content-center">
               <div className="mb-4 mb-lg-0 bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
                 <div className="text-center text-md-center mb-4 mt-md-0">
@@ -204,7 +213,29 @@ export default () => {
                 </div>
               </div>
             </Col>
-          </Row>
+          </Row>)}
+          {!hide &&(<Row className="justify-content-center form-bg-image" >
+            <Col xs={12} className="d-flex align-items-center justify-content-center">
+              <div className="mb-4 mb-lg-0 bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
+                <div className="text-center text-md-center mb-4 mt-md-0">
+                  <h3 className="mb-0">Registation</h3>
+                </div>
+              
+                <Col xs={12} className="d-flex align-items-center justify-content-center">
+              <div className="signin-inner my-3 my-lg-0 bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
+                <h3>Register  successfully</h3>
+                <p className="mb-4">please Check Your Mail to Verify</p>
+                <Form>
+                 
+                  <Button variant="primary" onClick={ClickHandler}>
+                    Click here to login
+                  </Button>
+                </Form>
+              </div>
+            </Col>
+              </div>
+            </Col>
+          </Row>)}
         </Container>
       </section>
     </main>

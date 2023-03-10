@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { css } from "@emotion/react";
-
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
+import Select from 'react-select';
+import { Dropdown } from 'semantic-ui-react'
+import Genders from "../../pages/Gender";
 
 export default function GenderModel({
   onAddGender,
@@ -17,12 +19,21 @@ export default function GenderModel({
   id,
   onClose,
   genderData,
+  recordStatusList = [],
 }) {
   const [newGender, setNewGender] = useState({
     genderName: "",
     description:"",
     recordStatusId: null,
   });
+  
+
+    const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus,item) =>(
+      {
+      key: item,
+      text: recordStatus.actionName,
+      value: recordStatus.recordStatusId,
+    })).filter((item) => item));
 
   const [fileSelected, setFileSelected] = useState();
 
@@ -95,6 +106,17 @@ export default function GenderModel({
       })
     }
   };
+  const dropdownHandler = (event,{value}) => {
+    setNewGender((currentGender) => ({...currentGender, recordStatusId: value}));
+  }
+  useEffect(() => { 
+    setRecordStatusOptions(recordStatusList.map((recordStatus,item) =>(
+      {
+      key: item,
+      text: recordStatus.actionName,
+    value: recordStatus.recordStatusId,
+    })).filter((item) => item));
+    }, [recordStatusList]);
 
   useEffect(() => {
     if (isEdit) {
@@ -147,17 +169,19 @@ export default function GenderModel({
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="recordStatusId">
-            <Form.Label>RecordStatusId</Form.Label>
-            <Form.Control
-              type="text"
-              name="recordStatusId"
-              placeholder="RecordStatusId"
-              value={newGender?.recordStatusId}
-              onChange={changeHandler}
+          <Form.Group className="mb-3" controlId="recordStatus">
+            <Form.Label>RecordStatus</Form.Label>
+            <Dropdown
+              name="actionName"
+              placeholder='Select Action'
+              fluid
+              search
+              selection
+              options={recordStatusOptions}
+              value = {newGender?.recordStatusId}
+              onChange={dropdownHandler}
             />
           </Form.Group>
-          
 
 
           <Form.Group className="mb-3" controlId="description">
@@ -224,6 +248,10 @@ GenderModel.propTypes = {
  * genderData for object type
  */
   genderData: PropTypes.any,
+  /**
+ * recordStatusData for object type
+ */
+  recordStatusList: PropTypes.any,
 };
 
 GenderModel.defaultProps = {
@@ -236,5 +264,6 @@ GenderModel.defaultProps = {
   onClose: null,
   id: null,
 genderData: null,
+recordStatusList:null,
 };
 

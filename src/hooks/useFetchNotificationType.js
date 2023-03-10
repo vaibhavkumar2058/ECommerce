@@ -3,33 +3,33 @@ import { useSelector, useDispatch } from "react-redux";
 import { useAPI } from "../services";
 
 import {
-    addMeasurementValueAction,
-    updateMeasurementValueAction,   
-    deleteMeasurementValueAction,
-    getMeasurementValueBeginAction,
-    getMeasurementValueSuccessAction,
-    getMeasurementValueFailureAction,
-    measurementValueAction,
-  } from "../actions/measurementValueActions";
+    addNotificationTypeAction,
+    updateNotificationTypeAction,   
+    deleteNotificationTypeAction,
+    getNotificationTypeBeginAction,
+    getNotificationTypeSuccessAction,
+    getNotificationTypeFailureAction,
+    notificationTypeAction,
+  } from "../actions/notificationTypeActions";
 
-  export default function useFetchMeasurementValues() {
+  export default function useFetchNotificationType() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/measurementValue";
+  const hapyCarURL = "https://localhost:7062/notificationType";
 
   const API = useAPI();
   const SUCCESS = "Success";
   const ERROR = "Error";
 
-  // MeasurementValue GET  ACTIONS
-  const getMeasurementValues = () => {
-    dispatch(getMeasurementValueBeginAction());
+  // NotificationType GET  ACTIONS
+  const getNotificationTypes = () => {
+    dispatch(getNotificationTypeBeginAction());
     return API.get(hapyCarURL,
       null,
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          getMeasurementValueSuccessAction({
+          getNotificationTypeSuccessAction({
             ...data,
             title: SUCCESS,
           })
@@ -37,12 +37,12 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.measurementValue) {
-          const [errors] = error.response.data.measurementValue;
+        if (error.response.data.notificationType) {
+          const [errors] = error.response.data.notificationType;
           errorMsg = errors;
         }
         dispatch(
-          getMeasurementValueFailureAction({
+          getNotificationTypeFailureAction({
             ...errorMsg,
             title: ERROR,
             errorMsg,
@@ -52,16 +52,16 @@ import {
 
   };
 
-  // MeasurementValue ADD  ACTIONS
-  const addMeasurementValue = (measurementValue) => {
+  // NotificationType ADD  ACTIONS
+  const addNotificationType = (notificationType) => {
     return API.post(
       hapyCarURL,
-      { data: measurementValue },
+      { data: notificationType },
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          addMeasurementValueAction({
+          addNotificationTypeAction({
             ...data,
             title: SUCCESS,
           })
@@ -70,13 +70,13 @@ import {
 
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.measurementValue) {
-          const [errors] = error.response.data.measurementValue;
+        if (error.response.data.notificationType) {
+          const [errors] = error.response.data.notificationType;
           errorMsg = errors;
         }
         dispatch(
-          addMeasurementValueAction({
-            ...measurementValue,
+          addNotificationTypeAction({
+            ...notificationType,
             title: ERROR,
             errorMsg,
           })
@@ -88,11 +88,11 @@ import {
 
   };
 
-  // MeasurementValue UPDATE  ACTIONS
-  const updateMeasurementValue = (measurementValueId, measurementValue) => {
+  // NotificationType UPDATE  ACTIONS
+  const updateNotificationType = (notificationTypeId, notificationType) => {
 
-    return API.put(`${hapyCarURL}/${measurementValueId}`,
-      { data: measurementValue },
+    return API.put(`${hapyCarURL}/${notificationTypeId}`,
+      { data: notificationType },
       { suppressErrors: [400] }
     )
       .then(({ data
@@ -100,7 +100,7 @@ import {
       }) =>
 
         dispatch(
-          updateMeasurementValueAction({
+          updateNotificationTypeAction({
             ...data,
             title: SUCCESS,
           })
@@ -108,13 +108,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.measurementValue) {
-          const [errors] = error.response.data.measurementValue;
+        if (error.response.data.notificationType) {
+          const [errors] = error.response.data.notificationType;
           errorMsg = errors;
         }
         dispatch(
-          updateMeasurementValueAction({
-            ...measurementValue,
+          updateNotificationTypeAction({
+            ...notificationType,
             title: ERROR,
             errorMsg,
           })
@@ -123,15 +123,15 @@ import {
 
   };
 
-  // MeasurementValue DELETE  ACTIONS
-  const deleteMeasurementValue = (measurementValueId) => {
-    return API.delete(`${hapyCarURL}/${measurementValueId}`,
+  // NotificationType DELETE  ACTIONS
+  const deleteNotificationType = (notificationTypeId) => {
+    return API.delete(`${hapyCarURL}/${notificationTypeId}`,
       null,
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          deleteMeasurementValueAction({
+          deleteNotificationTypeAction({
             ...data,
             title: SUCCESS,
           })
@@ -139,13 +139,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.measurementValue) {
-          const [errors] = error.response.data.measurementValue;
+        if (error.response.data.notificationType) {
+          const [errors] = error.response.data.notificationType;
           errorMsg = errors;
         }
         dispatch(
-          deleteMeasurementValueAction({
-            ...measurementValueId,
+          deleteNotificationTypeAction({
+            ...notificationTypeId,
             title: ERROR,
             errorMsg,
           })
@@ -154,9 +154,9 @@ import {
 
   };
 
-  // MeasurementValue BY ID ACTIONS
-  const measurementValueById = (measurementValueId) => {
-    return API.get(`${hapyCarURL}/${measurementValueId}`,
+  // NotificationType BY ID ACTIONS
+  const notificationTypeById = (notificationTypeId) => {
+    return API.get(`${hapyCarURL}/${notificationTypeId}`,
       null,
       { suppressErrors: [400] }
     )
@@ -165,7 +165,7 @@ import {
       }) =>
 
         dispatch(
-            measurementValueAction({
+            notificationTypeAction({
             ...data,
             title: SUCCESS,
           })
@@ -173,12 +173,12 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.measurementValue) {
-          const [errors] = error.response.data.measurementValue;
+        if (error.response.data.notificationType) {
+          const [errors] = error.response.data.notificationType;
           errorMsg = errors;
         }
         dispatch(
-            measurementValueAction({
+            notificationTypeAction({
             ...errorMsg,
             title: ERROR,
             errorMsg,
@@ -188,10 +188,10 @@ import {
       
   };
   return {
-    addMeasurementValue,
-    updateMeasurementValue,
-    deleteMeasurementValue,
-    getMeasurementValues,
-    measurementValueById,
+    addNotificationType,
+    updateNotificationType,
+    deleteNotificationType,
+    getNotificationTypes,
+    notificationTypeById,
   };
 }

@@ -1,30 +1,39 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { css } from "@emotion/react";
-import { Dropdown } from 'semantic-ui-react'
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
+import Select from 'react-select';
+import { Dropdown } from 'semantic-ui-react'
+import NotificationTypes from "../../pages/NotificationType";
 
-export default function NotificationModel({
-  onAddNotification,
-  onUpdateNotification,
-  onDeleteNotification,
+export default function NotificationTypeModel({
+  onAddNotificationType,
+  onUpdateNotificationType,
+  onDeleteNotificationType,
   isEdit,
   isDelete,
-  onGetNotification,
+  onGetNotificationType,
   id,
   onClose,
-  notificationData,
+  notificationTypeData,
   recordStatusList = [],
 }) {
-  const [newNotification, setNewNotification] = useState({
-    notificationTypeId:null,
-    notificationName: "",
-    description: "",
-    recordStatusId:null,
+  const [newNotificationType, setNewNotificationType] = useState({
+    notificationTypeName: "",
+    description:"",
+    recordStatusId: null,
   });
+  
+
+    const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus,item) =>(
+      {
+      key: item,
+      text: recordStatus.actionName,
+      value: recordStatus.recordStatusId,
+    })).filter((item) => item));
 
   const [fileSelected, setFileSelected] = useState();
 
@@ -35,15 +44,6 @@ export default function NotificationModel({
     message: "",
   });
 
-  const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus,item) =>(
-    {
-    key: item,
-    text: recordStatus.actionName,
-    value: recordStatus.recordStatusId,
-  })).filter((item) => item));
-
-
-
   const [saveDisabled, setSaveDisabled] = useState(true);
   const [buttonType, setButtonType] = useState("Save");
 
@@ -53,17 +53,17 @@ export default function NotificationModel({
     `,
     stFormControl: css``,
   };
+
   const changeHandler = (e) => {
-    setNewNotification({
-      ...newNotification,
+    setNewNotificationType({
+      ...newNotificationType,
       [e.target.name]: e.target.value,
     });
   };
-
+ 
   const saveHandler = async () => {
-    newNotification.file = fileSelected;
     if (isEdit) {
-      const response = await onUpdateNotification(id, newNotification);
+      const response = await onUpdateNotificationType(id, newNotificationType);
       if (response.payload.title == "Success") {
         onClose(true);
       }
@@ -75,11 +75,12 @@ export default function NotificationModel({
       }
     }
     else {
-      const response = await onAddNotification(newNotification);
+     
+      const response = await onAddNotificationType(newNotificationType);
       if (response.payload.title == "Success") {
         setMessageStatus({
           mode: 'success',
-          message: 'Notification Record Saved Succefully.'
+          message: 'NotificationType Record Saved Succefully.'
         })
         onClose(true);
         console.log(response.payload);
@@ -87,34 +88,27 @@ export default function NotificationModel({
       else {
         setMessageStatus({
           mode: 'danger',
-          message: 'Notification Save Failed.'
+          message: 'NotificationType  Save Failed.'
         })
       }
     }
   };
 
   const deleteHandler = async () => {
-    const response = await onDeleteNotification(id);
+    const response = await onDeleteNotificationType(id);
     if (response.payload.title == "Success") {
       onClose(true);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Notification Delete Failed.'
+        message: 'NotificationType Delete Failed.'
       })
     }
   };
-
   const dropdownHandler = (event,{value}) => {
-    setNewNotification((currentNotification) => ({...currentNotification, recordStatusId: value}));
+    setNewNotificationType((currentNotificationType) => ({...currentNotificationType, recordStatusId: value}));
   }
-  useEffect(() => {
-    if (isEdit) {
-      setNewNotification(notificationData);
-    }
-  }, []);
-
   useEffect(() => { 
     setRecordStatusOptions(recordStatusList.map((recordStatus,item) =>(
       {
@@ -123,16 +117,21 @@ export default function NotificationModel({
     value: recordStatus.recordStatusId,
     })).filter((item) => item));
     }, [recordStatusList]);
-  
+
+  useEffect(() => {
+    if (isEdit) {
+      setNewNotificationType(notificationTypeData);
+    }
+  }, []);
 
   useEffect(() => {
     if (isEdit) {
       setButtonType("Update");
     }
     const isEnable =
-      !newNotification?.notificationName|| !newNotification?.notificationTypeId|| !newNotification?.description || !newNotification?.recordStatusId;
+      !newNotificationType?.notificationTypeName || !newNotificationType?.recordStatusId|| !newNotificationType?.description  ;
     setSaveDisabled(isEnable);
-  }, [newNotification]);
+  }, [newNotificationType]);
 
   return (
     <>
@@ -158,41 +157,19 @@ export default function NotificationModel({
         <Form>
           <Form.Group
             className={styles.stFormContainer}
-            controlId="formNotification"
+            controlId="formNotificationType"
           >
-            
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>NotificationTypeId</Form.Label>
+            <Form.Label>NotificationType Name</Form.Label>
             <Form.Control
               type="text"
-              name="notificationTypeId"
-              placeholder="NotificationTypeId"
-              value={newNotification?.notificationTypeId}
+              name="notificationTypeName"                                                                                                                                   
+              placeholder="Enter NotificationTypeName"
+              value={newNotificationType?.notificationTypeName}
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group>
-            <Form.Label>NotificationName</Form.Label>
-            <Form.Control
-              type="text"
-              name="notificationName"
-              placeholder="NotificationName"
-              value={newNotification?.notificationName}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-          {/* <Form.Group>
-            <Form.Label>NotificationDate</Form.Label>
-            <Form.Control
-              type="text"
-              name="notificationDate"
-              placeholder="NotificationDate"
-              value={newNotification?.notificationDate}
-              onChange={changeHandler}
-            />
-          </Form.Group> */}
-           <Form.Group className="mb-3" controlId="recordStatus">
+
+          <Form.Group className="mb-3" controlId="recordStatus">
             <Form.Label>RecordStatus</Form.Label>
             <Dropdown
               name="actionName"
@@ -201,21 +178,24 @@ export default function NotificationModel({
               search
               selection
               options={recordStatusOptions}
-              value = {newNotification?.recordStatusId}
+              value = {newNotificationType?.recordStatusId}
               onChange={dropdownHandler}
             />
           </Form.Group>
 
-          <Form.Group>
+
+          <Form.Group className="mb-3" controlId="description">
             <Form.Label>Description</Form.Label>
             <Form.Control
               type="text"
               name="description"
               placeholder="Description"
-              value={newNotification?.description}
+              value={newNotificationType?.description}
               onChange={changeHandler}
             />
           </Form.Group>
+                    
+          
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel
@@ -231,23 +211,23 @@ export default function NotificationModel({
   );
 }
 
-NotificationModel.propTypes = {
+NotificationTypeModel.propTypes = {
   /**
-   * Callback function for Add Notification
+   * Callback function for Add NotificationType
    */
-  onAddNotification: PropTypes.func,
+  onAddNotificationType: PropTypes.func,
   /**
-   * Callback function for Update Notification
+   * Callback function for Update NotificationType
    */
-  onUpdateNotification: PropTypes.func,
+  onUpdateNotificationType: PropTypes.func,
   /**
-   * Callback function for Delete Notification
+   * Callback function for Delete NotificationType
    */
-  onDeleteNotification: PropTypes.func,
+  onDeleteNotificationType: PropTypes.func,
   /**
-   * Callback function for Get Notification
+   * Callback function for Get NotificationType
    */
-  onGetNotification: PropTypes.func,
+  onGetNotificationType: PropTypes.func,
   /**
    * isEdit for bool type
    */
@@ -257,7 +237,7 @@ NotificationModel.propTypes = {
    */
   isDelete: PropTypes.bool,
   /**
-   * Callback function for Get Notification
+   * Callback function for Get NotificationType
    */
   onClose: PropTypes.func,
   /**
@@ -265,25 +245,25 @@ NotificationModel.propTypes = {
    */
   id: PropTypes.number,
   /**
- * notificationData for object type
+ * notificationTypeData for object type
  */
-  notificationData: PropTypes.any,
+  notificationTypeData: PropTypes.any,
   /**
  * recordStatusData for object type
  */
   recordStatusList: PropTypes.any,
 };
 
-NotificationModel.defaultProps = {
-  onAddNotification: null,
-  onUpdateNotification: null,
-  onDeleteNotification: null,
-  onGetNotification: null,
+NotificationTypeModel.defaultProps = {
+  onAddNotificationType: null,
+  onUpdateNotificationType: null,
+  onDeleteNotificationType: null,
+  onGetNotificationType: null,
   isEdit: false,
   isDelete: false,
   onClose: null,
   id: null,
-  notificationData: null,
+  notificationTypeData: null,
   recordStatusList:null,
 };
 

@@ -5,7 +5,9 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
-import { Dropdown } from 'semantic-ui-react'
+import { Dropdown } from 'semantic-ui-react';
+import Select from 'react-select';
+import States from "../../pages/State";
 
 export default function StateModel({
   onAddState,
@@ -18,12 +20,20 @@ export default function StateModel({
   onClose,
   stateData,
   countryList = [],
+  recordStatusList = [],
 }) {
   const [newState, setNewState] = useState({
     stateName: "",
     countryId: null,
     description: "",
+    recordStatusId:null,
   });
+  const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus,item) =>(
+    {
+    key: item,
+    text: recordStatus.actionName,
+    value: recordStatus.recordStatusId,
+  })).filter((item) => item));
 
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
@@ -31,7 +41,7 @@ export default function StateModel({
     status: false,
     message: "",
   });
-  debugger;
+  
 
   const [countryOptions, setCountryOptions] = useState(countryList.map((country,item) =>(
     {
@@ -104,7 +114,17 @@ export default function StateModel({
 
   const dropdownHandler = (event,{value}) => {
     setNewState((currentState) => ({...currentState, countryId: value}));
+    setNewState((currentProduct) => ({...currentProduct, recordStatusId: value}));
   }
+  useEffect(() => { 
+    setRecordStatusOptions(recordStatusList.map((recordStatus,item) =>(
+      {
+      key: item,
+      text: recordStatus.actionName,
+    value: recordStatus.recordStatusId,
+    })).filter((item) => item));
+    }, [recordStatusList]);
+  
 
   useEffect(() => {
     if (isEdit) {
@@ -126,7 +146,7 @@ export default function StateModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newState?.stateName || !newState?.countryId || !newState?.description;
+      !newState?.stateName || !newState?.countryId || !newState?.description|| !newState?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newState]);
 
@@ -178,6 +198,19 @@ export default function StateModel({
               onChange={dropdownHandler}
             />
            
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="recordStatus">
+            <Form.Label>RecordStatus</Form.Label>
+            <Dropdown
+              name="actionName"
+              placeholder='Select Action'
+              fluid
+              search
+              selection
+              options={recordStatusOptions}
+              value = {newState?.recordStatusId}
+              onChange={dropdownHandler}
+            />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -246,6 +279,10 @@ StateModel.propTypes = {
  * countryList for object type
  */
     countryList: PropTypes.any,
+    /**
+ * recordStatusData for object type
+ */
+   recordStatusList: PropTypes.any,
 };
 
 StateModel.defaultProps = {
@@ -259,5 +296,6 @@ StateModel.defaultProps = {
   id: null,
   stateData: null,
   countryList:null,
+  recordStatusList:null,
 };
 

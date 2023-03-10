@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
 import useFetchState from "../hooks/useFetchState";
 import useFetchCountry from "../hooks/useFetchCountry";
+import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
 import StateModel from "../components/StateModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
@@ -28,6 +29,7 @@ export default function States() {
 
   const [states, setStates] = useState([]);
   const [countryList, setCountryList] = useState([]);
+  const [recordStatusList, setRecordStatusList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -68,6 +70,9 @@ export default function States() {
   const { 
     getCountries,
   } = useFetchCountry();
+  const { 
+    getRecordStatuss,
+  } = useFetchRecordStatus();
 
   const columns = [
 
@@ -75,6 +80,7 @@ export default function States() {
     { dataField: 'stateName', text: 'State', sort: true },
     { dataField: 'countryId', text: 'Country', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
+    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true },
      // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -105,6 +111,7 @@ export default function States() {
 
   useEffect(() => {
     getCountryList();
+    getRecordStatusList();
     if (states.length == 0) {
       getAllStates();
       setLoading(false)
@@ -173,6 +180,23 @@ export default function States() {
       setMessageStatus({
         mode: 'danger',
         message: 'State Fetch Failed.'
+      })
+    }
+  };
+  const getRecordStatusList = async () => {
+    const response = await getRecordStatuss();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setRecordStatusList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'RecordStatus Fetch Failed.'
       })
     }
   };
@@ -272,6 +296,7 @@ export default function States() {
                     noDataIndication={emptyDataMessage}
                     wrapperClasses="table-responsive"
                     selectRow={selectRow}
+                    
                   />
                 </div>
               )
@@ -303,6 +328,7 @@ export default function States() {
                 id={id}
                 stateData={state}
                 countryList={countryList}
+                recordStatusList={recordStatusList}
               />
             </Modal.Body>
 

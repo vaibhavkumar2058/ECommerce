@@ -1,18 +1,9 @@
 	
-
-
-
-
-
-
-
-
-
-
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
 import useFetchOrderTracking from "../hooks/useFetchOrderTracking";
+import useFetchOrderStatus from "../hooks/useFetchOrderStatus";
 import OrderTrackingModel from "../components/OrderTrackingModel";
 import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -24,6 +15,7 @@ import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit/dist/rea
 
 
 const { SearchBar, ClearSearchButton } = Search;
+
 
 const MyExportCSV = (props) => {
   const handleClick = () => {
@@ -46,6 +38,7 @@ export default function OrderTracking() {
 
   const [orderTrackinges, setOrderTrackinges] = useState([]);
   const [recordStatusList, setRecordStatusList] = useState([]);
+  const [orderStatusList, setOrderStatusList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -84,6 +77,9 @@ export default function OrderTracking() {
     getOrderTrackinges,
     orderTrackingById,
   } = useFetchOrderTracking();
+  const { 
+    getOrderStatuses,
+  } = useFetchOrderStatus();
 
   
   const { 
@@ -130,6 +126,7 @@ export default function OrderTracking() {
 
   useEffect(() => {
     getRecordStatusList();
+    getOrderStatusList();
     if (orderTrackinges.length == 0) {
       getAllOrderTrackinges();
       setLoading(false)
@@ -185,6 +182,7 @@ export default function OrderTracking() {
   });
   const getRecordStatusList = async () => {
     const response = await getRecordStatuss();
+  
     if (response.payload.title == "Success") {
 
       var arr = [];
@@ -197,6 +195,24 @@ export default function OrderTracking() {
       setMessageStatus({
         mode: 'danger',
         message: 'OrderTracking Fetch Failed.'
+        
+      })
+    }
+  };
+  const getOrderStatusList = async () => {
+    const response = await getOrderStatuses();
+    if (response.payload.title == "Success") {
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setOrderStatusList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'OrderTracking Fetch Failed.'
+       
       })
     }
   };
@@ -328,6 +344,7 @@ export default function OrderTracking() {
                 orderTrackingData={orderTracking}
                 recordStatusList={recordStatusList}
 
+                orderStatusList={orderStatusList}
               />
             </Modal.Body>
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { css } from "@emotion/react";
-
+import { Dropdown } from 'semantic-ui-react'
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
@@ -17,6 +17,7 @@ export default function FolderModel({
   id,
   onClose,
   folderData,
+  recordStatusList = [],
 }) {
   const [newFolder, setNewFolder] = useState({
     resourceId: null,
@@ -27,6 +28,14 @@ export default function FolderModel({
     isDeleted:true,
     recordStatusId:null,
   });
+
+  const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus,item) =>(
+    {
+    key: item,
+    text: recordStatus.actionName,
+    value: recordStatus.recordStatusId,
+  })).filter((item) => item));
+
 
   const [fileSelected, setFileSelected] = useState();
 
@@ -105,11 +114,24 @@ export default function FolderModel({
     }
   };
 
+  const dropdownHandler = (event,{value}) => {
+    setNewFolder((currentFolder) => ({...currentFolder, recordStatusId: value}));
+  }
+
   useEffect(() => {
     if (isEdit) {
       setNewFolder(folderData);
     }
   }, []);
+
+  useEffect(() => { 
+    setRecordStatusOptions(recordStatusList.map((recordStatus,item) =>(
+      {
+      key: item,
+      text: recordStatus.actionName,
+    value: recordStatus.recordStatusId,
+    })).filter((item) => item));
+    }, [recordStatusList]);
 
   useEffect(() => {
     if (isEdit) {
@@ -207,14 +229,17 @@ export default function FolderModel({
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="isArchived">
-            <Form.Label>RecordStatusId</Form.Label>
-            <Form.Control
-              type="text"
-              name="recordStatusId"
-              placeholder="Enter RecordStatusId"
-              value={newFolder?.recordStatusId}
-              onChange={changeHandler}
+          <Form.Group className="mb-3" controlId="recordStatus">
+            <Form.Label>RecordStatus</Form.Label>
+            <Dropdown
+              name="actionName"
+              placeholder='Select Action'
+              fluid
+              search
+              selection
+              options={recordStatusOptions}
+              value = {newFolder?.recordStatusId}
+              onChange={dropdownHandler}
             />
           </Form.Group>
           
@@ -270,6 +295,10 @@ FolderModel.propTypes = {
  * folderData for object type
  */
   folderData: PropTypes.any,
+  /**
+ * recordStatusData for object type
+ */
+  recordStatusList: PropTypes.any,
 };
 
 FolderModel.defaultProps = {
@@ -282,5 +311,6 @@ FolderModel.defaultProps = {
   onClose: null,
   id: null,
   folderData: null,
+  recordStatusList:null,
 };
 

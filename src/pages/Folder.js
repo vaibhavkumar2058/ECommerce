@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
 import useFetchFolder from "../hooks/useFetchFolder";
+import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
 import FolderModel from "../components/FolderModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
@@ -27,6 +28,7 @@ const MyExportCSV = (props) => {
 export default function Folders() {
 
   const [folders, setFolders] = useState([]);
+  const [recordStatusList, setRecordStatusList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -68,6 +70,10 @@ export default function Folders() {
     getFolders,
     folderById,
   } = useFetchFolder();
+
+  const { 
+    getRecordStatuss,
+  } = useFetchRecordStatus();
 
   const columns = [
     // columns follow dataField and text structure
@@ -129,6 +135,7 @@ export default function Folders() {
   ];
 
   useEffect(() => {
+    getRecordStatusList();
     if (folders.length == 0) {
       getAllFolders();
       setLoading(false)
@@ -182,6 +189,24 @@ export default function Folders() {
       console.log('sizePerPage', sizePerPage);
     }
   });
+
+  const getRecordStatusList = async () => {
+    const response = await getRecordStatuss();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setRecordStatusList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'State Fetch Failed.'
+      })
+    }
+  };
 
 
   const getAllFolders = async () => {
@@ -308,6 +333,7 @@ export default function Folders() {
                 isDelete={isDelete}
                 id={id}
                 folderData={folder}
+                recordStatusList={recordStatusList}
               />
             </Modal.Body>
 

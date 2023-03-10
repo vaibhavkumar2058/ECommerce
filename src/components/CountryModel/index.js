@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { css } from "@emotion/react";
-
+import { Dropdown } from 'semantic-ui-react'
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
@@ -17,6 +17,7 @@ export default function CountryModel({
   id,
   onClose,
   countryData,
+  recordStatusList = [],
 }) {
   const [newCountry, setNewCountry] = useState({
     countryName: "",
@@ -31,6 +32,13 @@ export default function CountryModel({
     status: false,
     message: "",
   });
+
+  const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus,item) =>(
+    {
+    key: item,
+    text: recordStatus.actionName,
+    value: recordStatus.recordStatusId,
+  })).filter((item) => item));
 
   const [saveDisabled, setSaveDisabled] = useState(true);
   const [buttonType, setButtonType] = useState("Save");
@@ -95,11 +103,25 @@ export default function CountryModel({
     }
   };
 
+  const dropdownHandler = (event,{value}) => {
+    setNewCountry((currentCountry) => ({...currentCountry, recordStatusId: value}));
+  }
+
+
   useEffect(() => {
     if (isEdit) {
       setNewCountry(countryData);
     }
   }, []);
+
+  useEffect(() => { 
+    setRecordStatusOptions(recordStatusList.map((recordStatus,item) =>(
+      {
+      key: item,
+      text: recordStatus.actionName,
+    value: recordStatus.recordStatusId,
+    })).filter((item) => item));
+    }, [recordStatusList]);
 
   useEffect(() => {
     if (isEdit) {
@@ -168,14 +190,17 @@ export default function CountryModel({
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="recordStatusId">
-            <Form.Label>RecordStatusId</Form.Label>
-            <Form.Control
-              type="text"
-              name="recordStatusId"
-              placeholder="RecordStatusId"
-              value={newCountry?.recordStatusId}
-              onChange={changeHandler}
+          <Form.Group className="mb-3" controlId="recordStatus">
+            <Form.Label>RecordStatus</Form.Label>
+            <Dropdown
+              name="actionName"
+              placeholder='Select Action'
+              fluid
+              search
+              selection
+              options={recordStatusOptions}
+              value = {newCountry?.recordStatusId}
+              onChange={dropdownHandler}
             />
           </Form.Group>
           <Modal.Footer>
@@ -230,6 +255,11 @@ CountryModel.propTypes = {
  * countryData for object type
  */
   countryData: PropTypes.any,
+
+   /**
+ * recordStatusData for object type
+ */
+   recordStatusList: PropTypes.any,
 };
 
 CountryModel.defaultProps = {
@@ -242,5 +272,6 @@ CountryModel.defaultProps = {
   onClose: null,
   id: null,
   countryData: null,
+  recordStatusList:null,
 };
 

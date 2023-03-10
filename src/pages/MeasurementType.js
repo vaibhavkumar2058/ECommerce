@@ -63,7 +63,7 @@ export default function MeasurementTypes() {
     addMeasurementType,
     updateMeasurementType,
     deleteMeasurementType,
-    getMeasurementType,
+    getMeasurementTypes,
     measurementTypeById,
   } = useFetchMeasurementType();
 
@@ -183,7 +183,7 @@ export default function MeasurementTypes() {
 
 
   const getAllMeasurementTypes = async () => {
-    const response = await getMeasurementType();
+    const response = await getMeasurementTypes();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',

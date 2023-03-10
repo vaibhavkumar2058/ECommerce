@@ -36,7 +36,7 @@ export default function Products() {
 
   const [recordStatusList, setRecordStatusList] = useState([]);
   const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState();
+  const [categoryList, setCategoryList] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -149,6 +149,7 @@ export default function Products() {
 
   useEffect(() => {
     getRecordStatusList();
+    getCategoryTypeList();
     if (products.length == 0) {
       getAllProducts();
       setLoading(false)
@@ -216,23 +217,33 @@ export default function Products() {
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Product Fetch Failed.'
+        message: 'product Fetch Failed.'
       })
     }
   };
 
+  const getCategoryTypeList = async () => {
+    const response = await getCategoryTypes();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setCategoryList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'product Fetch Failed.'
+      })
+    }
+  };
+
+
   const getAllProducts = async () => {
     const response = await getProducts();
     if (response.payload.title == "Success") {
-      const categoryList = await getCategoryTypes();
-
-      if (categoryList.payload.title == "Success") {
-        var carr = [];
-        for (var key in categoryList.payload) {
-          carr.push(categoryList.payload[key]);
-        }
-        setCategories(carr);
-      }
       setMessageStatus({
         mode: 'success',
         message: 'Products Record Fetch Succefully.'
@@ -364,8 +375,8 @@ export default function Products() {
                 isDelete={isDelete}
                 id={id}
                 productData={product}
-                categories={categories}
                 recordStatusList={recordStatusList}
+                categoryList={categoryList}
 
               />
             </Modal.Body>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { css } from "@emotion/react";
-
+import { Dropdown } from 'semantic-ui-react'
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
@@ -17,6 +17,7 @@ export default function InvoiceModel({
   id,
   onClose,
   invoiceData,
+  recordStatusList = [],
 }) {
   const [newInvoice, setNewInvoice] = useState({
     resourcesId:null,
@@ -24,7 +25,7 @@ export default function InvoiceModel({
     totalIncludeTax:null,
     total:null,
     description:"",
-    recordStatusId:"1"
+    recordStatusId:null,
     //invoiceDate:""
     
     
@@ -38,6 +39,14 @@ export default function InvoiceModel({
     status: false,
     message: "",
   });
+
+  const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus,item) =>(
+    {
+    key: item,
+    text: recordStatus.actionName,
+    value: recordStatus.recordStatusId,
+  })).filter((item) => item));
+
 
   const [saveDisabled, setSaveDisabled] = useState(true);
   const [buttonType, setButtonType] = useState("Save");
@@ -104,17 +113,32 @@ export default function InvoiceModel({
     }
   };
 
+  const dropdownHandler = (event,{value}) => {
+    setNewInvoice((currentInvoice) => ({...currentInvoice, recordStatusId: value}));
+  }
+
   useEffect(() => {
     if (isEdit) {
       setNewInvoice(invoiceData);
     }
   }, []);
 
+  useEffect(() => { 
+    setRecordStatusOptions(recordStatusList.map((recordStatus,item) =>(
+      {
+      key: item,
+      text: recordStatus.actionName,
+    value: recordStatus.recordStatusId,
+    })).filter((item) => item));
+    }, [recordStatusList]);
+  
+
+
   useEffect(() => {
     if (isEdit) {
       setButtonType("Update");
     }
-    const isEnable = !newInvoice?.resourcesId || !newInvoice?.orderId   || !newInvoice?.totalIncludeTax ||  !newInvoice?.total || !newInvoice?.description;
+    const isEnable = !newInvoice?.resourcesId || !newInvoice?.orderId   || !newInvoice?.totalIncludeTax ||  !newInvoice?.total || !newInvoice?.description  || !newInvoice?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newInvoice]);
 
@@ -186,11 +210,20 @@ export default function InvoiceModel({
               onChange={changeHandler}
             />
           </Form.Group> */}
-
+<Form.Group className="mb-3" controlId="recordStatus">
+            <Form.Label>RecordStatus</Form.Label>
+            <Dropdown
+              name="actionName"
+              placeholder='Select Action'
+              fluid
+              search
+              selection
+              options={recordStatusOptions}
+              value = {newInvoice?.recordStatusId}
+              onChange={dropdownHandler}
+            />
+          </Form.Group>
           
-            
-
-
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Total</Form.Label>
             <Form.Control
@@ -267,6 +300,11 @@ InvoiceModel.propTypes = {
  * invoiceData for object type
  */
   invoiceData: PropTypes.any,
+
+   /**
+ * recordStatusData for object type
+ */
+   recordStatusList: PropTypes.any,
 };
 
 InvoiceModel.defaultProps = {
@@ -279,5 +317,6 @@ InvoiceModel.defaultProps = {
   onClose: null,
   id: null,
   invoiceData: null,
+  recordStatusList:null,
 };
 
