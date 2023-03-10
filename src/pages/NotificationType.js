@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
-import useFetchOrderTracking from "../hooks/useFetchOrderTracking";
-import useFetchOrderStatus from "../hooks/useFetchOrderStatus";
-import OrderTrackingModel from "../components/OrderTrackingModel";
+import useFetchNotificationType from "../hooks/useFetchNotificationType";
+import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
+import NotificationTypeModel from "../components/NotificationTypeModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
@@ -26,23 +26,17 @@ const MyExportCSV = (props) => {
   );
 };
 
-export default function OrderTracking() {
-  const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
-  const admin=userInfo?.role?.admin;
-  const agent=userInfo?.role?.agent;
-  const dealer=userInfo?.role?.dealer;
-  const customer=userInfo?.role?.customer;
+export default function NotificationType() {
 
-
-  const [orderTrackinges, setOrderTrackinges] = useState([]);
-  const [orderStatusList, setOrderStatusList] = useState([]);
+  const [notificationTypes, setNotificationTypes] = useState([]);
+  const [recordStatusList, setRecordStatusList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
   const handleClose = () => {
-    getAllOrderTrackinges();
+    getAllNotificationType();
     setIsEdit(false);
     setIsDelete(false);
     setShow(false);
@@ -50,12 +44,11 @@ export default function OrderTracking() {
   const handleShow = () => setShow(true);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-  const [orderTracking, setOrderTracking] = useState({
-    orderId:null,
-    orderStatusId:null,
+  const [notificationType, setNotificationType] = useState({
+    notificationTypeName: "",
     description:"",
-    
-      });
+    recordStatusId:null,
+    });
 
   const [id, setId] = useState(null);
 
@@ -67,23 +60,22 @@ export default function OrderTracking() {
   });
 
   const { 
-    addOrderTracking,
-    updateOrderTracking,
-    deleteOrderTracking,
-    getOrderTrackinges,
-    orderTrackingById,
-  } = useFetchOrderTracking();
+    addNotificationType,
+    updateNotificationType,
+    deleteNotificationType,
+    getNotificationTypes,
+    notificationTypeById,
+  } = useFetchNotificationType();
   const { 
-    getOrderStatuses,
-  } = useFetchOrderStatus();
+    getRecordStatuss,
+  } = useFetchRecordStatus();
 
   const columns = [
-    { dataField: 'orderTrackingId', text: 'orderTracking Id', sort: true, hidden: true },
-    { dataField: 'orderId', text: 'Order Id', sort: true },
-    
-    { dataField: 'orderStatusId', text: 'OrderStatus Id', sort: true },
-    { dataField: 'description', text: 'Description', sort: true,},
-    
+
+     { dataField: 'notificationTypeId', text: 'NotificationTypeId', sort: true,hidden:true },
+     { dataField: 'notificationTypeName', text: 'NotificationTypeName', sort: true },
+     { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true },
+      { dataField: 'description', text: 'Description', sort: true },
     
     // columns follow dataField and text structure
     {
@@ -93,38 +85,37 @@ export default function OrderTracking() {
         return (
           <><button
             className="btn btn-primary btn-xs"
-            onClick={() => handleView(row.orderTrackingId, row.name)}
+            onClick={() => handleView(row.notificationTypeId, row.name)}
           >
             View
           </button>
-            {admin && <button
+            <button
               className="btn btn-primary btn-xs"
-              onClick={() => handleEdit(row.orderTrackingId, row)}
+              onClick={() => handleEdit(row.notificationTypeId, row)}
             >
               Edit
-            </button>}
-            {admin && <button
+            </button><button
               className="btn btn-danger btn-xs"
-              onClick={() => handleDelete(row.orderTrackingId, row.name)}
+              onClick={() => handleDelete(row.notificationTypeId, row.name)}
             >
               Delete
-            </button>}</>
+            </button></>
         );
       },
     },
   ];
 
   useEffect(() => {
-    getOrderStatusList();
-    if (orderTrackinges.length == 0) {
-      getAllOrderTrackinges();
+    getRecordStatusList();
+    if (notificationTypes.length == 0) {
+      getAllNotificationType();
       setLoading(false)
     }
-  }, [orderTrackinges]);
+  }, [notificationTypes]);
 
 
   const defaultSorted = [{
-    dataField: 'orderTrackingId',
+    dataField: 'notificationTypeId',
     order: 'desc'
   }];
 
@@ -138,8 +129,8 @@ export default function OrderTracking() {
   };
 
   const handleEdit = (rowId, row) => {
-    setOrderTracking(row);
-    //getOrderTrackingById(rowId);
+    setNotificationType(row);
+    //getNotificationTypeById(rowId);
     setId(rowId);
     setIsEdit(true);
     setShow(true);
@@ -169,31 +160,31 @@ export default function OrderTracking() {
       console.log('sizePerPage', sizePerPage);
     }
   });
-  const getOrderStatusList = async () => {
-    const response = await getOrderStatuses();
+  const getRecordStatusList = async () => {
+    const response = await getRecordStatuss();
     if (response.payload.title == "Success") {
 
       var arr = [];
       for (var key in response.payload) {
         arr.push(response.payload[key]);
       }
-      setOrderStatusList(arr);
+      setRecordStatusList(arr);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'OrderStatus Fetch Failed.'
+        message: 'NotificationType Fetch Failed.'
       })
     }
   };
 
 
-  const getAllOrderTrackinges = async () => {
-    const response = await getOrderTrackinges();
+  const getAllNotificationType = async () => {
+    const response = await getNotificationTypes();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',
-        message: 'OrderTracking Record Fetch Succefully.'
+        message: 'NotificationType Record Fetch Succefully.'
       })
 
       var arr = [];
@@ -201,25 +192,25 @@ export default function OrderTracking() {
         arr.push(response.payload[key]);
       }
 
-      setOrderTrackinges(arr);
+      setNotificationTypes(arr);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'OrderTracking Fetch Failed.'
+        message: 'NotificationType Fetch Failed.'
       })
     }
   };
 
-  const getOrderTrackingById = async (id) => {
-    const response = await orderTrackingById(id);
+  const getNotificationTypeById = async (id) => {
+    const response = await notificationTypeById(id);
     if (response.payload.title == "Success") {
-      setOrderTracking(response.payload);
+      setNotificationType(response.payload);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'OrderTracking Get Failed.'
+        message: 'NotificationType Get Failed.'
       })
     }
   };
@@ -246,11 +237,11 @@ export default function OrderTracking() {
     <>
       <div className="m-t-40">
         {loading && <div>A moment please...</div>}
-        {orderTrackinges && (<div>
+        {notificationType && (<div>
           <ToolkitProvider
             bootstrap4
-            keyField='orderTrackingId'
-            data={orderTrackinges}
+            keyField='notificationTypeId'
+            data={notificationTypes}
             columns={columns}
             search
           >
@@ -268,7 +259,7 @@ export default function OrderTracking() {
                           <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
                           <Button variant="primary" onClick={handleShow}>
-                            Add OrderTracking
+                            Add NotificationType
                           </Button>
                           </div>
                         </div>
@@ -299,20 +290,20 @@ export default function OrderTracking() {
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Add OrderTracking</Modal.Title>
+              <Modal.Title>Add NotificationType</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <OrderTrackingModel
-                onAddOrderTracking={addOrderTracking}
-                onUpdateOrderTracking={updateOrderTracking}
-                onDeleteOrderTracking={deleteOrderTracking}
-                onGetOrderTracking={orderTrackingById}
+              <NotificationTypeModel
+                onAddNotificationType={addNotificationType}
+                onUpdateNotificationType={updateNotificationType}
+                onDeleteNotificationType={deleteNotificationType}
+                onGetNotificationType={notificationTypeById}
                 onClose={handleClose}
                 isEdit={isEdit}
                 isDelete={isDelete}
                 id={id}
-                orderTrackingData={orderTracking}
-                orderStatusList={orderStatusList}
+                notificationTypeData={notificationType}
+                recordStatusList={recordStatusList}
               />
             </Modal.Body>
 

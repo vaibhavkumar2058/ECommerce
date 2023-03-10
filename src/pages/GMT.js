@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
 import useFetchGMT from "../hooks/useFetchGMT";
 import GMTModel from "../components/GMTModel";
+import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
@@ -27,6 +28,7 @@ const MyExportCSV = (props) => {
 export default function GMTs() {
 
   const [GMTs, setGMTs] = useState([]);
+  const [recordStatusList, setRecordStatusList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -67,6 +69,10 @@ export default function GMTs() {
     getGMTs,
     GMTById,
   } = useFetchGMT();
+  const { 
+    getRecordStatuss,
+  } = useFetchRecordStatus();
+
 
   const columns = [
     { dataField: 'gmtId', text: 'GMT', sort: true, hidden: true },
@@ -105,6 +111,7 @@ export default function GMTs() {
   ];
 
   useEffect(() => {
+    getRecordStatusList();
     if (GMTs.length == 0) {
       getAllGMTs();
       setLoading(false)
@@ -157,6 +164,24 @@ export default function GMTs() {
       console.log('sizePerPage', sizePerPage);
     }
   });
+  const getRecordStatusList = async () => {
+    const response = await getRecordStatuss();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setRecordStatusList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'RecordStatus Fetch Failed.'
+      })
+    }
+  };
+
 
 
   const getAllGMTs = async () => {
@@ -283,6 +308,7 @@ export default function GMTs() {
                 isDelete={isDelete}
                 id={id}
                 GMTData={GMT}
+                recordStatusList={recordStatusList}
               />
             </Modal.Body>
 

@@ -52,6 +52,7 @@ import MyProfile from "../pages/MyProfile";
 import Sidebar from "../pages/Sidebar";
 import Signup from "../pages/PublicPages/Signup";
 import OrderReports from "../pages/OrderReports";
+import NotificationType from "../pages/NotificationType";
 
 
 const NavbarComp = () => {
@@ -109,6 +110,7 @@ const NavbarComp = () => {
           <Route exact path="/forgotpassword" element={<ForgotPassword/>}/>
           {((admin||agent||dealer||customer) &&<Route exact path="/myProfile" element={<ProtectedRoute><Sidebar/><MyProfile /></ProtectedRoute>}/>)}
           <Route exact path="/*" element={<NotFound />} />
+          {(admin &&<Route exact path="/notificationType" element={<ProtectedRoute><Sidebar/><NotificationType /></ProtectedRoute>} />)}
           {((admin||agent||dealer||customer) &&<Route exact path="/orderReports" element={<ProtectedRoute><Sidebar/><OrderReports /></ProtectedRoute>} />)}
         </Routes>
       </div>

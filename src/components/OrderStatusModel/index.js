@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { css } from "@emotion/react";
-
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
+import Select from 'react-select';
+import { Dropdown } from 'semantic-ui-react'
+import MeasurementValues from "../../pages/MeasurementValue"
 
 
 export default function OrderStatusModel({
@@ -18,6 +20,7 @@ export default function OrderStatusModel({
   id,
   onClose,
   orderStatusData,
+  recordStatusList = [],
   //orderStatuss,
 
 
@@ -44,6 +47,12 @@ export default function OrderStatusModel({
     status: false,
     message: "",
   });
+  const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus,item) =>(
+    {
+    key: item,
+    text: recordStatus.actionName,
+    value: recordStatus.recordStatusId,
+  })).filter((item) => item));
   
   const [saveDisabled, setSaveDisabled] = useState(true);
   const [buttonType, setButtonType] = useState("Save");
@@ -115,6 +124,17 @@ export default function OrderStatusModel({
       })
     }
   };
+  const dropdownHandler = (event,{value}) => {
+    setNewOrderStatus((currentOrderStatus) => ({...currentOrderStatus, recordStatusId: value}));
+  }
+  useEffect(() => { 
+    setRecordStatusOptions(recordStatusList.map((recordStatus,item) =>(
+      {
+      key: item,
+      text: recordStatus.actionName,
+    value: recordStatus.recordStatusId,
+    })).filter((item) => item));
+    }, [recordStatusList]);
 
   useEffect(() => {
     if (isEdit) {
@@ -165,14 +185,17 @@ export default function OrderStatusModel({
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="state">
-            <Form.Label>RecordStatusId</Form.Label>
-            <Form.Control
-              type="text"
-              name="recordStatusId"
-              placeholder="RecordStatusId"
-              value={newOrderStatus?.recordStatusId}
-              onChange={changeHandler}
+          <Form.Group className="mb-3" controlId="recordStatus">
+            <Form.Label>RecordStatus</Form.Label>
+            <Dropdown
+              name="actionName"
+              placeholder='Select Action'
+              fluid
+              search
+              selection
+              options={recordStatusOptions}
+              value = {newOrderStatus?.recordStatusId}
+              onChange={dropdownHandler}
             />
           </Form.Group>
 
@@ -241,6 +264,10 @@ OrderStatusModel.propTypes = {
  * orderTrackingData for object type
  */
   orderStatusData: PropTypes.any,
+  /**
+ * recordStatusData for object type
+ */
+  recordStatusList: PropTypes.any,
 };
 
 OrderStatusModel.defaultProps = {
@@ -253,5 +280,6 @@ OrderStatusModel.defaultProps = {
   onClose: null,
   id: null,
   orderStatusData: null,
+  recordStatusList:null,
 };
 

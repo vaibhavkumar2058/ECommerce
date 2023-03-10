@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { css } from "@emotion/react";
-
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
-//import OrderTracking from "../../pages/OrderTracking";
+import OrderTracking from "../../pages/OrderTracking";
+import Select from 'react-select';
+import { Dropdown } from 'semantic-ui-react'
 
 export default function OrderTrackingModel({
   onAddOrderTracking,
@@ -18,6 +19,7 @@ export default function OrderTrackingModel({
   id,
   onClose,
   orderTrackingData,
+  orderStatusList = [],
   //orderStatuss,
 
 
@@ -29,13 +31,12 @@ export default function OrderTrackingModel({
     
   });
   
-  // const [orderStatusOptions, setOrderStatusOptions] = useState(orderStatuss.map((orderStatus, i) => (
-  //   {
-  //     key: i,
-  //     label: orderStatus.actionName,
-  //     value: orderStatus.orderStatusId,
-  //   })).filter((item) => item));
-
+  const [orderStatusOptions, setOrderStatusOptions] = useState(orderStatusList.map((orderStatus,item) =>(
+    {
+    key: item,
+    text: orderStatus.orderStatusName,
+    value: orderStatus.orderStatusId,
+  })).filter((item) => item));
   const [fileSelected, setFileSelected] = useState();
 
   const [messageStatus, setMessageStatus] = useState({
@@ -115,6 +116,17 @@ export default function OrderTrackingModel({
       })
     }
   };
+  const dropdownHandler = (event,{value}) => {
+    setNewOrderTracking((currentOrderTracking) => ({...currentOrderTracking, orderStatusId: value}));
+  }
+  useEffect(() => { 
+    setOrderStatusOptions(orderStatusList.map((orderStatus,item) =>(
+      {
+      key: item,
+      text:orderStatus.orderStatusName,
+    value: orderStatus.orderStatusId,
+    })).filter((item) => item));
+    }, [orderStatusList]);
 
   useEffect(() => {
     if (isEdit) {
@@ -165,14 +177,17 @@ export default function OrderTrackingModel({
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="state">
+          <Form.Group className="mb-3" controlId="orderStatusId">
             <Form.Label>OrderStatusId</Form.Label>
-            <Form.Control
-              type="text"
-              name="orderStatusId"
-              placeholder="OrderStatusId"
-              value={newOrderTracking?.orderStatusId}
-              onChange={changeHandler}
+            <Dropdown
+              name="orderStatusName"
+              placeholder='Select orderStatus'
+              fluid
+              search
+              selection
+              options={orderStatusOptions}
+              value = {newOrderTracking?.orderStatusId}
+              onChange={dropdownHandler}
             />
           </Form.Group>
 
@@ -241,6 +256,10 @@ OrderTrackingModel.propTypes = {
  * orderTrackingData for object type
  */
   orderTrackingData: PropTypes.any,
+  /**
+ * orderStatusData for object type
+ */
+  orderStatusList: PropTypes.any,
 };
 
 OrderTrackingModel.defaultProps = {
@@ -253,5 +272,6 @@ OrderTrackingModel.defaultProps = {
   onClose: null,
   id: null,
   orderTrackingData: null,
+  orderStatusList:null,
 };
 
