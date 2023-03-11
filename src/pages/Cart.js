@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
 import useFetchCart from "../hooks/useFetchCart";
 import useFetchProduct from "../hooks/useFetchProduct";
-// import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
+import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
 import CartModel from "../components/CartModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
@@ -29,8 +29,9 @@ const MyExportCSV = (props) => {
 export default function Carts() {
 
   const [carts, setCarts] = useState([]);
+  const [productList, setProductList] = useState([]);
+  const [recordStatusList ,setRecordStatusList] = useState([]);
   const [products, setProducts  ] = useState();
-  // const [recordStatuses, setRecordStatuses  ] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -74,9 +75,11 @@ export default function Carts() {
   const {
     getProducts,
   } = useFetchProduct();
-  // const {
-  //   getRecordStatuses,
-  // } = useFetchRecordStatus();
+
+  const {
+    getRecordStatuss,
+  } = useFetchRecordStatus();
+  
 
 
 
@@ -115,6 +118,17 @@ export default function Carts() {
       },
     },
   ];
+
+  useEffect(() => {
+    getProductList();
+    getRecordStatusList();
+    if (carts.length == 0) {
+      getAllCarts();
+      setLoading(false)
+    }
+  }, [carts]);
+
+  
 
   useEffect(() => {
     if (carts.length == 0) {
@@ -171,6 +185,42 @@ export default function Carts() {
     }
   });
 
+  const getProductList = async () => {
+    const response = await getProducts();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setProductList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'State Fetch Failed.'
+      })
+    }
+  };
+
+  const getRecordStatusList = async () => {
+    const response = await getRecordStatuss();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setRecordStatusList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'State Fetch Failed.'
+      })
+    }
+  };
+
 
   const getAllCarts = async () => {
     const response = await getCarts();
@@ -183,14 +233,7 @@ export default function Carts() {
       }
         setProducts(carr);
       }
-      // const recordStatusList = await getRecordStatuses();
-      // if (recordStatusList.payload.title == "Success") {
-      //   var carr = [];
-      // for (var key in recordStatusList.payload) {
-      //   carr.push(recordStatusList.payload[key]);
-      // }
-      //   setRecordStatuses(carr);
-      // }
+      
       setMessageStatus({
         mode: 'success',
         message: 'Carts Record Fetch Succefully.'
@@ -313,7 +356,9 @@ export default function Carts() {
                 id={id}
                 cartData={cart}
                 products={products}
-                // recordStatuses={recordStatuses}
+                productList={productList}
+                recordStatusList={recordStatusList}
+               
               />
             </Modal.Body>
 

@@ -1,29 +1,31 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { css } from "@emotion/react";
+
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
-import { Dropdown } from 'semantic-ui-react'
 
-export default function RoleModel({
-  onAddRole,
-  onUpdateRole,
-  onDeleteRole,
+export default function OrderItemModel({
+  onAddOrderItem,
+  onUpdateOrderItem,
+  onDeleteOrderItem,
   isEdit,
   isDelete,
-  onGetRole,
+  onGetOrderItem,
   id,
   onClose,
-  roleData,
-  recordStatusList = [],
+  orderItemData,
 }) 
 {
-  const [newRole, setNewRole] = useState({
-    roleName: "",
-    description: "",
-    recordStatusId:null,
+  const [newOrderItem, setNewOrderItem] = useState({
+    productId:null,
+    orderId:null,
+    cost:"",
+    quantity:"",
+    // recordStatusId:null,
+
  });
 
   const [fileSelected, setFileSelected] = useState();
@@ -34,13 +36,6 @@ export default function RoleModel({
     status: false,
     message: "",
   });
-
-  const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus,item) =>(
-    {
-    key: item,
-    text: recordStatus.actionName,
-    value: recordStatus.recordStatusId,
-  })).filter((item) => item));
 
   const [saveDisabled, setSaveDisabled] = useState(true);
   const [buttonType, setButtonType] = useState("Save");
@@ -53,8 +48,8 @@ export default function RoleModel({
   };
 
   const changeHandler = (e) => {
-    setNewRole({
-      ...newRole,
+    setNewOrderItem({
+      ...newOrderItem,
       [e.target.name]: e.target.value,
     });
   };
@@ -62,9 +57,10 @@ export default function RoleModel({
   
 
   const saveHandler = async () => {
-    newRole.file = fileSelected;
+    newOrderItem.file = fileSelected;
     if (isEdit) {
-      const response = await onUpdateRole(id, newRole);
+      debugger;
+      const response = await onUpdateOrderItem(id, newOrderItem);
       if (response.payload.title == "Success") {
         onClose(true);
       }
@@ -76,11 +72,11 @@ export default function RoleModel({
       }
     }
     else {
-      const response = await onAddRole(newRole);
+      const response = await onAddOrderItem(newOrderItem);
       if (response.payload.title == "Success") {
         setMessageStatus({
           mode: 'success',
-          message: 'Role Record Saved Succefully.'
+          message: 'OrderItem Record Saved Succefully.'
         })
         onClose(true);
         console.log(response.payload);
@@ -88,53 +84,39 @@ export default function RoleModel({
       else {
         setMessageStatus({
           mode: 'danger',
-          message: 'Role Save Failed.'
+          message: 'OrderItem Save Failed.'
         })
       }
     }
   };
 
   const deleteHandler = async () => {
-    const response = await onDeleteRole(id);
+    const response = await onDeleteOrderItem(id);
     if (response.payload.title == "Success") {
       onClose(true);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Role Delete Failed.'
+        message: 'OrderItem Delete Failed.'
       })
     }
   };
 
-  const dropdownHandler = (event,{value}) => {
-    setNewRole((currentRole) => ({...currentRole, recordStatusId: value}));
-  }
-
-
   useEffect(() => {
     if (isEdit) {
-      setNewRole(roleData);
+      setNewOrderItem(orderItemData);
     }
   }, []);
-
-  useEffect(() => { 
-    setRecordStatusOptions(recordStatusList.map((recordStatus,item) =>(
-      {
-      key: item,
-      text: recordStatus.actionName,
-      value: recordStatus.recordStatusId,
-    })).filter((item) => item));
-    }, [recordStatusList]);
 
   useEffect(() => {
     if (isEdit) {
       setButtonType("Update");
     }
     const isEnable =
-       !newRole?.roleName || !newRole?.description || !newRole?.recordStatusId; 
+       !newOrderItem?.productId  || !newOrderItem?.orderId || !newOrderItem?.cost || !newOrderItem?.quantity ; 
     setSaveDisabled(isEnable);
-  }, [newRole]);
+  }, [newOrderItem]);
 
   return (
     <>
@@ -160,44 +142,59 @@ export default function RoleModel({
         <Form>
           <Form.Group
             className={styles.stFormContainer}
-            controlId="formRole"
+            controlId="formOrderItem"
           >
-            <Form.Label>Role</Form.Label>
+            <Form.Label>ProductId</Form.Label>
             <Form.Control
               type="text"
-              name="roleName"
-              placeholder="Enter RoleName"
-              value={newRole?.roleName}
+              name="productId"
+              placeholder="Enter ProductId"
+              value={newOrderItem?.productId}
               onChange={changeHandler}
             />
           </Form.Group>
-          
-
-
-          <Form.Group className="mb-3" controlId="description">
-            <Form.Label>Description</Form.Label>
+          <Form.Group className="mb-3" controlId="OrderId">
+            <Form.Label>OrderId</Form.Label>
             <Form.Control
               type="text"
-              name="description"
-              placeholder="Description"
-              value={newRole?.description}
+              name="orderId"
+              placeholder="OrderId"
+              value={newOrderItem?.orderId}
               onChange={changeHandler}
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="mobile">
-            <Form.Label>RecordStatusID</Form.Label>
-            <Dropdown
-              name=" actionName"
-              placeholder='Select Action'
-              fluid
-              search
-              selection
-              options={recordStatusOptions}
-              value = {newRole?.RecordStatusId}
-              onChange={dropdownHandler}
+
+          <Form.Group className="mb-3" controlId="Cost">
+            <Form.Label>Cost</Form.Label>
+            <Form.Control
+              type="text"
+              name="cost"
+              placeholder="Cost"
+              value={newOrderItem?.cost}
+              onChange={changeHandler}
             />
-            </Form.Group>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="Quantity">
+            <Form.Label>Quantity</Form.Label>
+            <Form.Control
+              type="text"
+              name="quantity"
+              placeholder="Quantity"
+              value={newOrderItem?.quantity}
+              onChange={changeHandler}
+            />
+          </Form.Group>
+          {/* <Form.Group className="mb-3" controlId="RecordStatusId">
+            <Form.Label>RecordStatusId</Form.Label>
+            <Form.Control
+              type="text"
+              name="recordStatusId"
+              placeholder="RecordStatusId"
+              value={newOrderItem?.recordStatusId}
+              onChange={changeHandler}
+            />
+          </Form.Group> */}
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel
@@ -213,23 +210,23 @@ export default function RoleModel({
   );
 }
 
-RoleModel.propTypes = {
+OrderItemModel.propTypes = {
   /**
-   * Callback function for Add Role
+   * Callback function for Add OrderItem
    */
-  onAddRole: PropTypes.func,
+  onAddOrderItem: PropTypes.func,
   /**
-   * Callback function for Update Role
+   * Callback function for Update OrderItem
    */
-  onUpdateRole: PropTypes.func,
+  onUpdateOrderItem: PropTypes.func,
   /**
-   * Callback function for Delete Role
+   * Callback function for Delete OrderItem
    */
-  onDeleteRole: PropTypes.func,
+  onDeleteOrderItem: PropTypes.func,
   /**
-   * Callback function for Get Role
+   * Callback function for Get OrderItem
    */
-  onGetRole: PropTypes.func,
+  onGetOrderItem: PropTypes.func,
   /**
    * isEdit for bool type
    */
@@ -239,7 +236,7 @@ RoleModel.propTypes = {
    */
   isDelete: PropTypes.bool,
   /**
-   * Callback function for Get Role
+   * Callback function for Get OrderItem
    */
   onClose: PropTypes.func,
   /**
@@ -247,25 +244,20 @@ RoleModel.propTypes = {
    */
   id: PropTypes.number,
   /**
- * roleData for object type
+ * orderItemData for object type
  */
-  roleData: PropTypes.any,
-   /**
- * recordStatusList for object type
- */
-   recordStatusList: PropTypes.any,
+  orderItemData: PropTypes.any,
 };
 
-RoleModel.defaultProps = {
-  onAddRole: null,
-  onUpdateRole: null,
-  onDeleteRole: null,
-  onGetRole: null,
+OrderItemModel.defaultProps = {
+  onAddOrderItem: null,
+  onUpdateOrderItem: null,
+  onDeleteOrderItem: null,
+  onGetOrderItem: null,
   isEdit: false,
   isDelete: false,
   onClose: null,
   id: null,
-  roleData: null,
-  recordStatusList:null,
+  orderItemData: null,
 };
 

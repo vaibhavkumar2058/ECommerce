@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
-import useFetchNotification from "../hooks/useFetchNotification";
-import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
-import NotificationModel from "../components/NotificationModel";
+import useFetchOrderItem from "../hooks/useFetchOrderItem";
+import OrderItemModel from "../components/OrderItemModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit';
+import { getOrderItems } from "@testing-library/react";
+import Geocode from "react-geocode";
 
 
 const { SearchBar, ClearSearchButton } = Search;
@@ -25,17 +26,32 @@ const MyExportCSV = (props) => {
   );
 };
 
-export default function Notifications() {
-  const [recordStatusList, setRecordStatusList] = useState([]);
-  const [notifications, setNotifications] = useState([]);
+export default function OrderItems() {
 
+  
+  Geocode.setApiKey("AIzaSyAf_G4R_GlpOOoGIDJ8WLvyAFjuq8F2jYc");
+Geocode.enableDebug();
+
+Geocode.fromLatLng("12.9800000000", "77.5927000000").then(
+  response => {
+    var addressComponent = response.pincode;
+    console.log('pincode', response.results[5].address_components[0].long_name);
+    const address = response.results[0].formatted_address;
+    console.log(address);
+  },
+  error => {
+    console.error(error);
+  }
+);
+
+  const [orderItems, setOrderItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
   const handleClose = () => {
-    getAllNotifications();
+    getAllOrderItems();
     setIsEdit(false);
     setIsDelete(false);
     setShow(false);
@@ -43,12 +59,13 @@ export default function Notifications() {
   const handleShow = () => setShow(true);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-  const [notification, setNotification] = useState({
-    notificationTypeId:null,
-    notificationName:"",
-    description:"",
-    recordStatusId:null,
-      });
+  const [orderItem, setOrderItem] = useState({
+    productId:null,
+    orderId:null,
+    cost:"",
+    quantity:"",
+    // recordStatusId:null,
+  });
 
   const [id, setId] = useState(null);
 
@@ -60,25 +77,20 @@ export default function Notifications() {
   });
 
   const { 
-    addNotification,
-    updateNotification,
-    deleteNotification,
-    getNotifications,
-    notificationById,
-  } = useFetchNotification();
-
-  const { 
-    getRecordStatuss,
-  } = useFetchRecordStatus();
-
+    addOrderItem,
+    updateOrderItem,
+    deleteOrderItem,
+    getOrderItems,
+    orderItemById,
+  } = useFetchOrderItem();
 
   const columns = [
 
-    { dataField: 'notificationTypeId', text: 'NotificationTypeId', sort: true},
-    { dataField: 'notificationId', text: 'NotificationId', sort: true},
-    { dataField: 'notificationName', text: ' NotificationName', sort: true },
-    { dataField: 'description', text: 'Description', sort: true },
-    {dataField: 'recordStatusId',text: 'RecordStatusId',sort: true},
+    { dataField: 'productId', text: '  ProductId', sort: true},
+    { dataField: 'orderId', text: ' OrderId', sort: true},
+    { dataField: 'cost', text: 'Cost', sort: true },
+    { dataField: 'quantity', text: 'Quantity', sort: true },
+    // { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true },
     // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -87,18 +99,18 @@ export default function Notifications() {
         return (
           <><button
             className="btn btn-primary btn-xs"
-            onClick={() => handleView(row.notificationId, row.name)}
+            onClick={() => handleView(row.orderItemId, row.name)}
           >
             View
           </button>
             <button
               className="btn btn-primary btn-xs"
-              onClick={() => handleEdit(row.notificationId, row)}
+              onClick={() => handleEdit(row.orderItemId, row)}
             >
               Edit
             </button><button
               className="btn btn-danger btn-xs"
-              onClick={() => handleDelete(row.notificationId, row.name)}
+              onClick={() => handleDelete(row.orderItemId, row.name)}
             >
               Delete
             </button></>
@@ -107,26 +119,16 @@ export default function Notifications() {
     },
   ];
 
-  
-
   useEffect(() => {
-    if (notifications.length == 0) {
-      getAllNotifications();
+    if (orderItems.length == 0) {
+      getAllOrderItems();
       setLoading(false)
     }
-  }, [notifications]);
-
-  useEffect(() => {
-    getRecordStatusList();
-    if (notification.length == 0) {
-      getAllNotifications();
-      setLoading(false)
-    }
-  }, [notifications]);
+  }, [orderItems]);
 
 
   const defaultSorted = [{
-    dataField: 'notificationId',
+    dataField: 'orderItemId',
     order: 'desc'
   }];
 
@@ -140,8 +142,8 @@ export default function Notifications() {
   };
 
   const handleEdit = (rowId, row) => {
-    setNotification(row);
-    //getNotificationsById(rowId);
+    setOrderItem(row);
+    //getOrderItemsById(rowId);
     setId(rowId);
     setIsEdit(true);
     setShow(true);
@@ -172,31 +174,13 @@ export default function Notifications() {
     }
   });
 
-  const getRecordStatusList = async () => {
-    const response = await getRecordStatuss();
-    if (response.payload.title == "Success") {
 
-      var arr = [];
-      for (var key in response.payload) {
-        arr.push(response.payload[key]);
-      }
-      setRecordStatusList(arr);
-    }
-    else {
-      setMessageStatus({
-        mode: 'danger',
-        message: 'State Fetch Failed.'
-      })
-    }
-  };
-
-
-  const getAllNotifications = async () => {
-    const response = await getNotifications();
+  const getAllOrderItems = async () => {
+    const response = await getOrderItems();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',
-        message: 'Notifications Record Fetch Succefully.'
+        message: 'OrderItems Record Fetch Succefully.'
       })
 
       var arr = [];
@@ -204,25 +188,25 @@ export default function Notifications() {
         arr.push(response.payload[key]);
       }
 
-      setNotifications(arr);
+      setOrderItems(arr);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Notification Fetch Failed.'
+        message: 'OrderItem Fetch Failed.'
       })
     }
   };
 
-  const getNotificationById = async (id) => {
-    const response = await notificationById(id);
+  const getOrderItemById = async (id) => {
+    const response = await orderItemById(id);
     if (response.payload.title == "Success") {
-      setNotification(response.payload);
+      setOrderItem(response.payload);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Notification Get Failed.'
+        message: 'OrderItem Get Failed.'
       })
     }
   };
@@ -249,11 +233,11 @@ export default function Notifications() {
     <>
       <div className="m-t-40">
         {loading && <div>A moment please...</div>}
-        {notifications && (<div>
+        {orderItems && (<div>
           <ToolkitProvider
             bootstrap4
-            keyField='notificationId'
-            data={notifications}
+            keyField='orderItemId'
+            data={orderItems}
             columns={columns}
             search
           >
@@ -271,7 +255,7 @@ export default function Notifications() {
                           <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
                           <Button variant="primary" onClick={handleShow}>
-                            Add Notification
+                            Add OrderItem
                           </Button>
                           </div>
                         </div>
@@ -302,20 +286,19 @@ export default function Notifications() {
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Add Notification</Modal.Title>
+              <Modal.Title>Add OrderItem</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <NotificationModel
-                onAddNotification={addNotification}
-                onUpdateNotification={updateNotification}
-                onDeleteNotification={deleteNotification}
-                onGetNotification={notificationById}
+              <OrderItemModel
+                onAddOrderItem={addOrderItem}
+                onUpdateOrderItem={updateOrderItem}
+                onDeleteOrderItem={deleteOrderItem}
+                onGetOrderItem={orderItemById}
                 onClose={handleClose}
                 isEdit={isEdit}
                 isDelete={isDelete}
                 id={id}
-                notificationData={notification}
-                recordStatusList={recordStatusList}
+                orderItemData={orderItem}
               />
             </Modal.Body>
 

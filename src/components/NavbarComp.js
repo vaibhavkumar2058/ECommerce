@@ -43,6 +43,7 @@ import Dashboard from "../pages/DashBoard"
 import OrderSummaryList from "../pages/OrderSummaryList";
 import OrderPlacedList from "../pages/OrderPlacedList";
 import Tax from "../pages/Tax";
+import OrderItem from "../pages/OrderItem";
 import ProtectedRoute from "../pages/ProtectedRoute";
 import Signin from "../pages/PublicPages/Signin";
 import NotFound from "../pages/PublicPages/NotFound";
@@ -78,6 +79,7 @@ const NavbarComp = () => {
           {((admin||agent||dealer||customer) && <Route exact path="/orderTracking" element={<ProtectedRoute><Sidebar/> <OrderTracking/></ProtectedRoute>}/>)}
           {((admin||agent||dealer) && <Route exact path="/recordStatus" element={<ProtectedRoute><Sidebar/> <RecordStatus/></ProtectedRoute>}/>)}
           {(admin && <Route exact path="/tax" element={<ProtectedRoute><Sidebar/> <Tax /></ProtectedRoute>}/>)}
+          {(admin && <Route exact path="/orderItem" element={<ProtectedRoute><Sidebar/> <OrderItem /></ProtectedRoute>}/>)}
           {((admin||agent||dealer) && <Route exact path="/product" element={<ProtectedRoute><Sidebar/> <Product/></ProtectedRoute>}/>)}
           {(admin && <Route exact path="/country" element={<ProtectedRoute><Sidebar/> <Country/></ProtectedRoute>}/>)}
           {(admin && <Route exact path="/addressType" element={<ProtectedRoute><Sidebar/> <AddressType/></ProtectedRoute>}/>)}
