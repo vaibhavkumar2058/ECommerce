@@ -7,6 +7,7 @@ import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
 
+
 export default function NotificationModel({
   onAddNotification,
   onUpdateNotification,
@@ -216,6 +217,8 @@ export default function NotificationModel({
               onChange={changeHandler}
             />
           </Form.Group>
+
+          
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel

@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
-import useFetchCart from "../hooks/useFetchCart";
-import useFetchProduct from "../hooks/useFetchProduct";
-import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
-import CartModel from "../components/CartModel";
+import useFetchOrderItem from "../hooks/useFetchOrderItem";
+import OrderItemModel from "../components/OrderItemModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit';
+import { getOrderItems } from "@testing-library/react";
+import Geocode from "react-geocode";
 
 
 const { SearchBar, ClearSearchButton } = Search;
@@ -26,19 +26,32 @@ const MyExportCSV = (props) => {
   );
 };
 
-export default function Carts() {
+export default function OrderItems() {
 
-  const [carts, setCarts] = useState([]);
-  const [productList, setProductList] = useState([]);
-  const [recordStatusList ,setRecordStatusList] = useState([]);
-  const [products, setProducts  ] = useState();
+  
+  Geocode.setApiKey("AIzaSyAf_G4R_GlpOOoGIDJ8WLvyAFjuq8F2jYc");
+Geocode.enableDebug();
+
+Geocode.fromLatLng("12.9800000000", "77.5927000000").then(
+  response => {
+    var addressComponent = response.pincode;
+    console.log('pincode', response.results[5].address_components[0].long_name);
+    const address = response.results[0].formatted_address;
+    console.log(address);
+  },
+  error => {
+    console.error(error);
+  }
+);
+
+  const [orderItems, setOrderItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
   const handleClose = () => {
-    getAllCarts();
+    getAllOrderItems();
     setIsEdit(false);
     setIsDelete(false);
     setShow(false);
@@ -46,15 +59,13 @@ export default function Carts() {
   const handleShow = () => setShow(true);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-  const [cart, setCart] = useState({
-    resourcesId:null,
+  const [orderItem, setOrderItem] = useState({
     productId:null,
-    cost:null,
+    orderId:null,
+    cost:"",
     quantity:"",
-    description:"",
-    recordStatusId:null,
-
-      });
+    // recordStatusId:null,
+  });
 
   const [id, setId] = useState(null);
 
@@ -66,31 +77,20 @@ export default function Carts() {
   });
 
   const { 
-    addCart,
-    updateCart,
-    deleteCart,
-    getCarts,
-    cartById,
-  } = useFetchCart();
-  const {
-    getProducts,
-  } = useFetchProduct();
-
-  const {
-    getRecordStatuss,
-  } = useFetchRecordStatus();
-  
-
-
+    addOrderItem,
+    updateOrderItem,
+    deleteOrderItem,
+    getOrderItems,
+    orderItemById,
+  } = useFetchOrderItem();
 
   const columns = [
-    { dataField: 'cartId', text: 'Cart Id', sort: true, hidden: true },
-    { dataField: 'resourcesId', text: 'Resources Id', sort: true  },
-    { dataField: 'productId', text: ' Product Id', sort: true },
+
+    { dataField: 'productId', text: '  ProductId', sort: true},
+    { dataField: 'orderId', text: ' OrderId', sort: true},
     { dataField: 'cost', text: 'Cost', sort: true },
     { dataField: 'quantity', text: 'Quantity', sort: true },
-    { dataField: 'description', text: 'Description', sort: true },
-    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true },
+    // { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true },
     // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -99,18 +99,18 @@ export default function Carts() {
         return (
           <><button
             className="btn btn-primary btn-xs"
-            onClick={() => handleView(row.cartId, row.name)}
+            onClick={() => handleView(row.orderItemId, row.name)}
           >
             View
           </button>
             <button
               className="btn btn-primary btn-xs"
-              onClick={() => handleEdit(row.cartId, row)}
+              onClick={() => handleEdit(row.orderItemId, row)}
             >
               Edit
             </button><button
               className="btn btn-danger btn-xs"
-              onClick={() => handleDelete(row.cartId, row.name)}
+              onClick={() => handleDelete(row.orderItemId, row.name)}
             >
               Delete
             </button></>
@@ -120,26 +120,15 @@ export default function Carts() {
   ];
 
   useEffect(() => {
-    getProductList();
-    getRecordStatusList();
-    if (carts.length == 0) {
-      getAllCarts();
+    if (orderItems.length == 0) {
+      getAllOrderItems();
       setLoading(false)
     }
-  }, [carts]);
-
-  
-
-  useEffect(() => {
-    if (carts.length == 0) {
-      getAllCarts();
-      setLoading(false)
-    }
-  }, [carts]);
+  }, [orderItems]);
 
 
   const defaultSorted = [{
-    dataField: 'cartId',
+    dataField: 'orderItemId',
     order: 'desc'
   }];
 
@@ -153,8 +142,8 @@ export default function Carts() {
   };
 
   const handleEdit = (rowId, row) => {
-    setCart(row);
-    //getCartsById(rowId);
+    setOrderItem(row);
+    //getOrderItemsById(rowId);
     setId(rowId);
     setIsEdit(true);
     setShow(true);
@@ -185,58 +174,13 @@ export default function Carts() {
     }
   });
 
-  const getProductList = async () => {
-    const response = await getProducts();
+
+  const getAllOrderItems = async () => {
+    const response = await getOrderItems();
     if (response.payload.title == "Success") {
-
-      var arr = [];
-      for (var key in response.payload) {
-        arr.push(response.payload[key]);
-      }
-      setProductList(arr);
-    }
-    else {
-      setMessageStatus({
-        mode: 'danger',
-        message: 'State Fetch Failed.'
-      })
-    }
-  };
-
-  const getRecordStatusList = async () => {
-    const response = await getRecordStatuss();
-    if (response.payload.title == "Success") {
-
-      var arr = [];
-      for (var key in response.payload) {
-        arr.push(response.payload[key]);
-      }
-      setRecordStatusList(arr);
-    }
-    else {
-      setMessageStatus({
-        mode: 'danger',
-        message: 'State Fetch Failed.'
-      })
-    }
-  };
-
-
-  const getAllCarts = async () => {
-    const response = await getCarts();
-    if (response.payload.title == "Success") {
-      const productList = await getProducts();
-      if (productList.payload.title == "Success") {
-        var carr = [];
-      for (var key in productList.payload) {
-        carr.push(productList.payload[key]);
-      }
-        setProducts(carr);
-      }
-      
       setMessageStatus({
         mode: 'success',
-        message: 'Carts Record Fetch Succefully.'
+        message: 'OrderItems Record Fetch Succefully.'
       })
 
       var arr = [];
@@ -244,25 +188,25 @@ export default function Carts() {
         arr.push(response.payload[key]);
       }
 
-      setCarts(arr);
+      setOrderItems(arr);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Cart Fetch Failed.'
+        message: 'OrderItem Fetch Failed.'
       })
     }
   };
 
-  const getCartById = async (id) => {
-    const response = await cartById(id);
+  const getOrderItemById = async (id) => {
+    const response = await orderItemById(id);
     if (response.payload.title == "Success") {
-      setCart(response.payload);
+      setOrderItem(response.payload);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Cart Get Failed.'
+        message: 'OrderItem Get Failed.'
       })
     }
   };
@@ -289,11 +233,11 @@ export default function Carts() {
     <>
       <div className="m-t-40">
         {loading && <div>A moment please...</div>}
-        {carts && (<div>
+        {orderItems && (<div>
           <ToolkitProvider
             bootstrap4
-            keyField='cartId'
-            data={carts}
+            keyField='orderItemId'
+            data={orderItems}
             columns={columns}
             search
           >
@@ -311,7 +255,7 @@ export default function Carts() {
                           <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
                           <Button variant="primary" onClick={handleShow}>
-                            Add Cart
+                            Add OrderItem
                           </Button>
                           </div>
                         </div>
@@ -342,23 +286,19 @@ export default function Carts() {
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Add Cart</Modal.Title>
+              <Modal.Title>Add OrderItem</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <CartModel
-                onAddCart={addCart}
-                onUpdateCart={updateCart}
-                onDeleteCart={deleteCart}
-                onGetCart={cartById}
+              <OrderItemModel
+                onAddOrderItem={addOrderItem}
+                onUpdateOrderItem={updateOrderItem}
+                onDeleteOrderItem={deleteOrderItem}
+                onGetOrderItem={orderItemById}
                 onClose={handleClose}
                 isEdit={isEdit}
                 isDelete={isDelete}
                 id={id}
-                cartData={cart}
-                products={products}
-                productList={productList}
-                recordStatusList={recordStatusList}
-               
+                orderItemData={orderItem}
               />
             </Modal.Body>
 

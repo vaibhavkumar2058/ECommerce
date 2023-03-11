@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
 import useFetchRole from "../hooks/useFetchRole";
+import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
 import RoleModel from "../components/RoleModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
@@ -55,7 +56,7 @@ Geocode.fromLatLng(newGMT.latitude, newGMT.longitude).then(
     console.error(error);
   }
 );
-
+  const [recordStatusList, setRecordStatusList] = useState([]);
   const [roles, setRoles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -75,6 +76,7 @@ Geocode.fromLatLng(newGMT.latitude, newGMT.longitude).then(
     
     roleName:"",
     description:"",
+    recordStatusId:null,
   });
 
   const [id, setId] = useState(null);
@@ -94,11 +96,16 @@ Geocode.fromLatLng(newGMT.latitude, newGMT.longitude).then(
     roleById,
   } = useFetchRole();
 
+  const { 
+    getRecordStatuss,
+  } = useFetchRecordStatus();
+
   const columns = [
 
     { dataField: 'roleId', text: ' Role Id', sort: true},
     { dataField: 'roleName', text: ' RoleName', sort: true},
     { dataField: 'description', text: 'Description', sort: true },
+    {dataField: 'recordStatusId',text: 'RecordStatusId',sort: true},
     // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -133,6 +140,14 @@ Geocode.fromLatLng(newGMT.latitude, newGMT.longitude).then(
       setLoading(false)
     }
   }, [roles]);
+
+  useEffect(() => {
+    getRecordStatusList();
+    if (role.length == 0) {
+      getAllRoles();
+      setLoading(false)
+    }
+  }, [role]);
 
 
   const defaultSorted = [{
@@ -182,6 +197,23 @@ Geocode.fromLatLng(newGMT.latitude, newGMT.longitude).then(
     }
   });
 
+  const getRecordStatusList = async () => {
+    const response = await getRecordStatuss();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setRecordStatusList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'RecordStatus Fetch Failed.'
+      })
+    }
+  };
 
   const getAllRoles = async () => {
     const response = await getRoles();
@@ -307,6 +339,7 @@ Geocode.fromLatLng(newGMT.latitude, newGMT.longitude).then(
                 isDelete={isDelete}
                 id={id}
                 roleData={role}
+                recordStatusList={recordStatusList}
               />
             </Modal.Body>
 

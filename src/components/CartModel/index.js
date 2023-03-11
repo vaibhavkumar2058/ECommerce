@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { css } from "@emotion/react";
-
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
 import Select from 'react-select';
 import Carts from "../../pages/Cart";
+import { Dropdown } from 'semantic-ui-react'
 
 export default function CartModel({
   onAddCart,
@@ -19,7 +19,10 @@ export default function CartModel({
   id,
   onClose,
   cartData,
-  products,
+ 
+  recordStatusList =[],
+  productList = [],
+  
   // recordStatuses,
 }) {
   const [newCart, setNewCart] = useState({
@@ -30,20 +33,9 @@ export default function CartModel({
     description:"",
     recordStatusId:null,
   });
-  const [productOptions, setProductOptions] = useState(products.map((product, i) => (
-    {
-      key: i,
-      label: product.productName,
-      value: product.productId,
-    })).filter((item) => item));
+ 
 
-    // const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatuses.map((recordStatus, i) => (
-    //   {
-    //     key: i,
-    //     label: recordStatus.actionName,
-    //     value: recordStatus.recordStatusId,
-    //   })).filter((item) => item));
-  
+    
 
 
   const [fileSelected, setFileSelected] = useState();
@@ -54,6 +46,23 @@ export default function CartModel({
     status: false,
     message: "",
   });
+
+  const [productOptions, setProductOptions] = useState(productList.map((product, item) => (
+    {
+      key: item,
+      text: product.productName,
+      value: product.productId,
+    })).filter((item) => item));
+
+    const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus, item) => (
+      {
+        key: item,
+        text: recordStatus.actionName,
+        value: recordStatus.recordStatusId,
+      })).filter((item) => item));
+
+
+  
 
   const [saveDisabled, setSaveDisabled] = useState(true);
   const [buttonType, setButtonType] = useState("Save");
@@ -125,33 +134,42 @@ export default function CartModel({
       })
     }
   };
-  useEffect(() => {
-    setProductOptions(products.map((product, i) => (
-      {
-        key: i,
-        label: product.productName,
-        value: product.productId,
-      })).filter((item) => item));
+  const dropdownHandler = (event,{value}) => {
+    setNewCart((currentCart) => ({...currentCart, productId: value}));
+  }
 
-  }, [products]);
+  
 
-  // useEffect(() => {
-  //   setRecordStatusOptions(recordStatuses.map((recordStatus, i) => (
-  //     {
-  //       key: i,
-  //       label: recordStatus.actionName,
-  //       value: recordStatus.recordStatusId,
-  //     })).filter((item) => item));
-
-  // }, [recordStatuses]);
+  
+  
 
 
+  
 
   useEffect(() => {
     if (isEdit) {
       setNewCart(cartData);
     }
   }, []);
+
+  
+  useEffect(() => { 
+    setProductOptions(productList.map((product,item) =>(
+      {
+      key: item,
+      text: product.productName,
+      value: product.productId,
+    })).filter((item) => item));
+    }, [productList]);
+
+    useEffect(() => { 
+      setRecordStatusOptions(recordStatusList.map((recordStatus,item) =>(
+        {
+        key: item,
+        text: recordStatus.actionName,
+        value: recordStatus.recordStatusId,
+      })).filter((item) => item));
+      }, [recordStatusList]);
 
   useEffect(() => {
     if (isEdit) {
@@ -190,12 +208,7 @@ export default function CartModel({
               value={newCart?.productId}
               onChange={selectChangeHandler} />
           </Form.Group>
-          {/* <Form.Group className="mb-3" controlId="recordStatusId">
-            <Form.Label>RecordStatus</Form.Label>
-            <Select options={recordStatusOptions} name="recordStatusId"
-              value={newCart?.recordStatusId}
-              onChange={selectChangeHandler} />
-          </Form.Group> */}
+          
 
 
           <Form.Group
@@ -213,12 +226,15 @@ export default function CartModel({
           </Form.Group>
           <Form.Group className="mb-3" controlId="productId">
             <Form.Label>ProductId</Form.Label>
-            <Form.Control
-              type="text"
+            <Dropdown
               name="productId"
-              placeholder="ProductId"
+              placeholder=" Select Product"
+              fluid
+              search
+              selection
+              options={productOptions}
               value={newCart?.productId}
-              onChange={changeHandler}
+              onChange={dropdownHandler}
             />
           </Form.Group>
 
@@ -255,12 +271,15 @@ export default function CartModel({
           </Form.Group>
           <Form.Group className="mb-3" controlId="recordStatusId">
             <Form.Label>RecordStatusId</Form.Label>
-            <Form.Control
-              type="text"
-              name="recordStatusId"
-              placeholder="RecordStatusId"
+            <Dropdown
+              name="actionName"
+              placeholder=" Select Action"
+              fluid
+              search
+              selection
+              options={recordStatusOptions}
               value={newCart?.recordStatusId}
-              onChange={changeHandler}
+              onChange={dropdownHandler}
             />
           </Form.Group>
           
@@ -322,9 +341,15 @@ CartModel.propTypes = {
 */
 products: PropTypes.any,
 /**
-* recordStatuses for object type
+ 
+* produtList for object type
 */
-// recordStatuses: PropTypes.any,
+ produtList: PropTypes.any,
+ /**
+ 
+* recordStatusList for object type
+*/
+recordStatusList: PropTypes.any,
 };
 
 CartModel.defaultProps = {
@@ -337,7 +362,9 @@ CartModel.defaultProps = {
   onClose: null,
   id: null,
   cartData: null,
-  products:null,
-  // recordStatuses:null,
+ 
+  productList:null,
+  recordStatusList:null,
+ 
 };
 

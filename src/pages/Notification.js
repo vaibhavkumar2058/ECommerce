@@ -28,6 +28,7 @@ const MyExportCSV = (props) => {
 export default function Notifications() {
   const [recordStatusList, setRecordStatusList] = useState([]);
   const [notifications, setNotifications] = useState([]);
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -105,9 +106,19 @@ export default function Notifications() {
     },
   ];
 
+  
+
   useEffect(() => {
     getRecordStatusList();
     if (notifications.length == 0) {
+      getAllNotifications();
+      setLoading(false)
+    }
+  }, [notifications]);
+
+  useEffect(() => {
+    getRecordStatusList();
+    if (notification.length == 0) {
       getAllNotifications();
       setLoading(false)
     }
@@ -160,6 +171,9 @@ export default function Notifications() {
       console.log('sizePerPage', sizePerPage);
     }
   });
+ 
+
+
   const getRecordStatusList = async () => {
     const response = await getRecordStatuss();
     if (response.payload.title == "Success") {
@@ -173,11 +187,10 @@ export default function Notifications() {
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'RecorStatus Fetch Failed.'
+        message: 'State Fetch Failed.'
       })
     }
   };
-
 
 
   const getAllNotifications = async () => {
