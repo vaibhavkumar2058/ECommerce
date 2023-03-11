@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
-import { Dropdown } from 'semantic-ui-react'
+
 
 export default function NotificationModel({
   onAddNotification,
@@ -43,11 +43,8 @@ export default function NotificationModel({
     value: recordStatus.recordStatusId,
   })).filter((item) => item));
 
-<<<<<<< HEAD
-=======
 
 
->>>>>>> 5aa5c33a2f7c0e80b211d0b4aaef6342cfc31635
   const [saveDisabled, setSaveDisabled] = useState(true);
   const [buttonType, setButtonType] = useState("Save");
 
@@ -113,10 +110,6 @@ export default function NotificationModel({
   const dropdownHandler = (event,{value}) => {
     setNewNotification((currentNotification) => ({...currentNotification, recordStatusId: value}));
   }
-<<<<<<< HEAD
-
-=======
->>>>>>> 5aa5c33a2f7c0e80b211d0b4aaef6342cfc31635
   useEffect(() => {
     if (isEdit) {
       setNewNotification(notificationData);
@@ -128,16 +121,10 @@ export default function NotificationModel({
       {
       key: item,
       text: recordStatus.actionName,
-<<<<<<< HEAD
-      value: recordStatus.recordStatusId,
-    })).filter((item) => item));
-    }, [recordStatusList]);
-=======
     value: recordStatus.recordStatusId,
     })).filter((item) => item));
     }, [recordStatusList]);
   
->>>>>>> 5aa5c33a2f7c0e80b211d0b4aaef6342cfc31635
 
   useEffect(() => {
     if (isEdit) {
@@ -298,11 +285,7 @@ NotificationModel.propTypes = {
  */
   notificationData: PropTypes.any,
   /**
-<<<<<<< HEAD
- * recordStatusList for object type
-=======
  * recordStatusData for object type
->>>>>>> 5aa5c33a2f7c0e80b211d0b4aaef6342cfc31635
  */
   recordStatusList: PropTypes.any,
 };
