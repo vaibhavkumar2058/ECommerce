@@ -218,20 +218,7 @@ export default function NotificationModel({
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="mobile">
-            <Form.Label>RecordStatusID</Form.Label>
-            <Dropdown
-              name=" actionName"
-              placeholder='Select Action'
-              fluid
-              search
-              selection
-              options={recordStatusOptions}
-              value = {newNotification?.recordStatusId}
-              onChange={dropdownHandler}
-            />
-           
-          </Form.Group>
+          
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel
