@@ -21,13 +21,9 @@ export default function OrderModel({
   recordStatusList = [],
 }) {
   const [newOrder, setNewOrder] = useState({
-    categoryTypeId : null,
-    productId : null,
-    orderPrice : null,
+    orderItemId : null,
+    resourcesId:null,
     orderDate:null,
-    location : "",
-    customerNumber : null,
-    email:"",
     description : "",
     recordStatusId:null,
 
@@ -150,7 +146,7 @@ const dropdownHandler = (event,{value}) => {
       setButtonType("Update");
     }
     const isEnable =
-    !newOrder?.categoryTypeId || !newOrder?.productId|| !newOrder?.orderPrice || !newOrder?.location || !newOrder?.orderDate || !newOrder?.customerNumber || !newOrder?.description|| !newOrder?.email || !newOrder?.recordStatusId;
+    !newOrder?.orderItemId || !newOrder?.resourcesId || !newOrder?.orderDate || !newOrder?.description|| !newOrder?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newOrder]);
 
@@ -183,18 +179,7 @@ const dropdownHandler = (event,{value}) => {
             
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="categoryTypeId">
-            <Form.Label>CategoryTypeId</Form.Label>
-            <Form.Control
-              type="text"
-              name="categoryTypeId"
-              placeholder="CategoryTypeId"
-              value={newOrder?.categoryTypeId}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-
-
+          
           <Form.Group className="mb-3" controlId="description">
             <Form.Label>Description</Form.Label>
             <Form.Control
@@ -207,13 +192,13 @@ const dropdownHandler = (event,{value}) => {
           </Form.Group>
 
 
-          <Form.Group className="mb-3" controlId="productId">
-            <Form.Label>ProductId</Form.Label>
+          <Form.Group className="mb-3" controlId="orderItemId">
+            <Form.Label>OrderItemId</Form.Label>
             <Form.Control
               type="text"
-              name="productId"
-              placeholder="ProductId"
-              value={newOrder?.productId}
+              name="orderItemId"
+              placeholder="OrderItemId"
+              value={newOrder?.orderItemId}
               onChange={changeHandler}
             />
           </Form.Group>
@@ -229,51 +214,17 @@ const dropdownHandler = (event,{value}) => {
               onChange={changeHandler}
             />
           </Form.Group> 
-
-
-          <Form.Group className="mb-3" controlId="orderPrice">
-            <Form.Label>OrderPrice</Form.Label>
+          <Form.Group className="mb-3" controlId="resourcesId">
+            <Form.Label>ResourcesId</Form.Label>
             <Form.Control
               type="text"
-              name="orderPrice"
-              placeholder="OrderPrice"
-              value={newOrder?.orderPrice}
+              name="resourcesId"
+              placeholder="ResourcesId"
+              value={newOrder?.resourcesId}
               onChange={changeHandler}
             />
-          </Form.Group>
+          </Form.Group> 
 
-          <Form.Group className="mb-3" controlId="location">
-            <Form.Label>Location</Form.Label>
-            <Form.Control
-              type="text"
-              name="location"
-              placeholder="Location"
-              value={newOrder?.location}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="customerNumber">
-            <Form.Label>CustomerNumber</Form.Label>
-            <Form.Control
-              type="text"
-              name="customerNumber"
-              placeholder="CustomerNumber"
-              value={newOrder?.customerNumber}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="email">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              type="text"
-              name="email"
-              placeholder="Email"
-              value={newOrder?.email}
-              onChange={changeHandler}
-            />
-          </Form.Group>
 
           <Form.Group className="mb-3" controlId="recordStatus">
             <Form.Label>RecordStatus</Form.Label>
