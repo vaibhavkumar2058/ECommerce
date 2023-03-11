@@ -50,13 +50,9 @@ export default function Orders() {
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [order, setOrder] = useState({
-    categoryTypeId:null,
-    productId:null,
-    orderPrice:null,
+    orderItemId:null,
+    resourcesId:null,
     orderDate:null,
-    location:"",
-    customerNumber:null,
-    email:"",
     recordStatusId:null,
     description:"",
       });
@@ -86,12 +82,8 @@ export default function Orders() {
   const columns = [ 
 
     { dataField: 'orderId', text: 'OrderId', sort: true},
-    { dataField: 'categoryTypeId', text: ' CategoryTypeId', sort: true },
-    { dataField: 'productId', text: 'ProductId', sort: true },
-    { dataField: 'orderPrice', text: 'OrderPrice', sort: true },
-    { dataField: 'location', text: 'Location', sort: true },
-    { dataField: 'customerNumber', text: 'CustomerNumber', sort: true },
-    { dataField: 'email', text: 'Email', sort: true },
+    { dataField: 'orderItemId', text: ' OrderItemId', sort: true },
+    { dataField: 'resourcesId', text: 'ResourcesId', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
     { dataField: 'recordStatusId', text: ' RecordStatus', sort: true },
     { dataField: 'orderDate', text: 'OrderDate', sort: true },
