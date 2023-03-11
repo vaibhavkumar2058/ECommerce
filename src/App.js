@@ -13,6 +13,8 @@ import Button from "react-bootstrap/Button";
 import Dropdown from 'react-bootstrap/Dropdown';
 import Badge from 'react-bootstrap/Badge';
 import useFetchNotifications from "./hooks/useFetchNotification";
+import useFetchCart from "./hooks/useFetchCart";
+
 
 
 import 'semantic-ui-css/semantic.min.css'
@@ -31,17 +33,17 @@ function App() {
     window.location.href = "/myProfile";
   };
   const [notifications, setNotifications] = useState([]);
-
+  const [cart, setCart] = useState([]);
   const {
     getNotificationListByResourcesId,
   } = useFetchNotifications();
 
-  useEffect(() => {
-    if (notifications.length == 0) {
-      getNotificationsByResourcesId(6);
+  // useEffect(() => {
+  //   if (notifications.length == 0) {
+  //     getNotificationsByResourcesId(6);
 
-    }
-  }, [notifications]);
+  //   }
+  // }, [notifications]);
 
   const getNotificationsByResourcesId = async (id) => {
     const response = await getNotificationListByResourcesId(id);
@@ -57,6 +59,33 @@ function App() {
 
     }
   };
+
+  const {
+    getCartListByResourcesId,
+  } = useFetchCart();
+
+  // useEffect(() => {
+  //   if (cart.length == 0) {
+  //     getCartByResourcesId(6);
+  //   }
+  // }, [cart]);
+
+  const getCartByResourcesId = async (id) => {
+    const response = await getCartListByResourcesId(id);
+    if (response.payload.title == "Success") {
+      var arr = [];
+      for (var key in response.payload) {
+        if (key !== 'title')
+        arr.push(response.payload[key]);
+      }
+      setCart(arr);
+    }
+    else {
+
+    }
+  };
+ 
+
 
 
 
@@ -77,8 +106,8 @@ function App() {
                 </a>
                 </li>
                 <li className="nav-item dropdown"><a href="Shoppinglist" >
-                  <Badge className="notification" bg="secondary">9</Badge><img src="https://cdn-icons-png.flaticon.com/512/1413/1413908.png" width="35" height="35"></img>
-                </a>
+                  <Badge className="notification cart" bg="secondary">{cart?.length}</Badge><img src="https://cdn-icons-png.flaticon.com/512/1413/1413908.png" width="35" height="35"></img>
+                </a> 
                 </li>
 
                 <li className="nav-item dropdown ms-lg-3"><a className="nav-link dropdown-toggle pt-1 px-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

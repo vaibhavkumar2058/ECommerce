@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { css } from "@emotion/react";
-
+import { Dropdown } from 'semantic-ui-react'
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
@@ -43,6 +43,11 @@ export default function NotificationModel({
     value: recordStatus.recordStatusId,
   })).filter((item) => item));
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 5aa5c33a2f7c0e80b211d0b4aaef6342cfc31635
   const [saveDisabled, setSaveDisabled] = useState(true);
   const [buttonType, setButtonType] = useState("Save");
 
@@ -108,7 +113,10 @@ export default function NotificationModel({
   const dropdownHandler = (event,{value}) => {
     setNewNotification((currentNotification) => ({...currentNotification, recordStatusId: value}));
   }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5aa5c33a2f7c0e80b211d0b4aaef6342cfc31635
   useEffect(() => {
     if (isEdit) {
       setNewNotification(notificationData);
@@ -120,9 +128,16 @@ export default function NotificationModel({
       {
       key: item,
       text: recordStatus.actionName,
+<<<<<<< HEAD
       value: recordStatus.recordStatusId,
     })).filter((item) => item));
     }, [recordStatusList]);
+=======
+    value: recordStatus.recordStatusId,
+    })).filter((item) => item));
+    }, [recordStatusList]);
+  
+>>>>>>> 5aa5c33a2f7c0e80b211d0b4aaef6342cfc31635
 
   useEffect(() => {
     if (isEdit) {
@@ -191,6 +206,19 @@ export default function NotificationModel({
               onChange={changeHandler}
             />
           </Form.Group> */}
+           <Form.Group className="mb-3" controlId="recordStatus">
+            <Form.Label>RecordStatus</Form.Label>
+            <Dropdown
+              name="actionName"
+              placeholder='Select Action'
+              fluid
+              search
+              selection
+              options={recordStatusOptions}
+              value = {newNotification?.recordStatusId}
+              onChange={dropdownHandler}
+            />
+          </Form.Group>
 
           <Form.Group>
             <Form.Label>Description</Form.Label>
@@ -270,7 +298,11 @@ NotificationModel.propTypes = {
  */
   notificationData: PropTypes.any,
   /**
+<<<<<<< HEAD
  * recordStatusList for object type
+=======
+ * recordStatusData for object type
+>>>>>>> 5aa5c33a2f7c0e80b211d0b4aaef6342cfc31635
  */
   recordStatusList: PropTypes.any,
 };

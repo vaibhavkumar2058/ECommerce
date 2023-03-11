@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { css } from "@emotion/react";
 
+import { Dropdown } from 'semantic-ui-react'
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
-import Select from 'react-select';
-import Resourcess from "../../pages/Resources";
+
+
 
 export default function ResourcesModel({
   onAddResources,
@@ -19,9 +20,9 @@ export default function ResourcesModel({
   id,
   onClose,
   resourcesData,
-  roles,
-  genders,
-  // recordStatuss,
+  roleList=[],
+  genderList=[],
+  recordStatusList = [],
 
 }) {
   const [newResources, setNewResources] = useState({
@@ -37,24 +38,31 @@ export default function ResourcesModel({
     password: "",
     isEmailVerified: true,
     isMobileVerified: true,
-    recordStatusId: null,
+    recordStatusId:null,
     attachment: null,
     filesId:null,
 
   });
   
 
-  const [roleOptions, setRoleOptions] = useState(roles.map((role, i) => (
+  const [roleOptions, setRoleOptions] = useState(roleList.map((role,item) =>(
     {
-      key: i,
-      label: role.roleName,
-      value: role.roleId,
-    })).filter((item) => item));
-  const [genderOptions, setGenderOptions] = useState(genders.map((gender, i) => (
+    key: item,
+    text: role.roleName,
+    value: role.roleId,
+  })).filter((item) => item));
+
+  const [genderOptions, setGenderOptions] = useState(genderList.map((gender, item) => (
     {
-      key: i,
-      label: gender.genderName,
+      key: item,
+      text: gender.genderName,
       value: gender.genderId,
+    })).filter((item) => item));
+    const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus,item) =>(
+      {
+      key: item,
+      text: recordStatus.actionName,
+      value: recordStatus.recordStatusId,
     })).filter((item) => item));
 
 
@@ -84,13 +92,7 @@ export default function ResourcesModel({
     });
   };
 
-  const selectChangeHandler = (e) => {
-    setNewResources({
-      ...newResources,
-      "roleId": e.value,
-    });
-  };
-
+ 
   const saveFileSelected = (e) => {
     //in case you wan to print the file selected
     //console.log(e.target.files[0]);
@@ -144,25 +146,11 @@ export default function ResourcesModel({
     }
   };
 
-  useEffect(() => {
-    setRoleOptions(roles.map((role, i) => (
-      {
-        key: i,
-        label: role.roleName,
-        value: role.roleId,
-      })).filter((item) => item));
-
-  }, [roles]);
-  useEffect(() => {
-    setGenderOptions(genders.map((gender, i) => (
-      {
-        key: i,
-        label: gender.genderName,
-        value: gender.genderId,
-      })).filter((item) => item));
-
-  }, [genders]);
-
+  const dropdownHandler = (event,{value}) => {
+    setNewResources((currentResources) => ({...currentResources, roleId: value}));
+    setNewResources((currentResources) => ({...currentResources, genderId: value}));
+    setNewResources((currentResources) => ({...currentResources, recordStatusId: value}));
+  } 
 
 
   useEffect(() => {
@@ -170,6 +158,33 @@ export default function ResourcesModel({
       setNewResources(resourcesData);
     }
   }, []);
+
+  useEffect(() => { 
+    setRecordStatusOptions(recordStatusList.map((recordStatus,item) =>(
+      {
+      key: item,
+      text: recordStatus.actionName,
+    value: recordStatus.recordStatusId,
+    })).filter((item) => item));
+    }, [recordStatusList]);
+
+    useEffect(() => { 
+      setGenderOptions(genderList.map((gender, item) => (
+      {
+        key: item,
+        text: gender.genderName,
+        value: gender.genderId,
+      })).filter((item) => item));
+    },[genderList]);
+
+      useEffect(() => { 
+        setRoleOptions (roleList.map((role, item) => (
+          {
+            key: item,
+            text: role.roleName,
+            value: role.roleId,
+          })).filter((item) => item));
+      },[roleList]);
 
   useEffect(() => {
     if (isEdit) {
@@ -205,21 +220,6 @@ export default function ResourcesModel({
 
         <Form>
 
-          <Form.Group className="mb-3" controlId="roleId">
-            <Form.Label>Role</Form.Label>
-            <Select options={roleOptions} 
-              name="roleId"
-              value={newResources?.roleId}
-              onChange={selectChangeHandler} />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="genderId">
-            <Form.Label>Gender</Form.Label>
-            <Select options={genderOptions} name="genderId"
-              value={newResources?.genderId}
-              onChange={selectChangeHandler} />
-          </Form.Group>
-
-
           <Form.Group
             className={styles.stFormContainer}
             controlId="formResources"
@@ -251,6 +251,32 @@ export default function ResourcesModel({
               placeholder="LastName"
               value={newResources?.lastName}
               onChange={changeHandler}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="roleId">
+            <Form.Label>Role</Form.Label>
+            <Dropdown
+              name="roleName"
+              placeholder='Select Action'
+              fluid
+              search
+              selection
+              options={roleOptions}
+              value = {newResources?.roleId}
+              onChange={dropdownHandler}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="genderId">
+            <Form.Label>Gender</Form.Label>
+            <Dropdown
+              name="genderName"
+              placeholder='Select Action'
+              fluid
+              search
+              selection
+              options={genderOptions}
+              value = {newResources?.genderId}
+              onChange={dropdownHandler}
             />
           </Form.Group>
 
@@ -335,17 +361,20 @@ export default function ResourcesModel({
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="recordStatusId">
-            <Form.Label>RecordStatusId</Form.Label>
-            <Form.Control
-              type="text"
-              name="recordStatusId"
-              placeholder="RecordStatusId"
-              value={newResources?.recordStatusId}
-              onChange={changeHandler}
+
+           <Form.Group className="mb-3" controlId="recordStatus">
+            <Form.Label>RecordStatus</Form.Label>
+            <Dropdown
+              name="actionName"
+              placeholder='Select Action'
+              fluid
+              search
+              selection
+              options={recordStatusOptions}
+              value = {newResources?.recordStatusId}
+              onChange={dropdownHandler}
             />
           </Form.Group>
-
           <Form.Group>
             <Form.Label>Resources Image</Form.Label>
           </Form.Group>
@@ -409,13 +438,17 @@ ResourcesModel.propTypes = {
  */
   resourcesData: PropTypes.any,
   /**
-* roles for object type
+* roleList for object type
 */
-  roles: PropTypes.any,
+  roleList: PropTypes.any,
   /**
-  * genders for object type
+  * genderList for object type
   */
-  genders: PropTypes.any,
+  genderList: PropTypes.any,
+  /**
+ * recordStatusData for object type
+ */
+  recordStatusList: PropTypes.any,
 
 
 };
@@ -430,7 +463,8 @@ ResourcesModel.defaultProps = {
   onClose: null,
   id: null,
   resourcesData: null,
-  roles: null,
-  genders: null,
+  roleList: null,
+  genderList: null,
+  recordStatusList:null,
 
 };

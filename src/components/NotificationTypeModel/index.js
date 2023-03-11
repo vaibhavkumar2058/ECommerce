@@ -5,35 +5,37 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
-import { Dropdown } from 'semantic-ui-react';
 import Select from 'react-select';
-import States from "../../pages/State";
+import { Dropdown } from 'semantic-ui-react'
+import NotificationTypes from "../../pages/NotificationType";
 
-export default function StateModel({
-  onAddState,
-  onUpdateState,
-  onDeleteState,
+export default function NotificationTypeModel({
+  onAddNotificationType,
+  onUpdateNotificationType,
+  onDeleteNotificationType,
   isEdit,
   isDelete,
-  onGetState,
+  onGetNotificationType,
   id,
   onClose,
-  stateData,
-  countryList = [],
+  notificationTypeData,
   recordStatusList = [],
 }) {
-  const [newState, setNewState] = useState({
-    stateName: "",
-    countryId: null,
-    description: "",
-    recordStatusId:null,
+  const [newNotificationType, setNewNotificationType] = useState({
+    notificationTypeName: "",
+    description:"",
+    recordStatusId: null,
   });
-  const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus,item) =>(
-    {
-    key: item,
-    text: recordStatus.actionName,
-    value: recordStatus.recordStatusId,
-  })).filter((item) => item));
+  
+
+    const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus,item) =>(
+      {
+      key: item,
+      text: recordStatus.actionName,
+      value: recordStatus.recordStatusId,
+    })).filter((item) => item));
+
+  const [fileSelected, setFileSelected] = useState();
 
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
@@ -41,14 +43,6 @@ export default function StateModel({
     status: false,
     message: "",
   });
-  
-
-  const [countryOptions, setCountryOptions] = useState(countryList.map((country,item) =>(
-    {
-    key: item,
-    text: country.countryName,
-    value: country.countryId,
-  })).filter((item) => item));
 
   const [saveDisabled, setSaveDisabled] = useState(true);
   const [buttonType, setButtonType] = useState("Save");
@@ -61,15 +55,15 @@ export default function StateModel({
   };
 
   const changeHandler = (e) => {
-    setNewState({
-      ...newState,
+    setNewNotificationType({
+      ...newNotificationType,
       [e.target.name]: e.target.value,
     });
   };
-
+ 
   const saveHandler = async () => {
     if (isEdit) {
-      const response = await onUpdateState(id, newState);
+      const response = await onUpdateNotificationType(id, newNotificationType);
       if (response.payload.title == "Success") {
         onClose(true);
       }
@@ -81,11 +75,12 @@ export default function StateModel({
       }
     }
     else {
-      const response = await onAddState(newState);
+     
+      const response = await onAddNotificationType(newNotificationType);
       if (response.payload.title == "Success") {
         setMessageStatus({
           mode: 'success',
-          message: 'State Record Saved Succefully.'
+          message: 'NotificationType Record Saved Succefully.'
         })
         onClose(true);
         console.log(response.payload);
@@ -93,28 +88,26 @@ export default function StateModel({
       else {
         setMessageStatus({
           mode: 'danger',
-          message: 'State Save Failed.'
+          message: 'NotificationType  Save Failed.'
         })
       }
     }
   };
 
   const deleteHandler = async () => {
-    const response = await onDeleteState(id);
+    const response = await onDeleteNotificationType(id);
     if (response.payload.title == "Success") {
       onClose(true);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'State Delete Failed.'
+        message: 'NotificationType Delete Failed.'
       })
     }
   };
-
   const dropdownHandler = (event,{value}) => {
-    setNewState((currentState) => ({...currentState, countryId: value}));
-    setNewState((currentProduct) => ({...currentProduct, recordStatusId: value}));
+    setNewNotificationType((currentNotificationType) => ({...currentNotificationType, recordStatusId: value}));
   }
   useEffect(() => { 
     setRecordStatusOptions(recordStatusList.map((recordStatus,item) =>(
@@ -124,31 +117,21 @@ export default function StateModel({
     value: recordStatus.recordStatusId,
     })).filter((item) => item));
     }, [recordStatusList]);
-  
 
   useEffect(() => {
     if (isEdit) {
-      setNewState(stateData);
+      setNewNotificationType(notificationTypeData);
     }
   }, []);
-  
-  useEffect(() => { 
-  setCountryOptions(countryList.map((country,item) =>(
-    {
-    key: item,
-    text: country.countryName,
-    value: country.countryId,
-  })).filter((item) => item));
-  }, [countryList]);
 
   useEffect(() => {
     if (isEdit) {
       setButtonType("Update");
     }
     const isEnable =
-      !newState?.stateName || !newState?.countryId || !newState?.description|| !newState?.recordStatusId;
+      !newNotificationType?.notificationTypeName || !newNotificationType?.recordStatusId|| !newNotificationType?.description  ;
     setSaveDisabled(isEnable);
-  }, [newState]);
+  }, [newNotificationType]);
 
   return (
     <>
@@ -174,31 +157,18 @@ export default function StateModel({
         <Form>
           <Form.Group
             className={styles.stFormContainer}
-            controlId="formState"
+            controlId="formNotificationType"
           >
-            <Form.Label>StateName</Form.Label>
+            <Form.Label>NotificationType Name</Form.Label>
             <Form.Control
               type="text"
-              name="stateName"
-              placeholder="Enter StateName"
-              value={newState?.stateName}
+              name="notificationTypeName"                                                                                                                                   
+              placeholder="Enter NotificationTypeName"
+              value={newNotificationType?.notificationTypeName}
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="mobile">
-            <Form.Label>CountryID</Form.Label>
-            <Dropdown
-              name="countryName"
-              placeholder='Select Country'
-              fluid
-              search
-              selection
-              options={countryOptions}
-              value = {newState?.countryId}
-              onChange={dropdownHandler}
-            />
-           
-          </Form.Group>
+
           <Form.Group className="mb-3" controlId="recordStatus">
             <Form.Label>RecordStatus</Form.Label>
             <Dropdown
@@ -208,21 +178,24 @@ export default function StateModel({
               search
               selection
               options={recordStatusOptions}
-              value = {newState?.recordStatusId}
+              value = {newNotificationType?.recordStatusId}
               onChange={dropdownHandler}
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="formBasicPassword">
+
+          <Form.Group className="mb-3" controlId="description">
             <Form.Label>Description</Form.Label>
             <Form.Control
               type="text"
               name="description"
               placeholder="Description"
-              value={newState?.description}
+              value={newNotificationType?.description}
               onChange={changeHandler}
             />
           </Form.Group>
+                    
+          
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel
@@ -238,23 +211,23 @@ export default function StateModel({
   );
 }
 
-StateModel.propTypes = {
+NotificationTypeModel.propTypes = {
   /**
-   * Callback function for Add State
+   * Callback function for Add NotificationType
    */
-  onAddState: PropTypes.func,
+  onAddNotificationType: PropTypes.func,
   /**
-   * Callback function for Update State
+   * Callback function for Update NotificationType
    */
-  onUpdateState: PropTypes.func,
+  onUpdateNotificationType: PropTypes.func,
   /**
-   * Callback function for Delete State
+   * Callback function for Delete NotificationType
    */
-  onDeleteState: PropTypes.func,
+  onDeleteNotificationType: PropTypes.func,
   /**
-   * Callback function for Get State
+   * Callback function for Get NotificationType
    */
-  onGetState: PropTypes.func,
+  onGetNotificationType: PropTypes.func,
   /**
    * isEdit for bool type
    */
@@ -264,7 +237,7 @@ StateModel.propTypes = {
    */
   isDelete: PropTypes.bool,
   /**
-   * Callback function for Get State
+   * Callback function for Get NotificationType
    */
   onClose: PropTypes.func,
   /**
@@ -272,30 +245,25 @@ StateModel.propTypes = {
    */
   id: PropTypes.number,
   /**
- * stateData for object type
+ * notificationTypeData for object type
  */
-  stateData: PropTypes.any,
-    /**
- * countryList for object type
- */
-    countryList: PropTypes.any,
-    /**
+  notificationTypeData: PropTypes.any,
+  /**
  * recordStatusData for object type
  */
-   recordStatusList: PropTypes.any,
+  recordStatusList: PropTypes.any,
 };
 
-StateModel.defaultProps = {
-  onAddState: null,
-  onUpdateState: null,
-  onDeleteState: null,
-  onGetState: null,
+NotificationTypeModel.defaultProps = {
+  onAddNotificationType: null,
+  onUpdateNotificationType: null,
+  onDeleteNotificationType: null,
+  onGetNotificationType: null,
   isEdit: false,
   isDelete: false,
   onClose: null,
   id: null,
-  stateData: null,
-  countryList:null,
+  notificationTypeData: null,
   recordStatusList:null,
 };
 

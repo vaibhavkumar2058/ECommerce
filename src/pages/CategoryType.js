@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
 import useFetchCategorytype from "../hooks/useFetchCategoryType";
+import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
 import CategorytypeModel from "../components/CategorytypeModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
@@ -25,7 +26,7 @@ const MyExportCSV = (props) => {
 };
 
 export default function CategoryTypes() {
-
+    const [recordStatusList, setRecordStatusList] = useState([]);
     const [categoryTypes, setCategoryTypes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -64,12 +65,16 @@ export default function CategoryTypes() {
         categoryTypeById,
     } = useFetchCategorytype();
 
+    const { 
+        getRecordStatuss,
+      } = useFetchRecordStatus();
+
     const columns = [
 
-        { dataField: 'categoryTypeId', text: 'CategoryType Id', sort: true,},
+        { dataField: 'categoryTypeId', text: 'CategoryType ', sort: true,},
         { dataField: 'categoryTypeName', text: ' Category Type Name', sort: true },
         { dataField: 'description', text: 'Description', sort: true },
-        { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true },
+        { dataField: 'recordStatusId', text: 'RecordStatus', sort: true },
 
         // columns follow dataField and text structure
         {
@@ -100,6 +105,7 @@ export default function CategoryTypes() {
     ];
 
     useEffect(() => {
+        getRecordStatusList();
         if (categoryTypes.length == 0) {
             getAllCategoryTypes();
             setLoading(false)
@@ -153,6 +159,25 @@ export default function CategoryTypes() {
             console.log('sizePerPage', sizePerPage);
         }
     });
+
+    const getRecordStatusList = async () => {
+        const response = await getRecordStatuss();
+        if (response.payload.title == "Success") {
+    
+          var arr = [];
+          for (var key in response.payload) {
+            arr.push(response.payload[key]);
+          }
+          setRecordStatusList(arr);
+        }
+        else {
+          setMessageStatus({
+            mode: 'danger',
+            message: 'State Fetch Failed.'
+          })
+        }
+      };
+    
 
 
     const getAllCategoryTypes = async () => {
@@ -279,6 +304,7 @@ export default function CategoryTypes() {
                                 isDelete={isDelete}
                                 id={id}
                                 categoryTypeData={categoryType}
+                                recordStatusList={recordStatusList}
                             />
                         </Modal.Body>
 

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
 import useFetchFiles from "../hooks/useFetchFile";
+import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
+import useFetchFolder from "../hooks/useFetchFolder";
 import FileModel from "../components/FileModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
@@ -27,6 +29,8 @@ const MyExportCSV = (props) => {
 export default function Files() {
 
   const [files, setFiles] = useState([]);
+  const [recordStatusList, setRecordStatusList] = useState([]);
+  const [folderList, setFolderList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -68,6 +72,14 @@ export default function Files() {
     getFiles,
     fileById,
   } = useFetchFiles();
+  const { 
+    getRecordStatuss,
+  } = useFetchRecordStatus();
+  const { 
+    getFolders,
+  } = useFetchFolder();
+
+
 
   const columns = [
 
@@ -106,6 +118,8 @@ export default function Files() {
   ];
 
   useEffect(() => {
+    getRecordStatusList();
+    getFolderList();
     if (files.length == 0) {
       getAllFiles();
       setLoading(false)
@@ -160,6 +174,40 @@ export default function Files() {
     }
   });
 
+  const getRecordStatusList = async () => {
+    const response = await getRecordStatuss();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setRecordStatusList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'State Fetch Failed.'
+      })
+    }
+  };
+  const getFolderList = async () => {
+    const response = await getFolders();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setFolderList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'State Fetch Failed.'
+      })
+    }
+  };
 
   const getAllFiles = async () => {
     const response = await getFiles();
@@ -285,6 +333,8 @@ export default function Files() {
                 isDelete={isDelete}
                 id={id}
                 fileData={file}
+                recordStatusList={recordStatusList}
+                folderList={folderList}
               />
             </Modal.Body>
 

@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { css } from "@emotion/react";
-
+import { Dropdown } from 'semantic-ui-react'
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
 import Select from 'react-select';
-import Addresses from "../../pages/Address";
+
 
 
 export default function AddressModel({
@@ -20,9 +20,10 @@ export default function AddressModel({
   id,
   onClose,
   addressData,
-  countries,
-  states,
-  addressTypes,
+  addressTypeList=[],
+  recordStatusList = [],
+  countryList=[],
+  stateList = [],
   //recordStatus,
 }) {
   const [newAddress, setNewAddress] = useState({
@@ -37,34 +38,36 @@ export default function AddressModel({
     isDefault:"",
     defaultAddressTypeId:null,
     recordStatusId:null,
+
     
   });
-  const [countryOptions, setCountryOptions] = useState(countries.map((country, i) => (
+  const [countryOptions, setCountryOptions] = useState(countryList.map((country, item) => (
     {
-      key: i,
-      label: country.countryName,
+      key: item,
+      text: country.countryName,
       value: country.countryId,
     })).filter((item) => item));
-    const [stateOptions, setStateOptions] = useState(states.map((state, j) => (
+    const [stateOptions, setStateOptions] = useState(stateList.map((state, item) => (
       {
-        key: j,
-        label: state.stateName,
+        key: item,
+        text: state.stateName,
         value: state.stateId,
       })).filter((item) => item));
-      const [addressTypeOptions, setAddressTypeOptions] = useState(addressTypes.map((addressType, k) => (
+      const [addressTypeOptions, setAddressTypeOptions] = useState(addressTypeList.map((addressType, item) => (
         {
-          key: k,
-          label:addressType.addressTypeName,
+          key: item,
+          text:addressType.addressTypeName,
           value: addressType.addressTypeId,
         })).filter((item) => item));
-        // const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatus.map((recordStatus, L) => (
-        //   {
-        //     key: L,
-        //     label: recordStatus.recordStatusName,
-        //     value: recordStatus.recordStatusId,
-        //   })).filter((item) => item));
+     
+        const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus,item) =>(
+          {
+          key: item,
+          text: recordStatus.actionName,
+          value: recordStatus.recordStatusId,
+        })).filter((item) => item));
 
-  const [fileSelected, setFileSelected] = useState();
+
 
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
@@ -89,16 +92,10 @@ export default function AddressModel({
       [e.target.name]: e.target.value,
     });
   };
-  const selectChangeHandler = (e) => {
-    setNewAddress({
-      ...newAddress,
-      "addressId": e.value,
-    });
-  };
   
 
   const saveHandler = async () => {
-    newAddress.file = fileSelected;
+ 
     if (isEdit) {
       const response = await onUpdateAddress(id, newAddress);
       if (response.payload.title == "Success") {
@@ -142,52 +139,62 @@ export default function AddressModel({
       })
     }
   };
+  const dropdownHandler = (event,{value}) => {
+    setNewAddress((currentAddress) => ({...currentAddress, recordStatusId: value}));
+    setNewAddress((currentAddress) => ({...currentAddress, countryId: value}));
+    setNewAddress((currentAddress) => ({...currentAddress, stateId: value}));
+    setNewAddress((currentAddress) => ({...currentAddress, addressTypeId: value}));
+
+  }
+
   useEffect(() => {
-    setCountryOptions(countries.map((country, i) => (
+    setCountryOptions(countryList.map((country, item) => (
       {
-        key: i,
-        label: country.countryName,
+        key: item,
+        text: country.countryName,
         value: country.countryId,
       })).filter((item) => item));
 
-  }, [countries]);
+  }, [countryList]);
   useEffect(() => {
-    setStateOptions(states.map((state, j) => (
+    setStateOptions(stateList.map((state, item) => (
       {
-        key: j,
-        label: state.stateName,
+        key: item,
+        text: state.stateName,
         value: state.stateId,
       })).filter((item) => item));
 
-  }, [states]);
+  }, [stateList]);
   useEffect(() => {
-    setAddressTypeOptions(addressTypes.map((addressType, k) => (
+    setAddressTypeOptions(addressTypeList.map((addressType, item) => (
       {
-        key: k,
-        label: addressType.addressTypeName,
+        key: item,
+        text: addressType.addressTypeName,
         value: addressType.addressTypeId,
       })).filter((item) => item));
 
-  }, [addressTypes]);
-  // useEffect(() => {
-  //   setRecordStatusOptions(recordStatus.map((recordStatus, L) => (
-  //     {
-  //       key: L,
-  //       label: recordStatus.recordStatusName,
-  //       value: recordStatus.recordStatusId,
-  //     })).filter((item) => item));
-  // }, [recordStatus]);
+  }, [addressTypeList]);
+ 
   useEffect(() => {
     if (isEdit) {
       setNewAddress(addressData);
     }
   }, []);
 
+  useEffect(() => { 
+    setRecordStatusOptions(recordStatusList.map((recordStatus,item) =>(
+      {
+      key: item,
+      text: recordStatus.actionName,
+    value: recordStatus.recordStatusId,
+    })).filter((item) => item));
+    }, [recordStatusList]);
+
   useEffect(() => {
     if (isEdit) {
       setButtonType("Update");
     }
-    const isEnable = !newAddress?.city || !newAddress?.town  || !newAddress?.locality || !newAddress?.pincode|| !newAddress?.landMark|| !newAddress?.recordStatusId ;
+    const isEnable = !newAddress?.city || !newAddress?.stateId  || !newAddress?.countryId || !newAddress?.addressTypeId|| !newAddress?.town  || !newAddress?.locality || !newAddress?.pincode|| !newAddress?.landMark|| !newAddress?.recordStatusId ;
     setSaveDisabled(isEnable);
   }, [newAddress]);
 
@@ -213,31 +220,47 @@ export default function AddressModel({
       )}
       {!isDelete && (
         <Form>
-           <Form.Group className="mb-3" controlId="countryId">
-            <Form.Label>Country</Form.Label>
-            <Select options={countryOptions} name="countryId"
-              value={newAddress?.countryId}
-              onChange={selectChangeHandler} />
+           <Form.Group className="mb-3" controlId="state">
+            <Form.Label>State</Form.Label>
+            <Dropdown
+              name="stateName"
+              placeholder='Select State'
+              fluid
+              search
+              selection
+              options={stateOptions}
+              value = {newAddress?.stateId}
+              onChange={dropdownHandler}
+            />
           </Form.Group>
         
-           <Form.Group className="mb-3" controlId="stateId">
-            <Form.Label>State</Form.Label>
-            <Select options={stateOptions} name="stateId"
-              value={newAddress?.stateId}
-              onChange={selectChangeHandler} />
+          <Form.Group className="mb-3" controlId="country">
+            <Form.Label>Country</Form.Label>
+            <Dropdown
+              name="countryName"
+              placeholder='Select CountryName'
+              fluid
+              search
+              selection
+              options={countryOptions}
+              value = {newAddress?.countryId}
+              onChange={dropdownHandler}
+            />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="addressTypeId">
+          <Form.Group className="mb-3" controlId="addressType">
             <Form.Label>AddressType</Form.Label>
-            <Select options={addressTypeOptions} name="addressTypeId"
-              value={newAddress?.addressTypeId}
-              onChange={selectChangeHandler} />
+            <Dropdown
+              name="addressTypeName"
+              placeholder='Select AddressTypeName'
+              fluid
+              search
+              selection
+              options={addressTypeOptions}
+              value = {newAddress?.addressTypeId}
+              onChange={dropdownHandler}
+            />
           </Form.Group>
-          {/* <Form.Group className="mb-3" controlId="recordStatusId">
-            <Form.Label>RecordStatus</Form.Label>
-            <Select options={recordStatusOptions} name="recordStatusId"
-              value={newAddress?.recordStatusId}
-              onChange={selectChangeHandler} />
-          </Form.Group> */}
+         
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>City</Form.Label>
@@ -247,6 +270,19 @@ export default function AddressModel({
               placeholder="City"
               value={newAddress?.city}
               onChange={changeHandler}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="recordStatus">
+            <Form.Label>RecordStatus</Form.Label>
+            <Dropdown
+              name="actionName"
+              placeholder='Select Action'
+              fluid
+              search
+              selection
+              options={recordStatusOptions}
+              value = {newAddress?.recordStatusId}
+              onChange={dropdownHandler}
             />
           </Form.Group>
 
@@ -390,10 +426,22 @@ states: PropTypes.any,
 * addressTypes for object type
 */
 addressTypes: PropTypes.any,
-// /**
-// * recordStatuss for object type
-// */
-// recordStatuss: PropTypes.any,
+/**
+ * recordStatusList for object type
+ */
+recordStatusList: PropTypes.any,
+/**
+ * countryList for object type
+ */
+countryList: PropTypes.any,
+/**
+ * stateList for object type
+ */
+stateList: PropTypes.any,
+/**
+ * addressTypeList for object type
+ */
+addressTypeList: PropTypes.any,
 };
 
 AddressModel.defaultProps = {
@@ -406,9 +454,9 @@ AddressModel.defaultProps = {
   onClose: null,
   id: null,
   addressData: null,
-  countries: null,
-  states: null,
-  addressTypes: null,
-  //recordStatuss: null,
+  recordStatusList:null,
+  countryList:null,
+  stateList:null,
+  addressTypeList:null,
 };
 

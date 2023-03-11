@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
 import useFetchProducts from "../hooks/useFetchProduct";
 import useFetchCategoryType from "../hooks/useFetchCategoryType";
+import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
 import ProductModel from "../components/ProductModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
@@ -33,8 +34,9 @@ export default function Products() {
   const customer=userInfo?.role?.customer;
 
 
+  const [recordStatusList, setRecordStatusList] = useState([]);
   const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState();
+  const [categoryList, setCategoryList] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -53,6 +55,8 @@ export default function Products() {
     productName: "",
     categoryTypeId: null,
     description: "",
+    recordStatusId:null,
+
   });
 
   const [id, setId] = useState(null);
@@ -75,6 +79,10 @@ export default function Products() {
   const {
     getCategoryTypes,
   } = useFetchCategoryType();
+
+  const { 
+    getRecordStatuss,
+  } = useFetchRecordStatus();
 
   const columns = [
 
@@ -140,6 +148,8 @@ export default function Products() {
   ];
 
   useEffect(() => {
+    getRecordStatusList();
+    getCategoryTypeList();
     if (products.length == 0) {
       getAllProducts();
       setLoading(false)
@@ -148,7 +158,7 @@ export default function Products() {
 
 
   const defaultSorted = [{
-    dataField: 'productId',
+    dataField: 'productId', 
     order: 'desc'
   }];
 
@@ -194,19 +204,46 @@ export default function Products() {
     }
   });
 
+  const getRecordStatusList = async () => {
+    const response = await getRecordStatuss();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setRecordStatusList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'product Fetch Failed.'
+      })
+    }
+  };
+
+  const getCategoryTypeList = async () => {
+    const response = await getCategoryTypes();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setCategoryList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'product Fetch Failed.'
+      })
+    }
+  };
+
 
   const getAllProducts = async () => {
     const response = await getProducts();
     if (response.payload.title == "Success") {
-      const categoryList = await getCategoryTypes();
-
-      if (categoryList.payload.title == "Success") {
-        var carr = [];
-        for (var key in categoryList.payload) {
-          carr.push(categoryList.payload[key]);
-        }
-        setCategories(carr);
-      }
       setMessageStatus({
         mode: 'success',
         message: 'Products Record Fetch Succefully.'
@@ -338,7 +375,9 @@ export default function Products() {
                 isDelete={isDelete}
                 id={id}
                 productData={product}
-                categories={categories}
+                recordStatusList={recordStatusList}
+                categoryList={categoryList}
+
               />
             </Modal.Body>
 

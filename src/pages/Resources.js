@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
 import useFetchResources from "../hooks/useFetchResources";
+import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
 import useFetchRole from "../hooks/useFetchRole";
 import useFetchGender from "../hooks/useFetchGender";
 import ResourcesModel from "../components/ResourcesModel";
@@ -27,10 +28,10 @@ const MyExportCSV = (props) => {
 };
 
 export default function Resourcess() {
-
+  const [recordStatusList, setRecordStatusList] = useState([]);
   const [resourcess, setResourcess] = useState([]);
-  const[ roles, setRoles]=useState([]);
-  const[gender,setGenders]=useState([]);
+  const[ roleList, setRolesList]=useState([]);
+  const[genderList,setGendersList]=useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -86,13 +87,13 @@ export default function Resourcess() {
   const {
     getGenders,
   } = useFetchGender();
+  const { 
+    getRecordStatuss,
+  } = useFetchRecordStatus();
   
   const columns = [
 
     { dataField: 'resourcesId', text: 'resourcesId', sort: true, hidden: true },
-    { dataField: 'filesId', text: 'FilesId', sort: true,headerStyle: () => {
-      return { width: "60px" };
-    }, },
     {
       dataField: "resourcesImage",
       text: "Photo",
@@ -161,6 +162,9 @@ export default function Resourcess() {
   ];
 
   useEffect(() => {
+    getRecordStatusList();
+    getGenderList();
+    getRoleList();
     if (resourcess.length == 0) {
       getAllResourcess();
       setLoading(false)
@@ -215,28 +219,63 @@ export default function Resourcess() {
     }
   });
 
+  const getRecordStatusList = async () => {
+    const response = await getRecordStatuss();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setRecordStatusList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'State Fetch Failed.'
+      })
+    }
+  };
+  const getGenderList = async () => {
+    const response = await getGenders();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setGendersList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'State Fetch Failed.'
+      })
+    }
+  };
+
+  const getRoleList = async () => {
+    const response = await getRoles();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setRolesList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'State Fetch Failed.'
+      })
+    }
+  };
+
 
   const getAllResourcess = async () => {
     const response = await getResources();
     if (response.payload.title == "Success") {
-      const roleList = await getRoles();
-
-      if (roleList.payload.title == "Success") {
-        var carr = [];
-      for (var key in roleList.payload) {
-        carr.push(roleList.payload[key]);
-      }
-        setRoles(carr);
-      }
-      const genderList = await getGenders();
-
-      if (genderList.payload.title == "Success") {
-        var carr = [];
-      for (var key in genderList.payload) {
-        carr.push(genderList.payload[key]);
-      }
-        setGenders(carr);
-      }
       setMessageStatus({
         mode: 'success',
         message: 'Resources Record Fetch Succefully.'
@@ -258,7 +297,8 @@ export default function Resourcess() {
         curedData.isEmailVerified=rawData?.isEmailVerified ? 'YES':'NO';
         curedData.isMobileVerified=rawData?.isMobileVerified;
         curedData.recordStatusId = rawData.recordStatusId;
-        curedData.resourcesImage = rawData?.resourceAttachment?.files?.base64;
+        if(rawData?.resourceAttachment?.resourceAttachmentTypeId =="3" )
+        curedData.resourcesImage = 'data:image/jpeg;base64,'+ rawData?.resourceAttachment?.files?.base64;
         return curedData;
       }
 
@@ -379,8 +419,9 @@ export default function Resourcess() {
                 isDelete={isDelete}
                 id={id}
                 resourcesData={resources}
-                roles={roles}
-                genders={gender}
+                roleList={roleList}
+                genderList={genderList}
+                recordStatusList={recordStatusList}
                 
               />
             </Modal.Body>

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { css } from "@emotion/react";
-
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
+import Select from 'react-select';
+import { Dropdown } from 'semantic-ui-react'
+import MeasurementValues from "../../pages/MeasurementValue";
 
 export default function MeasurementValueModel({
   onAddMeasurementValue,
@@ -17,11 +19,18 @@ export default function MeasurementValueModel({
   id,
   onClose,
   measurementValueData,
+  recordStatusList = [],
 }) {
   const [newMeasurementValue, setNewMeasurementValue] = useState({
     value: "",
     description: "",
   });
+  const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus,item) =>(
+    {
+    key: item,
+    text: recordStatus.actionName,
+    value: recordStatus.recordStatusId,
+  })).filter((item) => item));
 
   const [fileSelected, setFileSelected] = useState();
 
@@ -95,6 +104,18 @@ export default function MeasurementValueModel({
       })
     }
   };
+  const dropdownHandler = (event,{value}) => {
+    setNewMeasurementValue((currentMeasurementValue) => ({...currentMeasurementValue, recordStatusId: value}));
+  }
+  useEffect(() => { 
+    setRecordStatusOptions(recordStatusList.map((recordStatus,item) =>(
+      {
+      key: item,
+      text: recordStatus.actionName,
+    value: recordStatus.recordStatusId,
+    })).filter((item) => item));
+    }, [recordStatusList]);
+
 
   useEffect(() => {
     if (isEdit) {
@@ -107,7 +128,7 @@ export default function MeasurementValueModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newMeasurementValue?.value || !newMeasurementValue?.description;
+      !newMeasurementValue?.value || !newMeasurementValue?.description|| !newMeasurementValue?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newMeasurementValue]);
 
@@ -144,6 +165,19 @@ export default function MeasurementValueModel({
               placeholder="Enter MeasurementValue"
               value={newMeasurementValue?.value}
               onChange={changeHandler}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="recordStatus">
+            <Form.Label>RecordStatus</Form.Label>
+            <Dropdown
+              name="actionName"
+              placeholder='Select Action'
+              fluid
+              search
+              selection
+              options={recordStatusOptions}
+              value = {newMeasurementValue?.recordStatusId}
+              onChange={dropdownHandler}
             />
           </Form.Group>
 
@@ -212,6 +246,10 @@ MeasurementValueModel.propTypes = {
  * measurementValueData for object type
  */
   measurementValueData: PropTypes.any,
+  /**
+ * recordStatusData for object type
+ */
+  recordStatusList: PropTypes.any,
 };
 
 MeasurementValueModel.defaultProps = {
@@ -224,5 +262,6 @@ MeasurementValueModel.defaultProps = {
   onClose: null,
   id: null,
   measurementValueData: null,
+  recordStatusList:null,
 };
 

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { css } from "@emotion/react";
-
+import { Dropdown } from 'semantic-ui-react';
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
+import Select from 'react-select';
+import GMTs from "../../pages/GMT";
 
 export default function GMTModel({
   onAddGMT,
@@ -17,6 +19,7 @@ export default function GMTModel({
   id,
   onClose,
   GMTData,
+  recordStatusList = [],
  }) {
   const [newGMT, setNewGMT] = useState({
     resourceId:null,
@@ -26,7 +29,12 @@ export default function GMTModel({
     description:"",
     recordStatusId:null,
   });
-
+  const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus,item) =>(
+    {
+    key: item,
+    text: recordStatus.actionName,
+    value: recordStatus.recordStatusId,
+  })).filter((item) => item));
   
 
   const [messageStatus, setMessageStatus] = useState({
@@ -99,6 +107,17 @@ export default function GMTModel({
       })
     }
   };
+  const dropdownHandler = (event,{value}) => {
+    setNewGMT((currentGMT) => ({...currentGMT, recordStatusId: value}));
+  }
+  useEffect(() => { 
+    setRecordStatusOptions(recordStatusList.map((recordStatus,item) =>(
+      {
+      key: item,
+      text: recordStatus.actionName,
+    value: recordStatus.recordStatusId,
+    })).filter((item) => item));
+    }, [recordStatusList]);
 
   useEffect(() => {
     if (isEdit) {
@@ -184,14 +203,17 @@ export default function GMTModel({
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="latitude">
-            <Form.Label>RecordStatusId</Form.Label>
-            <Form.Control
-              type="text"
-              name="recordStatusId"
-              placeholder="Enter RecordStatusId"
-              value={newGMT?.recordStatusId}
-              onChange={changeHandler}
+          <Form.Group className="mb-3" controlId="recordStatus">
+            <Form.Label>RecordStatus</Form.Label>
+            <Dropdown
+              name="actionName"
+              placeholder='Select Action'
+              fluid
+              search
+              selection
+              options={recordStatusOptions}
+              value = {newGMT?.recordStatusId}
+              onChange={dropdownHandler}
             />
           </Form.Group>
 
@@ -259,6 +281,10 @@ GMTModel.propTypes = {
  * GMTData for object type
  */
   GMTData: PropTypes.any,
+  /**
+ * recordStatusData for object type
+ */
+  recordStatusList: PropTypes.any,
 };
 
 GMTModel.defaultProps = {
@@ -271,5 +297,6 @@ GMTModel.defaultProps = {
   onClose: null,
   id: null,
   GMTData: null,
+  recordStatusList:null,
 };
 

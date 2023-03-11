@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
 import useFetchAddress from "../hooks/useFetchAddress";
+import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
+import useFetchCountry from "../hooks/useFetchCountry";
+import useFetchState from "../hooks/useFetchState";
+import useFetchAddressType from "../hooks/useFetchAddressType";
 import AddressModel from "../components/AddressModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
@@ -27,6 +31,10 @@ const MyExportCSV = (props) => {
 export default function Addresses() {
 
   const [addresses, setAddresses] = useState([]);
+  const [recordStatusList, setRecordStatusList] = useState([]);
+  const [countryList, setCountryList] = useState([]);
+  const [stateList, setStateList] = useState([]);
+  const [addressTypeList, setAddressTypeList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -73,12 +81,26 @@ export default function Addresses() {
     addressById,
   } = useFetchAddress();
 
+  const { 
+    getRecordStatuss,
+  } = useFetchRecordStatus();
+  const { 
+    getStates,
+  } = useFetchState();
+  const { 
+    getCountries,
+  } = useFetchCountry();
+  const { 
+    getAddressTypes,
+  } = useFetchAddressType();
+
+
   const columns = [
-    { dataField: 'addressId', text: 'address Id', sort: true, hidden: true },
-    { dataField: 'countryId', text: 'Country Id', sort: true,headerStyle: () => {
+    { dataField: 'addressId', text: 'Address ', sort: true, hidden: true },
+    { dataField: 'countryId', text: 'Country ', sort: true,headerStyle: () => {
       return { width: "120px" };
     }  },
-    { dataField: 'stateId', text: 'State Id', sort: true ,headerStyle: () => {
+    { dataField: 'stateId', text: 'State ', sort: true ,headerStyle: () => {
       return { width: "100px" };
     }},
     { dataField: 'city', text: 'City', sort: true,headerStyle: () => {
@@ -139,11 +161,17 @@ export default function Addresses() {
   ];
 
   useEffect(() => {
+    getRecordStatusList();
+    getCountryList();
+    getStateList();
+    getAddressTypeList();
     if (addresses.length == 0) {
       getAllAddresses();
       setLoading(false)
     }
   }, [addresses]);
+
+  
 
 
   const defaultSorted = [{
@@ -192,6 +220,77 @@ export default function Addresses() {
       console.log('sizePerPage', sizePerPage);
     }
   });
+  const getRecordStatusList = async () => {
+    const response = await getRecordStatuss();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setRecordStatusList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'Address Fetch Failed.'
+      })
+    }
+  };
+  const getCountryList = async () => {
+    const response = await getCountries();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setCountryList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'Address Fetch Failed.'
+      })
+    }
+  };
+
+  const getStateList = async () => {
+    const response = await getStates();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setStateList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'Address Fetch Failed.'
+      })
+    }
+  };
+
+  const getAddressTypeList = async () => {
+    const response = await getAddresses();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setAddressTypeList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'Address Fetch Failed.'
+      })
+    }
+  };
+
 
 
   const getAllAddresses = async () => {
@@ -318,6 +417,10 @@ export default function Addresses() {
                 isDelete={isDelete}
                 id={id}
                 addressData={address}
+                recordStatusList={recordStatusList}
+                countryList={countryList}
+                stateList={stateList}
+                addressTypeList={addressTypeList}
               />
             </Modal.Body>
 

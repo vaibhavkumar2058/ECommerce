@@ -71,14 +71,21 @@ export default function Notifications() {
     getRecordStatuss,
   } = useFetchRecordStatus();
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5aa5c33a2f7c0e80b211d0b4aaef6342cfc31635
   const columns = [
 
     { dataField: 'notificationTypeId', text: 'NotificationTypeId', sort: true},
     { dataField: 'notificationId', text: 'NotificationId', sort: true},
     { dataField: 'notificationName', text: ' NotificationName', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
+<<<<<<< HEAD
     {dataField: 'recordStatusId',text: 'RecordStatusId',sort: true},
+=======
+    { dataField: 'recordStatusId', text: ' RecordStatus', sort: true },
+>>>>>>> 5aa5c33a2f7c0e80b211d0b4aaef6342cfc31635
     // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -110,6 +117,7 @@ export default function Notifications() {
   
 
   useEffect(() => {
+    getRecordStatusList();
     if (notifications.length == 0) {
       getAllNotifications();
       setLoading(false)
@@ -171,6 +179,24 @@ export default function Notifications() {
       console.log('sizePerPage', sizePerPage);
     }
   });
+  const getRecordStatusList = async () => {
+    const response = await getRecordStatuss();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setRecordStatusList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'RecorStatus Fetch Failed.'
+      })
+    }
+  };
+
 
   const getRecordStatusList = async () => {
     const response = await getRecordStatuss();

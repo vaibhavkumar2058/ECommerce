@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
-import useFetchItemCost from "../hooks/useFetchItemCost";
+import useFetchNotificationType from "../hooks/useFetchNotificationType";
 import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
-import useFetchProduct from "../hooks/useFetchProduct";
-import useFetchMeasurementValue from "../hooks/useFetchMeasurementValue";
-import useFetchMeasurementType from "../hooks/useFetchMeasurementType";
-import ItemCostModel from "../components/ItemCostModel";
+import NotificationTypeModel from "../components/NotificationTypeModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
@@ -16,6 +13,7 @@ import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit/dist/rea
 
 
 const { SearchBar, ClearSearchButton } = Search;
+
 
 const MyExportCSV = (props) => {
   const handleClick = () => {
@@ -28,20 +26,17 @@ const MyExportCSV = (props) => {
   );
 };
 
-export default function ItemCosts() {
+export default function NotificationType() {
 
-  const [itemcosts, setItemCosts] = useState([]);
+  const [notificationTypes, setNotificationTypes] = useState([]);
   const [recordStatusList, setRecordStatusList] = useState([]);
-  const [productList, setProductList] = useState([]);
-  const [measurementValueList, setMeasurementValueList] = useState([]);
-  const [measurementTypeList, setMeasurementTypeList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
   const handleClose = () => {
-    getAllItemCosts();
+    getAllNotificationType();
     setIsEdit(false);
     setIsDelete(false);
     setShow(false);
@@ -49,16 +44,11 @@ export default function ItemCosts() {
   const handleShow = () => setShow(true);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-  const [itemcost, setItemCost] = useState({
-   
-    productId: null,
-    measurementTypeId: null,
-    measurementValueId: null,
-    customTypeId: null,
-    price:null,
-    description: "",
+  const [notificationType, setNotificationType] = useState({
+    notificationTypeName: "",
+    description:"",
     recordStatusId:null,
-      });
+    });
 
   const [id, setId] = useState(null);
 
@@ -70,51 +60,23 @@ export default function ItemCosts() {
   });
 
   const { 
-    addItemCost,
-    updateItemCost,
-    deleteItemCost,
-    getItemCosts,
-    itemCostById,
-  } = useFetchItemCost();
-
+    addNotificationType,
+    updateNotificationType,
+    deleteNotificationType,
+    getNotificationTypes,
+    notificationTypeById,
+  } = useFetchNotificationType();
   const { 
     getRecordStatuss,
   } = useFetchRecordStatus();
-  const { 
-    getProducts,
-  } = useFetchProduct();
-  const { 
-    getMeasurementValues,
-  } = useFetchMeasurementValue();
-  const { 
-    getMeasurementTypes,
-  } = useFetchMeasurementType();
-
 
   const columns = [
 
-    { dataField: 'itemCostId', text: 'ItemCost Id', sort: true},
-    { dataField: 'productId', text: ' Product Id', sort: true ,headerStyle: () => {
-      return { width: "120px" };
-    } },
-    { dataField: 'measurementTypeId', text: 'MeasurementType Id', sort: true ,headerStyle: () => {
-      return { width: "200px" };
-    } },
-    { dataField: 'measurementValueId', text: 'MeasurementValue Id', sort: true,headerStyle: () => {
-      return { width: "200px" };
-    }  },
-    { dataField: 'customTypeId', text: 'CustomType Id', sort: true,headerStyle: () => {
-      return { width: "150px" };
-    }  },
-    { dataField: 'price', text: 'Price', sort: true,headerStyle: () => {
-      return { width: "120px" };
-    }  },
-    { dataField: 'description', text: 'Description', sort: true,headerStyle: () => {
-      return { width: "150px" };
-    }  },
-    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true ,headerStyle: () => {
-      return { width: "180px" };
-    } },
+     { dataField: 'notificationTypeId', text: 'NotificationTypeId', sort: true,hidden:true },
+     { dataField: 'notificationTypeName', text: 'NotificationTypeName', sort: true },
+     { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true },
+      { dataField: 'description', text: 'Description', sort: true },
+    
     // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -123,18 +85,18 @@ export default function ItemCosts() {
         return (
           <><button
             className="btn btn-primary btn-xs"
-            onClick={() => handleView(row.itemCostId, row.name)}
+            onClick={() => handleView(row.notificationTypeId, row.name)}
           >
             View
           </button>
             <button
               className="btn btn-primary btn-xs"
-              onClick={() => handleEdit(row.itemCostId, row)}
+              onClick={() => handleEdit(row.notificationTypeId, row)}
             >
               Edit
             </button><button
               className="btn btn-danger btn-xs"
-              onClick={() => handleDelete(row.itemCostId, row.name)}
+              onClick={() => handleDelete(row.notificationTypeId, row.name)}
             >
               Delete
             </button></>
@@ -145,18 +107,15 @@ export default function ItemCosts() {
 
   useEffect(() => {
     getRecordStatusList();
-    getProductList();
-    getMeasurementValueList();
-    getMeasurementTypeList();
-    if (itemcosts.length == 0) {
-      getAllItemCosts();
+    if (notificationTypes.length == 0) {
+      getAllNotificationType();
       setLoading(false)
     }
-  }, [itemcosts]);
+  }, [notificationTypes]);
 
 
   const defaultSorted = [{
-    dataField: 'itemcostId',
+    dataField: 'notificationTypeId',
     order: 'desc'
   }];
 
@@ -170,8 +129,8 @@ export default function ItemCosts() {
   };
 
   const handleEdit = (rowId, row) => {
-    setItemCost(row);
-    //getItemCostsById(rowId);
+    setNotificationType(row);
+    //getNotificationTypeById(rowId);
     setId(rowId);
     setIsEdit(true);
     setShow(true);
@@ -201,7 +160,6 @@ export default function ItemCosts() {
       console.log('sizePerPage', sizePerPage);
     }
   });
-
   const getRecordStatusList = async () => {
     const response = await getRecordStatuss();
     if (response.payload.title == "Success") {
@@ -215,69 +173,18 @@ export default function ItemCosts() {
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'State Fetch Failed.'
-      })
-    }
-  };
-  const getProductList = async () => {
-    const response = await getProducts();
-    if (response.payload.title == "Success") {
-
-      var arr = [];
-      for (var key in response.payload) {
-        arr.push(response.payload[key]);
-      }
-      setProductList(arr);
-    }
-    else {
-      setMessageStatus({
-        mode: 'danger',
-        message: 'State Fetch Failed.'
-      })
-    }
-  };
-  const getMeasurementValueList = async () => {
-    const response = await getMeasurementValues();
-    if (response.payload.title == "Success") {
-
-      var arr = [];
-      for (var key in response.payload) {
-        arr.push(response.payload[key]);
-      }
-      setMeasurementValueList(arr);
-    }
-    else {
-      setMessageStatus({
-        mode: 'danger',
-        message: 'State Fetch Failed.'
-      })
-    }
-  };
-  const getMeasurementTypeList = async () => {
-    const response = await getMeasurementTypes();
-    if (response.payload.title == "Success") {
-
-      var arr = [];
-      for (var key in response.payload) {
-        arr.push(response.payload[key]);
-      }
-      setMeasurementTypeList(arr);
-    }
-    else {
-      setMessageStatus({
-        mode: 'danger',
-        message: 'State Fetch Failed.'
+        message: 'NotificationType Fetch Failed.'
       })
     }
   };
 
 
-  const getAllItemCosts = async () => {
-    const response = await getItemCosts();
+  const getAllNotificationType = async () => {
+    const response = await getNotificationTypes();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',
-        message: 'ItemCosts Record Fetch Succefully.'
+        message: 'NotificationType Record Fetch Succefully.'
       })
 
       var arr = [];
@@ -285,25 +192,25 @@ export default function ItemCosts() {
         arr.push(response.payload[key]);
       }
 
-      setItemCosts(arr);
+      setNotificationTypes(arr);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'ItemCost Fetch Failed.'
+        message: 'NotificationType Fetch Failed.'
       })
     }
   };
 
-  const getItemCostById = async (id) => {
-    const response = await itemCostById(id);
+  const getNotificationTypeById = async (id) => {
+    const response = await notificationTypeById(id);
     if (response.payload.title == "Success") {
-      setItemCost(response.payload);
+      setNotificationType(response.payload);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'ItemCost Get Failed.'
+        message: 'NotificationType Get Failed.'
       })
     }
   };
@@ -330,11 +237,11 @@ export default function ItemCosts() {
     <>
       <div className="m-t-40">
         {loading && <div>A moment please...</div>}
-        {itemcosts && (<div>
+        {notificationType && (<div>
           <ToolkitProvider
             bootstrap4
-            keyField='itemcostId'
-            data={itemcosts}
+            keyField='notificationTypeId'
+            data={notificationTypes}
             columns={columns}
             search
           >
@@ -352,7 +259,7 @@ export default function ItemCosts() {
                           <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
                           <Button variant="primary" onClick={handleShow}>
-                            AddItemCost
+                            Add NotificationType
                           </Button>
                           </div>
                         </div>
@@ -379,27 +286,24 @@ export default function ItemCosts() {
           <Modal
             show={show}
             onHide={handleClose}
-            dialogClassName="w-p-80"
+            backdrop="static"
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>AddItemCost</Modal.Title>
+              <Modal.Title>Add NotificationType</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <ItemCostModel
-                onAddItemCost={addItemCost}
-                onUpdateItemCost={updateItemCost}
-                onDeleteItemCost={deleteItemCost}
-                onGetItemCost={itemCostById}
+              <NotificationTypeModel
+                onAddNotificationType={addNotificationType}
+                onUpdateNotificationType={updateNotificationType}
+                onDeleteNotificationType={deleteNotificationType}
+                onGetNotificationType={notificationTypeById}
                 onClose={handleClose}
                 isEdit={isEdit}
                 isDelete={isDelete}
                 id={id}
-                itemcostData={itemcost}
+                notificationTypeData={notificationType}
                 recordStatusList={recordStatusList}
-                productList={productList}
-                measurementTypeList={measurementTypeList}
-                measurementValueList={measurementValueList}
               />
             </Modal.Body>
 

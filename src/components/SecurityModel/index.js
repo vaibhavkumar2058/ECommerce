@@ -5,6 +5,8 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
+import { Dropdown } from 'semantic-ui-react'
+
 
 export default function SecurityModel({
   onAddSecurity,
@@ -16,12 +18,23 @@ export default function SecurityModel({
   id,
   onClose,
   SecurityData,
+  recordStatusList = [],
+
 }) {
   const [newSecurity, setNewSecurity] = useState({
     questionId:null,
     answerId:null,
     description:"",
+    recordStatusId:null,
+
   });
+
+  const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus,item) =>(
+    {
+    key: item,
+    text: recordStatus.actionName,
+    value: recordStatus.recordStatusId,
+  })).filter((item) => item));
 
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
@@ -93,12 +106,25 @@ export default function SecurityModel({
     }
   };
 
+  const dropdownHandler = (event,{value}) => {
+    setNewSecurity((currentSecurity) => ({...currentSecurity, recordStatusId: value}));
+  }
+
   useEffect(() => {
     if (isEdit) {
       setNewSecurity(SecurityData);
     }
   }, []);
-  debugger;
+
+  useEffect(() => { 
+    setRecordStatusOptions(recordStatusList.map((recordStatus,item) =>(
+      {
+      key: item,
+      text: recordStatus.actionName,
+    value: recordStatus.recordStatusId,
+    })).filter((item) => item));
+    }, [recordStatusList]);
+
   useEffect(() => {
     if (isEdit) {
       setButtonType("Update");
@@ -142,6 +168,19 @@ export default function SecurityModel({
               placeholder="QuestionId"
               value={newSecurity?.questionId}
               onChange={changeHandler}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="recordStatus">
+            <Form.Label>RecordStatus</Form.Label>
+            <Dropdown
+              name="actionName"
+              placeholder='Select Action'
+              fluid
+              search
+              selection
+              options={recordStatusOptions}
+              value = {newSecurity?.recordStatusId}
+              onChange={dropdownHandler}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="answerId">
@@ -218,6 +257,10 @@ SecurityModel.propTypes = {
  * securityData for object type
  */
   securityData: PropTypes.any,
+   /**
+ * recordStatusData for object type
+ */
+   recordStatusList: PropTypes.any,
 };
 
 SecurityModel.defaultProps = {
@@ -230,4 +273,6 @@ SecurityModel.defaultProps = {
   onClose: null,
   id: null,
   securityData: null,
+  recordStatusList:null,
+
 };
