@@ -19,6 +19,7 @@ export default function NotificationModel({
   onClose,
   notificationData,
   recordStatusList = [],
+  notificationTypeList = [],
 }) {
   const [newNotification, setNewNotification] = useState({
     notificationTypeId:null,
@@ -41,6 +42,13 @@ export default function NotificationModel({
     key: item,
     text: recordStatus.actionName,
     value: recordStatus.recordStatusId,
+  })).filter((item) => item));
+
+  const [notificationTypeOptions, setNotificationTypeOptions] = useState(notificationTypeList.map((notificationType,item) =>(
+    {
+    key: item,
+    text: notificationType.notificationTypeName,
+    value: notificationType.notificationTypeId,
   })).filter((item) => item));
 
 
@@ -109,12 +117,23 @@ export default function NotificationModel({
 
   const dropdownHandler = (event,{value}) => {
     setNewNotification((currentNotification) => ({...currentNotification, recordStatusId: value}));
+    setNewNotification((currentNotification) => ({...currentNotification, notificationTypeId: value}));
+    
   }
   useEffect(() => {
     if (isEdit) {
       setNewNotification(notificationData);
     }
   }, []);
+
+  useEffect(() => { 
+    setNotificationTypeOptions(notificationTypeList.map((notificationType,item) =>(
+      {
+      key: item,
+      text: notificationType.actionName,
+    value: notificationType.notificationTypeId,
+    })).filter((item) => item));
+    }, [notificationTypeList]);
 
   useEffect(() => { 
     setRecordStatusOptions(recordStatusList.map((recordStatus,item) =>(
@@ -124,6 +143,7 @@ export default function NotificationModel({
     value: recordStatus.recordStatusId,
     })).filter((item) => item));
     }, [recordStatusList]);
+    
   
 
   useEffect(() => {
@@ -163,14 +183,17 @@ export default function NotificationModel({
           >
             
           </Form.Group>
-          <Form.Group>
-            <Form.Label>NotificationTypeId</Form.Label>
-            <Form.Control
-              type="text"
-              name="notificationTypeId"
-              placeholder="NotificationTypeId"
-              value={newNotification?.notificationTypeId}
-              onChange={changeHandler}
+          <Form.Group className="mb-3" controlId="notificationType">
+            <Form.Label>NotificationType</Form.Label>
+            <Dropdown
+              name="notificationTypeName"
+              placeholder='Select notificationTypeName'
+              fluid
+              search
+              selection
+              options={notificationTypeOptions}
+              value = {newNotification?.notificationTypeId}
+              onChange={dropdownHandler}
             />
           </Form.Group>
           <Form.Group>
@@ -275,6 +298,10 @@ NotificationModel.propTypes = {
  * recordStatusData for object type
  */
   recordStatusList: PropTypes.any,
+  /**
+ * notificationTypeData for object type
+ */
+  notificationTypeList: PropTypes.any,
 };
 
 NotificationModel.defaultProps = {
@@ -288,5 +315,6 @@ NotificationModel.defaultProps = {
   id: null,
   notificationData: null,
   recordStatusList:null,
+  notificationTypeList:null,
 };
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
 import useFetchNotification from "../hooks/useFetchNotification";
+import useFetchNotificationType from "../hooks/useFetchNotificationType";
 import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
 import NotificationModel from "../components/NotificationModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -27,6 +28,7 @@ const MyExportCSV = (props) => {
 
 export default function Notifications() {
   const [recordStatusList, setRecordStatusList] = useState([]);
+  const [notificationTypeList, setNotificationTypeList] = useState([]);
   const [notifications, setNotifications] = useState([]);
 
   const [loading, setLoading] = useState(true);
@@ -70,7 +72,11 @@ export default function Notifications() {
   const { 
     getRecordStatuss,
   } = useFetchRecordStatus();
-
+  
+  const { 
+    getNotificationTypes,
+  } = useFetchNotificationType();
+  
   const columns = [
 
     { dataField: 'notificationTypeId', text: 'NotificationTypeId', sort: true},
@@ -110,20 +116,14 @@ export default function Notifications() {
 
   useEffect(() => {
     getRecordStatusList();
+    getNotificationTypeList();
     if (notifications.length == 0) {
       getAllNotifications();
       setLoading(false)
     }
   }, [notifications]);
 
-  useEffect(() => {
-    getRecordStatusList();
-    if (notification.length == 0) {
-      getAllNotifications();
-      setLoading(false)
-    }
-  }, [notifications]);
-
+  
 
   const defaultSorted = [{
     dataField: 'notificationId',
@@ -183,6 +183,24 @@ export default function Notifications() {
         arr.push(response.payload[key]);
       }
       setRecordStatusList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'State Fetch Failed.'
+      })
+    }
+  };
+
+  const getNotificationTypeList = async () => {
+    const response = await getNotificationTypes();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setNotificationTypeList(arr);
     }
     else {
       setMessageStatus({
@@ -318,6 +336,7 @@ export default function Notifications() {
                 id={id}
                 notificationData={notification}
                 recordStatusList={recordStatusList}
+                notificationTypeList={notificationTypeList}
               />
             </Modal.Body>
 

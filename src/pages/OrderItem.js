@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
 import useFetchOrderItem from "../hooks/useFetchOrderItem";
+import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
+import useFetchProduct from "../hooks/useFetchProduct";
 import OrderItemModel from "../components/OrderItemModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
@@ -26,7 +28,8 @@ const MyExportCSV = (props) => {
 };
 
 export default function OrderItems() {
-
+  const [productList, setProductList] = useState([]);
+  const [recordStatusList, setRecordStatusList] = useState([]);
   const [orderItems, setOrderItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -47,7 +50,7 @@ export default function OrderItems() {
     orderId:null,
     cost:"",
     quantity:"",
-    // recordStatusId:null,
+    recordStatusId:null,
   });
 
   const [id, setId] = useState(null);
@@ -67,13 +70,20 @@ export default function OrderItems() {
     orderItemById,
   } = useFetchOrderItem();
 
+  const { 
+    getRecordStatuss,
+  } = useFetchRecordStatus();
+  const { 
+    getProducts,
+  } = useFetchProduct();
+
   const columns = [
 
     { dataField: 'productId', text: '  Product', sort: true,hidden:true},
     { dataField: 'orderId', text: ' Order', sort: true},
     { dataField: 'cost', text: 'Cost', sort: true },
     { dataField: 'quantity', text: 'Quantity', sort: true },
-    // { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true },
+    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true },
     // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -101,6 +111,15 @@ export default function OrderItems() {
       },
     },
   ];
+  useEffect(() => {
+    getRecordStatusList();
+    getProductList();
+    
+    if (orderItems.length == 0) {
+      getAllOrderItems();
+      setLoading(false)
+    }
+  }, [orderItems]);
 
   useEffect(() => {
     if (orderItems.length == 0) {
@@ -156,6 +175,41 @@ export default function OrderItems() {
       console.log('sizePerPage', sizePerPage);
     }
   });
+
+  const getRecordStatusList = async () => {
+    const response = await getRecordStatuss();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setRecordStatusList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'OrderItem Fetch Failed.'
+      })
+    }
+  };
+  const getProductList = async () => {
+    const response = await getProducts();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setProductList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'OrderItem Fetch Failed.'
+      })
+    }
+  };
 
 
   const getAllOrderItems = async () => {
@@ -282,6 +336,8 @@ export default function OrderItems() {
                 isDelete={isDelete}
                 id={id}
                 orderItemData={orderItem}
+                recordStatusList={recordStatusList}
+                productList={productList}
               />
             </Modal.Body>
 

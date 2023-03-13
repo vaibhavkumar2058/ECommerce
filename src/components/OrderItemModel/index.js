@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { css } from "@emotion/react";
-
+import { Dropdown } from 'semantic-ui-react';
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
@@ -17,6 +17,8 @@ export default function OrderItemModel({
   id,
   onClose,
   orderItemData,
+  recordStatusList = [],
+  productList = [],
 }) 
 {
   const [newOrderItem, setNewOrderItem] = useState({
@@ -24,9 +26,23 @@ export default function OrderItemModel({
     orderId:null,
     cost:"",
     quantity:"",
-    // recordStatusId:null,
+     recordStatusId:null,
 
  });
+ 
+const [productOptions, setProductOptions] = useState(productList.map((product,item) =>(
+  {
+  key: item,
+  text: product.productName,
+  value: product.productId,
+})).filter((item) => item));
+
+const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus,item) =>(
+  {
+  key: item,
+  text: recordStatus.actionName,
+  value: recordStatus.recordStatusId,
+})).filter((item) => item));
 
   const [fileSelected, setFileSelected] = useState();
 
@@ -102,6 +118,10 @@ export default function OrderItemModel({
       })
     }
   };
+  const dropdownHandler = (event,{value}) => {
+    setNewOrderItem((currentOrderItem) => ({...currentOrderItem, recordStatusId: value}));
+    setNewOrderItem((currentOrderItem) => ({...currentOrderItem, productId: value}));
+  }
 
   useEffect(() => {
     if (isEdit) {
@@ -109,12 +129,30 @@ export default function OrderItemModel({
     }
   }, []);
 
+  useEffect(() => { 
+    setProductOptions(productList.map((product,item) =>(
+      {
+      key: item,
+      text: product.actionName,
+    value: product.productId,
+    })).filter((item) => item));
+    }, [productList]);
+
+  useEffect(() => { 
+    setRecordStatusOptions(recordStatusList.map((recordStatus,item) =>(
+      {
+      key: item,
+      text: recordStatus.actionName,
+    value: recordStatus.recordStatusId,
+    })).filter((item) => item));
+    }, [recordStatusList]);
+
   useEffect(() => {
     if (isEdit) {
       setButtonType("Update");
     }
     const isEnable =
-       !newOrderItem?.productId  || !newOrderItem?.orderId || !newOrderItem?.cost || !newOrderItem?.quantity ; 
+       !newOrderItem?.productId  || !newOrderItem?.orderId || !newOrderItem?.cost || !newOrderItem?.quantity || !newOrderItem?.recordStatusId ; 
     setSaveDisabled(isEnable);
   }, [newOrderItem]);
 
@@ -140,19 +178,19 @@ export default function OrderItemModel({
       )}
       {!isDelete && (
         <Form>
-          <Form.Group
-            className={styles.stFormContainer}
-            controlId="formOrderItem"
-          >
-            <Form.Label>ProductId</Form.Label>
-            <Form.Control
-              type="text"
-              name="productId"
-              placeholder="Enter ProductId"
-              value={newOrderItem?.productId}
-              onChange={changeHandler}
+           <Form.Group className="mb-3" controlId="mobile">
+            <Form.Label>ProductID</Form.Label>
+            <Dropdown
+              name=" productName"
+              placeholder='Select ProductName'
+              fluid
+              search
+              selection
+              options={productOptions}
+              value = {newOrderItem?.ProductId}
+              onChange={dropdownHandler}
             />
-          </Form.Group>
+            </Form.Group>
           <Form.Group className="mb-3" controlId="OrderId">
             <Form.Label>OrderId</Form.Label>
             <Form.Control
@@ -185,16 +223,19 @@ export default function OrderItemModel({
               onChange={changeHandler}
             />
           </Form.Group>
-          {/* <Form.Group className="mb-3" controlId="RecordStatusId">
-            <Form.Label>RecordStatusId</Form.Label>
-            <Form.Control
-              type="text"
-              name="recordStatusId"
-              placeholder="RecordStatusId"
-              value={newOrderItem?.recordStatusId}
-              onChange={changeHandler}
+          <Form.Group className="mb-3" controlId="mobile">
+            <Form.Label>RecordStatusID</Form.Label>
+            <Dropdown
+              name=" actionName"
+              placeholder='Select Action'
+              fluid
+              search
+              selection
+              options={recordStatusOptions}
+              value = {newOrderItem?.RecordStatusId}
+              onChange={dropdownHandler}
             />
-          </Form.Group> */}
+            </Form.Group>
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel
@@ -247,6 +288,14 @@ OrderItemModel.propTypes = {
  * orderItemData for object type
  */
   orderItemData: PropTypes.any,
+  /**
+ * recordStatusList for object type
+ */
+recordStatusList: PropTypes.any,
+/**
+ * productList for object type
+ */
+productList: PropTypes.any,
 };
 
 OrderItemModel.defaultProps = {
@@ -259,5 +308,7 @@ OrderItemModel.defaultProps = {
   onClose: null,
   id: null,
   orderItemData: null,
+  recordStatusList:null,
+  productList:null,
 };
 

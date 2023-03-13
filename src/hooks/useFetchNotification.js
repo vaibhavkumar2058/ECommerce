@@ -12,7 +12,7 @@ import {
     notificationAction,
   } from "../actions/notificationActions";
 
-  export default function useFetchRecordStatus() {
+  export default function useFetchNotificationTYpe() {
     const dispatch = useDispatch();
   const hapyCarURL = "https://localhost:7062/notification";
 
