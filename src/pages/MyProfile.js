@@ -37,7 +37,7 @@ export default () => {
 
   useEffect(() => {
     if (resource == null) {
-      getResourcesById(23);
+      getResourcesById(6);
 
     }
 
