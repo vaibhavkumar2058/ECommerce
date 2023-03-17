@@ -30,6 +30,8 @@ export default function ProductModel({
     attachment: null,
     description: "",
     recordStatusId:null,
+    filesId:null,
+    productImage: null
   });
 
   const [categoryOptions, setCategoryOptions] = useState(categoryList.map((category, item) => (
@@ -209,7 +211,9 @@ export default function ProductModel({
             <Form.Label>Product Image</Form.Label>
           </Form.Group>
           <Form.Group>
-            <input type="file" onChange={saveFileSelected} />
+            <input type="file" onChange={saveFileSelected} />         
+            <img className="product-view" src={newProduct?.productImage}>
+            </img>
           </Form.Group>
           <Form.Group className="mb-3" controlId="description">
             <Form.Label>Description</Form.Label>
@@ -224,7 +228,7 @@ export default function ProductModel({
           <Form.Group className="mb-3" controlId="categoryType">
             <Form.Label>CategoryType</Form.Label>
             <Dropdown
-              name="actionName"
+              name="categoryTypeId"
               placeholder='Select Action'
               fluid
               search

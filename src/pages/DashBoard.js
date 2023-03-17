@@ -161,7 +161,7 @@ export default function Dashboard() {
         <>
             <div className="row">
                 <div className="col-md-6">
-                    <PieChart width={500} height={300}>
+                    <PieChart width={500} height={320}>
                         <Pie
                             data={productSales}
                             color="#000000"

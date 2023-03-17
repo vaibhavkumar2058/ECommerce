@@ -258,14 +258,18 @@ export default function Products() {
         const curedData = {};
         curedData.productId = rawData?.productId;
         curedData.productName = rawData?.productName;
-        curedData.categoryType = rawData?.categoryType?.categoryTypeName;
-       curedData.fileName = rawData?.productAttachments?.files?.fileName;
-        curedData.productImage = 'data:image/jpeg;base64,'+ rawData?.productAttachments?.files?.base64;
+        curedData.description = rawData?.description;
+        curedData.categoryTypeId = rawData?.categoryType?.categoryTypeId;
+        curedData.fileName = rawData?.productAttachments?.files?.fileName;
+        curedData.productImage = 'data:'+ rawData?.productAttachments?.files.fileMimeType +';base64,'+ rawData?.productAttachments?.files?.base64;
+        curedData.filesId = rawData?.productAttachments?.files?.filesId ? rawData?.productAttachments?.files?.filesId : 0;
+        curedData.recordStatusId = rawData?.recordStatusId;
         return curedData;
       }
 
       var arr = [];
       for (var key in response.payload) {
+        if (key !== 'title')
         arr.push(dataFormatter(response.payload[key]));
       }
 

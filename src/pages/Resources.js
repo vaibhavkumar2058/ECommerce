@@ -286,20 +286,19 @@ export default function Resourcess() {
         const curedData = {};
         curedData.resourcesId = rawData?.resourcesId;
         curedData.resourceName= rawData?.firstName + rawData?.middleName + rawData?.lastName;
-        curedData.role = rawData?.role?.roleName;
-        curedData.gender = rawData?.gender?.genderName;
+        curedData.roleId = rawData?.role?.roleId;
+        curedData.genderId = rawData?.gender?.genderId;
         curedData.mobileNumber=rawData?.mobileNumber;
-        curedData.resourceAttachmentType = rawData?.resourceAttachment?.resourceAttachmentType;
-        curedData.country = rawData?.address?.country.countryName;
-        curedData.state=rawData?.address?.state.stateName;
-        curedData.addressType=rawData?.address?.addressType;
+        curedData.resourceAttachmentTypeId = rawData?.resourceAttachment?.resourceAttachmentTypeId;
+        curedData.countryId = rawData?.address?.country.countryId;
+        curedData.stateId=rawData?.address?.state.stateId;
+        curedData.addressTypeId=rawData?.address?.addressTypeId;
         curedData.email=rawData?.email;
         curedData.password=rawData?.password;
         curedData.isEmailVerified=rawData?.isEmailVerified ? 'YES':'NO';
         curedData.isMobileVerified=rawData?.isMobileVerified;
         curedData.recordStatusId = rawData.recordStatusId;
-        curedData.filesId=rawData?.resourceAttachment?.files?.filesId;
-        debugger
+        curedData.filesId=rawData?.resourceAttachment?.files?.filesId ? rawData?.resourceAttachment?.files?.filesId : 0;
         if(rawData?.resourceAttachment?.resourceAttachmentTypeId =="3" )
         curedData.resourcesImage = 'data:'+ rawData?.resourceAttachment?.files.fileMimeType +';base64,'+ rawData?.resourceAttachment?.files?.base64;
         return curedData;
