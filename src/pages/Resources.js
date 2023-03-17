@@ -52,7 +52,6 @@ export default function Resourcess() {
     lastName: "",
     roleId:null,
     genderId:null,
-    filesId:null,
     mobileNumber:null,
     addressId:null,
     bloodGroup: "",
@@ -61,6 +60,8 @@ export default function Resourcess() {
     isEmailVerified: true,
     isMobileVerified: true,
     recordStatusId:null,
+    resourcesAttachmentType:3,
+    filesId:null,
 
   });
 
@@ -187,6 +188,7 @@ export default function Resourcess() {
   };
 
   const handleEdit = (rowId, row) => {
+    debugger;
     setResources(row);
     //getResources ById(rowId);
     setId(rowId);
@@ -280,8 +282,7 @@ export default function Resourcess() {
         mode: 'success',
         message: 'Resources Record Fetch Succefully.'
       })
-      debugger;
-      const dataFormatter = (rawData) => {
+    const dataFormatter = (rawData) => {
         const curedData = {};
         curedData.resourcesId = rawData?.resourcesId;
         curedData.resourceName= rawData?.firstName + rawData?.middleName + rawData?.lastName;
@@ -297,8 +298,10 @@ export default function Resourcess() {
         curedData.isEmailVerified=rawData?.isEmailVerified ? 'YES':'NO';
         curedData.isMobileVerified=rawData?.isMobileVerified;
         curedData.recordStatusId = rawData.recordStatusId;
+        curedData.filesId=rawData?.resourceAttachment?.files?.filesId;
+        debugger
         if(rawData?.resourceAttachment?.resourceAttachmentTypeId =="3" )
-        curedData.resourcesImage = 'data:image/jpeg;base64,'+ rawData?.resourceAttachment?.files?.base64;
+        curedData.resourcesImage = 'data:'+ rawData?.resourceAttachment?.files.fileMimeType +';base64,'+ rawData?.resourceAttachment?.files?.base64;
         return curedData;
       }
 

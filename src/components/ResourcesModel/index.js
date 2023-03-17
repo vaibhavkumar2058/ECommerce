@@ -40,7 +40,8 @@ export default function ResourcesModel({
     isMobileVerified: true,
     recordStatusId:null,
     attachment: null,
-    filesId:null,
+    resourcesAttachmentType:3,
+
 
   });
   
@@ -192,7 +193,7 @@ export default function ResourcesModel({
     }
     debugger
     const isEnable =
-      !newResources?.firstName || !newResources?.middleName || !newResources?.lastName || !newResources?.roleId || !newResources?.genderId || !newResources?.mobileNumber || !newResources?.addressId || !newResources?.bloodGroup || !newResources?.email || !newResources?.password || !newResources?.isEmailVerified || !newResources?.isMobileVerified || !newResources?.recordStatusId|| !newResources?.filesId;
+      !newResources?.firstName || !newResources?.middleName || !newResources?.lastName || !newResources?.roleId || !newResources?.genderId || !newResources?.mobileNumber || !newResources?.addressId || !newResources?.bloodGroup || !newResources?.email || !newResources?.password || !newResources?.isEmailVerified || !newResources?.isMobileVerified || !newResources?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newResources]);
 
@@ -331,16 +332,7 @@ export default function ResourcesModel({
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="filesId">
-            <Form.Label>FilesId</Form.Label>
-            <Form.Control
-              type="text"
-              name="filesId"
-              placeholder="FilesId"
-              value={newResources?.filesId}
-              onChange={changeHandler}
-            />
-          </Form.Group>
+          
           <Form.Group className="mb-3" controlId="isEmailVerified">
             <Form.Label>IsEmailVerified</Form.Label>
             <Form.Control
