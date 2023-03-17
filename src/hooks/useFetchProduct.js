@@ -54,10 +54,16 @@ import {
   };
 
   // Product ADD  ACTIONS
-  const addProduct = (product) => {
+
+  const addProduct = (product ,attachment) => {
+    debugger;
+    const formData = new FormData();
+    Object.keys(product).forEach((key) => formData.append(key,product[key]));
+
+
     return API.post(
       hapyCarURL,
-      { data: product },
+      { data: formData },
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
@@ -86,11 +92,13 @@ import {
 
   };
 
-  // Product UPDATE  ACTIONS
-  const updateProduct = (productId, product) => {
+  // Product update  ACTIONS
+  const updateProduct = (productId, product ,attachment) => {
+    const formData = new FormData();
+    Object.keys(product).forEach((key) => formData.append(key,product[key]));
 
     return API.put(`${hapyCarURL}/${productId}`,
-      { data: product },
+      { data: formData},
       { suppressErrors: [400] }
     )
       .then(({ data

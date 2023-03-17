@@ -53,6 +53,7 @@ export default function Products() {
   const [isDelete, setIsDelete] = useState(false);
   const [product, setProduct] = useState({
     productName: "",
+    attachment:null,
     categoryTypeId: null,
     description: "",
     recordStatusId:null,
@@ -86,15 +87,19 @@ export default function Products() {
 
   const columns = [
 
+
     { dataField: 'productId', text: 'Product Id', sort: true, hidden: true },
     // columns follow dataField and text structure
+    
     {
       dataField: "productImage",
-      text: "",
+      text: "Photo",
       headerStyle: () => {
+        debugger;
         return { width: "60px" };
       },
       formatter: (cellContent, row) => {
+        
         return (
           <>
             <img className="product-image" src={row.productImage}>
@@ -254,7 +259,7 @@ export default function Products() {
         curedData.productId = rawData?.productId;
         curedData.productName = rawData?.productName;
         curedData.categoryType = rawData?.categoryType?.categoryTypeName;
-        curedData.fileName = rawData?.productAttachments?.files?.fileName;
+       curedData.fileName = rawData?.productAttachments?.files?.fileName;
         curedData.productImage = 'data:image/jpeg;base64,'+ rawData?.productAttachments?.files?.base64;
         return curedData;
       }
