@@ -94,9 +94,10 @@ import {
 
   // Resources UPDATE  ACTIONS
   const updateResources = (resourcesId, resources) => {
-
+    const formData = new FormData();
+    Object.keys(resources).forEach((key) => formData.append(key,resources[key]));
     return API.put(`${hapyCarURL}/${resourcesId}`,
-      { data: resources },
+      { data: formData },
       { suppressErrors: [400] }
     )
       .then(({ data
