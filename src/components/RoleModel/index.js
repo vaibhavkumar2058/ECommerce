@@ -107,8 +107,8 @@ export default function RoleModel({
     }
   };
 
-  const dropdownHandler = (event,{value}) => {
-    setNewRole((currentRole) => ({...currentRole, recordStatusId: value}));
+  const dropdownHandler = (event,{name , value}) => {
+    setNewRole((currentRole) => ({...currentRole, [name]: value}));
   }
 
 
@@ -132,7 +132,9 @@ export default function RoleModel({
       setButtonType("Update");
     }
     const isEnable =
-       !newRole?.roleName || !newRole?.description || !newRole?.recordStatusId; 
+       !newRole?.roleName 
+       || !newRole?.description
+        || !newRole?.recordStatusId; 
     setSaveDisabled(isEnable);
   }, [newRole]);
 
@@ -162,11 +164,11 @@ export default function RoleModel({
             className={styles.stFormContainer}
             controlId="formRole"
           >
-            <Form.Label>Role</Form.Label>
+            <Form.Label>Role<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="roleName"
-              placeholder="Enter RoleName"
+              placeholder="Select RoleName"
               value={newRole?.roleName}
               onChange={changeHandler}
             />
@@ -186,15 +188,15 @@ export default function RoleModel({
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="mobile">
-            <Form.Label>RecordStatusID</Form.Label>
+            <Form.Label>Status<span className="required">*</span></Form.Label>
             <Dropdown
-              name=" actionName"
-              placeholder='Select Action'
+              name="recordStatusId"
+              placeholder='Select Status'
               fluid
               search
               selection
               options={recordStatusOptions}
-              value = {newRole?.RecordStatusId}
+              value = {newRole?.recordStatusId}
               onChange={dropdownHandler}
             />
             </Form.Group>

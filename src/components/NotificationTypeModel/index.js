@@ -106,8 +106,8 @@ export default function NotificationTypeModel({
       })
     }
   };
-  const dropdownHandler = (event,{value}) => {
-    setNewNotificationType((currentNotificationType) => ({...currentNotificationType, recordStatusId: value}));
+  const dropdownHandler = (event,{name, value}) => {
+    setNewNotificationType((currentNotificationType) => ({...currentNotificationType, [name]: value}));
   }
   useEffect(() => { 
     setRecordStatusOptions(recordStatusList.map((recordStatus,item) =>(
@@ -129,7 +129,8 @@ export default function NotificationTypeModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newNotificationType?.notificationTypeName || !newNotificationType?.recordStatusId|| !newNotificationType?.description  ;
+      !newNotificationType?.notificationTypeName
+       || !newNotificationType?.recordStatusId ;
     setSaveDisabled(isEnable);
   }, [newNotificationType]);
 
@@ -159,7 +160,7 @@ export default function NotificationTypeModel({
             className={styles.stFormContainer}
             controlId="formNotificationType"
           >
-            <Form.Label>NotificationType Name</Form.Label>
+            <Form.Label>NotificationType Name<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="notificationTypeName"                                                                                                                                   
@@ -170,10 +171,10 @@ export default function NotificationTypeModel({
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="recordStatus">
-            <Form.Label>RecordStatus</Form.Label>
+            <Form.Label>RecordStatus<span className="required">*</span></Form.Label>
             <Dropdown
-              name="actionName"
-              placeholder='Select Action'
+              name="recordStatusId"
+              placeholder='Select Status'
               fluid
               search
               selection

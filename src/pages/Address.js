@@ -121,13 +121,13 @@ export default function Addresses() {
     { dataField: 'isDefault', text: 'IsDefault', sort: true ,headerStyle: () => {
       return { width: "120px" };
     }},
-    { dataField: 'defaultAddressTypeId', text: 'Default AddressType Id', sort: true ,headerStyle: () => {
+    { dataField: 'defaultAddressTypeId', text: 'Default AddressType', sort: true ,headerStyle: () => {
       return { width: "200px" };
     }},
     { dataField: 'landMark', text: 'LandMark', sort: true,headerStyle: () => {
       return { width: "100px" };
     } },
-    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true,headerStyle: () => {
+    { dataField: 'recordStatusId', text: 'RecordStatus', sort: true,headerStyle: () => {
       return { width: "100px" };
     } },
     

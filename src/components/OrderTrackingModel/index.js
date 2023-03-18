@@ -131,10 +131,9 @@ export default function OrderTrackingModel({
       })
     }
   };
-  const dropdownHandler = (event,{value}) => {
-    setNewOrderTracking((currentOrderTracking) => ({...currentOrderTracking, recordStatusId: value}));
+  const dropdownHandler = (event,{name ,value}) => {
+    setNewOrderTracking((currentOrderTracking) => ({...currentOrderTracking, [name]: value}));
   
-    setNewOrderTracking((currentOrderTracking) => ({...currentOrderTracking, orderStatusId: value}));
   }
   useEffect(() => { 
     setOrderStatusOptions(orderStatusList.map((orderStatus,item) =>(
@@ -165,7 +164,9 @@ export default function OrderTrackingModel({
     if (isEdit) {
       setButtonType("Update");
     }
-    const isEnable = !newOrderTracking?.orderId || !newOrderTracking?.orderStatusId  || !newOrderTracking?.description ;
+    const isEnable = !newOrderTracking?.orderId 
+    || !newOrderTracking?.orderStatusId  
+    || !newOrderTracking?.recordStatusId ;
     setSaveDisabled(isEnable);
   }, [newOrderTracking]);
 
@@ -195,34 +196,21 @@ export default function OrderTrackingModel({
             className={styles.stFormContainer}
             controlId="formOrderTracking"
           >
-            <Form.Label>OrderId</Form.Label>
+            <Form.Label>Order<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="orderId"
-              placeholder="OrderId"
+              placeholder="Select Order"
               value={newOrderTracking?.orderId}
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="recordStatus">
-            <Form.Label>RecordStatus</Form.Label>
-            <Dropdown
-              name="actionName"
-              placeholder='Select Action'
-              fluid
-              search
-              selection
-              options={recordStatusOptions}
-              value = {newOrderTracking?.recordStatusId}
-              onChange={dropdownHandler}
-            />
-          </Form.Group>
           
           <Form.Group className="mb-3" controlId="orderStatusId">
-            <Form.Label>OrderStatusId</Form.Label>
+            <Form.Label>Order Status<span className="required">*</span></Form.Label>
             <Dropdown
               name="orderStatusName"
-              placeholder='Select orderStatus'
+              placeholder='Select OrderStatus'
               fluid
               search
               selection
@@ -243,6 +231,20 @@ export default function OrderTrackingModel({
               onChange={changeHandler}
             />
           </Form.Group>
+          <Form.Group className="mb-3" controlId="recordStatus">
+            <Form.Label>Status<span className="required">*</span></Form.Label>
+            <Dropdown
+              name="recordStatusId"
+              placeholder='Select Status'
+              fluid
+              search
+              selection
+              options={recordStatusOptions}
+              value = {newOrderTracking?.recordStatusId}
+              onChange={dropdownHandler}
+            />
+          </Form.Group>
+          
 
           
           <Modal.Footer>

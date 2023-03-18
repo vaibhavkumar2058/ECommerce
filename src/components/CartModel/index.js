@@ -134,18 +134,9 @@ export default function CartModel({
       })
     }
   };
-  const dropdownHandler = (event,{value}) => {
-    setNewCart((currentCart) => ({...currentCart, productId: value}));
+  const dropdownHandler = (event,{name,value}) => {
+    setNewCart((currentCart) => ({...currentCart, [name]: value}));
   }
-
-  
-
-  
-  
-
-
-  
-
   useEffect(() => {
     if (isEdit) {
       setNewCart(cartData);
@@ -176,7 +167,10 @@ export default function CartModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newCart?.resourcesId || !newCart?.productId  || !newCart?.cost || !newCart?.quantity|| !newCart?.description|| !newCart?.recordStatusId;
+      !newCart?.resourcesId ||
+       !newCart?.productId  || !newCart?.cost || 
+       !newCart?.quantity||
+        !newCart?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newCart]);
 
@@ -202,30 +196,23 @@ export default function CartModel({
       )}
       {!isDelete && (
         <Form>
-          <Form.Group className="mb-3" controlId="productId">
-            <Form.Label>Product</Form.Label>
-            <Select options={productOptions} name="productId"
-              value={newCart?.productId}
-              onChange={selectChangeHandler} />
-          </Form.Group>
-          
 
 
           <Form.Group
             className={styles.stFormContainer}
             controlId="formCart"
           >
-            <Form.Label>ResourcesId</Form.Label>
+            <Form.Label>Resources<span className="required">*</span></Form.Label>
             <Form.Control
-              type="text"
+              type="resourceId"
               name="resourcesId"
-              placeholder="ResourcesId"
+              placeholder=" Select Resources"
               value={newCart?.resourcesId}
               onChange={changeHandler}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="productId">
-            <Form.Label>ProductId</Form.Label>
+            <Form.Label>Product<span className="required">*</span></Form.Label>
             <Dropdown
               name="productId"
               placeholder=" Select Product"
@@ -239,22 +226,22 @@ export default function CartModel({
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="cost">
-            <Form.Label>Cost</Form.Label>
+            <Form.Label>Cost<span className="required">*</span></Form.Label>
             <Form.Control
-              type="text"
+              type="cost"
               name="cost"
-              placeholder="Cost"
+              placeholder=" Select Cost"
               value={newCart?.cost}
               onChange={changeHandler}
             />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="quantity">
-            <Form.Label>Quantity</Form.Label>
+            <Form.Label>Quantity<span className="required">*</span></Form.Label>
             <Form.Control
-              type="text"
+              type="quantity"
               name="quantity"
-              placeholder="Quantity"
+              placeholder=" Select Quantity"
               value={newCart?.quantity}
               onChange={changeHandler}
             />
@@ -270,10 +257,10 @@ export default function CartModel({
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="recordStatusId">
-            <Form.Label>RecordStatusId</Form.Label>
+            <Form.Label>Status<span className="required">*</span></Form.Label>
             <Dropdown
-              name="actionName"
-              placeholder=" Select Action"
+              name="recordStatusId"
+              placeholder=" Select Status"
               fluid
               search
               selection

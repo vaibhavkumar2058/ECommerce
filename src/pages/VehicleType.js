@@ -178,8 +178,6 @@ export default function VehicleType() {
     }
   };
 
-
-
   const getAllVehicleType = async () => {
     const response = await getVehicleType();
     if (response.payload.title == "Success") {

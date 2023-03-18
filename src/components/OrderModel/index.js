@@ -123,8 +123,8 @@ export default function OrderModel({
   }
 };
 
-const dropdownHandler = (event,{value}) => {
-  setNewOrder((currentOrder) => ({...currentOrder, recordStatusId: value}));
+const dropdownHandler = (event,{name,value}) => {
+  setNewOrder((currentOrder) => ({...currentOrder, [name]: value}));
 }
   useEffect(() => {
     if (isEdit) {
@@ -146,7 +146,10 @@ const dropdownHandler = (event,{value}) => {
       setButtonType("Update");
     }
     const isEnable =
-    !newOrder?.orderItemId || !newOrder?.resourcesId || !newOrder?.orderDate || !newOrder?.description|| !newOrder?.recordStatusId;
+    !newOrder?.orderItemId 
+    || !newOrder?.resourcesId 
+    || !newOrder?.orderDate 
+    || !newOrder?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newOrder]);
 
@@ -180,6 +183,40 @@ const dropdownHandler = (event,{value}) => {
           </Form.Group>
 
           
+          
+
+          <Form.Group className="mb-3" controlId="orderItemId">
+            <Form.Label>Order Item<span className="required">*</span></Form.Label>
+            <Form.Control
+              type="text"
+              name="orderItemId"
+              placeholder=" Enter OrderItem"
+              value={newOrder?.orderItemId}
+              onChange={changeHandler}
+            />
+          </Form.Group>
+
+
+           <Form.Group className="mb-3" controlId="orderDate">
+            <Form.Label>Order Date<span className="required">*</span></Form.Label>
+            <Form.Control
+              type="text"
+              name="orderDate"
+              placeholder="Enter OrderDate"
+              value={newOrder?.orderDate}
+              onChange={changeHandler}
+            />
+          </Form.Group> 
+          <Form.Group className="mb-3" controlId="resourcesId">
+            <Form.Label>Resources<span className="required">*</span></Form.Label>
+            <Form.Control
+              type="text"
+              name="resourcesId"
+              placeholder="Enter Resources"
+              value={newOrder?.resourcesId}
+              onChange={changeHandler}
+            />
+          </Form.Group> 
           <Form.Group className="mb-3" controlId="description">
             <Form.Label>Description</Form.Label>
             <Form.Control
@@ -192,45 +229,11 @@ const dropdownHandler = (event,{value}) => {
           </Form.Group>
 
 
-          <Form.Group className="mb-3" controlId="orderItemId">
-            <Form.Label>OrderItemId</Form.Label>
-            <Form.Control
-              type="text"
-              name="orderItemId"
-              placeholder="OrderItemId"
-              value={newOrder?.orderItemId}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-
-
-           <Form.Group className="mb-3" controlId="orderDate">
-            <Form.Label>OrderDate</Form.Label>
-            <Form.Control
-              type="text"
-              name="orderDate"
-              placeholder="OrderDate"
-              value={newOrder?.orderDate}
-              onChange={changeHandler}
-            />
-          </Form.Group> 
-          <Form.Group className="mb-3" controlId="resourcesId">
-            <Form.Label>ResourcesId</Form.Label>
-            <Form.Control
-              type="text"
-              name="resourcesId"
-              placeholder="ResourcesId"
-              value={newOrder?.resourcesId}
-              onChange={changeHandler}
-            />
-          </Form.Group> 
-
-
           <Form.Group className="mb-3" controlId="recordStatus">
-            <Form.Label>RecordStatus</Form.Label>
+            <Form.Label>Status<span className="required">*</span></Form.Label>
             <Dropdown
-              name="actionName"
-              placeholder='Select Action'
+              name="recordStatusId"
+              placeholder='Select Status'
               fluid
               search
               selection
@@ -239,6 +242,8 @@ const dropdownHandler = (event,{value}) => {
               onChange={dropdownHandler}
             />
           </Form.Group>
+          
+
 
 
           

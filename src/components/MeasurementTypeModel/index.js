@@ -105,8 +105,8 @@ export default function MeasurementTypeModel({
             })
         }
     };
-    const dropdownHandler = (event, { value }) => {
-        setNewMeasurementType((currentMeasurementType) => ({ ...currentMeasurementType, recordStatusId: value }));
+    const dropdownHandler = (event, { name,value }) => {
+        setNewMeasurementType((currentMeasurementType) => ({ ...currentMeasurementType, [name]: value }));
     }
 
 
@@ -151,7 +151,7 @@ export default function MeasurementTypeModel({
                         className={styles.stFormContainer}
                         controlId="formEnquiry"
                     >
-                        <Form.Label>MeasurementType</Form.Label>
+                        <Form.Label>MeasurementType<span className="required">*</span></Form.Label>
                         <Form.Control
                             type="text"
                             name="name"
@@ -172,10 +172,10 @@ export default function MeasurementTypeModel({
                         />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="recordStatus">
-                        <Form.Label>RecordStatus</Form.Label>
+                        <Form.Label>RecordStatus<span className="required">*</span></Form.Label>
                         <Dropdown
-                            name="actionName"
-                            placeholder='Select Action'
+                            name="recordStatusId"
+                            placeholder='Select Status'
                             fluid
                             search
                             selection

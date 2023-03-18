@@ -29,15 +29,7 @@ export default function OrderStatusModel({
     orderStatusName:"",
     description:"",
     recordStatusId:null,
-    
   });
-  
-  // const [orderStatusOptions, setOrderStatusOptions] = useState(orderStatuss.map((orderStatus, i) => (
-  //   {
-  //     key: i,
-  //     label: orderStatus.actionName,
-  //     value: orderStatus.orderStatusId,
-  //   })).filter((item) => item));
 
   const [fileSelected, setFileSelected] = useState();
 
@@ -47,6 +39,7 @@ export default function OrderStatusModel({
     status: false,
     message: "",
   });
+  debugger;
   const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus,item) =>(
     {
     key: item,
@@ -124,8 +117,8 @@ export default function OrderStatusModel({
       })
     }
   };
-  const dropdownHandler = (event,{value}) => {
-    setNewOrderStatus((currentOrderStatus) => ({...currentOrderStatus, recordStatusId: value}));
+  const dropdownHandler = (event,{name,value}) => {
+    setNewOrderStatus((currentOrderStatus) => ({...currentOrderStatus, [name]: value}));
   }
   useEffect(() => { 
     setRecordStatusOptions(recordStatusList.map((recordStatus,item) =>(
@@ -146,7 +139,7 @@ export default function OrderStatusModel({
     if (isEdit) {
       setButtonType("Update");
     }
-    const isEnable = !newOrderStatus?.orderStatusName || !newOrderStatus?.recordStatusId  || !newOrderStatus?.description ;
+    const isEnable = !newOrderStatus?.orderStatusName || !newOrderStatus?.recordStatusId   ;
     setSaveDisabled(isEnable);
   }, [newOrderStatus]);
 
@@ -176,20 +169,21 @@ export default function OrderStatusModel({
             className={styles.stFormContainer}
             controlId="formOrderStatus"
           >
-            <Form.Label>OrderStatusName</Form.Label>
+            
+            <Form.Label>Order Status</Form.Label>
             <Form.Control
               type="text"
               name="orderStatusName"
-              placeholder="OrderStatusName"
+              placeholder="Enter orderStatus"
               value={newOrderStatus?.orderStatusName}
               onChange={changeHandler}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="recordStatus">
-            <Form.Label>RecordStatus</Form.Label>
+            <Form.Label>Status<span className="required">*</span></Form.Label>
             <Dropdown
-              name="actionName"
-              placeholder='Select Action'
+              name="recordStatusId"
+              placeholder='Select Status'
               fluid
               search
               selection

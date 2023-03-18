@@ -114,9 +114,8 @@ export default function TaxModel({
       })
     }
   };
-  const dropdownHandler = (event, { value }) => {
-    setNewTax((currentTax) => ({ ...currentTax, recordStatusId: value }));
-    setNewTax((currentTax) => ({ ...currentTax, productId: value }));
+  const dropdownHandler = (event, {name , value }) => {
+    setNewTax((currentTax) => ({ ...currentTax, [name]: value }));
   }
 
 
@@ -151,7 +150,7 @@ export default function TaxModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newTax?.productId || !newTax?.taxValue || !newTax?.taxDescription;
+      !newTax?.productId || !newTax?.taxValue || !newTax?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newTax]);
 
@@ -183,7 +182,7 @@ export default function TaxModel({
           >
             <Form.Label>ProductId</Form.Label>
             <Dropdown
-              name="productName"
+              name="productId"
               placeholder='Select Product'
               fluid
               search
@@ -203,19 +202,7 @@ export default function TaxModel({
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="recordStatus">
-            <Form.Label>RecordStatus</Form.Label>
-            <Dropdown
-              name="actionName"
-              placeholder='Select Action'
-              fluid
-              search
-              selection
-              options={recordStatusOptions}
-              value={newTax?.recordStatusId}
-              onChange={dropdownHandler}
-            />
-          </Form.Group>
+          
 
           <Form.Group className="mb-3" controlId="TaxDescription">
             <Form.Label>TaxDescription</Form.Label>
@@ -225,6 +212,19 @@ export default function TaxModel({
               placeholder="TaxDescription"
               value={newTax?.taxDescription}
               onChange={changeHandler}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="recordStatus">
+            <Form.Label>RecordStatus</Form.Label>
+            <Dropdown
+              name="recordStatusId"
+              placeholder='Select Action'
+              fluid
+              search
+              selection
+              options={recordStatusOptions}
+              value={newTax?.recordStatusId}
+              onChange={dropdownHandler}
             />
           </Form.Group>
           <Modal.Footer>

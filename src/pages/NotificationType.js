@@ -77,6 +77,7 @@ export default function NotificationType() {
      { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true },
       { dataField: 'description', text: 'Description', sort: true },
     
+      
     // columns follow dataField and text structure
     {
       dataField: "Actions",

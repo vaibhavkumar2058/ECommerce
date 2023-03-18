@@ -179,7 +179,7 @@ export default function EnquiryModel({
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="email">
-            <Form.Label>Email</Form.Label>
+            <Form.Label>Email<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="email"

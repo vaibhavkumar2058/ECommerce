@@ -104,8 +104,8 @@ export default function MeasurementValueModel({
       })
     }
   };
-  const dropdownHandler = (event,{value}) => {
-    setNewMeasurementValue((currentMeasurementValue) => ({...currentMeasurementValue, recordStatusId: value}));
+  const dropdownHandler = (event,{name,value}) => {
+    setNewMeasurementValue((currentMeasurementValue) => ({...currentMeasurementValue, [name]: value}));
   }
   useEffect(() => { 
     setRecordStatusOptions(recordStatusList.map((recordStatus,item) =>(
@@ -128,7 +128,7 @@ export default function MeasurementValueModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newMeasurementValue?.value || !newMeasurementValue?.description|| !newMeasurementValue?.recordStatusId;
+      !newMeasurementValue?.value || !newMeasurementValue?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newMeasurementValue]);
 
@@ -158,7 +158,7 @@ export default function MeasurementValueModel({
             className={styles.stFormContainer}
             controlId="formMeasurementValue"
           >
-            <Form.Label>MeasurementValue</Form.Label>
+            <Form.Label>MeasurementValue<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="value"
@@ -167,20 +167,6 @@ export default function MeasurementValueModel({
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="recordStatus">
-            <Form.Label>RecordStatus</Form.Label>
-            <Dropdown
-              name="actionName"
-              placeholder='Select Action'
-              fluid
-              search
-              selection
-              options={recordStatusOptions}
-              value = {newMeasurementValue?.recordStatusId}
-              onChange={dropdownHandler}
-            />
-          </Form.Group>
-
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Description</Form.Label>
@@ -192,6 +178,22 @@ export default function MeasurementValueModel({
               onChange={changeHandler}
             />
           </Form.Group>
+          <Form.Group className="mb-3" controlId="recordStatus">
+            <Form.Label>RecordStatus<span className="required">*</span></Form.Label>
+            <Dropdown
+              name="recordStatusId"
+              placeholder='Select Action'
+              fluid
+              search
+              selection
+              options={recordStatusOptions}
+              value = {newMeasurementValue?.recordStatusId}
+              onChange={dropdownHandler}
+            />
+          </Form.Group>
+
+
+          
           
           
           <Modal.Footer>
