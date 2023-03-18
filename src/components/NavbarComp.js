@@ -19,7 +19,7 @@ import AddressType from "../pages/AddressType";
 import Address from "../pages/Address";
 import Cart from "../pages/Cart";
 import Invoice from "../pages/InVoice";
-import Country from "../pages/Country";
+import Country from "../pages/country";
 import Gender from "../pages/Gender";
 import GMT from "../pages/GMT";
 import ItemCost from "../pages/ItemCost";
@@ -54,6 +54,9 @@ import Sidebar from "../pages/Sidebar";
 import Signup from "../pages/PublicPages/Signup";
 import OrderReports from "../pages/OrderReports";
 import NotificationType from "../pages/NotificationType";
+import Emailverification from "../pages/PublicPages/Emailverification";
+import Topbar from "../pages/Topbar";
+
 
 
 const NavbarComp = () => {
@@ -73,7 +76,7 @@ const NavbarComp = () => {
           {(admin && <Route exact path="/resources" element={<ProtectedRoute><Sidebar/> <Resources/></ProtectedRoute>}/>)}
           {((admin||agent||dealer||customer) && <Route exact path="/order" element={<ProtectedRoute><Sidebar/><Order/></ProtectedRoute>}/>)}
           {((admin||agent||dealer||customer) &&<Route exact path="/shoppinglist" element={<ProtectedRoute><Sidebar/> <ShoppingList /></ProtectedRoute>} />)}
-          {(admin && <Route exact path="/itemCost" element={<ProtectedRoute><Sidebar/> <ItemCost/></ProtectedRoute>}/>)}
+          {(admin && <Route exact path="/itemCost" element={<ProtectedRoute><Sidebar/><ItemCost/></ProtectedRoute>}/>)}
           {((admin||agent||dealer||customer)  && <Route exact path="/cart" element={<ProtectedRoute><Sidebar/> <Cart/></ProtectedRoute>}/>)}
           {(admin && <Route exact path="/GMT" element={<ProtectedRoute><Sidebar/> <GMT/></ProtectedRoute>}/>)}
           {((admin||agent||dealer) && <Route exact path="/invoice" element={<ProtectedRoute><Sidebar/> <Invoice/></ProtectedRoute>}/>)}
@@ -104,12 +107,13 @@ const NavbarComp = () => {
           {((admin||agent||dealer||customer) &&<Route exact path="/orderSummaryList" element={<ProtectedRoute><Sidebar/><OrderSummaryList /></ProtectedRoute>} />)}
           {((admin||agent||dealer||customer) &&<Route exact path="/orderPlacedList" element={<ProtectedRoute><Sidebar/><OrderPlacedList /></ProtectedRoute>} />)}
           {(admin &&<Route exact path="/map" element={<ProtectedRoute><Sidebar/><ZMap /></ProtectedRoute>} />)}
-          <Route exact path="/dashboard" element={<ProtectedRoute><Sidebar/><Dashboard /></ProtectedRoute>}/>
+          <Route exact path="/dashboard" element={<ProtectedRoute><Topbar/><Sidebar/><Dashboard /></ProtectedRoute>}/>
           <Route exact path="/signin" element={<Signin />}/>
           <Route exact path="/signup" element={<Signup/>}/>
           <Route path="/" element={<Navigate replace to="/signin" />} />
           {((admin||agent||dealer||customer) &&<Route exact path="/changepassword" element={<ProtectedRoute><Sidebar/><ChangePassword/></ProtectedRoute>}/>)}
           <Route exact path="/forgotpassword" element={<ForgotPassword/>}/>
+          <Route exact path="/emailverification" element={<Emailverification/>}/>
           {((admin||agent||dealer||customer) &&<Route exact path="/myProfile" element={<ProtectedRoute><Sidebar/><MyProfile /></ProtectedRoute>}/>)}
           <Route exact path="/*" element={<NotFound />} />
           {(admin &&<Route exact path="/notificationType" element={<ProtectedRoute><Sidebar/><NotificationType /></ProtectedRoute>} />)}
