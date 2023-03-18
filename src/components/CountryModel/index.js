@@ -103,8 +103,8 @@ export default function CountryModel({
     }
   };
 
-  const dropdownHandler = (event,{value}) => {
-    setNewCountry((currentCountry) => ({...currentCountry, recordStatusId: value}));
+  const dropdownHandler = (event,{name,value}) => {
+    setNewCountry((currentCountry) => ({...currentCountry, [name]: value}));
   }
 
 
@@ -128,7 +128,9 @@ export default function CountryModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newCountry?.countryName || !newCountry?.regionCode || !newCountry?.description || !newCountry?.recordStatusId;
+      !newCountry?.countryName 
+      || !newCountry?.regionCode 
+      || !newCountry?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newCountry]);
 
@@ -158,7 +160,7 @@ export default function CountryModel({
             className={styles.stFormContainer}
             controlId="formCountry"
           >
-            <Form.Label>Country</Form.Label>
+            <Form.Label>Country<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="countryName"
@@ -168,7 +170,7 @@ export default function CountryModel({
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="regioncode">
-            <Form.Label>Region</Form.Label>
+            <Form.Label>Region<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="regionCode"
@@ -191,10 +193,10 @@ export default function CountryModel({
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="recordStatus">
-            <Form.Label>RecordStatus</Form.Label>
+            <Form.Label>Status<span className="required">*</span></Form.Label>
             <Dropdown
-              name="actionName"
-              placeholder='Select Action'
+              name="recordStatusId"
+              placeholder='Select Status'
               fluid
               search
               selection

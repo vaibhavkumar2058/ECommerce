@@ -139,11 +139,8 @@ export default function AddressModel({
       })
     }
   };
-  const dropdownHandler = (event,{value}) => {
-    setNewAddress((currentAddress) => ({...currentAddress, recordStatusId: value}));
-    setNewAddress((currentAddress) => ({...currentAddress, countryId: value}));
-    setNewAddress((currentAddress) => ({...currentAddress, stateId: value}));
-    setNewAddress((currentAddress) => ({...currentAddress, addressTypeId: value}));
+  const dropdownHandler = (event,{name,value}) => {
+    setNewAddress((currentAddress) => ({...currentAddress, [name]: value}));
 
   }
 
@@ -194,9 +191,15 @@ export default function AddressModel({
     if (isEdit) {
       setButtonType("Update");
     }
-    const isEnable = !newAddress?.city || !newAddress?.stateId  || !newAddress?.countryId || !newAddress?.addressTypeId|| !newAddress?.town  || !newAddress?.locality || !newAddress?.pincode|| !newAddress?.landMark|| !newAddress?.recordStatusId ;
+    const isEnable = !newAddress?.city
+     || !newAddress?.stateId 
+     || !newAddress?.countryId 
+     || !newAddress?.town  
+     || !newAddress?.pincode|| !newAddress?.landMark
+     || !newAddress?.recordStatusId ;
     setSaveDisabled(isEnable);
   }, [newAddress]);
+
 
   return (
     <>
@@ -220,10 +223,10 @@ export default function AddressModel({
       )}
       {!isDelete && (
         <Form>
-           <Form.Group className="mb-3" controlId="state">
-            <Form.Label>State</Form.Label>
+           <Form.Group className="mb-3" controlId="stateId">
+            <Form.Label>State<span className="required">*</span></Form.Label>
             <Dropdown
-              name="stateName"
+              name="stateId"
               placeholder='Select State'
               fluid
               search
@@ -234,11 +237,11 @@ export default function AddressModel({
             />
           </Form.Group>
         
-          <Form.Group className="mb-3" controlId="country">
-            <Form.Label>Country</Form.Label>
+          <Form.Group className="mb-3" controlId="countryId">
+            <Form.Label>Country<span className="required">*</span></Form.Label>
             <Dropdown
-              name="countryName"
-              placeholder='Select CountryName'
+              name="countryId"
+              placeholder='Select Country'
               fluid
               search
               selection
@@ -247,11 +250,11 @@ export default function AddressModel({
               onChange={dropdownHandler}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="addressType">
+          <Form.Group className="mb-3" controlId="addressTypeId">
             <Form.Label>AddressType</Form.Label>
             <Dropdown
-              name="addressTypeName"
-              placeholder='Select AddressTypeName'
+              name="addressTypeId"
+              placeholder='Select AddressTypeId'
               fluid
               search
               selection
@@ -263,35 +266,22 @@ export default function AddressModel({
          
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>City</Form.Label>
+            <Form.Label>City<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="city"
-              placeholder="City"
+              placeholder=" Select City"
               value={newAddress?.city}
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="recordStatus">
-            <Form.Label>RecordStatus</Form.Label>
-            <Dropdown
-              name="actionName"
-              placeholder='Select Action'
-              fluid
-              search
-              selection
-              options={recordStatusOptions}
-              value = {newAddress?.recordStatusId}
-              onChange={dropdownHandler}
-            />
-          </Form.Group>
 
           <Form.Group className="mb-3" controlId="town">
-            <Form.Label>Town</Form.Label>
+            <Form.Label>Town<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="town"
-              placeholder="Town"
+              placeholder=" Select Town"
               value={newAddress?.town}
               onChange={changeHandler}
             />
@@ -302,17 +292,17 @@ export default function AddressModel({
             <Form.Control
               type="text"
               name="locality"
-              placeholder="Locality"
+              placeholder=" Select Locality"
               value={newAddress?.locality}
               onChange={changeHandler}
             />
             </Form.Group>
           <Form.Group className="mb-3" controlId="pincode">
-            <Form.Label>PinCode</Form.Label>
+            <Form.Label>PinCode<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="pincode"
-              placeholder="Pincode"
+              placeholder=" Select Pincode"
               value={newAddress?.pincode}
               onChange={changeHandler}
             />
@@ -324,28 +314,28 @@ export default function AddressModel({
             <Form.Control
               type="text"
               name="isDefault"
-              placeholder="IsDefault"
+              placeholder=" Select IsDefault"
               value={newAddress?.isDefault}
               onChange={changeHandler}
             />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="landMark">
-            <Form.Label>LandMark</Form.Label>
+            <Form.Label>LandMark<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="landMark"
-              placeholder="LandMark"
+              placeholder=" Select LandMark"
               value={newAddress?.landMark}
               onChange={changeHandler}
             />
             </Form.Group>
             <Form.Group className="mb-3" controlId="defaultAddressTypeId">
-            <Form.Label>DefaultAddressTypeId</Form.Label>
+            <Form.Label>DefaultAddressType</Form.Label>
             <Form.Control
               type="text"
               name="defaultAddressTypeId"
-              placeholder="DefaultAddressTypeId"
+              placeholder=" Select DefaultAddressTypeId"
               value={newAddress?.defaultAddressTypeId}
               onChange={changeHandler}
             />
@@ -355,9 +345,22 @@ export default function AddressModel({
             <Form.Control
               type="text"
               name="description"
-              placeholder="Description"
+              placeholder=" Select Description"
               value={newAddress?.description}
               onChange={changeHandler}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="recordStatus">
+            <Form.Label>Status<span className="required">*</span></Form.Label>
+            <Dropdown
+              name="recordStatusId"
+              placeholder='Select RecordStatus'
+              fluid
+              search
+              selection
+              options={recordStatusOptions}
+              value = {newAddress?.recordStatusId}
+              onChange={dropdownHandler}
             />
           </Form.Group>
           

@@ -119,9 +119,8 @@ export default function FileModel({
     }
   };
 
-  const dropdownHandler = (event,{value}) => {
-    setNewFile((currentFile) => ({...currentFile, recordStatusId: value}));
-    setNewFile((currentFile) => ({...currentFile, folderId: value}));
+  const dropdownHandler = (event,{name,value}) => {
+    setNewFile((currentFile) => ({...currentFile, [name]: value}));
   }
 
   useEffect(() => {
@@ -136,7 +135,7 @@ export default function FileModel({
       key: item,
       text: recordStatus.actionName,
     value: recordStatus.recordStatusId,
-    })).filter((item) => item));
+    })).filter((item) => item)); 
     }, [recordStatusList]);
 
     useEffect(() => { 
@@ -154,7 +153,7 @@ export default function FileModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newFile?.resourceId;
+      !newFile?.resourceId ||!newFile?.folderId||!newFile?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newFile]);
 
@@ -184,9 +183,9 @@ export default function FileModel({
             className={styles.stFormContainer}
             controlId="formFile"
           >
-            <Form.Label>FolderId</Form.Label>
+            <Form.Label>Folder<span className="required">*</span></Form.Label>
             <Dropdown
-              name="folderName"
+              name="folderId"
               placeholder="Select Folder"
               fluid
               search
@@ -197,21 +196,21 @@ export default function FileModel({
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="mobile">
-            <Form.Label>ResourceId</Form.Label>
+            <Form.Label>Resource<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="resourceId"
-              placeholder="resourceId"
+              placeholder="Select resourceId"
               value={newFile?.resourceId}
               onChange={changeHandler}
             />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="recordStatus">
-            <Form.Label>RecordStatus</Form.Label>
+            <Form.Label>Status<span className="required">*</span></Form.Label>
             <Dropdown
-              name="actionName"
-              placeholder='Select Action'
+              name="recordStatusId"
+              placeholder='Select Status'
               fluid
               search
               selection
