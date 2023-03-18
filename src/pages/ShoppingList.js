@@ -60,6 +60,7 @@ export default function ShoppingList() {
       }
       var arr = [];
       for (var key in response.payload) {
+         if (key !== 'title')
         arr.push(dataFormatter(response.payload[key]));
       }
 

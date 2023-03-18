@@ -229,6 +229,7 @@ Geocode.fromLatLng("12.9800000000", "77.5927000000").then(
 
       var arr = [];
       for (var key in response.payload) {
+        if (key !== 'title')
         arr.push(response.payload[key]);
       }
 

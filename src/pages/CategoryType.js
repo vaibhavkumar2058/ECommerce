@@ -190,6 +190,7 @@ export default function CategoryTypes() {
 
             var arr = [];
             for (var key in response.payload) {
+                if (key !== 'title')
                 arr.push(response.payload[key]);
             }
 
