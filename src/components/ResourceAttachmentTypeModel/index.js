@@ -139,32 +139,32 @@ export default function ResourceAttachmentTypeModel({
         <Form>
          
           <Form.Group classId="mb-3" controlId="displayText">
-            <Form.Label>Displaytext</Form.Label>
+            <Form.Label>Displaytext<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
-              id="displayText"
-              placeholder="Enter Displaytext"
+              name="displayText"
+              placeholder="Select Displaytext"
               value={newResourceAttachmentType?.displayText}
               onChange={changeHandler}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="sortOrder">
-            <Form.Label>SortOrder</Form.Label>
+            <Form.Label>SortOrder<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="sortOrder"
-              placeholder="Enter SortOrder"
+              placeholder="Select SortOrder"
               value={newResourceAttachmentType?.sortOrder}
               onChange={changeHandler}
             />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="isActive">
-            <Form.Label>IsActive</Form.Label>
+            <Form.Label>IsActive<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="isActive"
-              placeholder="IsActive"
+              placeholder="Select IsActive"
               value={newResourceAttachmentType?.isActive}
               onChange={changeHandler}
             />
@@ -174,7 +174,7 @@ export default function ResourceAttachmentTypeModel({
             <Form.Control
               type="text"
               name="description"
-              placeholder="Enter Description"
+              placeholder="Select Description"
               value={newResourceAttachmentType?.description}
               onChange={changeHandler}
             />

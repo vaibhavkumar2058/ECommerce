@@ -163,7 +163,7 @@ export default function VehicleType() {
   const getRecordStatusList = async () => {
     const response = await getRecordStatuss();
     if (response.payload.title == "Success") {
-
+alert();
       var arr = [];
       for (var key in response.payload) {
         arr.push(response.payload[key]);
@@ -177,8 +177,6 @@ export default function VehicleType() {
       })
     }
   };
-
-
 
   const getAllVehicleType = async () => {
     const response = await getVehicleType();

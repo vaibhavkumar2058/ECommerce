@@ -106,8 +106,8 @@ export default function SecurityModel({
     }
   };
 
-  const dropdownHandler = (event,{value}) => {
-    setNewSecurity((currentSecurity) => ({...currentSecurity, recordStatusId: value}));
+  const dropdownHandler = (event,{name , value}) => {
+    setNewSecurity((currentSecurity) => ({...currentSecurity, [name]: value}));
   }
 
   useEffect(() => {
@@ -131,7 +131,7 @@ export default function SecurityModel({
     }
    
     const isEnable =
-    !newSecurity?.questionId ||!newSecurity?.answerId || !newSecurity?.description;
+    !newSecurity?.questionId ||!newSecurity?.answerId || !newSecurity?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newSecurity]);
 
@@ -161,34 +161,22 @@ export default function SecurityModel({
             className={styles.stFormContainer}
             controlId="formSecurity"
           >
-            <Form.Label>QuestionId</Form.Label>
+            <Form.Label>Question<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="questionId"
-              placeholder="QuestionId"
+              placeholder="Select Question"
               value={newSecurity?.questionId}
               onChange={changeHandler}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="recordStatus">
-            <Form.Label>RecordStatus</Form.Label>
-            <Dropdown
-              name="actionName"
-              placeholder='Select Action'
-              fluid
-              search
-              selection
-              options={recordStatusOptions}
-              value = {newSecurity?.recordStatusId}
-              onChange={dropdownHandler}
-            />
-          </Form.Group>
+          
           <Form.Group className="mb-3" controlId="answerId">
-            <Form.Label>AnswerId</Form.Label>
+            <Form.Label>Answer<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="answerId"
-              placeholder="AnswerId"
+              placeholder="Select Answer"
               value={newSecurity?.answerId}
               onChange={changeHandler}
             />
@@ -203,7 +191,19 @@ export default function SecurityModel({
               onChange={changeHandler}
             />
           </Form.Group>
-                                                    
+          <Form.Group className="mb-3" controlId="recordStatus">
+            <Form.Label>Status<span className="required">*</span></Form.Label>
+            <Dropdown
+              name="recordStatusId"
+              placeholder='Select Status'
+              fluid
+              search
+              selection
+              options={recordStatusOptions}
+              value = {newSecurity?.recordStatusId}
+              onChange={dropdownHandler}
+            />
+          </Form.Group>                         
           
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
