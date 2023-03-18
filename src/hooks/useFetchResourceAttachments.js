@@ -22,9 +22,9 @@ import {
   const ERROR = "Error";
 
   // ResourceAttachments GET  ACTIONS
-  const getResourceAttachmentses = () => {
+  const getResourceAttachmentses = (resourceId) => {
     dispatch(getResourceAttachmentsBeginAction());
-    return API.get(hapyCarURL,
+    return API.get(`${hapyCarURL}/resource/${resourceId}`,
       null,
       { suppressErrors: [400] }
     )

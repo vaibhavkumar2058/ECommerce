@@ -39,9 +39,7 @@ export default function ResourcesModel({
     isMobileVerified: true,
     recordStatusId:1,
     attachment: null,
-    resourcesAttachmentType:3,
-
-
+    resourcesAttachmentTypeId:1003,
   });
   
 
@@ -146,12 +144,9 @@ export default function ResourcesModel({
     }
   };
 
-  const dropdownHandler = (event,{value}) => {
-    setNewResources((currentResources) => ({...currentResources, roleId: value}));
-    setNewResources((currentResources) => ({...currentResources, genderId: value}));
-    setNewResources((currentResources) => ({...currentResources, recordStatusId: value}));
+  const dropdownHandler = (event,{name, value}) => {
+    setNewResources((currentResources) => ({...currentResources, [name]: value}));
   } 
-
 
   useEffect(() => {
     if (isEdit) {
@@ -190,7 +185,6 @@ export default function ResourcesModel({
     if (isEdit) {
       setButtonType("Update");
     }
-    debugger
     const isEnable =
       !newResources?.firstName 
       || !newResources?.roleId || !newResources?.genderId 
@@ -261,8 +255,8 @@ export default function ResourcesModel({
           <Form.Group className="mb-3" controlId="roleId">
             <Form.Label>Role</Form.Label>
             <Dropdown
-              name="roleName"
-              placeholder='Select Action'
+              name="roleId"
+              placeholder='Select Role'
               fluid
               search
               selection
@@ -274,8 +268,8 @@ export default function ResourcesModel({
           <Form.Group className="mb-3" controlId="genderId">
             <Form.Label>Gender</Form.Label>
             <Dropdown
-              name="genderName"
-              placeholder='Select Action'
+              name="genderId"
+              placeholder='Select Gender'
               fluid
               search
               selection
