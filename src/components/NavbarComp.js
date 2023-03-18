@@ -43,7 +43,6 @@ import Dashboard from "../pages/DashBoard"
 import OrderSummaryList from "../pages/OrderSummaryList";
 import OrderPlacedList from "../pages/OrderPlacedList";
 import Tax from "../pages/Tax";
-import OrderItem from "../pages/OrderItem";
 import ProtectedRoute from "../pages/ProtectedRoute";
 import Signin from "../pages/PublicPages/Signin";
 import NotFound from "../pages/PublicPages/NotFound";
@@ -70,54 +69,53 @@ const NavbarComp = () => {
     <Router>
       <div>
         <Routes>      
-          {(admin && <Route exact path="/role" element={<ProtectedRoute><Sidebar/> <Role /></ProtectedRoute>} />)}
-          {(admin && <Route exact path="/state" element={<ProtectedRoute><Sidebar/> <State /></ProtectedRoute>} />)}
-          {(admin && <Route exact path="/vehicleType" element={<ProtectedRoute><Sidebar/> <VehicleType /></ProtectedRoute>} />)}
-          {(admin && <Route exact path="/resources" element={<ProtectedRoute><Sidebar/> <Resources/></ProtectedRoute>}/>)}
-          {((admin||agent||dealer||customer) && <Route exact path="/order" element={<ProtectedRoute><Sidebar/><Order/></ProtectedRoute>}/>)}
-          {((admin||agent||dealer||customer) &&<Route exact path="/shoppinglist" element={<ProtectedRoute><Sidebar/> <ShoppingList /></ProtectedRoute>} />)}
-          {(admin && <Route exact path="/itemCost" element={<ProtectedRoute><Sidebar/><ItemCost/></ProtectedRoute>}/>)}
-          {((admin||agent||dealer||customer)  && <Route exact path="/cart" element={<ProtectedRoute><Sidebar/> <Cart/></ProtectedRoute>}/>)}
-          {(admin && <Route exact path="/GMT" element={<ProtectedRoute><Sidebar/> <GMT/></ProtectedRoute>}/>)}
-          {((admin||agent||dealer) && <Route exact path="/invoice" element={<ProtectedRoute><Sidebar/> <Invoice/></ProtectedRoute>}/>)}
-          {((admin||agent||dealer||customer) && <Route exact path="/orderTracking" element={<ProtectedRoute><Sidebar/> <OrderTracking/></ProtectedRoute>}/>)}
-          {((admin||agent||dealer) && <Route exact path="/recordStatus" element={<ProtectedRoute><Sidebar/> <RecordStatus/></ProtectedRoute>}/>)}
-          {(admin && <Route exact path="/tax" element={<ProtectedRoute><Sidebar/> <Tax /></ProtectedRoute>}/>)}
-          {(admin && <Route exact path="/orderItem" element={<ProtectedRoute><Sidebar/> <OrderItem /></ProtectedRoute>}/>)}
-          {((admin||agent||dealer) && <Route exact path="/product" element={<ProtectedRoute><Sidebar/> <Product/></ProtectedRoute>}/>)}
-          {(admin && <Route exact path="/country" element={<ProtectedRoute><Sidebar/> <Country/></ProtectedRoute>}/>)}
-          {(admin && <Route exact path="/addressType" element={<ProtectedRoute><Sidebar/> <AddressType/></ProtectedRoute>}/>)}
-          {(admin && <Route exact path="/address" element={<ProtectedRoute><Sidebar/> <Address/></ProtectedRoute>}/>)}
-          {(admin && <Route exact path="/categoryType" element={<ProtectedRoute><Sidebar/><CategoryType/></ProtectedRoute>}/>)}
-          {(admin && <Route exact path="/measurementType" element={<ProtectedRoute><Sidebar/><MeasurementType/></ProtectedRoute>}/>)}
-          {(admin && <Route exact path="/measurementValue" element={<ProtectedRoute><Sidebar/><MeasurementValue/></ProtectedRoute>}/>)}
-          {(admin && <Route exact path="/orderStatus" element={<ProtectedRoute><Sidebar/><OrderStatus/></ProtectedRoute>}/>)}
-          {(admin && <Route exact path="/productAttachments" element={<ProtectedRoute><Sidebar/><ProductAttachments/></ProtectedRoute>}/>)}
-          {((admin||agent||dealer||customer) && <Route exact path="/orderPlacedList" element={<ProtectedRoute><Sidebar/><OrderPlacedList/></ProtectedRoute>}/>)}
-         {((admin||agent||dealer||customer) && <Route exact path="/itemList" element={<ProtectedRoute><Sidebar/><ItemList/></ProtectedRoute>}/>)}
+          {(admin && <Route exact path="/role" element={<ProtectedRoute><Sidebar/><Topbar/> <Role /></ProtectedRoute>} />)}
+          {(admin && <Route exact path="/state" element={<ProtectedRoute><Sidebar/><Topbar/> <State /></ProtectedRoute>} />)}
+          {(admin && <Route exact path="/vehicleType" element={<ProtectedRoute><Sidebar/><Topbar/> <VehicleType /></ProtectedRoute>} />)}
+          {(admin && <Route exact path="/resources" element={<ProtectedRoute><Sidebar/><Topbar/> <Resources/></ProtectedRoute>}/>)}
+          {((admin||agent||dealer||customer) && <Route exact path="/order" element={<ProtectedRoute><Sidebar/><Topbar/><Order/></ProtectedRoute>}/>)}
+          {((admin||agent||dealer||customer) &&<Route exact path="/shoppinglist" element={<ProtectedRoute><Sidebar/><Topbar/> <ShoppingList /></ProtectedRoute>} />)}
+          {(admin && <Route exact path="/itemCost" element={<ProtectedRoute><Sidebar/><Topbar/><ItemCost/></ProtectedRoute>}/>)}
+          {((admin||agent||dealer||customer)  && <Route exact path="/cart" element={<ProtectedRoute><Sidebar/><Topbar/> <Cart/></ProtectedRoute>}/>)}
+          {(admin && <Route exact path="/GMT" element={<ProtectedRoute><Sidebar/><Topbar/> <GMT/></ProtectedRoute>}/>)}
+          {((admin||agent||dealer) && <Route exact path="/invoice" element={<ProtectedRoute><Sidebar/><Topbar/> <Invoice/></ProtectedRoute>}/>)}
+          {((admin||agent||dealer||customer) && <Route exact path="/orderTracking" element={<ProtectedRoute><Sidebar/><Topbar/> <OrderTracking/></ProtectedRoute>}/>)}
+          {((admin||agent||dealer) && <Route exact path="/recordStatus" element={<ProtectedRoute><Sidebar/><Topbar/> <RecordStatus/></ProtectedRoute>}/>)}
+          {(admin && <Route exact path="/tax" element={<ProtectedRoute><Sidebar/><Topbar/> <Tax /></ProtectedRoute>}/>)}
+          {((admin||agent||dealer) && <Route exact path="/product" element={<ProtectedRoute><Sidebar/><Topbar/> <Product/></ProtectedRoute>}/>)}
+          {(admin && <Route exact path="/country" element={<ProtectedRoute><Sidebar/><Topbar/> <Country/></ProtectedRoute>}/>)}
+          {(admin && <Route exact path="/addressType" element={<ProtectedRoute><Sidebar/><Topbar/> <AddressType/></ProtectedRoute>}/>)}
+          {(admin && <Route exact path="/address" element={<ProtectedRoute><Sidebar/><Topbar/> <Address/></ProtectedRoute>}/>)}
+          {(admin && <Route exact path="/categoryType" element={<ProtectedRoute><Sidebar/><Topbar/><CategoryType/></ProtectedRoute>}/>)}
+          {(admin && <Route exact path="/measurementType" element={<ProtectedRoute><Sidebar/><Topbar/><MeasurementType/></ProtectedRoute>}/>)}
+          {(admin && <Route exact path="/measurementValue" element={<ProtectedRoute><Sidebar/><Topbar/><MeasurementValue/></ProtectedRoute>}/>)}
+          {(admin && <Route exact path="/orderStatus" element={<ProtectedRoute><Sidebar/><Topbar/><OrderStatus/></ProtectedRoute>}/>)}
+          {(admin && <Route exact path="/productAttachments" element={<ProtectedRoute><Sidebar/><Topbar/><ProductAttachments/></ProtectedRoute>}/>)}
+          {((admin||agent||dealer||customer) && <Route exact path="/orderPlacedList" element={<ProtectedRoute><Sidebar/><Topbar/><OrderPlacedList/></ProtectedRoute>}/>)}
+         {((admin||agent||dealer||customer) && <Route exact path="/itemList" element={<ProtectedRoute><Sidebar/><Topbar/><ItemList/></ProtectedRoute>}/>)}
 
-          {(admin && <Route exact path="/role" element={<ProtectedRoute><Sidebar/> <Role /></ProtectedRoute>} />)}
-          {(admin && <Route exact path="/file" element={<ProtectedRoute><Sidebar/><File /></ProtectedRoute>} />)}
-          {(admin && <Route exact path="/security" element={<ProtectedRoute><Sidebar/><Security /></ProtectedRoute>} />)}
-          {(admin &&<Route exact path="/gender" element={<ProtectedRoute><Sidebar/><Gender /></ProtectedRoute>} />)}
-          {(admin &&<Route exact path="/notifications" element={<ProtectedRoute><Sidebar/><Notification /></ProtectedRoute>} />)}
-          {(admin && <Route exact path="/resourceAttachmentType" element={<ProtectedRoute><Sidebar/><ResourceAttachmentType /></ProtectedRoute>} />)}
-          {(admin &&<Route exact path="/resourceAttachments" element={<ProtectedRoute><Sidebar/><ResourceAttachments /></ProtectedRoute>} />)}
-          {(admin &&<Route exact path="/folder" element={<ProtectedRoute><Sidebar/><Folder /></ProtectedRoute>} />)}
-          {((admin||agent||dealer||customer) &&<Route exact path="/orderSummaryList" element={<ProtectedRoute><Sidebar/><OrderSummaryList /></ProtectedRoute>} />)}
-          {((admin||agent||dealer||customer) &&<Route exact path="/orderPlacedList" element={<ProtectedRoute><Sidebar/><OrderPlacedList /></ProtectedRoute>} />)}
-          {(admin &&<Route exact path="/map" element={<ProtectedRoute><Sidebar/><ZMap /></ProtectedRoute>} />)}
-          <Route exact path="/dashboard" element={<ProtectedRoute><Topbar/><Sidebar/><Dashboard /></ProtectedRoute>}/>
+          {(admin && <Route exact path="/role" element={<ProtectedRoute><Sidebar/><Topbar/> <Role /></ProtectedRoute>} />)}
+          {(admin && <Route exact path="/file" element={<ProtectedRoute><Sidebar/><Topbar/><File /></ProtectedRoute>} />)}
+          {(admin && <Route exact path="/security" element={<ProtectedRoute><Sidebar/><Topbar/><Security /></ProtectedRoute>} />)}
+          {(admin &&<Route exact path="/gender" element={<ProtectedRoute><Sidebar/><Topbar/><Gender /></ProtectedRoute>} />)}
+          {(admin &&<Route exact path="/notifications" element={<ProtectedRoute><Sidebar/><Topbar/><Notification /></ProtectedRoute>} />)}
+          {(admin && <Route exact path="/resourceAttachmentType" element={<ProtectedRoute><Sidebar/><Topbar/><ResourceAttachmentType /></ProtectedRoute>} />)}
+          {(admin &&<Route exact path="/resourceAttachments" element={<ProtectedRoute><Sidebar/><Topbar/><ResourceAttachments /></ProtectedRoute>} />)}
+          {(admin &&<Route exact path="/folder" element={<ProtectedRoute><Sidebar/><Topbar/><Folder /></ProtectedRoute>} />)}
+          {((admin||agent||dealer||customer) &&<Route exact path="/orderSummaryList" element={<ProtectedRoute><Sidebar/><Topbar/><OrderSummaryList /></ProtectedRoute>} />)}
+          {((admin||agent||dealer||customer) &&<Route exact path="/orderPlacedList" element={<ProtectedRoute><Sidebar/><Topbar/><OrderPlacedList /></ProtectedRoute>} />)}
+          {(admin &&<Route exact path="/map" element={<ProtectedRoute><Sidebar/><Topbar/><ZMap /></ProtectedRoute>} />)}
+          <Route exact path="/dashboard" element={<ProtectedRoute><Sidebar/><Topbar/><Dashboard /></ProtectedRoute>}/>
           <Route exact path="/signin" element={<Signin />}/>
           <Route exact path="/signup" element={<Signup/>}/>
           <Route path="/" element={<Navigate replace to="/signin" />} />
-          {((admin||agent||dealer||customer) &&<Route exact path="/changepassword" element={<ProtectedRoute><Sidebar/><ChangePassword/></ProtectedRoute>}/>)}
+          {((admin||agent||dealer||customer) &&<Route exact path="/changepassword" element={<ProtectedRoute><Sidebar/><Topbar/><ChangePassword/></ProtectedRoute>}/>)}
           <Route exact path="/forgotpassword" element={<ForgotPassword/>}/>
           <Route exact path="/emailverification" element={<Emailverification/>}/>
-          {((admin||agent||dealer||customer) &&<Route exact path="/myProfile" element={<ProtectedRoute><Sidebar/><MyProfile /></ProtectedRoute>}/>)}
+          {((admin||agent||dealer||customer) &&<Route exact path="/myProfile" element={<ProtectedRoute><Sidebar/><Topbar/><MyProfile /></ProtectedRoute>}/>)}
           <Route exact path="/*" element={<NotFound />} />
-          {(admin &&<Route exact path="/notificationType" element={<ProtectedRoute><Sidebar/><NotificationType /></ProtectedRoute>} />)}
-          {((admin||agent||dealer||customer) &&<Route exact path="/orderReports" element={<ProtectedRoute><Sidebar/><OrderReports /></ProtectedRoute>} />)}
+          {(admin &&<Route exact path="/notificationType" element={<ProtectedRoute><Sidebar/><Topbar/><NotificationType /></ProtectedRoute>} />)}
+          {((admin||agent||dealer||customer) &&<Route exact path="/orderReports" element={<ProtectedRoute><Sidebar/><Topbar/><OrderReports /></ProtectedRoute>} />)}
         </Routes>
       </div>
     </Router>
