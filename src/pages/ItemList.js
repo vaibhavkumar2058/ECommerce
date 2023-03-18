@@ -87,10 +87,24 @@ export default function ItemList() {
         message: 'ItemCosts Record Fetch Succefully.'
       })
 
+      const dataFormatter = (rawData) => {
+        const curedData = {};
+        debugger
+        curedData.productId = rawData?.productId;
+        curedData.productName = rawData?.product?.productName;
+        curedData.description = rawData?.product?.description;
+        curedData.categoryTypeId = rawData?.product?.categoryTypeId;
+        curedData.fileName = rawData?.product?.productAttachments?.files?.fileName;
+        curedData.productImage = 'data:' + rawData?.product?.productAttachments?.files.fileMimeType + ';base64,' + rawData?.product?.productAttachments?.files?.base64;
+        curedData.filesId = rawData?.product?.productAttachments?.files?.filesId ? rawData?.product?.productAttachments?.files?.filesId : 0;
+        curedData.recordStatusId = rawData?.recordStatusId;
+        return curedData;
+      }
+
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-          arr.push(response.payload[key]);
+          arr.push(dataFormatter(response.payload[key]));
       }
 
       setItemCosts(arr);
@@ -109,17 +123,23 @@ export default function ItemList() {
         {loading && <div>A moment please...</div>}
         {itemcosts && (<div className="row">
           <div class="row">
-            <div class="col-md-3 col-lg-3"></div>
-            <div class="col-md-6 col-lg-6"><b><h1>ProductList</h1></b></div>
+            <div class="col-md-12 col-lg-12 m-center">
+              <h1>
+                <span class="mp-heading">
+                  Products
+                </span>
+              </h1>
+            </div>
           </div>
 
           {itemcosts.map((item) =>
             <div className="col-md-2">
-              <div className="pro-img">
-                <img src="data:image/png;base64,"></img>
+              <div>
+                <img className="product-view" src={item.productImage}>
+                </img>
               </div>
-              <div > {item.product?.productName}</div>
-              <div > {item.product?.description}</div>
+              <div > {item?.productName}</div>
+              <div > {item?.description}</div>
               <div>
                 <select>
                   <option value="25">25</option>
