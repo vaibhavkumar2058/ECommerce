@@ -129,9 +129,8 @@ export default function ProductModel({
     }
   };
 
-  const dropdownHandler = (event,{value}) => {
-    setNewProduct((currentProduct) => ({...currentProduct, recordStatusId: value}));
-    setNewProduct((currentProduct) => ({...currentProduct, categoryTypeId: value}));
+  const dropdownHandler = (event,{name,value}) => {
+    setNewProduct((currentProduct) => ({...currentProduct, [name]: value}));
   }
 
   useEffect(() => {
@@ -165,7 +164,9 @@ export default function ProductModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newProduct?.productName || !newProduct?.categoryTypeId || !newProduct?.description || !newProduct?.recordStatusId;
+      !newProduct?.productName 
+      || !newProduct?.categoryTypeId 
+     || !newProduct?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newProduct]);
 
@@ -198,7 +199,7 @@ export default function ProductModel({
             className={styles.stFormContainer}
             controlId="formProduct"
           >
-            <Form.Label>ProductName</Form.Label>
+            <Form.Label>ProductName<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="productName"
@@ -208,7 +209,7 @@ export default function ProductModel({
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Product Image</Form.Label>
+            <Form.Label>Product Image<span className="required">*</span></Form.Label>
           </Form.Group>
           <Form.Group>
             <input type="file" onChange={saveFileSelected} />         
@@ -226,10 +227,10 @@ export default function ProductModel({
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="categoryType">
-            <Form.Label>CategoryType</Form.Label>
+            <Form.Label>CategoryType<span className="required">*</span></Form.Label>
             <Dropdown
               name="categoryTypeId"
-              placeholder='Select Action'
+              placeholder='Select CategoryType'
               fluid
               search
               selection
@@ -239,10 +240,10 @@ export default function ProductModel({
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="recordStatus">
-            <Form.Label>RecordStatus</Form.Label>
+            <Form.Label>RecordStatus<span className="required">*</span></Form.Label>
             <Dropdown
-              name="actionName"
-              placeholder='Select Action'
+              name="recordStatusId"
+              placeholder='Select Status'
               fluid
               search
               selection

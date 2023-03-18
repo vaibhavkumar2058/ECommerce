@@ -36,7 +36,7 @@ const [productOptions, setProductOptions] = useState(productList.map((product,it
   text: product.productName,
   value: product.productId,
 })).filter((item) => item));
-
+debugger;
 const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus,item) =>(
   {
   key: item,
@@ -118,9 +118,8 @@ const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.
       })
     }
   };
-  const dropdownHandler = (event,{value}) => {
-    setNewOrderItem((currentOrderItem) => ({...currentOrderItem, recordStatusId: value}));
-    setNewOrderItem((currentOrderItem) => ({...currentOrderItem, productId: value}));
+  const dropdownHandler = (event,{name,value}) => {
+    setNewOrderItem((currentOrderItem) => ({...currentOrderItem, [name] :value}));
   }
 
   useEffect(() => {
@@ -133,7 +132,7 @@ const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.
     setProductOptions(productList.map((product,item) =>(
       {
       key: item,
-      text: product.actionName,
+      text: product.productName,
     value: product.productId,
     })).filter((item) => item));
     }, [productList]);
@@ -152,7 +151,11 @@ const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.
       setButtonType("Update");
     }
     const isEnable =
-       !newOrderItem?.productId  || !newOrderItem?.orderId || !newOrderItem?.cost || !newOrderItem?.quantity || !newOrderItem?.recordStatusId ; 
+       !newOrderItem?.productId  
+       || !newOrderItem?.orderId 
+       || !newOrderItem?.cost 
+       || !newOrderItem?.quantity
+       || !newOrderItem?.recordStatusId ; 
     setSaveDisabled(isEnable);
   }, [newOrderItem]);
 
@@ -179,24 +182,24 @@ const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.
       {!isDelete && (
         <Form>
            <Form.Group className="mb-3" controlId="mobile">
-            <Form.Label>ProductID</Form.Label>
+            <Form.Label>Product<span className="required">*</span></Form.Label>
             <Dropdown
-              name=" productName"
-              placeholder='Select ProductName'
+              name="productId"
+              placeholder='Select product'
               fluid
               search
               selection
               options={productOptions}
-              value = {newOrderItem?.ProductId}
+              value = {newOrderItem?.productId}
               onChange={dropdownHandler}
             />
             </Form.Group>
           <Form.Group className="mb-3" controlId="OrderId">
-            <Form.Label>OrderId</Form.Label>
+            <Form.Label>Order<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="orderId"
-              placeholder="OrderId"
+              placeholder=" select Order"
               value={newOrderItem?.orderId}
               onChange={changeHandler}
             />
@@ -204,7 +207,7 @@ const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.
 
 
           <Form.Group className="mb-3" controlId="Cost">
-            <Form.Label>Cost</Form.Label>
+            <Form.Label>Cost<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="cost"
@@ -214,7 +217,7 @@ const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="Quantity">
-            <Form.Label>Quantity</Form.Label>
+            <Form.Label>Quantity<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="quantity"
@@ -224,15 +227,15 @@ const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="mobile">
-            <Form.Label>RecordStatusID</Form.Label>
+            <Form.Label>Status<span className="required">*</span></Form.Label>
             <Dropdown
-              name=" actionName"
-              placeholder='Select Action'
+              name="recordStatusId"
+              placeholder='Select Status'
               fluid
               search
               selection
               options={recordStatusOptions}
-              value = {newOrderItem?.RecordStatusId}
+              value = {newOrderItem?.recordStatusId}
               onChange={dropdownHandler}
             />
             </Form.Group>

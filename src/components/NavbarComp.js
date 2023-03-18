@@ -27,6 +27,7 @@ import MeasurementType from "../pages/MeasurementType";
 import MeasurementValue from "../pages/MeasurementValue";
 import Notification from "../pages/Notification";
 import Order from "../pages/Order";
+import OrderItem from "../pages/OrderItem";
 import OrderTracking from "../pages/OrderTracking";
 import RecordStatus from "../pages/RecordStatus";
 import ResourceAttachmentType from "../pages/ResouceAttachmentType";
@@ -109,6 +110,7 @@ const NavbarComp = () => {
           <Route exact path="/signin" element={<Signin />}/>
           <Route exact path="/signup" element={<Signup/>}/>
           <Route path="/" element={<Navigate replace to="/signin" />} />
+          {(admin && <Route exact path="/orderItem" element={<ProtectedRoute><Sidebar/><Topbar/> <OrderItem /></ProtectedRoute>} />)}
           {((admin||agent||dealer||customer) &&<Route exact path="/changepassword" element={<ProtectedRoute><Sidebar/><Topbar/><ChangePassword/></ProtectedRoute>}/>)}
           <Route exact path="/forgotpassword" element={<ForgotPassword/>}/>
           <Route exact path="/emailverification" element={<Emailverification/>}/>

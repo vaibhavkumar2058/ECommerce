@@ -23,6 +23,7 @@ export default function ProductAttachmentsModel({
     productId:id,
     attachment:null,
     description:"test",
+    
   });
 
   const Products = [
@@ -158,7 +159,7 @@ export default function ProductAttachmentsModel({
             className={styles.stFormContainer}
             controlId="formProductAttachments"
           >
-            <Form.Label>ProductId</Form.Label>
+            <Form.Label>Product<span className="required">*</span></Form.Label>
             <Select options={Products} name="productId"
             onChange={selectChangeHandler}
             defaultValue={newProductAttachments?.productId}
