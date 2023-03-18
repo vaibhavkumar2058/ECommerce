@@ -129,7 +129,7 @@ export default function GenderModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newGender?.genderName || !newGender?.recordStatusId|| !newGender?.description  ;
+      !newGender?.genderName || !newGender?.recordStatusId ;
     setSaveDisabled(isEnable);
   }, [newGender]);
 
@@ -159,30 +159,15 @@ export default function GenderModel({
             className={styles.stFormContainer}
             controlId="formGender"
           >
-            <Form.Label>Gender</Form.Label>
+            <Form.Label>Gender<span className="required">*</span></Form.Label>
             <Form.Control
-              type="text"
-              name="genderName"                                                                                                                                   
-              placeholder="Enter GenderName"
+              type="text" 
+              name="genderName  "                                                                                                                                   
+              placeholder=" Gender"
               value={newGender?.genderName}
               onChange={changeHandler}
             />
           </Form.Group>
-
-          <Form.Group className="mb-3" controlId="recordStatus">
-            <Form.Label>RecordStatus</Form.Label>
-            <Dropdown
-              name="actionName"
-              placeholder='Select Action'
-              fluid
-              search
-              selection
-              options={recordStatusOptions}
-              value = {newGender?.recordStatusId}
-              onChange={dropdownHandler}
-            />
-          </Form.Group>
-
 
           <Form.Group className="mb-3" controlId="description">
             <Form.Label>Description</Form.Label>
@@ -194,7 +179,23 @@ export default function GenderModel({
               onChange={changeHandler}
             />
           </Form.Group>
-                    
+
+          <Form.Group className="mb-3" controlId="recordStatus">
+            <Form.Label>RecordStatus<span className="required">*</span></Form.Label>
+            <Dropdown
+              name="recordStatusId"
+              placeholder='Select Status'
+              fluid
+              search
+              selection
+              options={recordStatusOptions}
+              value = {newGender?.recordStatusId}
+              onChange={dropdownHandler}
+            />
+          </Form.Group>
+
+
+          
           
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>

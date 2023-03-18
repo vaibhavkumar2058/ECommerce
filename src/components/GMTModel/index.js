@@ -107,8 +107,8 @@ export default function GMTModel({
       })
     }
   };
-  const dropdownHandler = (event,{value}) => {
-    setNewGMT((currentGMT) => ({...currentGMT, recordStatusId: value}));
+  const dropdownHandler = (event,{name,value}) => {
+    setNewGMT((currentGMT) => ({...currentGMT, [name]: value}));
   }
   useEffect(() => { 
     setRecordStatusOptions(recordStatusList.map((recordStatus,item) =>(
@@ -131,7 +131,7 @@ export default function GMTModel({
     }
     const isEnable =
     
-    !newGMT?.resourceId || !newGMT?.longitude || !newGMT?.latitude||  !newGMT?.description||  !newGMT?.recordStatusId;
+    !newGMT?.resourceId || !newGMT?.longitude || !newGMT?.latitude||   !newGMT?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newGMT]);
 
@@ -161,22 +161,33 @@ export default function GMTModel({
             className={styles.stFormContainer}
             controlId="formGMT"
           >
-            <Form.Label>ResourceId</Form.Label>
+            <Form.Label>Resource<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
-              name="resourceId"
-              placeholder="Enter ResourceId"
+              name="resource"
+              placeholder="Enter Resource"
               value={newGMT?.resourceId}
               onChange={changeHandler}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="longitude">
-            <Form.Label>Longitude</Form.Label>
+            <Form.Label>Longitude<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="longitude"
               placeholder="Longitude"
               value={newGMT?.longitude}
+              onChange={changeHandler}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="latitude">
+            <Form.Label>Latitude<span className="required">*</span></Form.Label>
+            <Form.Control
+              type="text"
+              name="latitude"
+              placeholder="Latitude"
+              value={newGMT?.latitude}
               onChange={changeHandler}
             />
           </Form.Group>
@@ -193,21 +204,12 @@ export default function GMTModel({
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="latitude">
-            <Form.Label>Latitude</Form.Label>
-            <Form.Control
-              type="text"
-              name="latitude"
-              placeholder="Latitude"
-              value={newGMT?.latitude}
-              onChange={changeHandler}
-            />
-          </Form.Group>
+         
           <Form.Group className="mb-3" controlId="recordStatus">
-            <Form.Label>RecordStatus</Form.Label>
+            <Form.Label>RecordStatus<span className="required">*</span></Form.Label>
             <Dropdown
-              name="actionName"
-              placeholder='Select Action'
+              name="recordStatusId"
+              placeholder='Select Status'
               fluid
               search
               selection

@@ -129,11 +129,9 @@ export default function ItemCostModel({
     }
   };
 
-  const dropdownHandler = (event,{value}) => {
-    setNewItemCost((currentItemCost) => ({...currentItemCost, recordStatusId: value}));
-    setNewItemCost((currentItemCost) => ({...currentItemCost, productId: value}));
-    setNewItemCost((currentItemCost) => ({...currentItemCost, measurementValueId: value}));
-    setNewItemCost((currentItemCost) => ({...currentItemCost, measurementTypeId: value}));
+  const dropdownHandler = (event,{name,value}) => {
+    setNewItemCost((currentItemCost) => ({...currentItemCost, [name]: value}));
+    
   }
 
 
@@ -186,7 +184,7 @@ export default function ItemCostModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newItemCost?.productId || !newItemCost?.measurementTypeId || !newItemCost?.measurementValueId || !newItemCost?.customTypeId || !newItemCost?.price || !newItemCost?.description|| !newItemCost?.recordStatusId;
+      !newItemCost?.productId || !newItemCost?.measurementTypeId || !newItemCost?.measurementValueId || !newItemCost?.customTypeId || !newItemCost?.price|| !newItemCost?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newItemCost]);
 
@@ -216,9 +214,9 @@ export default function ItemCostModel({
             className={styles.stFormContainer}
             controlId="formItemCost"
           >
-            <Form.Label>ProductId</Form.Label>
+            <Form.Label>Product<span className="required">*</span></Form.Label>
             <Dropdown
-              name="productName "
+              name="productId"
               placeholder=" Select Product"
               fluid
               search
@@ -229,9 +227,9 @@ export default function ItemCostModel({
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="measurementTypeId">
-            <Form.Label>MeasurementTypeId</Form.Label>
+            <Form.Label>MeasurementType<span className="required">*</span></Form.Label>
             <Dropdown
-              name="name"
+              name="measurementTypeId"
               placeholder=" Select measurementTypeName"
               fluid
               search
@@ -243,10 +241,10 @@ export default function ItemCostModel({
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="MeasurementValueId">
-            <Form.Label>MeasurementValueId</Form.Label>
+            <Form.Label>MeasurementValue<span className="required">*</span></Form.Label>
             <Dropdown
-              name="value "
-              placeholder="Select Value"
+              name="measurementValueId"
+              placeholder="Select measurementValue"
               fluid
               search
               selection
@@ -257,17 +255,17 @@ export default function ItemCostModel({
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="customTypeId">
-            <Form.Label>CustomTypeId</Form.Label>
+            <Form.Label>CustomType<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="customTypeId"
-              placeholder="CustomTypeId"
+              placeholder=" Select CustomType"
               value={newItemCost?.customTypeId}
               onChange={changeHandler}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="price">
-            <Form.Label>Price</Form.Label>
+            <Form.Label>Price<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="price"
@@ -288,10 +286,10 @@ export default function ItemCostModel({
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="recordStatusId">
-            <Form.Label>RecordStatusId</Form.Label>
+            <Form.Label>RecordStatus<span className="required">*</span></Form.Label>
             <Dropdown
-              name="actionName "
-              placeholder=  'Select Action'
+              name="recordStatusId"
+              placeholder=  'Select Status'
               fluid
               search
               selection
