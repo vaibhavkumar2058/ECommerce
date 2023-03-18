@@ -32,13 +32,12 @@ export default function ResourcesModel({
     roleId: null,
     genderId: null,
     mobileNumber: null,
-    addressId: null,
     bloodGroup: "",
     email: "",
     password: "",
     isEmailVerified: true,
     isMobileVerified: true,
-    recordStatusId:null,
+    recordStatusId:1,
     attachment: null,
     resourcesAttachmentType:3,
 
@@ -193,7 +192,12 @@ export default function ResourcesModel({
     }
     debugger
     const isEnable =
-      !newResources?.firstName || !newResources?.middleName || !newResources?.lastName || !newResources?.roleId || !newResources?.genderId || !newResources?.mobileNumber || !newResources?.addressId || !newResources?.bloodGroup || !newResources?.email || !newResources?.password || !newResources?.isEmailVerified || !newResources?.isMobileVerified || !newResources?.recordStatusId;
+      !newResources?.firstName 
+      || !newResources?.roleId || !newResources?.genderId 
+      || !newResources?.mobileNumber
+      || !newResources?.email 
+      || !newResources?.password
+      || !newResources?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newResources]);
 
@@ -225,7 +229,7 @@ export default function ResourcesModel({
             className={styles.stFormContainer}
             controlId="formResources"
           >
-            <Form.Label>FirstName</Form.Label>
+            <Form.Label>FirstName <span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="firstName"
@@ -289,16 +293,6 @@ export default function ResourcesModel({
               name="mobileNumber"
               placeholder="MobileNumber"
               value={newResources?.mobileNumber}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="addressId">
-            <Form.Label>addressId</Form.Label>
-            <Form.Control
-              type="text"
-              name="addressId"
-              placeholder="AddressId"
-              value={newResources?.addressId}
               onChange={changeHandler}
             />
           </Form.Group>
