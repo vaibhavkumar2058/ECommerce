@@ -36,6 +36,7 @@ export default () => {
     // setShowNavbar(!showNavbar)
 
     const response = await login(newLogin);
+    debugger;
     if (response.payload.success) {
       debugger;
       setError({ status: true, msg: "Login Success", type: 'success' })

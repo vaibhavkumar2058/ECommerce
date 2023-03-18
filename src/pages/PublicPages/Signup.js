@@ -32,6 +32,7 @@ export default () => {
     middleName: "",
     lastName: "",
     roleId: null,
+    addressId:null,
     mobileNumber: null,
     email: "",
     password: "",
@@ -42,7 +43,7 @@ export default () => {
    
   }, [hide]);
   const ClickHandler = (e) => {
-   navigate('/dashboard');
+   navigate('/emailverification');
   };
   const changeHandler = (e) => {
     setNewSignup({
@@ -55,6 +56,7 @@ export default () => {
     // setShowNavbar(!showNavbar)
     debugger;
     const response = await addResources(newSignup);
+    debugger;
     if (response.payload.title == "Success") {
       setError({ status: true, msg: "Login Success", type: 'success' })
       setHide(false);
@@ -142,7 +144,21 @@ export default () => {
                       />
                     </InputGroup>
                   </Form.Group>
+                  <Form.Group id="addressId" className="mb-4">
+                  <Form.Label>addressId</Form.Label>
+                  <InputGroup>
+                    <InputGroup.Text>
 
+                    </InputGroup.Text>
+                    <Form.Control
+                      type="text"
+                      name="addressId"
+                      placeholder="addressId"
+                      value={newSignup?.addressId}
+                      onChange={changeHandler}
+                    />
+                  </InputGroup>
+                </Form.Group>
                   <Form.Group id="mobileNumber" className="mb-4">
                     <Form.Label>mobileNumber</Form.Label>
                     <InputGroup>
@@ -228,7 +244,7 @@ export default () => {
                 <Form>
                  
                   <Button variant="primary" onClick={ClickHandler}>
-                    Click here to login
+                    Click here to verifiemail
                   </Button>
                 </Form>
               </div>

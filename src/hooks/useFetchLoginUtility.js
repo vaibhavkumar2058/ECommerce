@@ -13,6 +13,7 @@ export default function useFetchLogins() {
   const changePasswordURL = "https://localhost:7062/changepassword";
   const forgotPasswordURL = "https://localhost:7062/forgotPassword?emails=";
   const loginURL = "https://localhost:7062/login";
+  const emailverificationURL = "https://localhost:7062/email";
   const API = useAPI();
   const SUCCESS = "Success";
   const ERROR = "Error";
@@ -48,13 +49,45 @@ export default function useFetchLogins() {
       });
 
   };
+  const emailverification = (emailToken) => {
+    return API.put(`${emailverificationURL}/${emailToken}`,
+      null,
+      { suppressErrors: [400] }
+    )
+      .then(({ 
+        data 
+      }) =>
+        dispatch(updateLoginAction({
+            ...data,
+            title: SUCCESS,
+          })
+        )
+      )
+      .catch((error) => {
+        let errorMsg = "error msg from copy file";
+        if (error.response.data.login) {
+          const [errors] = error.response.data.login;
+          errorMsg = errors;
+        }
+        dispatch(
+          updateLoginAction({
+            ...login,
+            title: ERROR,
+            errorMsg,
+          })
+        );
+      });
+  };
   const login = (login) => {
+    debugger;
     return API.post(
       loginURL,
       { data: login },
       { suppressErrors: [400] }
     )
-      .then(({ data }) =>
+      .then(({ 
+        data 
+      }) =>
         dispatch(
           addLoginAction({
             ...data,
@@ -79,14 +112,11 @@ export default function useFetchLogins() {
       });
   };
   const changepassword = (login) => {
-
     return API.put(`${changePasswordURL}`,
       { data: login },
       { suppressErrors: [400] }
     )
-      .then(({ data
-
-      }) =>
+      .then(({ data }) =>
         dispatch(
           updateLoginAction({
             ...data,
@@ -117,6 +147,7 @@ export default function useFetchLogins() {
     forgotPassword,
     login,
     changepassword,
+    emailverification,
   };
 
 }

@@ -29,10 +29,11 @@ import {
   
   
       case ADD_LOGIN:
+        debugger
         return {
           ...state,
           login: {
-            ...state.login,
+            ...state,
             data: action.payload,
           },
         };
