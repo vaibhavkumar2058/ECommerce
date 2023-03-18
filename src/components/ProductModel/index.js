@@ -30,7 +30,7 @@ export default function ProductModel({
     attachment: null,
     description: "",
     recordStatusId:null,
-    filesId:null,
+    filesId:0,
     productImage: null
   });
 
