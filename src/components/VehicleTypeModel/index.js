@@ -21,6 +21,7 @@ export default function VehicleTypeModel({
   const [newVehicleType, setNewVehicleType] = useState({
     vehicleTypeName: "",
     description: "",
+    recordStatusId:null,
   });
 
   const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus,item) =>(
@@ -58,8 +59,6 @@ export default function VehicleTypeModel({
   };
 
   const saveFileSelected = (e) => {
-    //in case you wan to print the file selected
-    //console.log(e.target.files[0]);
     setFileSelected(e.target.files[0]);
   };
   const saveHandler = async () => {
@@ -105,8 +104,8 @@ export default function VehicleTypeModel({
     }
   };
 
-  const dropdownHandler = (event,{value}) => {
-    setNewVehicleType((currentVehicleType) => ({...currentVehicleType, recordStatusId: value}));
+  const dropdownHandler = (event,{name , value}) => {
+    setNewVehicleType((currentVehicleType) => ({...currentVehicleType, [name]: value}));
   }
 
 
@@ -130,7 +129,7 @@ export default function VehicleTypeModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newVehicleType?.vehicleTypeName || !newVehicleType?.description;
+      !newVehicleType?.vehicleTypeName || !newVehicleType?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newVehicleType]);
 
@@ -184,9 +183,9 @@ export default function VehicleTypeModel({
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="recordStatus">
-            <Form.Label>RecordStatus</Form.Label>
+            <Form.Label>Status</Form.Label>
             <Dropdown
-              name="actionName"
+              name="recordStatusId"
               placeholder='Select Action'
               fluid
               search

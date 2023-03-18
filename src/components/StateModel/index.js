@@ -112,9 +112,8 @@ export default function StateModel({
     }
   };
 
-  const dropdownHandler = (event,{value}) => {
-    setNewState((currentState) => ({...currentState, countryId: value}));
-    setNewState((currentProduct) => ({...currentProduct, recordStatusId: value}));
+  const dropdownHandler = (event,{name , value}) => {
+    setNewState((currentState) => ({...currentState, [name]: value}));
   }
   useEffect(() => { 
     setRecordStatusOptions(recordStatusList.map((recordStatus,item) =>(
@@ -146,7 +145,9 @@ export default function StateModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newState?.stateName || !newState?.countryId || !newState?.description|| !newState?.recordStatusId;
+      !newState?.stateName 
+      || !newState?.countryId 
+      || !newState?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newState]);
 
@@ -176,19 +177,19 @@ export default function StateModel({
             className={styles.stFormContainer}
             controlId="formState"
           >
-            <Form.Label>StateName</Form.Label>
+            <Form.Label>StateName<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="stateName"
-              placeholder="Enter StateName"
+              placeholder="Select StateName"
               value={newState?.stateName}
               onChange={changeHandler}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="mobile">
-            <Form.Label>CountryID</Form.Label>
+            <Form.Label>Country<span className="required">*</span></Form.Label>
             <Dropdown
-              name="countryName"
+              name="countryId"
               placeholder='Select Country'
               fluid
               search
@@ -199,20 +200,6 @@ export default function StateModel({
             />
            
           </Form.Group>
-          <Form.Group className="mb-3" controlId="recordStatus">
-            <Form.Label>RecordStatus</Form.Label>
-            <Dropdown
-              name="actionName"
-              placeholder='Select Action'
-              fluid
-              search
-              selection
-              options={recordStatusOptions}
-              value = {newState?.recordStatusId}
-              onChange={dropdownHandler}
-            />
-          </Form.Group>
-
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Description</Form.Label>
             <Form.Control
@@ -223,6 +210,21 @@ export default function StateModel({
               onChange={changeHandler}
             />
           </Form.Group>
+          <Form.Group className="mb-3" controlId="recordStatus">
+            <Form.Label>Status<span className="required">*</span></Form.Label>
+            <Dropdown
+              name="recordStatusId"
+              placeholder='Select Action'
+              fluid
+              search
+              selection
+              options={recordStatusOptions}
+              value = {newState?.recordStatusId}
+              onChange={dropdownHandler}
+            />
+          </Form.Group>
+
+         
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel

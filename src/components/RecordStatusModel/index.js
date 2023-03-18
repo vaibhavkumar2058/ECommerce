@@ -108,7 +108,7 @@ export default function RecordStatusModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newRecordStatus?.actionName  || !newRecordStatus?.description ;
+      !newRecordStatus?.actionName ;
     setSaveDisabled(isEnable);
   }, [newRecordStatus]);
 
@@ -136,13 +136,13 @@ export default function RecordStatusModel({
         <Form>
           <Form.Group
             className={styles.stFormContainer}
-            controlId="formRecordStatus"
+            controlId="actionName"
           >
-            <Form.Label>ActionName</Form.Label>
+            <Form.Label>ActionName<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="actionName"
-              placeholder="Enter Action"
+              placeholder="Select Action"
               value={newRecordStatus?.actionName}
               onChange={changeHandler}
             />

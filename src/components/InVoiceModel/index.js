@@ -113,8 +113,8 @@ export default function InvoiceModel({
     }
   };
 
-  const dropdownHandler = (event,{value}) => {
-    setNewInvoice((currentInvoice) => ({...currentInvoice, recordStatusId: value}));
+  const dropdownHandler = (event,{name,value}) => {
+    setNewInvoice((currentInvoice) => ({...currentInvoice, [name]: value}));
   }
 
   useEffect(() => {
@@ -138,7 +138,7 @@ export default function InvoiceModel({
     if (isEdit) {
       setButtonType("Update");
     }
-    const isEnable = !newInvoice?.resourcesId || !newInvoice?.orderId   || !newInvoice?.totalIncludeTax ||  !newInvoice?.total || !newInvoice?.description  || !newInvoice?.recordStatusId;
+    const isEnable = !newInvoice?.resourcesId || !newInvoice?.orderId    ||  !newInvoice?.total   || !newInvoice?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newInvoice]);
 
@@ -168,22 +168,33 @@ export default function InvoiceModel({
             className={styles.stFormContainer}
             controlId="formInvoice"
           >
-            <Form.Label>ResourcesId</Form.Label>
+            <Form.Label>Resources<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="resourcesId"
-              placeholder="ResourcesId"
+              placeholder="Resources"
               value={newInvoice?.resourcesId}
               onChange={changeHandler}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="orderId">
-            <Form.Label>OrderId</Form.Label>
+            <Form.Label>Order<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="orderId"
-              placeholder="OrderId"
+              placeholder="Order"
               value={newInvoice?.orderId}
+              onChange={changeHandler}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Total<span className="required">*</span></Form.Label>
+            <Form.Control
+              type="text"
+              name="total"
+              placeholder="Total"
+              value={newInvoice?.total}
               onChange={changeHandler}
             />
           </Form.Group>
@@ -210,30 +221,9 @@ export default function InvoiceModel({
               onChange={changeHandler}
             />
           </Form.Group> */}
-<Form.Group className="mb-3" controlId="recordStatus">
-            <Form.Label>RecordStatus</Form.Label>
-            <Dropdown
-              name="actionName"
-              placeholder='Select Action'
-              fluid
-              search
-              selection
-              options={recordStatusOptions}
-              value = {newInvoice?.recordStatusId}
-              onChange={dropdownHandler}
-            />
-          </Form.Group>
+
           
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Total</Form.Label>
-            <Form.Control
-              type="text"
-              name="total"
-              placeholder="Total"
-              value={newInvoice?.total}
-              onChange={changeHandler}
-            />
-          </Form.Group>
+         
           <Form.Group className="mb-3" controlId="description">
             <Form.Label>Description</Form.Label>
             <Form.Control
@@ -242,6 +232,20 @@ export default function InvoiceModel({
               placeholder="Description"
               value={newInvoice?.description}
               onChange={changeHandler}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="recordStatus">
+            <Form.Label>RecordStatus<span className="required">*</span></Form.Label>
+            <Dropdown
+              name="recordStatusId"
+              placeholder='Select Status'
+              fluid
+              search
+              selection
+              options={recordStatusOptions}
+              value = {newInvoice?.recordStatusId}
+              onChange={dropdownHandler}
             />
           </Form.Group>
             
