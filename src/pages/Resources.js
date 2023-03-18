@@ -288,6 +288,7 @@ export default function Resourcess() {
         curedData.firstName = rawData?.firstName;
         curedData.middleName = rawData?.middleName;
         curedData.lastName = rawData?.lastName;
+        curedData.resourceName= rawData?.firstName + rawData?.middleName + rawData?.lastName;
         curedData.bloodGroup = rawData?.bloodGroup;
         curedData.roleId = rawData?.role?.roleId;
         curedData.genderId = rawData?.gender?.genderId;
@@ -300,10 +301,10 @@ export default function Resourcess() {
         curedData.password=rawData?.password;
         curedData.isEmailVerified=rawData?.isEmailVerified;
         curedData.isMobileVerified=rawData?.isMobileVerified;
-        curedData.recordStatusId = rawData.recordStatusId;
+        curedData.recordStatusId = rawData?.recordStatusId;
         curedData.filesId=rawData?.resourceAttachment?.files?.filesId ? rawData?.resourceAttachment?.files?.filesId : 0;
-        if(rawData?.resourceAttachment?.resourceAttachmentTypeId =="3" )
-        curedData.resourcesImage = 'data:'+ rawData?.resourceAttachment?.files.fileMimeType +';base64,'+ rawData?.resourceAttachment?.files?.base64;
+        if(rawData?.resourceAttachment)
+        curedData.resourcesImage = 'data:'+ rawData?.resourceAttachment?.files?.fileMimeType +';base64,'+ rawData?.resourceAttachment?.files?.base64;
         return curedData;
       }
 

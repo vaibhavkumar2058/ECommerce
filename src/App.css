@@ -49,6 +49,11 @@ height: 30px;
 {
   max-width:160px;
 }
+.required
+{
+  color:red;
+  font-size: 14px;
+}
 .pro-img
 {
   width: 50px;
