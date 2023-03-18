@@ -115,9 +115,9 @@ export default function NotificationModel({
     }
   };
 
-  const dropdownHandler = (event,{value}) => {
-    setNewNotification((currentNotification) => ({...currentNotification, recordStatusId: value}));
-    setNewNotification((currentNotification) => ({...currentNotification, notificationTypeId: value}));
+  const dropdownHandler = (event,{name,value}) => {
+    setNewNotification((currentNotification) => ({...currentNotification, event,[name]: value}));
+    
     
   }
   useEffect(() => {
@@ -151,7 +151,7 @@ export default function NotificationModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newNotification?.notificationName|| !newNotification?.notificationTypeId|| !newNotification?.description || !newNotification?.recordStatusId;
+      !newNotification?.notificationName|| !newNotification?.notificationTypeId || !newNotification?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newNotification]);
 
@@ -184,9 +184,9 @@ export default function NotificationModel({
             
           </Form.Group>
           <Form.Group className="mb-3" controlId="notificationType">
-            <Form.Label>NotificationType</Form.Label>
+            <Form.Label>NotificationType<span className="required">*</span></Form.Label>
             <Dropdown
-              name="notificationTypeName"
+              name="notificationTypeId"
               placeholder='Select notificationTypeName'
               fluid
               search
@@ -197,7 +197,7 @@ export default function NotificationModel({
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label>NotificationName</Form.Label>
+            <Form.Label>NotificationName<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="notificationName"
@@ -216,21 +216,8 @@ export default function NotificationModel({
               onChange={changeHandler}
             />
           </Form.Group> */}
-           <Form.Group className="mb-3" controlId="recordStatus">
-            <Form.Label>RecordStatus</Form.Label>
-            <Dropdown
-              name="actionName"
-              placeholder='Select Action'
-              fluid
-              search
-              selection
-              options={recordStatusOptions}
-              value = {newNotification?.recordStatusId}
-              onChange={dropdownHandler}
-            />
-          </Form.Group>
 
-          <Form.Group>
+            <Form.Group>
             <Form.Label>Description</Form.Label>
             <Form.Control
               type="text"
@@ -240,6 +227,21 @@ export default function NotificationModel({
               onChange={changeHandler}
             />
           </Form.Group>
+           <Form.Group className="mb-3" controlId="recordStatus">
+            <Form.Label>RecordStatus<span className="required">*</span></Form.Label>
+            <Dropdown
+              name="recordStatusId"
+              placeholder='Select Status'
+              fluid
+              search
+              selection
+              options={recordStatusOptions}
+              value = {newNotification?.recordStatusId}
+              onChange={dropdownHandler}
+            />
+          </Form.Group>
+
+         
 
           
           <Modal.Footer>
