@@ -20,7 +20,7 @@ export default function ProductModel({
   id,
   onClose,
   productData,
-  categoryList =[],
+  categoryList = [],
   recordStatusList = [],
 
 }) {
@@ -29,8 +29,8 @@ export default function ProductModel({
     categoryTypeId: null,
     attachment: null,
     description: "",
-    recordStatusId:null,
-    filesId:0,
+    recordStatusId: null,
+    filesId: 0,
     productImage: null
   });
 
@@ -41,13 +41,13 @@ export default function ProductModel({
       value: category.categoryTypeId,
     })).filter((item) => item));
 
-    const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus,item) =>(
-      {
+  const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus, item) => (
+    {
       key: item,
       text: recordStatus.actionName,
       value: recordStatus.recordStatusId,
     })).filter((item) => item));
-  
+
 
   const [fileSelected, setFileSelected] = useState();
 
@@ -75,7 +75,7 @@ export default function ProductModel({
     });
   };
 
-  
+
   const saveFileSelected = (e) => {
     //in case you wan to print the file selected
     //console.log(e.target.files[0]);
@@ -129,8 +129,8 @@ export default function ProductModel({
     }
   };
 
-  const dropdownHandler = (event,{name,value}) => {
-    setNewProduct((currentProduct) => ({...currentProduct, [name]: value}));
+  const dropdownHandler = (event, { name, value }) => {
+    setNewProduct((currentProduct) => ({ ...currentProduct, [name]: value }));
   }
 
   useEffect(() => {
@@ -149,24 +149,24 @@ export default function ProductModel({
     }
   }, []);
 
-  useEffect(() => { 
-    setRecordStatusOptions(recordStatusList.map((recordStatus,item) =>(
+  useEffect(() => {
+    setRecordStatusOptions(recordStatusList.map((recordStatus, item) => (
       {
-      key: item,
-      text: recordStatus.actionName,
-    value: recordStatus.recordStatusId,
-    })).filter((item) => item));
-    }, [recordStatusList]);
-  
+        key: item,
+        text: recordStatus.actionName,
+        value: recordStatus.recordStatusId,
+      })).filter((item) => item));
+  }, [recordStatusList]);
+
 
   useEffect(() => {
     if (isEdit) {
       setButtonType("Update");
     }
     const isEnable =
-      !newProduct?.productName 
-      || !newProduct?.categoryTypeId 
-     || !newProduct?.recordStatusId;
+      !newProduct?.productName
+      || !newProduct?.categoryTypeId
+      || !newProduct?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newProduct]);
 
@@ -192,30 +192,33 @@ export default function ProductModel({
       )}
       {!isDelete && (
         <Form>
-
-          
-
-          <Form.Group
-            className={styles.stFormContainer}
-            controlId="formProduct"
-          >
-            <Form.Label>ProductName<span className="required">*</span></Form.Label>
-            <Form.Control
-              type="text"
-              name="productName"
-              placeholder="ProductName"
-              value={newProduct?.productName}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Product Image<span className="required">*</span></Form.Label>
-          </Form.Group>
-          <Form.Group>
-            <input type="file" onChange={saveFileSelected} />         
-            <img className="product-view" src={newProduct?.productImage}>
-            </img>
-          </Form.Group>
+          <div className="row">
+            <div className="col-md-6">
+              <Form.Group
+                className={styles.stFormContainer}
+                controlId="formProduct"
+              >
+                <Form.Label>ProductName<span className="required">*</span></Form.Label>
+                <Form.Control
+                  type="text"
+                  name="productName"
+                  placeholder="ProductName"
+                  value={newProduct?.productName}
+                  onChange={changeHandler}
+                />
+              </Form.Group>
+            </div>
+            <div className="col-md-6">
+              <Form.Group>
+                <Form.Label>Product Image<span className="required">*</span></Form.Label>
+              </Form.Group>
+              <Form.Group>
+                <input type="file" onChange={saveFileSelected} />
+                <img className="product-view" src={newProduct?.productImage}>
+                </img>
+              </Form.Group>
+            </div>
+          </div>
           <Form.Group className="mb-3" controlId="description">
             <Form.Label>Description</Form.Label>
             <Form.Control
@@ -235,7 +238,7 @@ export default function ProductModel({
               search
               selection
               options={categoryOptions}
-              value = {newProduct?.categoryTypeId}
+              value={newProduct?.categoryTypeId}
               onChange={dropdownHandler}
             />
           </Form.Group>
@@ -248,7 +251,7 @@ export default function ProductModel({
               search
               selection
               options={recordStatusOptions}
-              value = {newProduct?.recordStatusId}
+              value={newProduct?.recordStatusId}
               onChange={dropdownHandler}
             />
           </Form.Group>
@@ -308,14 +311,14 @@ ProductModel.propTypes = {
 * categories for object type
 */
   categories: PropTypes.any,
-   /**
- * recordStatusData for object type
- */
-   recordStatusList: PropTypes.any,
-   /**
- * categoryList for object type
- */
-   categoryList: PropTypes.any,
+  /**
+* recordStatusData for object type
+*/
+  recordStatusList: PropTypes.any,
+  /**
+* categoryList for object type
+*/
+  categoryList: PropTypes.any,
 };
 
 ProductModel.defaultProps = {
@@ -329,8 +332,8 @@ ProductModel.defaultProps = {
   id: null,
   productData: null,
   categories: null,
-  recordStatusList:null,
-  categoryList:null,
+  recordStatusList: null,
+  categoryList: null,
 
 };
 

@@ -403,8 +403,8 @@ export default function Resourcess() {
 
         </div>)}
         {/* <!--- Model Box ---> */}
-        <div className="model_box">
-          <Modal
+        <div>
+          <Modal dialogClassName="my-modal" 
             show={show}
             onHide={handleClose}
             backdrop="static"
