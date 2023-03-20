@@ -219,6 +219,8 @@ export default function ProductModel({
               </Form.Group>
             </div>
           </div>
+          <div className="row">
+          <div className="col-md-6">
           <Form.Group className="mb-3" controlId="description">
             <Form.Label>Description</Form.Label>
             <Form.Control
@@ -229,6 +231,8 @@ export default function ProductModel({
               onChange={changeHandler}
             />
           </Form.Group>
+          </div>
+          <div className="col-md-6">
           <Form.Group className="mb-3" controlId="categoryType">
             <Form.Label>CategoryType<span className="required">*</span></Form.Label>
             <Dropdown
@@ -242,6 +246,10 @@ export default function ProductModel({
               onChange={dropdownHandler}
             />
           </Form.Group>
+          </div>
+          </div>
+          <div className="row">
+          <div className="col-md-6">
           <Form.Group className="mb-3" controlId="recordStatus">
             <Form.Label>RecordStatus<span className="required">*</span></Form.Label>
             <Dropdown
@@ -255,6 +263,8 @@ export default function ProductModel({
               onChange={dropdownHandler}
             />
           </Form.Group>
+          </div>
+          </div>
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel

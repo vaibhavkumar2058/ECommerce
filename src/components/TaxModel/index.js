@@ -215,7 +215,7 @@ export default function TaxModel({
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="recordStatus">
-            <Form.Label>RecordStatus</Form.Label>
+            <Form.Label>Status</Form.Label>
             <Dropdown
               name="recordStatusId"
               placeholder='Select Action'

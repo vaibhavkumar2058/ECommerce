@@ -137,7 +137,8 @@ export default function ResourceAttachmentTypeModel({
       )}
       {!isDelete && (
         <Form>
-         
+         <div className="row">
+          <div className="col-md-6">
           <Form.Group classId="mb-3" controlId="displayText">
             <Form.Label>Displaytext<span className="required">*</span></Form.Label>
             <Form.Control
@@ -148,6 +149,8 @@ export default function ResourceAttachmentTypeModel({
               onChange={changeHandler}
             />
           </Form.Group>
+          </div>
+          <div className="col-md-6">
           <Form.Group className="mb-3" controlId="sortOrder">
             <Form.Label>SortOrder<span className="required">*</span></Form.Label>
             <Form.Control
@@ -158,7 +161,10 @@ export default function ResourceAttachmentTypeModel({
               onChange={changeHandler}
             />
           </Form.Group>
-
+          </div>
+          </div>
+          <div className="row">
+          <div className="col-md-6">
           <Form.Group className="mb-3" controlId="isActive">
             <Form.Label>IsActive<span className="required">*</span></Form.Label>
             <Form.Control
@@ -169,6 +175,8 @@ export default function ResourceAttachmentTypeModel({
               onChange={changeHandler}
             />
           </Form.Group>
+          </div>
+          <div className="col-md-6">
           <Form.Group classId="mb-3" controlId="description">
             <Form.Label>Description</Form.Label>
             <Form.Control
@@ -179,6 +187,8 @@ export default function ResourceAttachmentTypeModel({
               onChange={changeHandler}
             />
           </Form.Group>
+          </div>
+          </div>
          <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel
