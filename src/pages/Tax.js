@@ -98,9 +98,10 @@ Geocode.fromLatLng("12.9800000000", "77.5927000000").then(
 
   const columns = [
 
-    { dataField: 'productId', text: '  ProductId', sort: true},
+    { dataField: 'productId', text: '  ProductId', sort: true , hidden:true},
     { dataField: 'taxValue', text: ' TaxValue', sort: true},
     { dataField: 'taxDescription', text: 'TaxDescription', sort: true },
+    { dataField: 'recordStatusId' , text: 'RecordStatusId', sort: true , hidden: true },
     // columns follow dataField and text structure
     {
       dataField: "Actions",

@@ -286,7 +286,7 @@ export default function ItemCostModel({
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="recordStatusId">
-            <Form.Label>RecordStatus<span className="required">*</span></Form.Label>
+            <Form.Label>Status<span className="required">*</span></Form.Label>
             <Dropdown
               name="recordStatusId"
               placeholder=  'Select Status'

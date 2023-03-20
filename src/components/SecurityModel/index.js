@@ -157,6 +157,8 @@ export default function SecurityModel({
       )}
       {!isDelete && (
         <Form>
+          <div className="row">
+            <div className="col-md-6">
           <Form.Group
             className={styles.stFormContainer}
             controlId="formSecurity"
@@ -170,7 +172,8 @@ export default function SecurityModel({
               onChange={changeHandler}
             />
           </Form.Group>
-          
+          </div>
+          <div className="col-md-6">
           <Form.Group className="mb-3" controlId="answerId">
             <Form.Label>Answer<span className="required">*</span></Form.Label>
             <Form.Control
@@ -181,6 +184,10 @@ export default function SecurityModel({
               onChange={changeHandler}
             />
           </Form.Group>
+          </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
           <Form.Group className="mb-3" controlId="description">
             <Form.Label>Description</Form.Label>
             <Form.Control
@@ -191,6 +198,8 @@ export default function SecurityModel({
               onChange={changeHandler}
             />
           </Form.Group>
+          </div>
+          <div className="col-md-6">
           <Form.Group className="mb-3" controlId="recordStatus">
             <Form.Label>Status<span className="required">*</span></Form.Label>
             <Dropdown
@@ -203,7 +212,9 @@ export default function SecurityModel({
               value = {newSecurity?.recordStatusId}
               onChange={dropdownHandler}
             />
-          </Form.Group>                         
+          </Form.Group>
+          </div>
+          </div>                         
           
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>

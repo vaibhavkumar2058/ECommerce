@@ -247,7 +247,7 @@ export default function InvoiceModel({
           </div>
           <div className="col-md-6">
           <Form.Group className="mb-3" controlId="recordStatus">
-            <Form.Label>RecordStatus<span className="required">*</span></Form.Label>
+            <Form.Label>Status<span className="required">*</span></Form.Label>
             <Dropdown
               name="recordStatusId"
               placeholder='Select Status'

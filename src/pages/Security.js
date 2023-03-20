@@ -74,9 +74,9 @@ export default function Securities() {
 
   const columns = [
 
-    { dataField: 'securityId', text: ' SecurityId', sort: true },
-    { dataField: 'questionId', text: ' QuestionId', sort: true },
-    { dataField: 'answerId', text: ' AnswerId', sort: true },
+    { dataField: 'securityId', text: ' SecurityId', sort: true , hidden:true},
+    { dataField: 'questionId', text: ' QuestionId', sort: true , hidden:true},
+    { dataField: 'answerId', text: ' AnswerId', sort: true , hidden:true },
     { dataField: 'description', text: 'Description', sort: true },
     
     // columns follow dataField and text structure

@@ -75,6 +75,7 @@ export default function VehicleType() {
     { dataField: 'vehicleTypeId', text: ' VehicleTypeId', sort: true, hidden: true},
     { dataField: 'vehicleTypeName', text: ' VehicleTypeName', sort: true  },
     { dataField: 'description', text: 'Description', sort: true },
+    { dataField: 'recordStatuId' , text:'RecordStatusId' , sort: true , hidden: true},
    
     // columns follow dataField and text structure
     {
