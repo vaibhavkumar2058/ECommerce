@@ -93,17 +93,17 @@ export default function ItemCosts() {
 
   const columns = [
 
-    { dataField: 'itemCostId', text: 'ItemCost Id', sort: true},
-    { dataField: 'productId', text: ' Product Id', sort: true ,headerStyle: () => {
+    { dataField: 'itemCostId', text: 'ItemCost Id', sort: true, hidden: true},
+    { dataField: 'productId', text: ' Product Id', sort: true ,hidden: true,headerStyle: () => {
       return { width: "120px" };
     } },
-    { dataField: 'measurementTypeId', text: 'MeasurementType Id', sort: true ,headerStyle: () => {
+    { dataField: 'measurementTypeId', text: 'MeasurementType Id', sort: true , hidden: true,headerStyle: () => {
       return { width: "200px" };
     } },
-    { dataField: 'measurementValueId', text: 'MeasurementValue Id', sort: true,headerStyle: () => {
+    { dataField: 'measurementValueId', text: 'MeasurementValue Id', sort: true, hidden: true,headerStyle: () => {
       return { width: "200px" };
     }  },
-    { dataField: 'customTypeId', text: 'CustomType Id', sort: true,headerStyle: () => {
+    { dataField: 'customTypeId', text: 'CustomType Id', sort: true,hidden: true,headerStyle: () => {
       return { width: "150px" };
     }  },
     { dataField: 'price', text: 'Price', sort: true,headerStyle: () => {
@@ -112,7 +112,7 @@ export default function ItemCosts() {
     { dataField: 'description', text: 'Description', sort: true,headerStyle: () => {
       return { width: "150px" };
     }  },
-    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true ,headerStyle: () => {
+    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true , hidden: true,headerStyle: () => {
       return { width: "180px" };
     } },
     // columns follow dataField and text structure

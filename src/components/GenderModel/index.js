@@ -162,7 +162,7 @@ export default function GenderModel({
             <Form.Label>Gender<span className="required">*</span></Form.Label>
             <Form.Control
               type="text" 
-              name="genderName  "                                                                                                                                   
+              name="genderName"                                                                                                                                   
               placeholder="Gender"
               value={newGender?.genderName}
               onChange={changeHandler}
