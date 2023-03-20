@@ -74,7 +74,7 @@ export default function NotificationType() {
 
      { dataField: 'notificationTypeId', text: 'NotificationTypeId', sort: true,hidden:true },
      { dataField: 'notificationTypeName', text: 'NotificationTypeName', sort: true },
-     { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true },
+     { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true,hidden:true },
       { dataField: 'description', text: 'Description', sort: true },
     
       

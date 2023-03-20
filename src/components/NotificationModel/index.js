@@ -177,6 +177,8 @@ export default function NotificationModel({
       )}
       {!isDelete && (
         <Form>
+          <div className="row">
+            <div className="col-md-6">
           <Form.Group
             className={styles.stFormContainer}
             controlId="formNotification"
@@ -187,7 +189,7 @@ export default function NotificationModel({
             <Form.Label>NotificationType<span className="required">*</span></Form.Label>
             <Dropdown
               name="notificationTypeId"
-              placeholder='Select notificationTypeName'
+              placeholder='Select notificationType'
               fluid
               search
               selection
@@ -196,6 +198,8 @@ export default function NotificationModel({
               onChange={dropdownHandler}
             />
           </Form.Group>
+          </div>
+          <div className="col-md-6">
           <Form.Group>
             <Form.Label>NotificationName<span className="required">*</span></Form.Label>
             <Form.Control
@@ -206,6 +210,8 @@ export default function NotificationModel({
               onChange={changeHandler}
             />
           </Form.Group>
+          </div>
+          </div>
           {/* <Form.Group>
             <Form.Label>NotificationDate</Form.Label>
             <Form.Control
@@ -216,6 +222,8 @@ export default function NotificationModel({
               onChange={changeHandler}
             />
           </Form.Group> */}
+          <div className="row">
+            <div className="col-md-6">
 
             <Form.Group>
             <Form.Label>Description</Form.Label>
@@ -227,6 +235,8 @@ export default function NotificationModel({
               onChange={changeHandler}
             />
           </Form.Group>
+          </div>
+          <div className="col-md-6">
            <Form.Group className="mb-3" controlId="recordStatus">
             <Form.Label>Status<span className="required">*</span></Form.Label>
             <Dropdown
@@ -240,6 +250,8 @@ export default function NotificationModel({
               onChange={dropdownHandler}
             />
           </Form.Group>
+          </div>
+          </div>
 
          
 

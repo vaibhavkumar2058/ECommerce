@@ -89,10 +89,10 @@ export default function OrderTracking() {
 
   const columns = [
     { dataField: 'orderTrackingId', text: 'orderTracking Id', sort: true, hidden: true },
-    { dataField: 'orderId', text: 'Order Id', sort: true },
+    { dataField: 'orderId', text: 'Order Id', sort: true , hidden: true},
     
-    { dataField: 'orderStatusId', text: 'OrderStatus Id', sort: true },
-    { dataField: 'description', text: 'Description', sort: true,},
+    { dataField: 'orderStatusId', text: 'OrderStatus Id', sort: true, hidden: true },
+    { dataField: 'description', text: 'Description', sort: true},
     
     
     // columns follow dataField and text structure

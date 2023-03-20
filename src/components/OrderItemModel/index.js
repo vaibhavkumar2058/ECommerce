@@ -181,6 +181,8 @@ const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.
       )}
       {!isDelete && (
         <Form>
+          <div className="row">
+            <div className="col-md-6">
            <Form.Group className="mb-3" controlId="mobile">
             <Form.Label>Product<span className="required">*</span></Form.Label>
             <Dropdown
@@ -194,6 +196,8 @@ const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.
               onChange={dropdownHandler}
             />
             </Form.Group>
+            </div>
+            <div className="col-md-6">
           <Form.Group className="mb-3" controlId="OrderId">
             <Form.Label>Order<span className="required">*</span></Form.Label>
             <Form.Control
@@ -204,7 +208,10 @@ const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.
               onChange={changeHandler}
             />
           </Form.Group>
-
+          </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
 
           <Form.Group className="mb-3" controlId="Cost">
             <Form.Label>Cost<span className="required">*</span></Form.Label>
@@ -216,6 +223,8 @@ const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.
               onChange={changeHandler}
             />
           </Form.Group>
+          </div>
+          <div className="col-md-6">
           <Form.Group className="mb-3" controlId="Quantity">
             <Form.Label>Quantity<span className="required">*</span></Form.Label>
             <Form.Control
@@ -226,6 +235,10 @@ const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.
               onChange={changeHandler}
             />
           </Form.Group>
+          </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
           <Form.Group className="mb-3" controlId="mobile">
             <Form.Label>Status<span className="required">*</span></Form.Label>
             <Dropdown
@@ -239,6 +252,8 @@ const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.
               onChange={dropdownHandler}
             />
             </Form.Group>
+            </div>
+            </div>
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel

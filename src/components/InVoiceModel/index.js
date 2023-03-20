@@ -164,6 +164,8 @@ export default function InvoiceModel({
       )}
       {!isDelete && (
         <Form>
+          <div className="row">
+            <div className="col-md-6">
           <Form.Group
             className={styles.stFormContainer}
             controlId="formInvoice"
@@ -177,6 +179,8 @@ export default function InvoiceModel({
               onChange={changeHandler}
             />
           </Form.Group>
+          </div>
+          <div className="col-md-6">
           <Form.Group className="mb-3" controlId="orderId">
             <Form.Label>Order<span className="required">*</span></Form.Label>
             <Form.Control
@@ -187,6 +191,10 @@ export default function InvoiceModel({
               onChange={changeHandler}
             />
           </Form.Group>
+          </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Total<span className="required">*</span></Form.Label>
@@ -198,9 +206,8 @@ export default function InvoiceModel({
               onChange={changeHandler}
             />
           </Form.Group>
-
-
-          
+          </div>
+          <div className="col-md-6"> 
           <Form.Group className="mb-3" controlId="totalIncludeTax">
             <Form.Label>TotalIncludeTax</Form.Label>
             <Form.Control
@@ -211,6 +218,8 @@ export default function InvoiceModel({
               onChange={changeHandler}
             />
           </Form.Group>
+          </div>
+          </div>
           {/* <Form.Group className="mb-3" controlId="invoiceDate">
             <Form.Label>InvoiceDate</Form.Label>
             <Form.Control
@@ -223,7 +232,8 @@ export default function InvoiceModel({
           </Form.Group> */}
 
           
-         
+            <div className="row">
+            <div className="col-md-6">
           <Form.Group className="mb-3" controlId="description">
             <Form.Label>Description</Form.Label>
             <Form.Control
@@ -234,7 +244,8 @@ export default function InvoiceModel({
               onChange={changeHandler}
             />
           </Form.Group>
-
+          </div>
+          <div className="col-md-6">
           <Form.Group className="mb-3" controlId="recordStatus">
             <Form.Label>Status<span className="required">*</span></Form.Label>
             <Dropdown
@@ -248,6 +259,8 @@ export default function InvoiceModel({
               onChange={dropdownHandler}
             />
           </Form.Group>
+          </div>
+          </div>
             
           
           

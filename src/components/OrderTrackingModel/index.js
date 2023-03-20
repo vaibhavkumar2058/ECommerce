@@ -212,7 +212,7 @@ export default function OrderTrackingModel({
           <Form.Group className="mb-3" controlId="orderStatusId">
             <Form.Label>Order Status<span className="required">*</span></Form.Label>
             <Dropdown
-              name="orderStatusName"
+              name="orderStatusId"
               placeholder='Select OrderStatus'
               fluid
               search
