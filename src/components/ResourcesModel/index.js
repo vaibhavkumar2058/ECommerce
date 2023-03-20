@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { css } from "@emotion/react";
-
 import { Dropdown } from 'semantic-ui-react'
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
-
-
 
 export default function ResourcesModel({
   onAddResources,
@@ -20,8 +17,8 @@ export default function ResourcesModel({
   id,
   onClose,
   resourcesData,
-  roleList=[],
-  genderList=[],
+  roleList = [],
+  genderList = [],
   recordStatusList = [],
 
 }) {
@@ -37,20 +34,18 @@ export default function ResourcesModel({
     password: "",
     isEmailVerified: true,
     isMobileVerified: true,
-    recordStatusId:1,
+    recordStatusId: 1,
     attachment: null,
-    resourcesAttachmentType:3,
-
-
+    resourcesAttachmentTypeId: 1003,
   });
-  
 
-  const [roleOptions, setRoleOptions] = useState(roleList.map((role,item) =>(
+
+  const [roleOptions, setRoleOptions] = useState(roleList.map((role, item) => (
     {
-    key: item,
-    text: role.roleName,
-    value: role.roleId,
-  })).filter((item) => item));
+      key: item,
+      text: role.roleName,
+      value: role.roleId,
+    })).filter((item) => item));
 
   const [genderOptions, setGenderOptions] = useState(genderList.map((gender, item) => (
     {
@@ -58,8 +53,8 @@ export default function ResourcesModel({
       text: gender.genderName,
       value: gender.genderId,
     })).filter((item) => item));
-    const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus,item) =>(
-      {
+  const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus, item) => (
+    {
       key: item,
       text: recordStatus.actionName,
       value: recordStatus.recordStatusId,
@@ -92,7 +87,7 @@ export default function ResourcesModel({
     });
   };
 
- 
+
   const saveFileSelected = (e) => {
     //in case you wan to print the file selected
     //console.log(e.target.files[0]);
@@ -146,12 +141,9 @@ export default function ResourcesModel({
     }
   };
 
-  const dropdownHandler = (event,{value}) => {
-    setNewResources((currentResources) => ({...currentResources, roleId: value}));
-    setNewResources((currentResources) => ({...currentResources, genderId: value}));
-    setNewResources((currentResources) => ({...currentResources, recordStatusId: value}));
-  } 
-
+  const dropdownHandler = (event, { name, value }) => {
+    setNewResources((currentResources) => ({ ...currentResources, [name]: value }));
+  }
 
   useEffect(() => {
     if (isEdit) {
@@ -159,43 +151,42 @@ export default function ResourcesModel({
     }
   }, []);
 
-  useEffect(() => { 
-    setRecordStatusOptions(recordStatusList.map((recordStatus,item) =>(
+  useEffect(() => {
+    setRecordStatusOptions(recordStatusList.map((recordStatus, item) => (
       {
-      key: item,
-      text: recordStatus.actionName,
-    value: recordStatus.recordStatusId,
-    })).filter((item) => item));
-    }, [recordStatusList]);
+        key: item,
+        text: recordStatus.actionName,
+        value: recordStatus.recordStatusId,
+      })).filter((item) => item));
+  }, [recordStatusList]);
 
-    useEffect(() => { 
-      setGenderOptions(genderList.map((gender, item) => (
+  useEffect(() => {
+    setGenderOptions(genderList.map((gender, item) => (
       {
         key: item,
         text: gender.genderName,
         value: gender.genderId,
       })).filter((item) => item));
-    },[genderList]);
+  }, [genderList]);
 
-      useEffect(() => { 
-        setRoleOptions (roleList.map((role, item) => (
-          {
-            key: item,
-            text: role.roleName,
-            value: role.roleId,
-          })).filter((item) => item));
-      },[roleList]);
+  useEffect(() => {
+    setRoleOptions(roleList.map((role, item) => (
+      {
+        key: item,
+        text: role.roleName,
+        value: role.roleId,
+      })).filter((item) => item));
+  }, [roleList]);
 
   useEffect(() => {
     if (isEdit) {
       setButtonType("Update");
     }
-    debugger
     const isEnable =
-      !newResources?.firstName 
-      || !newResources?.roleId || !newResources?.genderId 
+      !newResources?.firstName
+      || !newResources?.roleId || !newResources?.genderId
       || !newResources?.mobileNumber
-      || !newResources?.email 
+      || !newResources?.email
       || !newResources?.password
       || !newResources?.recordStatusId;
     setSaveDisabled(isEnable);
@@ -222,165 +213,160 @@ export default function ResourcesModel({
         </>
       )}
       {!isDelete && (
-
-        <Form>
-
-          <Form.Group
-            className={styles.stFormContainer}
-            controlId="formResources"
-          >
-            <Form.Label>FirstName <span className="required">*</span></Form.Label>
-            <Form.Control
-              type="text"
-              name="firstName"
-              placeholder="FirstName"
-              value={newResources?.firstName}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="middleName">
-            <Form.Label>MiddleName</Form.Label>
-            <Form.Control
-              type="text"
-              name="middleName"
-              placeholder="MiddleName"
-              value={newResources?.middleName}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="lastName">
-            <Form.Label>LastName</Form.Label>
-            <Form.Control
-              type="text"
-              name="lastName"
-              placeholder="LastName"
-              value={newResources?.lastName}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="roleId">
-            <Form.Label>Role</Form.Label>
-            <Dropdown
-              name="roleName"
-              placeholder='Select Action'
-              fluid
-              search
-              selection
-              options={roleOptions}
-              value = {newResources?.roleId}
-              onChange={dropdownHandler}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="genderId">
-            <Form.Label>Gender</Form.Label>
-            <Dropdown
-              name="genderName"
-              placeholder='Select Action'
-              fluid
-              search
-              selection
-              options={genderOptions}
-              value = {newResources?.genderId}
-              onChange={dropdownHandler}
-            />
-          </Form.Group>
-
-
-          <Form.Group className="mb-3" controlId="mobileNumber">
-            <Form.Label>MobileNumber</Form.Label>
-            <Form.Control
-              type="text"
-              name="mobileNumber"
-              placeholder="MobileNumber"
-              value={newResources?.mobileNumber}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="bloodGroup">
-            <Form.Label>BloodGroup</Form.Label>
-            <Form.Control
-              type="text"
-              name="bloodGroup"
-              placeholder="BloodGroup"
-              value={newResources?.bloodGroup}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="email">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              type="text"
-              name="email"
-              placeholder="Email"
-              value={newResources?.email}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="password">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="text"
-              name="password"
-              placeholder="Password"
-              value={newResources?.password}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-          
-          <Form.Group className="mb-3" controlId="isEmailVerified">
-            <Form.Label>IsEmailVerified</Form.Label>
-            <Form.Control
-              type="text"
-              name="isEmailVerified"
-              placeholder="IsEmailVerified"
-              value={newResources?.isEmailVerified}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="isMobileVerified">
-            <Form.Label>IsMobileVerified</Form.Label>
-            <Form.Control
-              type="text"
-              name="isMobileVerified"
-              placeholder="isMobileVerified"
-              value={newResources?.isMobileVerified}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-
-           <Form.Group className="mb-3" controlId="recordStatus">
-            <Form.Label>RecordStatus</Form.Label>
-            <Dropdown
-              name="actionName"
-              placeholder='Select Action'
-              fluid
-              search
-              selection
-              options={recordStatusOptions}
-              value = {newResources?.recordStatusId}
-              onChange={dropdownHandler}
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Resources Image</Form.Label>
-          </Form.Group>
-          <Form.Group>
-            <input type="file" onChange={saveFileSelected} />
-          </Form.Group>
-
-          <Form.Group>
-
-          </Form.Group>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={onClose}>
-              Cancel
-            </Button>
-            <Button variant="primary" onClick={saveHandler}
-              disabled={saveDisabled}>
-              {buttonType}
-            </Button>
-          </Modal.Footer>
-        </Form>
+        <div className="">
+          <Form>
+            <div className="row">
+              <div className="col-md-6">
+                <Form.Group
+                  className={styles.stFormContainer}
+                  controlId="formResources">
+                  <Form.Label>FirstName <span className="required">*</span></Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="firstName"
+                    placeholder="FirstName"
+                    value={newResources?.firstName}
+                    onChange={changeHandler}
+                  />
+                </Form.Group>
+              </div>
+              <div className="col-md-6">
+                <Form.Group className="mb-3" controlId="middleName">
+                  <Form.Label>MiddleName</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="middleName"
+                    placeholder="MiddleName"
+                    value={newResources?.middleName}
+                    onChange={changeHandler}
+                  />
+                </Form.Group>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-6">
+                <Form.Group className="mb-3" controlId="lastName">
+                  <Form.Label>LastName</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="lastName"
+                    placeholder="LastName"
+                    value={newResources?.lastName}
+                    onChange={changeHandler}
+                  />
+                </Form.Group>
+              </div>
+              <div className="col-md-6">
+                <Form.Group>
+                  <Form.Label>Resources Image</Form.Label>
+                </Form.Group>
+                <Form.Group>
+                  <input type="file" onChange={saveFileSelected} />
+                </Form.Group>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-6">
+                <Form.Group className="mb-3" controlId="roleId">
+                  <Form.Label>Role</Form.Label>
+                  <Dropdown
+                    name="roleId"
+                    placeholder='Select Role'
+                    fluid
+                    search
+                    selection
+                    options={roleOptions}
+                    value={newResources?.roleId}
+                    onChange={dropdownHandler}
+                  />
+                </Form.Group>
+              </div>
+              <div className="col-md-6">
+                <Form.Group className="mb-3" controlId="genderId">
+                  <Form.Label>Gender</Form.Label>
+                  <Dropdown
+                    name="genderId"
+                    placeholder='Select Gender'
+                    fluid
+                    search
+                    selection
+                    options={genderOptions}
+                    value={newResources?.genderId}
+                    onChange={dropdownHandler}
+                  />
+                </Form.Group>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-6">
+                <Form.Group className="mb-3" controlId="mobileNumber">
+                  <Form.Label>MobileNumber</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="mobileNumber"
+                    placeholder="MobileNumber"
+                    value={newResources?.mobileNumber}
+                    onChange={changeHandler}
+                  />
+                </Form.Group>
+              </div>
+              <div className="col-md-6">
+                <Form.Group className="mb-3" controlId="email">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="email"
+                    placeholder="Email"
+                    value={newResources?.email}
+                    onChange={changeHandler}
+                  />
+                </Form.Group>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-6">
+                <Form.Group className="mb-3" controlId="password">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="password"
+                    placeholder="Password"
+                    value={newResources?.password}
+                    onChange={changeHandler}
+                  />
+                </Form.Group>
+              </div>
+              <div className="col-md-6">
+                <Form.Group className="mb-3" controlId="recordStatusId">
+                  <Form.Label>Status</Form.Label>
+                  <Dropdown
+                    name="recordStatusId"
+                    placeholder='Select Status'
+                    fluid
+                    search
+                    selection
+                    options={recordStatusOptions}
+                    value={newResources?.recordStatusId}
+                    onChange={dropdownHandler}
+                  />
+                </Form.Group>
+              </div>
+            </div>
+            {/* <div className="row">
+              <div className="col-md-6"> */}
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={onClose}>
+                    Cancel
+                  </Button>
+                  <Button variant="primary" onClick={saveHandler}
+                    disabled={saveDisabled}>
+                    {buttonType}
+                  </Button>
+                </Modal.Footer>
+              {/* </div>
+            </div> */}
+          </Form>
+        </div>
       )}
     </>
   );
@@ -451,6 +437,6 @@ ResourcesModel.defaultProps = {
   resourcesData: null,
   roleList: null,
   genderList: null,
-  recordStatusList:null,
+  recordStatusList: null,
 
 };

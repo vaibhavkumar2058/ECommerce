@@ -6,10 +6,20 @@ import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
 import Select from 'react-select';
-import Dropdown from 'react-bootstrap/Dropdown';
+import { Dropdown } from 'semantic-ui-react'
 import useFetchResources from '../hooks/useFetchResources';
+import ResourceAttachments from './ResourceAttachments';
+import useFetchGender from "../hooks/useFetchGender";
+import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
+import useFetchRole from "../hooks/useFetchRole";
+
 
 export default () => {
+
+  const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
+  const resourceId= userInfo?.resourcesId;
+  const[ roleList, setRolesList]=useState([]);
+  const[genderList,setGendersList]=useState([]);
   const [resource, setResource] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -19,12 +29,18 @@ export default () => {
     updateResources,
     resourcesById,
   } = useFetchResources();
+  const {
+    getRoles,
+  } = useFetchRole();
+  const {
+    getGenders,
+  } = useFetchGender();
 
   const UpdateResource = () => {
     const saveHandler = async () => {
 
 
-      const response = await updateResources(6, resource);
+      const response = await updateResources(resourceId, resource);
       if (response.payload.title == "Success") {
 
       }
@@ -37,8 +53,9 @@ export default () => {
 
   useEffect(() => {
     if (resource == null) {
-      getResourcesById(6);
-
+      getGenderList();
+    getRoleList();
+      getResourcesById(resourceId);
     }
 
 
@@ -53,6 +70,74 @@ export default () => {
 
     }
   };
+
+  const [roleOptions, setRoleOptions] = useState(roleList.map((role,item) =>(
+    {
+    key: item,
+    text: role.roleName,
+    value: role.roleId,
+  })).filter((item) => item));
+
+  const [genderOptions, setGenderOptions] = useState(genderList.map((gender, item) => (
+    {
+      key: item,
+      text: gender.genderName,
+      value: gender.genderId,
+    })).filter((item) => item));
+    
+
+    useEffect(() => { 
+      setGenderOptions(genderList.map((gender, item) => (
+      {
+        key: item,
+        text: gender.genderName,
+        value: gender.genderId,
+      })).filter((item) => item));
+    },[genderList]);
+
+    useEffect(() => { 
+      setRoleOptions (roleList.map((role, item) => (
+        {
+          key: item,
+          text: role.roleName,
+          value: role.roleId,
+        })).filter((item) => item));
+    },[roleList]);
+
+  const dropdownHandler = (event,{name, value}) => {
+    setResource((currentResources) => ({...currentResources, [name]: value}));
+  } 
+
+  const getGenderList = async () => {
+    const response = await getGenders();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setGendersList(arr);
+    }
+    else {
+      
+    }
+  };
+
+  const getRoleList = async () => {
+    const response = await getRoles();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setRolesList(arr);
+    }
+    else {
+      
+    }
+  };
+
 
 
 
@@ -115,7 +200,36 @@ export default () => {
                     value={resource?.email}
                   />
                 </Form.Group></div>
-              <div class="col-md-4 col-lg-4">
+                <Form.Group className="mb-3" controlId="genderId">
+            <Form.Label>Gender</Form.Label>
+            <div class="col-md-4 col-lg-4">
+            <Dropdown
+              name="genderId"
+              placeholder='Select Gender'
+              fluid
+              search
+              selection
+              options={genderOptions}
+              value = {resource?.genderId}
+              onChange={dropdownHandler}
+            /></div>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="roleId">
+            <Form.Label>Role</Form.Label>
+            <div class="col-md-4 col-lg-4">
+            <Dropdown
+              name="roleId"
+              placeholder='Select Role'
+              fluid
+              search
+              selection
+              options={roleOptions}
+              value = {resource?.roleId}
+              onChange={dropdownHandler}
+            /></div>
+          </Form.Group>
+
+              {/* <div class="col-md-4 col-lg-4">
                 <Dropdown>
                   <Dropdown.Toggle  >
 
@@ -134,9 +248,9 @@ export default () => {
                     <Dropdown.Item href="#/action-2">Male </Dropdown.Item>
 
                   </Dropdown.Menu>
-                </Dropdown></div>
+                </Dropdown>
 
-
+</div> */}
             </div>
             <div class="row">
 
@@ -204,8 +318,8 @@ export default () => {
       </div>
       </Tab >
     <Tab eventKey="documents" title="Documents" >
-      <div>Documents
-
+      <div>
+        <ResourceAttachments></ResourceAttachments>
       </div>
 
 

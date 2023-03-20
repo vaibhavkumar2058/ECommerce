@@ -25,7 +25,8 @@ const MyExportCSV = (props) => {
 };
 
 export default function ResourceAttachments() {
-
+  const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
+  const resourceId= userInfo?.resourcesId;
   const [resourceAttachmentses, setResourceAttachmentses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -33,7 +34,7 @@ export default function ResourceAttachments() {
   const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
   const handleClose = () => {
-    getAllResourceAttachmentses();
+    getAllResourceAttachmentses(resourceId);
     setIsEdit(false);
     setIsDelete(false);
     setShow(false);
@@ -69,15 +70,15 @@ export default function ResourceAttachments() {
 
   const columns = [
 
-    { dataField: 'resourceAttachmentsId', text:'ResourceAttachmentsId', sort: true, hidden: true },
-    { dataField: 'resourcesId', text: ' Resources', sort: true },
-    { dataField: 'filesId', text: 'FilesId', sort: true },
-    { dataField: 'resourceAttachmentTypeId', text: 'ResourceAttachmentType', sort: true,headerStyle: () => {
+    { dataField: 'resourceAttachmentsId', text: 'ResourceAttachmentsId ', sort: true, hidden: true },
+    { dataField: 'resourcesId', text: ' resourcesId', sort: true, hidden: true },
+    { dataField: 'fileName', text: 'File Name', sort: true },
+    { dataField: 'documentType', text: 'Document Type', sort: true,headerStyle: () => {
       return { width: "230px" };
     } },
-    { dataField: 'description', text: 'Description', sort: true,headerStyle: () => {
-      return { width: "200px" };
-    } },
+    // { dataField: 'description', text: 'Description', sort: true,headerStyle: () => {
+    //   return { width: "200px" };
+    // } },
     //{ dataField: 'visibleToCustomer', text: 'VisibleToCustomer', sort: true ,headerStyle: () => {
       //return { width: "200px" };
     //}},
@@ -112,7 +113,7 @@ export default function ResourceAttachments() {
 
   useEffect(() => {
     if (ResourceAttachments.length == 0) {
-      getAllResourceAttachmentses();
+      getAllResourceAttachmentses(resourceId);
       setLoading(false)
     }
   }, [ResourceAttachments]);
@@ -166,18 +167,28 @@ export default function ResourceAttachments() {
   });
 
 
-  const getAllResourceAttachmentses = async () => {
-    const response = await getResourceAttachmentses();
+  const getAllResourceAttachmentses = async (resourceId) => {
+    const response = await getResourceAttachmentses(resourceId);
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',
         message: 'ResourceAttachments Record Fetch Succefully.'
       })
+      const dataFormatter = (rawData) => {
+        const curedData = {};
+         curedData.resourceAttachmentsId = rawData?.resourceAttachmentsId;
+         curedData.fileName = rawData?.files?.fileName;
+         curedData.documentType = rawData?.resourceAttachmentType?.displayText;
+         curedData.resourcesId = rawData?.resourcesId;
+         curedData.resourcesImage = 'data:'+ rawData?.files?.fileMimeType +';base64,'+ rawData?.resourceAttachment?.files?.base64;
+        return curedData;
+
+      }
 
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+       arr.push(dataFormatter(response.payload[key]));
       }
 
       setResourceAttachmentses(arr);
@@ -243,8 +254,8 @@ export default function ResourceAttachments() {
                     <div className="col-lg-6">
                       <div className="row">
                         <div className="app-right col-lg-12">
-                          <div className="app-float-right p-1">
-                          <MyExportCSV {...props.csvProps} /></div>
+                          {/* <div className="app-float-right p-1">
+                          <MyExportCSV {...props.csvProps} /></div> */}
                           <div className="app-float-right p-1">
                           <Button variant="primary" onClick={handleShow}>
                             Add ResourceAttachments

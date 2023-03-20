@@ -54,6 +54,7 @@ import {
 
   // AddressType ADD  ACTIONS
   const addAddressType = (addressType) => {
+    debugger;
     return API.post(
       hapyCarURL,
       { data: addressType },

@@ -6,9 +6,6 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
-import Select from 'react-select';
-
-
 
 export default function AddressModel({
   onAddAddress,
@@ -20,26 +17,24 @@ export default function AddressModel({
   id,
   onClose,
   addressData,
-  addressTypeList=[],
+  addressTypeList = [],
   recordStatusList = [],
-  countryList=[],
+  countryList = [],
   stateList = [],
   //recordStatus,
 }) {
   const [newAddress, setNewAddress] = useState({
-    countryId:null,
-    stateId:null,
-    city:"",
-    town:"",
-    locality:"",
-    pincode:null,
-    addressTypeId:null,
-    landMark:"",
-    isDefault:"",
-    defaultAddressTypeId:null,
-    recordStatusId:null,
-
-    
+    countryId: null,
+    stateId: null,
+    city: "",
+    town: "",
+    locality: "",
+    pincode: null,
+    addressTypeId: null,
+    landMark: "",
+    isDefault: "",
+    defaultAddressTypeId: null,
+    recordStatusId: null,
   });
   const [countryOptions, setCountryOptions] = useState(countryList.map((country, item) => (
     {
@@ -47,27 +42,25 @@ export default function AddressModel({
       text: country.countryName,
       value: country.countryId,
     })).filter((item) => item));
-    const [stateOptions, setStateOptions] = useState(stateList.map((state, item) => (
-      {
-        key: item,
-        text: state.stateName,
-        value: state.stateId,
-      })).filter((item) => item));
-      const [addressTypeOptions, setAddressTypeOptions] = useState(addressTypeList.map((addressType, item) => (
-        {
-          key: item,
-          text:addressType.addressTypeName,
-          value: addressType.addressTypeId,
-        })).filter((item) => item));
-     
-        const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus,item) =>(
-          {
-          key: item,
-          text: recordStatus.actionName,
-          value: recordStatus.recordStatusId,
-        })).filter((item) => item));
+  const [stateOptions, setStateOptions] = useState(stateList.map((state, item) => (
+    {
+      key: item,
+      text: state.stateName,
+      value: state.stateId,
+    })).filter((item) => item));
+  const [addressTypeOptions, setAddressTypeOptions] = useState(addressTypeList.map((addressType, item) => (
+    {
+      key: item,
+      text: addressType.addressTypeName,
+      value: addressType.addressTypeId,
+    })).filter((item) => item));
 
-
+  const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus, item) => (
+    {
+      key: item,
+      text: recordStatus.actionName,
+      value: recordStatus.recordStatusId,
+    })).filter((item) => item));
 
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
@@ -92,10 +85,10 @@ export default function AddressModel({
       [e.target.name]: e.target.value,
     });
   };
-  
+
 
   const saveHandler = async () => {
- 
+
     if (isEdit) {
       const response = await onUpdateAddress(id, newAddress);
       if (response.payload.title == "Success") {
@@ -139,11 +132,8 @@ export default function AddressModel({
       })
     }
   };
-  const dropdownHandler = (event,{value}) => {
-    setNewAddress((currentAddress) => ({...currentAddress, recordStatusId: value}));
-    setNewAddress((currentAddress) => ({...currentAddress, countryId: value}));
-    setNewAddress((currentAddress) => ({...currentAddress, stateId: value}));
-    setNewAddress((currentAddress) => ({...currentAddress, addressTypeId: value}));
+  const dropdownHandler = (event, { name, value }) => {
+    setNewAddress((currentAddress) => ({ ...currentAddress, [name]: value }));
 
   }
 
@@ -174,29 +164,35 @@ export default function AddressModel({
       })).filter((item) => item));
 
   }, [addressTypeList]);
- 
+
   useEffect(() => {
     if (isEdit) {
       setNewAddress(addressData);
     }
   }, []);
 
-  useEffect(() => { 
-    setRecordStatusOptions(recordStatusList.map((recordStatus,item) =>(
+  useEffect(() => {
+    setRecordStatusOptions(recordStatusList.map((recordStatus, item) => (
       {
-      key: item,
-      text: recordStatus.actionName,
-    value: recordStatus.recordStatusId,
-    })).filter((item) => item));
-    }, [recordStatusList]);
+        key: item,
+        text: recordStatus.actionName,
+        value: recordStatus.recordStatusId,
+      })).filter((item) => item));
+  }, [recordStatusList]);
 
   useEffect(() => {
     if (isEdit) {
       setButtonType("Update");
     }
-    const isEnable = !newAddress?.city || !newAddress?.stateId  || !newAddress?.countryId || !newAddress?.addressTypeId|| !newAddress?.town  || !newAddress?.locality || !newAddress?.pincode|| !newAddress?.landMark|| !newAddress?.recordStatusId ;
+    const isEnable = !newAddress?.city
+      || !newAddress?.stateId
+      || !newAddress?.countryId
+      || !newAddress?.town
+      || !newAddress?.pincode || !newAddress?.landMark
+      || !newAddress?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newAddress]);
+
 
   return (
     <>
@@ -220,147 +216,174 @@ export default function AddressModel({
       )}
       {!isDelete && (
         <Form>
-           <Form.Group className="mb-3" controlId="state">
-            <Form.Label>State</Form.Label>
-            <Dropdown
-              name="stateName"
-              placeholder='Select State'
-              fluid
-              search
-              selection
-              options={stateOptions}
-              value = {newAddress?.stateId}
-              onChange={dropdownHandler}
-            />
-          </Form.Group>
-        
-          <Form.Group className="mb-3" controlId="country">
-            <Form.Label>Country</Form.Label>
-            <Dropdown
-              name="countryName"
-              placeholder='Select CountryName'
-              fluid
-              search
-              selection
-              options={countryOptions}
-              value = {newAddress?.countryId}
-              onChange={dropdownHandler}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="addressType">
-            <Form.Label>AddressType</Form.Label>
-            <Dropdown
-              name="addressTypeName"
-              placeholder='Select AddressTypeName'
-              fluid
-              search
-              selection
-              options={addressTypeOptions}
-              value = {newAddress?.addressTypeId}
-              onChange={dropdownHandler}
-            />
-          </Form.Group>
-         
-
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>City</Form.Label>
-            <Form.Control
-              type="text"
-              name="city"
-              placeholder="City"
-              value={newAddress?.city}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="recordStatus">
-            <Form.Label>RecordStatus</Form.Label>
-            <Dropdown
-              name="actionName"
-              placeholder='Select Action'
-              fluid
-              search
-              selection
-              options={recordStatusOptions}
-              value = {newAddress?.recordStatusId}
-              onChange={dropdownHandler}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="town">
-            <Form.Label>Town</Form.Label>
-            <Form.Control
-              type="text"
-              name="town"
-              placeholder="Town"
-              value={newAddress?.town}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="locality">
-            <Form.Label>Locality</Form.Label>
-            <Form.Control
-              type="text"
-              name="locality"
-              placeholder="Locality"
-              value={newAddress?.locality}
-              onChange={changeHandler}
-            />
-            </Form.Group>
-          <Form.Group className="mb-3" controlId="pincode">
-            <Form.Label>PinCode</Form.Label>
-            <Form.Control
-              type="text"
-              name="pincode"
-              placeholder="Pincode"
-              value={newAddress?.pincode}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-
-
-          <Form.Group className="mb-3" controlId="isDefault">
-            <Form.Label>IsDefault</Form.Label>
-            <Form.Control
-              type="text"
-              name="isDefault"
-              placeholder="IsDefault"
-              value={newAddress?.isDefault}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="landMark">
-            <Form.Label>LandMark</Form.Label>
-            <Form.Control
-              type="text"
-              name="landMark"
-              placeholder="LandMark"
-              value={newAddress?.landMark}
-              onChange={changeHandler}
-            />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="defaultAddressTypeId">
-            <Form.Label>DefaultAddressTypeId</Form.Label>
-            <Form.Control
-              type="text"
-              name="defaultAddressTypeId"
-              placeholder="DefaultAddressTypeId"
-              value={newAddress?.defaultAddressTypeId}
-              onChange={changeHandler}
-            />
-            </Form.Group>
-             <Form.Group className="mb-3" controlId="description">
-            <Form.Label>Description</Form.Label>
-            <Form.Control
-              type="text"
-              name="description"
-              placeholder="Description"
-              value={newAddress?.description}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-          
+          <div className="row">
+            <div className="col-md-6">
+              <Form.Group className="mb-3" controlId="stateId">
+                <Form.Label>State<span className="required">*</span></Form.Label>
+                <Dropdown
+                  name="stateId"
+                  placeholder='Select State'
+                  fluid
+                  search
+                  selection
+                  options={stateOptions}
+                  value={newAddress?.stateId}
+                  onChange={dropdownHandler}
+                />
+              </Form.Group>
+            </div>
+            <div className="col-md-6">
+              <Form.Group className="mb-3" controlId="countryId">
+                <Form.Label>Country<span className="required">*</span></Form.Label>
+                <Dropdown
+                  name="countryId"
+                  placeholder='Select Country'
+                  fluid
+                  search
+                  selection
+                  options={countryOptions}
+                  value={newAddress?.countryId}
+                  onChange={dropdownHandler}
+                />
+              </Form.Group>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
+              <Form.Group className="mb-3" controlId="addressTypeId">
+                <Form.Label>Address Type</Form.Label>
+                <Dropdown
+                  name="addressTypeId"
+                  placeholder='Select Address Type'
+                  fluid
+                  search
+                  selection
+                  options={addressTypeOptions}
+                  value={newAddress?.addressTypeId}
+                  onChange={dropdownHandler}
+                />
+              </Form.Group>
+            </div>
+            <div className="col-md-6">
+              <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Label>City<span className="required">*</span></Form.Label>
+                <Form.Control
+                  type="text"
+                  name="city"
+                  placeholder=" Select City"
+                  value={newAddress?.city}
+                  onChange={changeHandler}
+                />
+              </Form.Group>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
+              <Form.Group className="mb-3" controlId="town">
+                <Form.Label>Town<span className="required">*</span></Form.Label>
+                <Form.Control
+                  type="text"
+                  name="town"
+                  placeholder=" Select Town"
+                  value={newAddress?.town}
+                  onChange={changeHandler}
+                />
+              </Form.Group>
+            </div>
+            <div className="col-md-6">
+              <Form.Group className="mb-3" controlId="locality">
+                <Form.Label>Locality</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="locality"
+                  placeholder=" Select Locality"
+                  value={newAddress?.locality}
+                  onChange={changeHandler}
+                />
+              </Form.Group>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
+              <Form.Group className="mb-3" controlId="pincode">
+                <Form.Label>PinCode<span className="required">*</span></Form.Label>
+                <Form.Control
+                  type="text"
+                  name="pincode"
+                  placeholder=" Select Pincode"
+                  value={newAddress?.pincode}
+                  onChange={changeHandler}
+                />
+              </Form.Group>
+            </div>
+            <div className="col-md-6">
+              <Form.Group className="mb-3" controlId="isDefault">
+                <Form.Label>IsDefault</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="isDefault"
+                  placeholder=" Select IsDefault"
+                  value={newAddress?.isDefault}
+                  onChange={changeHandler}
+                />
+              </Form.Group>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
+              <Form.Group className="mb-3" controlId="landMark">
+                <Form.Label>LandMark<span className="required">*</span></Form.Label>
+                <Form.Control
+                  type="text"
+                  name="landMark"
+                  placeholder=" Select LandMark"
+                  value={newAddress?.landMark}
+                  onChange={changeHandler}
+                />
+              </Form.Group>
+            </div>
+            <div className="col-md-6">
+              <Form.Group className="mb-3" controlId="defaultAddressTypeId">
+                <Form.Label>DefaultAddressType</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="defaultAddressTypeId"
+                  placeholder=" Select DefaultAddressTypeId"
+                  value={newAddress?.defaultAddressTypeId}
+                  onChange={changeHandler}
+                />
+              </Form.Group>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
+              <Form.Group className="mb-3" controlId="description">
+                <Form.Label>Description</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="description"
+                  placeholder=" Select Description"
+                  value={newAddress?.description}
+                  onChange={changeHandler}
+                />
+              </Form.Group>
+            </div>
+            <div className="col-md-6">
+              <Form.Group className="mb-3" controlId="recordStatus">
+                <Form.Label>Status<span className="required">*</span></Form.Label>
+                <Dropdown
+                  name="recordStatusId"
+                  placeholder='Select RecordStatus'
+                  fluid
+                  search
+                  selection
+                  options={recordStatusOptions}
+                  value={newAddress?.recordStatusId}
+                  onChange={dropdownHandler}
+                />
+              </Form.Group>
+            </div>
+          </div>
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel
@@ -370,7 +393,6 @@ export default function AddressModel({
               {buttonType}
             </Button>
           </Modal.Footer>
-          
         </Form>
       )}
     </>
@@ -417,31 +439,31 @@ AddressModel.propTypes = {
   /**
 * countries for object type
 */
-countries: PropTypes.any,
-/**
-* states for object type
-*/
-states: PropTypes.any,
-/**
-* addressTypes for object type
-*/
-addressTypes: PropTypes.any,
-/**
- * recordStatusList for object type
- */
-recordStatusList: PropTypes.any,
-/**
- * countryList for object type
- */
-countryList: PropTypes.any,
-/**
- * stateList for object type
- */
-stateList: PropTypes.any,
-/**
- * addressTypeList for object type
- */
-addressTypeList: PropTypes.any,
+  countries: PropTypes.any,
+  /**
+  * states for object type
+  */
+  states: PropTypes.any,
+  /**
+  * addressTypes for object type
+  */
+  addressTypes: PropTypes.any,
+  /**
+   * recordStatusList for object type
+   */
+  recordStatusList: PropTypes.any,
+  /**
+   * countryList for object type
+   */
+  countryList: PropTypes.any,
+  /**
+   * stateList for object type
+   */
+  stateList: PropTypes.any,
+  /**
+   * addressTypeList for object type
+   */
+  addressTypeList: PropTypes.any,
 };
 
 AddressModel.defaultProps = {
@@ -454,9 +476,9 @@ AddressModel.defaultProps = {
   onClose: null,
   id: null,
   addressData: null,
-  recordStatusList:null,
-  countryList:null,
-  stateList:null,
-  addressTypeList:null,
+  recordStatusList: null,
+  countryList: null,
+  stateList: null,
+  addressTypeList: null,
 };
 

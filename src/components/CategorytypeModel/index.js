@@ -104,8 +104,8 @@ export default function CategorytypeModel({
     }
   };
 
-  const dropdownHandler = (event,{value}) => {
-    setNewCategoryType((currentCategoryType) => ({...currentCategoryType, recordStatusId: value}));
+  const dropdownHandler = (event,{name,value}) => {
+    setNewCategoryType((currentCategoryType) => ({...currentCategoryType, [name]: value}));
   }
 
   useEffect(() => {
@@ -129,7 +129,8 @@ export default function CategorytypeModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newCategoryType?.categoryTypeName|| !newCategoryType?.description|| !newCategoryType?.recordStatusId;
+      !newCategoryType?.categoryTypeName|| 
+       !newCategoryType?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newCategoryType]);
 
@@ -159,7 +160,7 @@ export default function CategorytypeModel({
             className={styles.stFormContainer}
             controlId="formCategoryType"
           >
-            <Form.Label>CategoryTypename</Form.Label>
+            <Form.Label>CategoryTypename<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="categoryTypeName"
@@ -179,10 +180,10 @@ export default function CategorytypeModel({
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="recordStatus">
-            <Form.Label>RecordStatus</Form.Label>
+            <Form.Label>Status<span className="required">*</span></Form.Label>
             <Dropdown
-              name="actionName"
-              placeholder='Select Action'
+              name="recordStatusId"
+              placeholder='Select Status'
               fluid
               search
               selection

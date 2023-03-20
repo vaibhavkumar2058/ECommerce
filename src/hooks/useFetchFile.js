@@ -93,6 +93,7 @@ import {
 
   // File UPDATE  ACTIONS
   const updateFile = (fileId, file) => {
+    debugger;
 
     return API.put(`${hapyCarURL}/${fileId}`,
       { data: file },

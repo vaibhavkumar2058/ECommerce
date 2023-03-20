@@ -72,7 +72,7 @@ export default function AddressTypes() {
 
   const columns = [
 
-    { dataField: 'addressTypeId', text: 'AddressType Id', sort: true, hidden: true },
+    { dataField: 'addressTypeId', text: 'AddressType', sort: true, hidden: true },
     { dataField: 'addressTypeName', text: 'AddressTypeName', sort: true, },
     { dataField: 'description', text: ' Description', sort: true },
     { dataField: 'recordStatusId', text: ' RecordStatus', sort: true },

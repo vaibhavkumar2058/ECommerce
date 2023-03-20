@@ -364,7 +364,7 @@ export default function Products() {
         </div>)}
         {/* <!--- Model Box ---> */}
         <div className="model_box">
-          <Modal
+          <Modal dialogClassName="my-modal" 
             show={show}
             onHide={handleClose}
             backdrop="static"

@@ -114,8 +114,8 @@ export default function FolderModel({
     }
   };
 
-  const dropdownHandler = (event,{value}) => {
-    setNewFolder((currentFolder) => ({...currentFolder, recordStatusId: value}));
+  const dropdownHandler = (event,{name,value}) => {
+    setNewFolder((currentFolder) => ({...currentFolder, [name]: value}));
   }
 
   useEffect(() => {
@@ -138,7 +138,12 @@ export default function FolderModel({
       setButtonType("Update");
     }
     const isEnable =
-    !newFolder?.resourceId ||!newFolder?.parentFolderId || !newFolder?.folderName  || !newFolder?.isSystemGenerated || !newFolder?.isArchived || !newFolder?.isDeleted|| !newFolder?.recordStatusId;
+    !newFolder?.resourceId 
+    ||!newFolder?.parentFolderId 
+    || !newFolder?.folderName  
+    || !newFolder?.isArchived
+     || !newFolder?.isDeleted
+     || !newFolder?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newFolder]);
 
@@ -168,7 +173,7 @@ export default function FolderModel({
             className={styles.stFormContainer}
             controlId="formFolder"
           >
-            <Form.Label>ResourceId</Form.Label>
+            <Form.Label>Resource<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="resourceId"
@@ -178,7 +183,7 @@ export default function FolderModel({
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="ParentFolderId">
-            <Form.Label>ParentFolderId</Form.Label>
+            <Form.Label>ParentFolder<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="parentFolderId"
@@ -188,7 +193,7 @@ export default function FolderModel({
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="folderName">
-            <Form.Label>FolderName</Form.Label>
+            <Form.Label>FolderName<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="folderName"
@@ -210,7 +215,7 @@ export default function FolderModel({
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="isArchived">
-            <Form.Label>IsArchived</Form.Label>
+            <Form.Label>IsArchived<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="isArchived"
@@ -220,7 +225,7 @@ export default function FolderModel({
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="isArchived">
-            <Form.Label>IsDeleted</Form.Label>
+            <Form.Label>IsDeleted<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="isDeleted"
@@ -230,10 +235,10 @@ export default function FolderModel({
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="recordStatus">
-            <Form.Label>RecordStatus</Form.Label>
+            <Form.Label>Status<span className="required">*</span></Form.Label>
             <Dropdown
-              name="actionName"
-              placeholder='Select Action'
+              name="recordStatusId"
+              placeholder='Select Status'
               fluid
               search
               selection

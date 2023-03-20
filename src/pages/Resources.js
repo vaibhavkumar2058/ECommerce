@@ -188,7 +188,6 @@ export default function Resourcess() {
   };
 
   const handleEdit = (rowId, row) => {
-    debugger;
     setResources(row);
     //getResources ById(rowId);
     setId(rowId);
@@ -293,7 +292,7 @@ export default function Resourcess() {
         curedData.roleId = rawData?.role?.roleId;
         curedData.genderId = rawData?.gender?.genderId;
         curedData.mobileNumber=rawData?.mobileNumber;
-        curedData.resourceAttachmentTypeId = rawData?.resourceAttachment?.resourceAttachmentTypeId;
+        curedData.resourceAttachmentTypeId = rawData?.resourceAttachment?.resourceAttachmentTypeId ?? 1003;
         curedData.countryId = rawData?.address?.country.countryId;
         curedData.stateId=rawData?.address?.state.stateId;
         curedData.addressTypeId=rawData?.address?.addressTypeId;
@@ -302,7 +301,7 @@ export default function Resourcess() {
         curedData.isEmailVerified=rawData?.isEmailVerified;
         curedData.isMobileVerified=rawData?.isMobileVerified;
         curedData.recordStatusId = rawData?.recordStatusId;
-        curedData.filesId=rawData?.resourceAttachment?.files?.filesId ? rawData?.resourceAttachment?.files?.filesId : 0;
+        curedData.filesId=rawData?.resourceAttachment?.files?.filesId ?? 0;
         if(rawData?.resourceAttachment)
         curedData.resourcesImage = 'data:'+ rawData?.resourceAttachment?.files?.fileMimeType +';base64,'+ rawData?.resourceAttachment?.files?.base64;
         return curedData;
@@ -404,8 +403,8 @@ export default function Resourcess() {
 
         </div>)}
         {/* <!--- Model Box ---> */}
-        <div className="model_box">
-          <Modal
+        <div>
+          <Modal dialogClassName="my-modal" 
             show={show}
             onHide={handleClose}
             backdrop="static"

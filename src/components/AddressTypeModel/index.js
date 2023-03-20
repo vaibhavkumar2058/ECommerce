@@ -106,8 +106,8 @@ export default function AddressTypeModel({
     }
   };
 
-  const dropdownHandler = (event,{value}) => {
-    setNewAddressType((currentAddressType) => ({...currentAddressType, recordStatusId: value}));
+  const dropdownHandler = (event,{name,value}) => {
+    setNewAddressType((currentAddressType) => ({...currentAddressType, [name]: value}));
   }
 
   useEffect(() => {
@@ -131,7 +131,7 @@ export default function AddressTypeModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newAddressType?.addressTypeName || !newAddressType?.description || !newAddressType?.recordStatusId;
+       !newAddressType?.recordStatusId ;
     setSaveDisabled(isEnable);
   }, [newAddressType]);
 
@@ -161,11 +161,11 @@ export default function AddressTypeModel({
             className={styles.stFormContainer}
             controlId="formAddressType"
           >
-            <Form.Label>AddressType</Form.Label>
+            <Form.Label>AddressTypeName</Form.Label>
             <Form.Control
               type="text"
               name="addressTypeName"
-              placeholder="AddressTypeName"
+              placeholder=" Select AddressTypeName"
               value={newAddressType?.addressTypeName}
               onChange={changeHandler}
             />
@@ -181,10 +181,10 @@ export default function AddressTypeModel({
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="recordStatus">
-            <Form.Label>RecordStatus</Form.Label>
+            <Form.Label>Status<span className="required">*</span></Form.Label>
             <Dropdown
-              name="actionName"
-              placeholder='Select Action'
+              name="recordStatusId"
+              placeholder='Select Status'
               fluid
               search
               selection
