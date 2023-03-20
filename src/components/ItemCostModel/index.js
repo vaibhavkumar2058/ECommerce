@@ -289,7 +289,7 @@ export default function ItemCostModel({
             <Form.Label>Status<span className="required">*</span></Form.Label>
             <Dropdown
               name="recordStatusId"
-              placeholder=  'Select Status'
+              placeholder='Select Status'
               fluid
               search
               selection

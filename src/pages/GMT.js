@@ -81,7 +81,7 @@ export default function GMTs() {
     { dataField: 'latitude', text: 'Latitude', sort: true },
     //{ dataField: 'trackTime', text: 'TrackTime', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
-    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true },
+    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true, hidden: true },
         // columns follow dataField and text structure
     {
       dataField: "Actions",

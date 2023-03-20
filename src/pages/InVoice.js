@@ -82,13 +82,13 @@ export default function Invoices() {
 
   const columns = [
     { dataField: 'invoiceId', text: 'invoiceId', sort: true, hidden: true },
-    { dataField: 'resourcesId', text: 'ResourcesId', sort: true  },
-    { dataField: 'orderId', text: ' OrderId', sort: true },
+    { dataField: 'resourcesId', text: 'ResourcesId', sort: true, hidden: true  },
+    { dataField: 'orderId', text: ' OrderId', sort: true, hidden: true },
     { dataField: 'totalIncludeTax', text: 'totalIncludeTax', sort: true },
     { dataField: 'total', text: 'Total', sort: true },
     //{ dataField: 'invoiceDate', text: 'InvoiceDate', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
-    { dataField: 'recordStatusId', text: ' RecordStatus', sort: true },
+    { dataField: 'recordStatusId', text: ' RecordStatus', sort: true, hidden: true },
     // columns follow dataField and text structure
     {
       dataField: "Actions",
