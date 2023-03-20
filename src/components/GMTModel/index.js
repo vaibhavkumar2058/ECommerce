@@ -157,6 +157,8 @@ export default function GMTModel({
       )}
       {!isDelete && (
         <Form>
+          <div className="row">
+            <div className="col-md-6">
           <Form.Group
             className={styles.stFormContainer}
             controlId="formGMT"
@@ -170,6 +172,8 @@ export default function GMTModel({
               onChange={changeHandler}
             />
           </Form.Group>
+          </div>
+          <div className="col-md-6">
           <Form.Group className="mb-3" controlId="longitude">
             <Form.Label>Longitude<span className="required">*</span></Form.Label>
             <Form.Control
@@ -180,6 +184,10 @@ export default function GMTModel({
               onChange={changeHandler}
             />
           </Form.Group>
+          </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
 
           <Form.Group className="mb-3" controlId="latitude">
             <Form.Label>Latitude<span className="required">*</span></Form.Label>
@@ -191,8 +199,8 @@ export default function GMTModel({
               onChange={changeHandler}
             />
           </Form.Group>
-
-
+          </div>
+          <div className="col-md-6">
           <Form.Group className="mb-3" controlId="description">
             <Form.Label>Description</Form.Label>
             <Form.Control
@@ -203,7 +211,10 @@ export default function GMTModel({
               onChange={changeHandler}
             />
           </Form.Group>
-
+          </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
          
           <Form.Group className="mb-3" controlId="recordStatus">
             <Form.Label>RecordStatus<span className="required">*</span></Form.Label>
@@ -218,6 +229,8 @@ export default function GMTModel({
               onChange={dropdownHandler}
             />
           </Form.Group>
+          </div>
+          </div>
 
           {/* <Form.Group className="mb-3" controlId="tracktime">
             <Form.Label>TrackTime</Form.Label>

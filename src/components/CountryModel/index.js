@@ -156,6 +156,8 @@ export default function CountryModel({
       )}
       {!isDelete && (
         <Form>
+          <div className="row">
+          <div className="col-md-6">
           <Form.Group
             className={styles.stFormContainer}
             controlId="formCountry"
@@ -169,6 +171,8 @@ export default function CountryModel({
               onChange={changeHandler}
             />
           </Form.Group>
+          </div>
+          <div className="col-md-6">
           <Form.Group className="mb-3" controlId="regioncode">
             <Form.Label>Region<span className="required">*</span></Form.Label>
             <Form.Control
@@ -179,8 +183,10 @@ export default function CountryModel({
               onChange={changeHandler}
             />
           </Form.Group>
-
-
+          </div>
+          </div>
+          <div className="row">
+          <div className="col-md-6">
           <Form.Group className="mb-3" controlId="description">
             <Form.Label>Description</Form.Label>
             <Form.Control
@@ -191,7 +197,8 @@ export default function CountryModel({
               onChange={changeHandler}
             />
           </Form.Group>
-
+          </div>
+          <div className="col-md-6">
           <Form.Group className="mb-3" controlId="recordStatus">
             <Form.Label>Status<span className="required">*</span></Form.Label>
             <Dropdown
@@ -205,6 +212,8 @@ export default function CountryModel({
               onChange={dropdownHandler}
             />
           </Form.Group>
+          </div>
+          </div>
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel
