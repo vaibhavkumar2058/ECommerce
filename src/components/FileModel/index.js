@@ -153,7 +153,9 @@ export default function FileModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newFile?.resourceId ||!newFile?.folderId||!newFile?.recordStatusId;
+      !newFile?.resourceId 
+      ||!newFile?.folderId
+      ||!newFile?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newFile]);
 
@@ -186,7 +188,7 @@ export default function FileModel({
             <Form.Label>Folder<span className="required">*</span></Form.Label>
             <Dropdown
               name="folderId"
-              placeholder="Select Folder"
+              placeholder="Select FolderId"
               fluid
               search
               selection
@@ -195,7 +197,7 @@ export default function FileModel({
               onChange={dropdownHandler}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="mobile">
+          <Form.Group className="mb-3" controlId="resourceId">
             <Form.Label>Resource<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
@@ -206,11 +208,11 @@ export default function FileModel({
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="recordStatus">
+          <Form.Group className="mb-3" controlId="recordStatusId">
             <Form.Label>Status<span className="required">*</span></Form.Label>
             <Dropdown
               name="recordStatusId"
-              placeholder='Select Status'
+              placeholder='Select RecordStatusId'
               fluid
               search
               selection

@@ -93,10 +93,11 @@ import {
 
   // File UPDATE  ACTIONS
   const updateFile = (fileId, file) => {
-    debugger;
+    const formData = new FormData();
+    Object.keys(file).forEach((key) => formData.append(key,file[key]));
 
     return API.put(`${hapyCarURL}/${fileId}`,
-      { data: file },
+      { data: formData },
       { suppressErrors: [400] }
     )
       .then(({ data

@@ -176,6 +176,8 @@ export default function TaxModel({
       )}
       {!isDelete && (
         <Form>
+           <div className="row">
+            <div className="col-md-6">
           <Form.Group
             className={styles.stFormContainer}
             controlId="formTax"
@@ -192,6 +194,8 @@ export default function TaxModel({
               onChange={dropdownHandler}
             />
           </Form.Group>
+          </div>
+          <div className="col-md-6">
           <Form.Group className="mb-3" controlId="TaxValue">
             <Form.Label>TaxValue</Form.Label>
             <Form.Control
@@ -202,7 +206,10 @@ export default function TaxModel({
               onChange={changeHandler}
             />
           </Form.Group>
-          
+          </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
 
           <Form.Group className="mb-3" controlId="TaxDescription">
             <Form.Label>TaxDescription</Form.Label>
@@ -214,8 +221,11 @@ export default function TaxModel({
               onChange={changeHandler}
             />
           </Form.Group>
+          </div>
+          <div className="col-md-6">
+
           <Form.Group className="mb-3" controlId="recordStatus">
-            <Form.Label>RecordStatus</Form.Label>
+            <Form.Label>Status</Form.Label>
             <Dropdown
               name="recordStatusId"
               placeholder='Select Action'
@@ -227,6 +237,8 @@ export default function TaxModel({
               onChange={dropdownHandler}
             />
           </Form.Group>
+          </div>
+          </div>
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel

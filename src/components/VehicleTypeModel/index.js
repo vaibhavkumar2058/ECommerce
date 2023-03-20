@@ -157,6 +157,8 @@ export default function VehicleTypeModel({
       )}
       {!isDelete && (
         <Form>
+          <div className="row">
+            <div className="col-md-6">
           <Form.Group
             className={styles.stFormContainer}
             controlId="formVehicleType"
@@ -170,7 +172,8 @@ export default function VehicleTypeModel({
               onChange={changeHandler}
             />
           </Form.Group>
-
+          </div>
+          <div className="col-md-6">
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Description</Form.Label>
             <Form.Control
@@ -181,7 +184,9 @@ export default function VehicleTypeModel({
               onChange={changeHandler}
             />
           </Form.Group>
-
+          </div>
+          </div>
+          
           <Form.Group className="mb-3" controlId="recordStatus">
             <Form.Label>Status</Form.Label>
             <Dropdown
@@ -195,6 +200,8 @@ export default function VehicleTypeModel({
               onChange={dropdownHandler}
             />
           </Form.Group>
+         
+
           {/* <Form.Group>
             <input
               type="file"

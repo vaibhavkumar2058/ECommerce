@@ -169,6 +169,8 @@ export default function FolderModel({
       )}
       {!isDelete && (
         <Form>
+          <div className="row">
+          <div className="col-md-6">
           <Form.Group
             className={styles.stFormContainer}
             controlId="formFolder"
@@ -182,6 +184,8 @@ export default function FolderModel({
               onChange={changeHandler}
             />
           </Form.Group>
+          </div>
+          <div className="col-md-6">
           <Form.Group className="mb-3" controlId="ParentFolderId">
             <Form.Label>ParentFolder<span className="required">*</span></Form.Label>
             <Form.Control
@@ -192,6 +196,10 @@ export default function FolderModel({
               onChange={changeHandler}
             />
           </Form.Group>
+          </div>
+          </div>
+          <div className="row">
+          <div className="col-md-6">
           <Form.Group className="mb-3" controlId="folderName">
             <Form.Label>FolderName<span className="required">*</span></Form.Label>
             <Form.Control
@@ -202,7 +210,8 @@ export default function FolderModel({
               onChange={changeHandler}
             />
           </Form.Group>
-          
+          </div>
+          <div className="col-md-6">
           <Form.Group className="mb-3" controlId="isSystemGenerated">
             <Form.Label>IsSystemGenerated</Form.Label>
             <Form.Control
@@ -213,7 +222,10 @@ export default function FolderModel({
               onChange={changeHandler}
             />
           </Form.Group>
-
+          </div>
+          </div>
+          <div className="row">
+          <div className="col-md-6">
           <Form.Group className="mb-3" controlId="isArchived">
             <Form.Label>IsArchived<span className="required">*</span></Form.Label>
             <Form.Control
@@ -224,6 +236,8 @@ export default function FolderModel({
               onChange={changeHandler}
             />
           </Form.Group>
+          </div>
+          <div className="col-md-6">
           <Form.Group className="mb-3" controlId="isArchived">
             <Form.Label>IsDeleted<span className="required">*</span></Form.Label>
             <Form.Control
@@ -234,6 +248,10 @@ export default function FolderModel({
               onChange={changeHandler}
             />
           </Form.Group>
+          </div>
+          </div>
+          <div className="row">
+          <div className="col-md-6">
           <Form.Group className="mb-3" controlId="recordStatus">
             <Form.Label>Status<span className="required">*</span></Form.Label>
             <Dropdown
@@ -247,6 +265,8 @@ export default function FolderModel({
               onChange={dropdownHandler}
             />
           </Form.Group>
+          </div>
+          </div>
           
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
