@@ -76,11 +76,11 @@ export default function States() {
 
   const columns = [
 
-    { dataField: 'stateId', text: 'State Id', sort: true, hidden: true },
-    { dataField: 'stateName', text: 'State', sort: true },
-    { dataField: 'countryId', text: 'Country', sort: true },
+    { dataField: 'stateId', text: 'State Id', sort: true, hidden: true , hidden:true },
+    { dataField: 'stateName', text: 'State', sort: true , hidden:true},
+    { dataField: 'countryId', text: 'Country', sort: true , hidden:true },
     { dataField: 'description', text: 'Description', sort: true },
-    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true },
+    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true , hidden:true },
      // columns follow dataField and text structure
     {
       dataField: "Actions",
