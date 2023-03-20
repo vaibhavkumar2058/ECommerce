@@ -198,7 +198,7 @@ export default function ProductModel({
                 className={styles.stFormContainer}
                 controlId="formProduct"
               >
-                <Form.Label>ProductName<span className="required">*</span></Form.Label>
+                <Form.Label>Product Name<span className="required">*</span></Form.Label>
                 <Form.Control
                   type="text"
                   name="productName"
@@ -230,7 +230,7 @@ export default function ProductModel({
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="categoryType">
-            <Form.Label>CategoryType<span className="required">*</span></Form.Label>
+            <Form.Label>Category Type<span className="required">*</span></Form.Label>
             <Dropdown
               name="categoryTypeId"
               placeholder='Select CategoryType'
@@ -243,7 +243,7 @@ export default function ProductModel({
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="recordStatus">
-            <Form.Label>RecordStatus<span className="required">*</span></Form.Label>
+            <Form.Label>Status<span className="required">*</span></Form.Label>
             <Dropdown
               name="recordStatusId"
               placeholder='Select Status'

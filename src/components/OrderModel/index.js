@@ -175,15 +175,13 @@ const dropdownHandler = (event,{name,value}) => {
       )}
       {!isDelete && (
         <Form>
+          <div className="row">
+            <div className="col-md-6">
           <Form.Group
             className={styles.stFormContainer}
             controlId="formOrder"
           >
-            
           </Form.Group>
-
-          
-          
 
           <Form.Group className="mb-3" controlId="orderItemId">
             <Form.Label>Order Item<span className="required">*</span></Form.Label>
@@ -195,8 +193,9 @@ const dropdownHandler = (event,{name,value}) => {
               onChange={changeHandler}
             />
           </Form.Group>
+          </div>
 
-
+          <div className="col-md-6">
            <Form.Group className="mb-3" controlId="orderDate">
             <Form.Label>Order Date<span className="required">*</span></Form.Label>
             <Form.Control
@@ -207,6 +206,10 @@ const dropdownHandler = (event,{name,value}) => {
               onChange={changeHandler}
             />
           </Form.Group> 
+          </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
           <Form.Group className="mb-3" controlId="resourcesId">
             <Form.Label>Resources<span className="required">*</span></Form.Label>
             <Form.Control
@@ -217,6 +220,8 @@ const dropdownHandler = (event,{name,value}) => {
               onChange={changeHandler}
             />
           </Form.Group> 
+          </div>
+          <div className="col-md-6">
           <Form.Group className="mb-3" controlId="description">
             <Form.Label>Description</Form.Label>
             <Form.Control
@@ -227,8 +232,10 @@ const dropdownHandler = (event,{name,value}) => {
               onChange={changeHandler}
             />
           </Form.Group>
-
-
+          </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
           <Form.Group className="mb-3" controlId="recordStatus">
             <Form.Label>Status<span className="required">*</span></Form.Label>
             <Dropdown
@@ -242,10 +249,8 @@ const dropdownHandler = (event,{name,value}) => {
               onChange={dropdownHandler}
             />
           </Form.Group>
-          
-
-
-
+          </div>
+          </div>
           
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>

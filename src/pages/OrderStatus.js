@@ -76,7 +76,7 @@ export default function OrderStatus() {
     { dataField: 'orderStatusId', text: 'orderStatus Id', sort: true, hidden: true },
     { dataField: 'orderStatusName', text: 'OrderStatus Name', sort: true },
     
-    { dataField: 'recordStatusId', text: 'RecordStatus Id', sort: true },
+    { dataField: 'recordStatusId', text: 'RecordStatus Id', sort: true , hidden: true},
     { dataField: 'description', text: 'Description', sort: true,},
     
     
