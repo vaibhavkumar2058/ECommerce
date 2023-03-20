@@ -66,9 +66,9 @@ export default function ProductAttachments() {
   } = useFetchProductAttachments();
 
   const columns = [
-    { dataField: 'productAttachmentsId', text: 'productAttachmentsId', sort: true, hidden: true },
-    { dataField: 'productId', text: 'ProductId ', sort: true,  },
-    { dataField: 'filesId', text: 'FilesId ', sort: true ,},
+    { dataField: 'productAttachmentsId', text: 'productAttachmentsId', sort: true,hidden: true },
+    { dataField: 'productId', text: 'ProductId ', sort: true,hidden: true  },
+    { dataField: 'filesId', text: 'FilesId ', sort: true ,hidden: true},
     { dataField: 'description', text: 'Description', sort: true,},
     
     

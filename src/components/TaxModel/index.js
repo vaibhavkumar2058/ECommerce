@@ -176,11 +176,13 @@ export default function TaxModel({
       )}
       {!isDelete && (
         <Form>
+           <div className="row">
+            <div className="col-md-6">
           <Form.Group
             className={styles.stFormContainer}
             controlId="formTax"
           >
-            <Form.Label>ProductId</Form.Label>
+            <Form.Label>Product<span className="required">*</span></Form.Label>
             <Dropdown
               name="productId"
               placeholder='Select Product'
@@ -192,8 +194,10 @@ export default function TaxModel({
               onChange={dropdownHandler}
             />
           </Form.Group>
+          </div>
+          <div className="col-md-6">
           <Form.Group className="mb-3" controlId="TaxValue">
-            <Form.Label>TaxValue</Form.Label>
+            <Form.Label>TaxValue<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="taxValue"
@@ -202,7 +206,10 @@ export default function TaxModel({
               onChange={changeHandler}
             />
           </Form.Group>
-          
+          </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
 
           <Form.Group className="mb-3" controlId="TaxDescription">
             <Form.Label>TaxDescription</Form.Label>
@@ -214,8 +221,11 @@ export default function TaxModel({
               onChange={changeHandler}
             />
           </Form.Group>
+          </div>
+          <div className="col-md-6">
+
           <Form.Group className="mb-3" controlId="recordStatus">
-            <Form.Label>RecordStatus</Form.Label>
+            <Form.Label>Status<span className="required">*</span></Form.Label>
             <Dropdown
               name="recordStatusId"
               placeholder='Select Action'
@@ -227,6 +237,8 @@ export default function TaxModel({
               onChange={dropdownHandler}
             />
           </Form.Group>
+          </div>
+          </div>
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel

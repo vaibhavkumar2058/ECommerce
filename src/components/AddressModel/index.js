@@ -369,7 +369,7 @@ export default function AddressModel({
               </Form.Group>
             </div>
             <div className="col-md-6">
-              <Form.Group className="mb-3" controlId="recordStatus">
+              <Form.Group className="mb-3" controlId="recordStatusId">
                 <Form.Label>Status<span className="required">*</span></Form.Label>
                 <Dropdown
                   name="recordStatusId"

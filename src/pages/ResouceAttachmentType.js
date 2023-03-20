@@ -68,7 +68,7 @@ export default function ResourceAttachmentType() {
   const columns = [
 
     
-    { dataField: 'resourceAttachmentTypeId', text: 'ResourceAttachmentTypeID', sort: true },
+    { dataField: 'resourceAttachmentTypeId', text: 'ResourceAttachmentTypeID', sort: true , hidden:true },
     { dataField: 'displayText', text: 'DisplayText', sort: true },
     { dataField: 'sortOrder', text: 'SortOrder', sort: true },
     { dataField: 'isActive', text: 'IsActive', sort: true },

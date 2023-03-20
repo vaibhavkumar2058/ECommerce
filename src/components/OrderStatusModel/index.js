@@ -170,7 +170,7 @@ export default function OrderStatusModel({
             controlId="formOrderStatus"
           >
             
-            <Form.Label>Order Status</Form.Label>
+            <Form.Label>Order Status<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="orderStatusName"

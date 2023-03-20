@@ -18,7 +18,7 @@ import Security from "../pages/Security";
 import AddressType from "../pages/AddressType";
 import Address from "../pages/Address";
 import Cart from "../pages/Cart";
-import Invoice from "../pages/InVoice";
+import Invoice from "../pages/Invoice";
 import Country from "../pages/country";
 import Gender from "../pages/Gender";
 import GMT from "../pages/GMT";

@@ -192,6 +192,8 @@ export default function OrderTrackingModel({
       )}
       {!isDelete && (
         <Form>
+          <div className="row">
+          <div className="col-md-6">
           <Form.Group
             className={styles.stFormContainer}
             controlId="formOrderTracking"
@@ -205,11 +207,12 @@ export default function OrderTrackingModel({
               onChange={changeHandler}
             />
           </Form.Group>
-          
+          </div>
+          <div className="col-md-6">
           <Form.Group className="mb-3" controlId="orderStatusId">
             <Form.Label>Order Status<span className="required">*</span></Form.Label>
             <Dropdown
-              name="orderStatusName"
+              name="orderStatusId"
               placeholder='Select OrderStatus'
               fluid
               search
@@ -219,8 +222,10 @@ export default function OrderTrackingModel({
               onChange={dropdownHandler}
             />
           </Form.Group>
-
-
+          </div>  
+          </div>
+          <div className="row">
+          <div className="col-md-6">
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Description</Form.Label>
             <Form.Control
@@ -230,7 +235,9 @@ export default function OrderTrackingModel({
               value={newOrderTracking?.description}
               onChange={changeHandler}
             />
-          </Form.Group>
+          </Form.Group>.
+          </div>
+          <div className="col-md-6">
           <Form.Group className="mb-3" controlId="recordStatus">
             <Form.Label>Status<span className="required">*</span></Form.Label>
             <Dropdown
@@ -244,8 +251,8 @@ export default function OrderTrackingModel({
               onChange={dropdownHandler}
             />
           </Form.Group>
-          
-
+          </div>
+          </div>
           
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>

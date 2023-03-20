@@ -32,6 +32,7 @@ export default function ItemCostModel({
     price:null,
     description: "",
     recordStatusId:null,
+
   });
 
   const [messageStatus, setMessageStatus] = useState({
@@ -210,6 +211,8 @@ export default function ItemCostModel({
       )}
       {!isDelete && (
         <Form>
+          <div className="row">
+            <div className="col-md-6">
           <Form.Group
             className={styles.stFormContainer}
             controlId="formItemCost"
@@ -226,11 +229,13 @@ export default function ItemCostModel({
               onChange={dropdownHandler}
             />
           </Form.Group>
+          </div>
+          <div className="col-md-6">
           <Form.Group className="mb-3" controlId="measurementTypeId">
             <Form.Label>MeasurementType<span className="required">*</span></Form.Label>
             <Dropdown
               name="measurementTypeId"
-              placeholder=" Select measurementTypeName"
+              placeholder=" Select measurementType"
               fluid
               search
               selection
@@ -239,6 +244,10 @@ export default function ItemCostModel({
               onChange={dropdownHandler}
             />
           </Form.Group>
+          </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
 
           <Form.Group className="mb-3" controlId="MeasurementValueId">
             <Form.Label>MeasurementValue<span className="required">*</span></Form.Label>
@@ -253,6 +262,8 @@ export default function ItemCostModel({
               onChange={dropdownHandler}
             />
           </Form.Group>
+          </div>
+          <div className="col-md-6">
 
           <Form.Group className="mb-3" controlId="customTypeId">
             <Form.Label>CustomType<span className="required">*</span></Form.Label>
@@ -264,6 +275,10 @@ export default function ItemCostModel({
               onChange={changeHandler}
             />
           </Form.Group>
+          </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
           <Form.Group className="mb-3" controlId="price">
             <Form.Label>Price<span className="required">*</span></Form.Label>
             <Form.Control
@@ -274,7 +289,8 @@ export default function ItemCostModel({
               onChange={changeHandler}
             />
           </Form.Group>
-
+          </div>
+          <div className="col-md-6">
           <Form.Group className="mb-3" controlId="description">
             <Form.Label>Description</Form.Label>
             <Form.Control
@@ -285,11 +301,15 @@ export default function ItemCostModel({
               onChange={changeHandler}
             />
           </Form.Group>
+          </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
           <Form.Group className="mb-3" controlId="recordStatusId">
-            <Form.Label>RecordStatus<span className="required">*</span></Form.Label>
+            <Form.Label>Status<span className="required">*</span></Form.Label>
             <Dropdown
               name="recordStatusId"
-              placeholder=  'Select Status'
+              placeholder='Select Status'
               fluid
               search
               selection
@@ -298,6 +318,8 @@ export default function ItemCostModel({
               onChange={dropdownHandler}
             />
           </Form.Group>
+          </div>
+          </div>
 
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>

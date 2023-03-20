@@ -169,6 +169,16 @@ export default function NotificationTypeModel({
               onChange={changeHandler}
             />
           </Form.Group>
+          <Form.Group className="mb-3" controlId="description">
+            <Form.Label>Description</Form.Label>
+            <Form.Control
+              type="text"
+              name="description"
+              placeholder="Description"
+              value={newNotificationType?.description}
+              onChange={changeHandler}
+            />
+          </Form.Group>
 
           <Form.Group className="mb-3" controlId="recordStatus">
             <Form.Label>RecordStatus<span className="required">*</span></Form.Label>
@@ -185,16 +195,7 @@ export default function NotificationTypeModel({
           </Form.Group>
 
 
-          <Form.Group className="mb-3" controlId="description">
-            <Form.Label>Description</Form.Label>
-            <Form.Control
-              type="text"
-              name="description"
-              placeholder="Description"
-              value={newNotificationType?.description}
-              onChange={changeHandler}
-            />
-          </Form.Group>
+          
                     
           
           <Modal.Footer>

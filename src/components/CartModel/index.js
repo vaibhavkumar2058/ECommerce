@@ -19,23 +19,23 @@ export default function CartModel({
   id,
   onClose,
   cartData,
- 
-  recordStatusList =[],
+
+  recordStatusList = [],
   productList = [],
-  
+
   // recordStatuses,
 }) {
   const [newCart, setNewCart] = useState({
-    resourcesId:null,
-    productId:null,
-    cost:null,
-    quantity:"",
-    description:"",
-    recordStatusId:null,
+    resourcesId: null,
+    productId: null,
+    cost: null,
+    quantity: "",
+    description: "",
+    recordStatusId: null,
   });
- 
 
-    
+
+
 
 
   const [fileSelected, setFileSelected] = useState();
@@ -54,15 +54,15 @@ export default function CartModel({
       value: product.productId,
     })).filter((item) => item));
 
-    const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus, item) => (
-      {
-        key: item,
-        text: recordStatus.actionName,
-        value: recordStatus.recordStatusId,
-      })).filter((item) => item));
+  const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus, item) => (
+    {
+      key: item,
+      text: recordStatus.actionName,
+      value: recordStatus.recordStatusId,
+    })).filter((item) => item));
 
 
-  
+
 
   const [saveDisabled, setSaveDisabled] = useState(true);
   const [buttonType, setButtonType] = useState("Save");
@@ -87,7 +87,7 @@ export default function CartModel({
     });
   };
 
-  
+
 
   const saveHandler = async () => {
     newCart.file = fileSelected;
@@ -134,8 +134,8 @@ export default function CartModel({
       })
     }
   };
-  const dropdownHandler = (event,{name,value}) => {
-    setNewCart((currentCart) => ({...currentCart, [name]: value}));
+  const dropdownHandler = (event, { name, value }) => {
+    setNewCart((currentCart) => ({ ...currentCart, [name]: value }));
   }
   useEffect(() => {
     if (isEdit) {
@@ -143,24 +143,24 @@ export default function CartModel({
     }
   }, []);
 
-  
-  useEffect(() => { 
-    setProductOptions(productList.map((product,item) =>(
-      {
-      key: item,
-      text: product.productName,
-      value: product.productId,
-    })).filter((item) => item));
-    }, [productList]);
 
-    useEffect(() => { 
-      setRecordStatusOptions(recordStatusList.map((recordStatus,item) =>(
-        {
+  useEffect(() => {
+    setProductOptions(productList.map((product, item) => (
+      {
+        key: item,
+        text: product.productName,
+        value: product.productId,
+      })).filter((item) => item));
+  }, [productList]);
+
+  useEffect(() => {
+    setRecordStatusOptions(recordStatusList.map((recordStatus, item) => (
+      {
         key: item,
         text: recordStatus.actionName,
         value: recordStatus.recordStatusId,
       })).filter((item) => item));
-      }, [recordStatusList]);
+  }, [recordStatusList]);
 
   useEffect(() => {
     if (isEdit) {
@@ -168,9 +168,9 @@ export default function CartModel({
     }
     const isEnable =
       !newCart?.resourcesId ||
-       !newCart?.productId  || !newCart?.cost || 
-       !newCart?.quantity||
-        !newCart?.recordStatusId;
+      !newCart?.productId || !newCart?.cost ||
+      !newCart?.quantity ||
+      !newCart?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newCart]);
 
@@ -196,81 +196,95 @@ export default function CartModel({
       )}
       {!isDelete && (
         <Form>
+          <div className="row">
+            <div className="col-md-6">
+              <Form.Group
 
+                className={styles.stFormContainer}
+                controlId="formCart"
+              >
 
-          <Form.Group
-            className={styles.stFormContainer}
-            controlId="formCart"
-          >
-            <Form.Label>Resources<span className="required">*</span></Form.Label>
-            <Form.Control
-              type="resourceId"
-              name="resourcesId"
-              placeholder=" Select Resources"
-              value={newCart?.resourcesId}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="productId">
-            <Form.Label>Product<span className="required">*</span></Form.Label>
-            <Dropdown
-              name="productId"
-              placeholder=" Select Product"
-              fluid
-              search
-              selection
-              options={productOptions}
-              value={newCart?.productId}
-              onChange={dropdownHandler}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="cost">
-            <Form.Label>Cost<span className="required">*</span></Form.Label>
-            <Form.Control
-              type="cost"
-              name="cost"
-              placeholder=" Select Cost"
-              value={newCart?.cost}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="quantity">
-            <Form.Label>Quantity<span className="required">*</span></Form.Label>
-            <Form.Control
-              type="quantity"
-              name="quantity"
-              placeholder=" Select Quantity"
-              value={newCart?.quantity}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="description">
-            <Form.Label>Description</Form.Label>
-            <Form.Control
-              type="text"
-              name="description"
-              placeholder="Description"
-              value={newCart?.description}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="recordStatusId">
-            <Form.Label>Status<span className="required">*</span></Form.Label>
-            <Dropdown
-              name="recordStatusId"
-              placeholder=" Select Status"
-              fluid
-              search
-              selection
-              options={recordStatusOptions}
-              value={newCart?.recordStatusId}
-              onChange={dropdownHandler}
-            />
-          </Form.Group>
-          
-          
+                <Form.Label>Resources<span className="required">*</span></Form.Label>
+                <Form.Control
+                  type="resourceId"
+                  name="resourcesId"
+                  placeholder=" Select Resources"
+                  value={newCart?.resourcesId}
+                  onChange={changeHandler}
+                />
+              </Form.Group>
+            </div>
+            <div className="col-md-6">
+              <Form.Group className="mb-3" controlId="productId">
+                <Form.Label>Product<span className="required">*</span></Form.Label>
+                <Dropdown
+                  name="productId"
+                  placeholder=" Select Product"
+                  fluid
+                  search
+                  selection
+                  options={productOptions}
+                  value={newCart?.productId}
+                  onChange={dropdownHandler}
+                />
+              </Form.Group>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
+              <Form.Group className="mb-3" controlId="cost">
+                <Form.Label>Cost<span className="required">*</span></Form.Label>
+                <Form.Control
+                  type="cost"
+                  name="cost"
+                  placeholder=" Select Cost"
+                  value={newCart?.cost}
+                  onChange={changeHandler}
+                />
+              </Form.Group>
+            </div>
+            <div className="col-md-6">
+              <Form.Group className="mb-3" controlId="quantity">
+                <Form.Label>Quantity<span className="required">*</span></Form.Label>
+                <Form.Control
+                  type="quantity"
+                  name="quantity"
+                  placeholder=" Select Quantity"
+                  value={newCart?.quantity}
+                  onChange={changeHandler}
+                />
+              </Form.Group>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
+              <Form.Group className="mb-3" controlId="description">
+                <Form.Label>Description</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="description"
+                  placeholder="Description"
+                  value={newCart?.description}
+                  onChange={changeHandler}
+                />
+              </Form.Group>
+            </div>
+            <div className="col-md-6">
+              <Form.Group className="mb-3" controlId="recordStatusId">
+                <Form.Label>Status<span className="required">*</span></Form.Label>
+                <Dropdown
+                  name="recordStatusId"
+                  placeholder=" Select Status"
+                  fluid
+                  search
+                  selection
+                  options={recordStatusOptions}
+                  value={newCart?.recordStatusId}
+                  onChange={dropdownHandler}
+                />
+              </Form.Group>
+            </div>
+          </div>
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel
@@ -326,17 +340,17 @@ CartModel.propTypes = {
   /**
 * products for object type
 */
-products: PropTypes.any,
-/**
- 
-* produtList for object type
-*/
- produtList: PropTypes.any,
- /**
- 
-* recordStatusList for object type
-*/
-recordStatusList: PropTypes.any,
+  products: PropTypes.any,
+  /**
+   
+  * produtList for object type
+  */
+  produtList: PropTypes.any,
+  /**
+  
+ * recordStatusList for object type
+ */
+  recordStatusList: PropTypes.any,
 };
 
 CartModel.defaultProps = {
@@ -349,9 +363,9 @@ CartModel.defaultProps = {
   onClose: null,
   id: null,
   cartData: null,
- 
-  productList:null,
-  recordStatusList:null,
- 
+
+  productList: null,
+  recordStatusList: null,
+
 };
 

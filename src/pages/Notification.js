@@ -79,11 +79,11 @@ export default function Notifications() {
   
   const columns = [
 
-    { dataField: 'notificationTypeId', text: 'NotificationTypeId', sort: true},
-    { dataField: 'notificationId', text: 'NotificationId', sort: true},
+    { dataField: 'notificationTypeId', text: 'NotificationTypeId', sort: true, hidden: true},
+    { dataField: 'notificationId', text: 'NotificationId', sort: true, hidden: true},
     { dataField: 'notificationName', text: ' NotificationName', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
-    { dataField: 'recordStatusId', text: ' RecordStatus', sort: true },
+    { dataField: 'recordStatusId', text: ' RecordStatus', sort: true, hidden: true },
     // columns follow dataField and text structure
     {
       dataField: "Actions",
