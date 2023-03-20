@@ -182,7 +182,7 @@ export default function TaxModel({
             className={styles.stFormContainer}
             controlId="formTax"
           >
-            <Form.Label>ProductId</Form.Label>
+            <Form.Label>Product<span className="required">*</span></Form.Label>
             <Dropdown
               name="productId"
               placeholder='Select Product'
@@ -197,7 +197,7 @@ export default function TaxModel({
           </div>
           <div className="col-md-6">
           <Form.Group className="mb-3" controlId="TaxValue">
-            <Form.Label>TaxValue</Form.Label>
+            <Form.Label>TaxValue<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="taxValue"
@@ -225,7 +225,7 @@ export default function TaxModel({
           <div className="col-md-6">
 
           <Form.Group className="mb-3" controlId="recordStatus">
-            <Form.Label>Status</Form.Label>
+            <Form.Label>Status<span className="required">*</span></Form.Label>
             <Dropdown
               name="recordStatusId"
               placeholder='Select Action'

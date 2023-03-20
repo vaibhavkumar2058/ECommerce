@@ -161,7 +161,7 @@ export default function AddressTypeModel({
             className={styles.stFormContainer}
             controlId="formAddressType"
           >
-            <Form.Label>AddressTypeName</Form.Label>
+            <Form.Label>AddressTypeName<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="addressTypeName"

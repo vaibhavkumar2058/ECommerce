@@ -163,7 +163,7 @@ export default function VehicleTypeModel({
             className={styles.stFormContainer}
             controlId="formVehicleType"
           >
-            <Form.Label>VehicleTypeName</Form.Label>
+            <Form.Label>VehicleTypeName<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="vehicleTypeName"
@@ -186,9 +186,11 @@ export default function VehicleTypeModel({
           </Form.Group>
           </div>
           </div>
+          <div className="row">
+            <div className="col-md-6">
           
           <Form.Group className="mb-3" controlId="recordStatus">
-            <Form.Label>Status</Form.Label>
+            <Form.Label>Status<span className="required">*</span></Form.Label>
             <Dropdown
               name="recordStatusId"
               placeholder='Select Action'
@@ -200,6 +202,8 @@ export default function VehicleTypeModel({
               onChange={dropdownHandler}
             />
           </Form.Group>
+          </div>
+          </div>
          
 
           {/* <Form.Group>

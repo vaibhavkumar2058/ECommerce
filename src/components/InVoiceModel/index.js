@@ -209,7 +209,7 @@ export default function InvoiceModel({
           </div>
           <div className="col-md-6"> 
           <Form.Group className="mb-3" controlId="totalIncludeTax">
-            <Form.Label>TotalIncludeTax</Form.Label>
+            <Form.Label>TotalIncludeTax<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="totalIncludeTax"

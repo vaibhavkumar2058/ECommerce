@@ -145,7 +145,7 @@ export default function ResourceAttachmentsModel({
             className={styles.stFormContainer}
             controlId="formResourceAttachments"
           >
-            <Form.Label>ResourceId</Form.Label>
+            <Form.Label>Resource<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="resourcesId"
@@ -155,7 +155,7 @@ export default function ResourceAttachmentsModel({
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="attachmentType">
-            <Form.Label>ResourceAttachmentTypeId</Form.Label>
+            <Form.Label>ResourceAttachmentType<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="resourceAttachmentTypeId"
