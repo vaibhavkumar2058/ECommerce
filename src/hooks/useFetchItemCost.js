@@ -21,9 +21,9 @@ import {
   const ERROR = "Error";
 
   // ItemCost GET  ACTIONS
-  const getItemCosts = () => {
+  const getItemCosts = (categoryTypeId) => {
     dispatch(getItemCostBeginAction());
-    return API.get(hapyCarURL,
+    return API.get(`${hapyCarURL}/category/${categoryTypeId}`,
       null,
       { suppressErrors: [400] }
     )

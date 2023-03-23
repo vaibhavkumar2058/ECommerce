@@ -59,10 +59,15 @@
   width: 50px;
   margin-bottom: 50px;
 }
-.measurement{
+.measure{
   height: 20px;
-  width: 70px;
-  margin-bottom: 70px;
+  width: 60px;
+ 
+}
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 5px;
 }
 .pro-img {
   width: 50px;
