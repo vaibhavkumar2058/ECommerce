@@ -19,6 +19,10 @@ export default function OrderModel({
   orderData,
   onPlaceOrder,
   recordStatusList = [],
+  categoryTypeList=[],
+  productList=[],
+  measurementTypeList=[],
+  measurementValueList=[],
 }) {
   const [newOrder, setNewOrder] = useState({
     orderItemId : null,
@@ -41,10 +45,36 @@ export default function OrderModel({
     text: recordStatus.actionName,
     value: recordStatus.recordStatusId,
   })).filter((item) => item));
+  const [categoryTypeOptions, setCategoryTypeOptions] = useState(categoryTypeList.map((categoryType,item) =>(
+    {
+    key: item,
+    text: categoryType.categoryTypeName,
+    value: categoryType.categoryTypeId,
+  })).filter((item) => item));
+  const [productOptions, setProductOptions] = useState(productList.map((product,item) =>(
+    {
+    key: item,
+    text: product.productName,
+    value: product.productId,
+  })).filter((item) => item));
+  const [measurementTypeOptions, setMeasurementTypeOptions] = useState(measurementTypeList.map((measurementType,item) =>(
+    {
+    key: item,
+    text: measurementType.name,
+    value: measurementType.measurementTypeId,
+  })).filter((item) => item));
+  const [measurementValueOptions, setMeasurementValueOptions] = useState(measurementValueList.map((measurementValue,item) =>(
+    {
+    key: item,
+    text: measurementValue.value,
+    value: measurementValue.measurementValueId,
+  })).filter((item) => item));
+
+
 
 
   const [saveDisabled, setSaveDisabled] = useState(true);
-  const [buttonType, setButtonType] = useState("Save");
+  const [buttonType, setButtonType] = useState("Place Order");
 
   const styles = {
     stFormContainer: css`
@@ -140,6 +170,40 @@ const dropdownHandler = (event,{name,value}) => {
     value: recordStatus.recordStatusId,
     })).filter((item) => item));
     }, [recordStatusList]);
+    useEffect(() => { 
+      setCategoryTypeOptions(categoryTypeList.map((categoryType,item) =>(
+        {
+        key: item,
+        text: categoryType.categoryTypeName,
+      value: categoryType.categoryTypeId,
+      })).filter((item) => item));
+      }, [categoryTypeList]);
+      useEffect(() => { 
+        setProductOptions(productList.map((productList,item) =>(
+          {
+          key: item,
+          text: productList.productListName,
+        value: productList.productListId,
+        })).filter((item) => item));
+        }, [productList]);
+        useEffect(() => { 
+          setMeasurementTypeOptions(measurementTypeList.map((measurementType,item) =>(
+            {
+            key: item,
+            text: measurementType.name,
+          value: measurementType.measurementTypeId,
+          })).filter((item) => item));
+          }, [measurementTypeList]);
+          useEffect(() => { 
+            setMeasurementValueOptions(measurementValueList.map((measurementValue,item) =>(
+              {
+              key: item,
+              text: measurementValue.value,
+            value: measurementValue.measurementValueId,
+            })).filter((item) => item));
+            }, [measurementValueList]);
+      
+    
 
   useEffect(() => {
     if (isEdit) {
@@ -183,72 +247,96 @@ const dropdownHandler = (event,{name,value}) => {
           >
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="orderItemId">
-            <Form.Label>Order Item<span className="required">*</span></Form.Label>
-            <Form.Control
-              type="text"
-              name="orderItemId"
-              placeholder=" Enter OrderItem"
-              value={newOrder?.orderItemId}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-          </div>
-
-          <div className="col-md-6">
-           <Form.Group className="mb-3" controlId="orderDate">
-            <Form.Label>Order Date<span className="required">*</span></Form.Label>
-            <Form.Control
-              type="text"
-              name="orderDate"
-              placeholder="Enter OrderDate"
-              value={newOrder?.orderDate}
-              onChange={changeHandler}
-            />
-          </Form.Group> 
-          </div>
-          </div>
-          <div className="row">
-            <div className="col-md-6">
-          <Form.Group className="mb-3" controlId="resourcesId">
-            <Form.Label>Resources<span className="required">*</span></Form.Label>
-            <Form.Control
-              type="text"
-              name="resourcesId"
-              placeholder="Enter Resources"
-              value={newOrder?.resourcesId}
-              onChange={changeHandler}
-            />
-          </Form.Group> 
-          </div>
-          <div className="col-md-6">
-          <Form.Group className="mb-3" controlId="description">
-            <Form.Label>Description</Form.Label>
-            <Form.Control
-              type="text"
-              name="description"
-              placeholder="Description"
-              value={newOrder?.description}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-          </div>
-          </div>
-          <div className="row">
-            <div className="col-md-6">
-          <Form.Group className="mb-3" controlId="recordStatus">
-            <Form.Label>Status<span className="required">*</span></Form.Label>
+          <Form.Group className="mb-3" controlId="categoryTypeId">
+            <Form.Label>CategoryType<span className="required">*</span></Form.Label>
             <Dropdown
-              name="recordStatusId"
-              placeholder='Select Status'
+              name="categoryTypeId"
+              placeholder='Select CategoryType'
               fluid
               search
               selection
-              options={recordStatusOptions}
-              value = {newOrder?.recordStatusId}
+              options={categoryTypeOptions}
+              value = {newOrder?.categoryTypeId}
               onChange={dropdownHandler}
             />
           </Form.Group>
+
+          </div>
+
+          <div className="col-md-6">
+           <Form.Group className="mb-3" controlId="productId">
+            <Form.Label>Product<span className="required">*</span></Form.Label>
+            <Dropdown
+              name="productId"
+              placeholder='Select Product'
+              fluid
+              search
+              selection
+              options={productOptions}
+              value = {newOrder?.productId}
+              onChange={dropdownHandler}
+            />
+          </Form.Group> 
+          </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
+          <Form.Group className="mb-3" controlId="measurementValueId">
+            <Form.Label>Measurement Value<span className="required">*</span></Form.Label>
+            <Dropdown
+              name="measurementValueId"
+              placeholder="Enter MeasurementValue"
+              fluid
+              search
+              selection
+              options={measurementValueOptions}
+              value={newOrder?.measurementValueId}
+              onChange={dropdownHandler}
+            />
+          </Form.Group> 
+          </div>
+          <div className="col-md-6">
+          <Form.Group className="mb-3" controlId="measurementTypeId">
+            <Form.Label>Measurement Type</Form.Label>
+            <Dropdown
+              name="measurementTypeId"
+              placeholder="Enter MeasurementType"
+              fluid
+              search
+              selection
+              options={measurementTypeOptions}
+              value={newOrder?.measurementTypeId}
+              onChange={dropdownHandler}
+            />
+          </Form.Group>
+          </div>
+          </div>
+          <div className="row">
+         
+            <div className="col-md-6">
+          <Form.Group className="mb-3" controlId="price">
+            <Form.Label>Price</Form.Label>
+            <Form.Control
+              type="text"
+              name="price"
+              placeholder="Enter Price"
+              value={newOrder?.price}
+              onChange={changeHandler}
+            />
+          </Form.Group>
+          </div>
+          <div className="col-md-6">
+          <Form.Group className="mb-3" controlId="quantity">
+            <Form.Label>Quantity</Form.Label>
+            <Form.Control
+              type="text"
+              name="quantity"
+              placeholder="Enter Quantity"
+              value={newOrder?.quantity}
+              onChange={changeHandler}
+            />
+          </Form.Group>
+          
           </div>
           </div>
           
@@ -313,6 +401,22 @@ OrderModel.propTypes = {
  * recordStatusData for object type
  */
  recordStatusList: PropTypes.any,
+ /**
+ * categoryTypeData for object type
+ */
+ categoryTypeList: PropTypes.any,
+ /**
+ * productData for object type
+ */
+ productTypeList: PropTypes.any,
+ /**
+ * measurementTypeData for object type
+ */
+ measurementTypeList: PropTypes.any,
+ /**
+ * measurementValueData for object type
+ */
+ measurementValueList: PropTypes.any,
 };
 
 OrderModel.defaultProps = {
@@ -327,5 +431,9 @@ OrderModel.defaultProps = {
   orderData: null,
   onPlaceOrder:null,
   recordStatusList:null,
+  categoryTypeList:null,
+  productList:null,
+  measurementTypeList:null,
+  measurementValueList:null,
 };
 

@@ -3,6 +3,10 @@ import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
 import useFetchOrder from "../hooks/useFetchOrder";
 import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
+import useFetchCategoryType from "../hooks/useFetchCategoryType";
+import useFetchProduct from "../hooks/useFetchProduct";
+import useFetchMeasurementType from "../hooks/useFetchMeasurementType";
+import useFetchMeasurementValue from "../hooks/useFetchMeasurementValue";
 import OrderModel from "../components/OrderModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
@@ -34,6 +38,10 @@ export default function Orders() {
 
 
   const [recordStatusList, setRecordStatusList] = useState([]);
+  const [categoryTypeList, setcategoryTypeList] = useState([]);
+  const [productList, setproductList] = useState([]);
+  const [measurementTypeList, setmeasurementTypeList] = useState([]);
+  const [measurementValueList, setmeasurementValueList] = useState([]);
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -77,6 +85,21 @@ export default function Orders() {
   const { 
     getRecordStatuss,
   } = useFetchRecordStatus();
+  const { 
+    getCategoryTypes,
+  } = useFetchCategoryType();
+  const { 
+    getProducts,
+  } = useFetchProduct();
+  const { 
+    getMeasurementTypes,
+  } = useFetchMeasurementType();
+  const { 
+    getMeasurementValues,
+  } = useFetchMeasurementValue();
+
+
+
 
 
   const columns = [ 
@@ -118,6 +141,10 @@ export default function Orders() {
 
   useEffect(() => {
     getRecordStatusList();
+    getCategoryTypeList();
+    getProductList();
+    getMeasurementTypeList();
+    getMeasurementValueList();
     if (orders.length == 0) {
       getAllOrders();
       setLoading(false)
@@ -186,6 +213,74 @@ export default function Orders() {
       setMessageStatus({
         mode: 'danger',
         message: 'State Fetch Failed.'
+      })
+    }
+  };
+  const getCategoryTypeList = async () => {
+    const response = await getCategoryTypes();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setcategoryTypeList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'CategoryType Fetch Failed.'
+      })
+    }
+  };
+  const getProductList = async () => {
+    const response = await getProducts();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setproductList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'Product Fetch Failed.'
+      })
+    }
+  };
+  const getMeasurementTypeList = async () => {
+    const response = await getMeasurementTypes();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setmeasurementTypeList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'MeasurementType Fetch Failed.'
+      })
+    }
+  };
+  const getMeasurementValueList = async () => {
+    const response = await getMeasurementValues();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setmeasurementValueList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'MeasurementValue Fetch Failed.'
       })
     }
   };
@@ -318,6 +413,10 @@ export default function Orders() {
                 orderData={order}
                 onPlaceOrder={placeOrder}
                 recordStatusList={recordStatusList}
+                categoryTypeList={categoryTypeList}
+                productList={productList}
+                measurementTypeList={measurementTypeList}
+                measurementValueList={measurementValueList}
               />
             </Modal.Body>
 
