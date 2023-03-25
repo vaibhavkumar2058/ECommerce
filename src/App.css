@@ -50,6 +50,33 @@
   max-width: 160px;
 }
 
+#_desktop_contact_link {
+  float: left;
+  position: relative;
+  text-align: left;
+  cursor: pointer;
+  color: #666;
+  width: 100%;
+  font-size: 13px;
+  margin: 0px;
+  align-items: center;
+}
+
+span.content {
+  width: 60%;
+  float: none;
+  display: inline-block;
+  vertical-align: top;
+}
+
+span.content a.contact-info {
+  color: #767cad;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0;
+}
+
 .required {
   color: red;
   font-size: 14px;
@@ -61,7 +88,7 @@
 }
 .measure{
   height: 20px;
-  width: 60px;
+  width: 68px;
  
 }
 .column {

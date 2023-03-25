@@ -9,8 +9,8 @@ import useFetchMeasurementValue from "../hooks/useFetchMeasurementValue";
 import useFetchMeasurementType from "../hooks/useFetchMeasurementType";
 import { Dropdown } from 'semantic-ui-react'
 import Form from "react-bootstrap/Form";
- import useFetchCategoryType from "../hooks/useFetchCategoryType";
- import CategorytypeModel from "../components/CategorytypeModel";
+import useFetchCategoryType from "../hooks/useFetchCategoryType";
+import CategorytypeModel from "../components/CategorytypeModel";
 
 
 
@@ -23,7 +23,7 @@ export default function ItemList() {
   const [categoryTypeId, setCategoryTypeId] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-   const [categoryList, setCategoryList] = useState([]);
+  const [categoryList, setCategoryList] = useState([]);
   const [itemcost, setItemCost] = useState({
     productId: null,
     measurementTypeId: null,
@@ -36,17 +36,17 @@ export default function ItemList() {
   const [categoryType, setCategoryType] = useState({
     categoryTypeName: "",
     description: "",
-    recordStatusId:null,
-});
+    recordStatusId: null,
+  });
 
 
   const handleClose = () => {
     setShow(false);
   };
-  const { 
+  const {
     getMeasurementValues,
   } = useFetchMeasurementValue();
-  const { 
+  const {
     getMeasurementTypes,
   } = useFetchMeasurementType();
   const {
@@ -65,12 +65,15 @@ export default function ItemList() {
     resourcesId: userInfo.resourcesId,
     productId: null,
     cost: null,
-    quantity: "1",
+    quantity: null,
     description: null,
     recordStatusId: 1,
   });
 
+
+
   const addToCart = async (item) => {
+    debugger
     newCart.resourcesId = userInfo.resourcesId;
     newCart.productId = item.productId;
     newCart.description = item.description;
@@ -103,11 +106,11 @@ export default function ItemList() {
     if (itemcosts.length == 0) {
       getCategoryTypeList();
       getMeasurementValueList();
-    getMeasurementTypeList();
+      getMeasurementTypeList();
       getAllItemCosts(categoryTypeId);
       setLoading(false)
     }
-  }, [itemcosts,categoryTypeId]);
+  }, [itemcosts, categoryTypeId]);
 
   const [categoryOptions, setCategoryOptions] = useState(categoryList.map((category, item) => (
     {
@@ -116,19 +119,19 @@ export default function ItemList() {
       value: category.categoryTypeId,
     })).filter((item) => item));
 
-  const [measurementValueOptions, setMeasurementValueOptions] = useState(measurementValueList.map((measurementValue,item) =>(
+  const [measurementValueOptions, setMeasurementValueOptions] = useState(measurementValueList.map((measurementValue, item) => (
     {
-    key: item,
-    text: measurementValue.Value,
-    value: measurementValue.measurementValueId,
-  })).filter((item) => item));
+      key: item,
+      text: measurementValue.Value,
+      value: measurementValue.measurementValueId,
+    })).filter((item) => item));
 
-  const [measurementTypeOptions, setMeasurementTypeOptions] = useState(measurementTypeList.map((measurementType,item) =>(
+  const [measurementTypeOptions, setMeasurementTypeOptions] = useState(measurementTypeList.map((measurementType, item) => (
     {
-    key: item,
-    text: measurementType.name,
-    value: measurementType.measurementTypeId,
-  })).filter((item) => item));
+      key: item,
+      text: measurementType.name,
+      value: measurementType.measurementTypeId,
+    })).filter((item) => item));
 
   useEffect(() => {
     setCategoryOptions(categoryList.map((category, item) => (
@@ -140,82 +143,87 @@ export default function ItemList() {
 
   }, [categoryList]);
 
-  useEffect(() => { 
-    setMeasurementValueOptions(measurementValueList.map((measurementValue,item) =>(
+  useEffect(() => {
+    setMeasurementValueOptions(measurementValueList.map((measurementValue, item) => (
       {
-      key: item,
-      text: measurementValue.value,
-      value: measurementValue.measurementValueId,
-    })).filter((item) => item));
-    }, [measurementValueList]);
+        key: item,
+        text: measurementValue.value,
+        value: measurementValue.measurementValueId,
+      })).filter((item) => item));
+  }, [measurementValueList]);
 
-    useEffect(() => { 
-      setMeasurementTypeOptions(measurementTypeList.map((measurementType,item) =>(
-        {
+  useEffect(() => {
+    setMeasurementTypeOptions(measurementTypeList.map((measurementType, item) => (
+      {
         key: item,
         text: measurementType.name,
         value: measurementType.measurementTypeId,
       })).filter((item) => item));
-      }, [measurementTypeList]);
+  }, [measurementTypeList]);
 
-      const dropdownHandler = (event,{name,value}) => {
-        setItemCost((currentItemCost) => ({...currentItemCost, [name]: value}));
-       setCategoryTypeId(value)
-      getAllItemCosts(value);
+  const dropdownHandler = (event, { name, value }) => {
+    setItemCost((currentItemCost) => ({ ...currentItemCost, [name]: value }));
+    setCategoryTypeId(value)
+    getAllItemCosts(value);
+  }
+
+  const dropdownCartHandler = (event, { name, value }) => {
+    setNewCart((currentCart) => ({ ...currentCart, [name]: value }));
+  }
+  const getCategoryTypeList = async () => {
+    const response = await getCategoryTypes();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
       }
-      const getCategoryTypeList = async () => {
-        const response = await getCategoryTypes();
-        if (response.payload.title == "Success") {
-    
-          var arr = [];
-          for (var key in response.payload) {
-            arr.push(response.payload[key]);
-          }
-          setCategoryList(arr);
-        }
-        else {
-          setMessageStatus({
-            mode: 'danger',
-            message: 'product Fetch Failed.'
-          })
-        }
-      };
-    
-    
-      const getMeasurementValueList = async () => {
-        const response = await getMeasurementValues();
-        if (response.payload.title == "Success") {
-    
-          var arr = [];
-          for (var key in response.payload) {
-            arr.push(response.payload[key]);
-          }
-          setMeasurementValueList(arr);
-        }
-        else {
-          setMessageStatus({
-            mode: 'danger',
-            message: 'State Fetch Failed.'
-          })
-        }
-      };
-      const getMeasurementTypeList = async () => {
-        const response = await getMeasurementTypes();
-        if (response.payload.title == "Success") {
-    
-          var arr = [];
-          for (var key in response.payload) {
-            arr.push(response.payload[key]);
-          }
-          setMeasurementTypeList(arr);
-        }
-        else {
-          setMessageStatus({
-            mode: 'danger',
-            message: 'State Fetch Failed.'
-          })
-        }
-      };
+      setCategoryList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'product Fetch Failed.'
+      })
+    }
+  };
+
+
+  const getMeasurementValueList = async () => {
+    const response = await getMeasurementValues();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setMeasurementValueList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'State Fetch Failed.'
+      })
+    }
+  };
+  const getMeasurementTypeList = async () => {
+    const response = await getMeasurementTypes();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setMeasurementTypeList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'State Fetch Failed.'
+      })
+    }
+  };
+
 
 
   const getAllItemCosts = async (categoryId) => {
@@ -233,6 +241,9 @@ export default function ItemList() {
         curedData.productName = rawData?.product?.productName;
         curedData.description = rawData?.product?.description;
         curedData.categoryTypeId = rawData?.product?.categoryTypeId;
+        curedData.measurementTypeId = rawData?.measurementTypeId;
+        curedData.measurementValueId = rawData?.measurementValueId;
+        curedData.price = rawData?.price;
         curedData.productImage = 'data:' + rawData?.product?.productAttachments?.files.fileMimeType + ';base64,' + rawData?.product?.productAttachments?.files?.base64;
         curedData.filesId = rawData?.product?.productAttachments?.files?.filesId ? rawData?.product?.productAttachments?.files?.filesId : 0;
         curedData.recordStatusId = rawData?.recordStatusId;
@@ -254,16 +265,14 @@ export default function ItemList() {
       })
     }
   };
-  const quantity = [
-    
-    { key: '1', value: '1',  text: '1' },
-    { key: '2', value: '2',  text: '2' },
-    { key: '3', value: '3',  text: '3' },
-    { key: '4', value: '4',  text: '4' },
-    { key: '5', value: '5',  text: '5' },
-    { key: '6', value: '6',  text: '6' },
+  const quantityOptions = [
+    { key: '1', value: '1', text: '1' },
+    { key: '2', value: '2', text: '2' },
+    { key: '3', value: '3', text: '3' },
+    { key: '4', value: '4', text: '4' },
+    { key: '5', value: '5', text: '5' },
+    { key: '6', value: '6', text: '6' },
   ]
-  
 
   return (
     <>
@@ -279,106 +288,94 @@ export default function ItemList() {
               </h1>
             </div>
             <div className="col-md-3">
-          <Form.Group className="mb-3" controlId="categoryTypeId">
-            <Form.Label>Category Type</Form.Label>
-            <Dropdown
-              name="categoryTypeId"
-              placeholder='Select Category'
-              fluid
-              search
-              selection
-              options={categoryOptions}
-              value={categoryTypeId}
-              onChange={dropdownHandler}
-            />
-          </Form.Group>
-          </div>
+              <Form.Group className="mb-3" controlId="categoryTypeId">
+                <Form.Label>Category Type</Form.Label>
+                <Dropdown
+                  name="categoryTypeId"
+                  placeholder='Select Category'
+                  fluid
+                  search
+                  selection
+                  options={categoryOptions}
+                  value={categoryTypeId}
+                  onChange={dropdownHandler}
+                />
+              </Form.Group>
+            </div>
           </div>
           {itemcosts.map((item) =>
             <div className="col-md-3">
-              
               <div > {item?.productName}</div>
               <div>
-                <img  src={item.productImage}>
+                <img src={item.productImage}>
                 </img>
               </div>
               <div > {item?.description}</div>
               <div>
-             
-              <Form>
-              <div className="row">
-            <div className="col-md-3">
-             
-          <Form.Group className="mb-3 measure" controlId="MeasurementValueId">
-        
-            <Dropdown
-              name="measurementValueId"
-              fluid
-              search
-              selection
-              options={measurementValueOptions}
-              value={itemcosts?.measurementValueId}
-              onChange={dropdownHandler}
-            />
-          </Form.Group>
-          </div>
-          <div className="col-md-3">
-          <Form.Group className="mb-3 measure" controlId="measurementTypeId">
-        
-            <Dropdown
-              name="measurementTypeId"
-              fluid
-              search
-              selection
-              options={measurementTypeOptions}
-              value={itemcosts?.measurementTypeId}
-              onChange={dropdownHandler}
-            />
-          </Form.Group>
-          </div>
-          
-          
-         
-          
-          <div className="col-md-2">
-          <Form.Group className="mb-3" controlId="quantity">
-         
-                <div className="quantity">
-                 
-                  <Dropdown
-              name="quantity"
-              fluid
-              search
-              selection
-              options={quantity}
-              onChange={dropdownHandler}
-            />
-                </div>
-                </Form.Group>
-                </div>
-                </div>
-                
-
-                </Form>
                 <div className="row">
-            <div className="col-md-6">
-                <Button variant="secondary"
-                  onClick={() => addToCart(item)}
-                >
-                  Add To Cart
-                </Button>
+                  <div className="col-md-3">
+                    <Form.Group className="mb-3 measure" controlId="MeasurementValueId">
+                      <Dropdown
+                        name="measurementValueId"
+                        fluid
+                        search
+                        selection
+                        options={measurementValueOptions}
+                        value={item?.measurementValueId}
+                        onChange={dropdownCartHandler}
+                      />
+                    </Form.Group>
+                  </div>
+                  <div className="col-md-3">
+                    <Form.Group className="mb-3 measure" controlId="measurementTypeId">
+                      <Dropdown
+                        name="measurementTypeId"
+                        fluid
+                        search
+                        selection
+                        options={measurementTypeOptions}
+                        value={item?.measurementTypeId}
+                        onChange={dropdownCartHandler}
+                      />
+                    </Form.Group>
+                  </div>
+                  <div className="col-md-3">
+                    <Form.Group className="mb-3" controlId="quantity">
+                      <div className="quantity">
+                        <Dropdown
+                          name="quantity"
+                          fluid
+                          search
+                          selection
+                          options={quantityOptions}
+                          value="1"
+                          onChange={dropdownCartHandler}
+                        />
+                      </div>
+                    </Form.Group>
+                  </div>
+                  <div className="col-md-3">
+                      {item?.price}
+                  </div>
                 </div>
-                <div className="col-md-6">
-                <Button variant="secondary" >
-                  Order
-                </Button>
+                <div className="row">
+                  <div className="col-md-6">
+                    <Button variant="secondary"
+                      onClick={() => addToCart(item)}
+                    >
+                      Add To Cart
+                    </Button>
+                  </div>
+                  <div className="col-md-6">
+                    <Button variant="secondary" >
+                      Order
+                    </Button>
 
+                  </div>
+                </div>
               </div>
             </div>
-            </div>
-            </div>
           )}
-
 
           <div className="model_box">
             <Modal

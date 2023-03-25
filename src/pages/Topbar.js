@@ -84,6 +84,17 @@ export default (props = {}) => {
           <div className="d-flex align-items-center"><button id="sidebar-toggle" className="sidebar-toggle me-3 btn btn-icon-only d-none d-lg-inline-block align-items-center justify-content-center"></button>
           </div>
           <ul className="navbar-nav align-items-center">
+          <li className="nav-item dropdown"><a href="notifications" >
+          <div id="_desktop_contact_link" class="header-cms-block">
+							<div class="wdicon"></div>
+							<span class="content">
+								<span class="service-title">Reach us:</span>
+								<a href="tel:%phone%" class="contact-info">+91 70138 35158 / 9440514453</a><br></br>
+								<a href="tel:%phone%" class="contact-info">nataraj@manthrasoaps.co.in</a>
+							</span>
+						</div>
+            </a>
+            </li>
             <li className="nav-item dropdown"><a href="notifications" >
               <Badge className="notification" bg="secondary">{notifications?.length}</Badge><img src="https://png.pngtree.com/png-clipart/20190705/original/pngtree-vvector-notification-icon-png-image_4232478.jpg" width="35" height="35"></img>
             </a>
