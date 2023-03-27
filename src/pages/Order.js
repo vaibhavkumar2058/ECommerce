@@ -402,7 +402,6 @@ export default function Orders() {
             </Modal.Header>
             <Modal.Body>
               <OrderModel
-                onAddOrder={addOrder}
                 onUpdateOrder={updateOrder}
                 onDeleteOrder={deleteOrder}
                 onGetOrder={orderById}

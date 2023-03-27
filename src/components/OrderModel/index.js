@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
+import useFetchOrders from "../../hooks/useFetchOrder";
 
 export default function OrderModel({
   onAddOrder,
@@ -25,11 +26,9 @@ export default function OrderModel({
   measurementValueList=[],
 }) {
   const [newOrder, setNewOrder] = useState({
-    orderItemId : null,
     resourcesId:null,
-    orderDate:null,
-    description : "",
-    recordStatusId:null,
+    orderItems:[],
+    description:"",
 
   });
 
@@ -104,7 +103,14 @@ export default function OrderModel({
       }
     }
     else {
-      const response = await onAddOrder(newOrder);
+      const orders ={
+        productId:null,
+        cost: null,
+      quantity: null,
+      description: "",
+      }
+      newOrder.orderItems.push(orders)
+      const response = await onPlaceOrder(newOrder);
       if (response.payload.title == "Success") {
         setMessageStatus({
           mode: 'success',
@@ -179,11 +185,11 @@ const dropdownHandler = (event,{name,value}) => {
       })).filter((item) => item));
       }, [categoryTypeList]);
       useEffect(() => { 
-        setProductOptions(productList.map((productList,item) =>(
+        setProductOptions(productList.map((product,item) =>(
           {
           key: item,
-          text: productList.productListName,
-        value: productList.productListId,
+          text: product.productName,
+        value: product.productId,
         })).filter((item) => item));
         }, [productList]);
         useEffect(() => { 
