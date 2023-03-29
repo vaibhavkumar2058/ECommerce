@@ -3,7 +3,10 @@ import React, { useState ,useEffect} from "react";
 import { Col, Row, Form, Card, Button, FormCheck, Container, InputGroup } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import useFetchResources from "../../hooks/useFetchResources";
+import useFetchRole from "../../hooks/useFetchRole";
 import { useNavigate } from "react-router-dom";
+import { Dropdown } from 'semantic-ui-react'
+
 export default () => {
   const resource = {
     role: { admin: true, agent: false, dealer: false, customer: false },
@@ -14,6 +17,7 @@ export default () => {
   };
   localStorage.setItem("hidemenu", JSON.stringify(menu))
   localStorage.setItem("loggedIn", JSON.stringify(resource))
+  const[ roleList, setRolesList]=useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState("");
@@ -21,6 +25,9 @@ export default () => {
   const {
     addResources,
   } = useFetchResources();
+  const {
+    getRoles,
+  } = useFetchRole();
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
     title: "",
@@ -32,12 +39,12 @@ export default () => {
     middleName: "",
     lastName: "",
     roleId: null,
-    addressId:null,
     mobileNumber: null,
     email: "",
     password: "",
   });
   const [hide, setHide] = useState(true);
+
 
   useEffect(() => {
    
@@ -69,6 +76,41 @@ export default () => {
 
     }
   };
+  const [roleOptions, setRoleOptions] = useState(roleList.map((role,item) =>(
+    {
+    key: item,
+    text: role.roleName,
+    value: role.roleId,
+  })).filter((item) => item));
+
+  useEffect(() => { 
+    getRoleList();
+    setRoleOptions (roleList.map((role, item) => (
+      {
+        key: item,
+        text: role.roleName,
+        value: role.roleId,
+      })).filter((item) => item));
+  },[roleList]);
+  const dropdownHandler = (event,{name, value}) => {
+    setNewSignup((currentNewSignup) => ({...currentNewSignup, [name]: value}));
+  } 
+
+  const getRoleList = async () => {
+    const response = await getRoles();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setRolesList(arr);
+    }
+    else {
+      
+    }
+  };
+  
   return (
     <main>
       <section className="d-flex align-items-center my-5 mt-lg-6 mb-lg-5">
@@ -85,7 +127,7 @@ export default () => {
                 </div>
                 <Form className="mt-4">
                   <Form.Group id="firstName" className="mb-4">
-                    <Form.Label>firstName</Form.Label>
+                    <Form.Label>Name</Form.Label>
                     <InputGroup>
                       <InputGroup.Text>
 
@@ -93,74 +135,32 @@ export default () => {
                       <Form.Control
                         type="text"
                         name="firstName"
-                        placeholder="firstName"
-                        value={newSignup?.firstName}
+                        placeholder="Name"
+                        value={ newSignup?.firstName }
                         onChange={changeHandler}
                       />
                     </InputGroup>
                   </Form.Group>
-                  <Form.Group id="middleName" className="mb-4">
-                    <Form.Label>middleName</Form.Label>
+                  <Form.Group id="role" className="mb-4">
+                    <Form.Label>Role</Form.Label>
                     <InputGroup>
                       <InputGroup.Text>
 
                       </InputGroup.Text>
-                      <Form.Control
-                        type="text"
-                        name="middleName"
-                        placeholder="middleName"
-                        value={newSignup?.middleName}
-                        onChange={changeHandler}
-                      />
+                      <Dropdown
+              name="roleId"
+              placeholder='Select Role'
+              fluid
+              search
+              selection
+              options={roleOptions}
+              value = {newSignup?.roleId}
+              onChange={dropdownHandler}
+            />
                     </InputGroup>
                   </Form.Group>
-                  <Form.Group id="lastName" className="mb-4">
-                    <Form.Label>lastName</Form.Label>
-                    <InputGroup>
-                      <InputGroup.Text>
-
-                      </InputGroup.Text>
-                      <Form.Control
-                        type="text"
-                        name="lastName"
-                        placeholder="lastName"
-                        value={newSignup?.lastName}
-                        onChange={changeHandler}
-                      />
-                    </InputGroup>
-                  </Form.Group>
-                  <Form.Group id="roleId" className="mb-4">
-                    <Form.Label>roleId</Form.Label>
-                    <InputGroup>
-                      <InputGroup.Text>
-
-                      </InputGroup.Text>
-                      <Form.Control
-                        type="text"
-                        name="roleId"
-                        placeholder="roleId"
-                        value={newSignup?.roleId}
-                        onChange={changeHandler}
-                      />
-                    </InputGroup>
-                  </Form.Group>
-                  <Form.Group id="addressId" className="mb-4">
-                  <Form.Label>addressId</Form.Label>
-                  <InputGroup>
-                    <InputGroup.Text>
-
-                    </InputGroup.Text>
-                    <Form.Control
-                      type="text"
-                      name="addressId"
-                      placeholder="addressId"
-                      value={newSignup?.addressId}
-                      onChange={changeHandler}
-                    />
-                  </InputGroup>
-                </Form.Group>
                   <Form.Group id="mobileNumber" className="mb-4">
-                    <Form.Label>mobileNumber</Form.Label>
+                    <Form.Label>MobileNumber</Form.Label>
                     <InputGroup>
                       <InputGroup.Text>
 
@@ -174,12 +174,10 @@ export default () => {
                       />
                     </InputGroup>
                   </Form.Group>
-
                   <Form.Group id="email" className="mb-4">
-                    <Form.Label>email</Form.Label>
+                    <Form.Label>Email</Form.Label>
                     <InputGroup>
                       <InputGroup.Text>
-
                       </InputGroup.Text>
                       <Form.Control
                         type="text"
@@ -192,7 +190,7 @@ export default () => {
                   </Form.Group>
 
                   <Form.Group id="password" className="mb-4">
-                    <Form.Label>password</Form.Label>
+                    <Form.Label>Password</Form.Label>
                     <InputGroup>
                       <InputGroup.Text>
 
