@@ -15,7 +15,6 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit';
 
-
 const { SearchBar, ClearSearchButton } = Search;
 
 const MyExportCSV = (props) => {
@@ -98,17 +97,13 @@ export default function Orders() {
     getMeasurementValues,
   } = useFetchMeasurementValue();
 
-
-
-
-
   const columns = [ 
-
-    { dataField: 'orderId', text: 'OrderId', sort: true,hidden:true},
-    { dataField: 'orderItemId', text: ' OrderItemId', sort: true ,hidden:true},
-    { dataField: 'resourcesId', text: 'ResourcesId', sort: true ,hidden:true},
+    { dataField: 'orderItemId', text: ' OrderItemId', sort: true, hidden:true},
+    { dataField: 'orderId', text: 'Order Id', sort: true},    
+    { dataField: 'productName', text: 'product', sort: true},
+    { dataField: 'quantity', text: 'quantity', sort: true},    
+    { dataField: 'cost', text: ' cost', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
-    { dataField: 'recordStatusId', text: ' RecordStatus', sort: true },
     { dataField: 'orderDate', text: 'OrderDate', sort: true },
     // columns follow dataField and text structure
     {
@@ -136,7 +131,7 @@ export default function Orders() {
             </button>}</>
         );
       },
-    },
+    }
   ];
 
   useEffect(() => {
@@ -151,15 +146,12 @@ export default function Orders() {
     }
   }, [orders]);
 
-
   const defaultSorted = [{
     dataField: 'orderId',
     order: 'desc'
   }];
 
-
   const emptyDataMessage = () => { return 'No Data to Display'; }
-
 
   const handleView = (rowId, name) => {
     console.log(rowId, name);
@@ -293,11 +285,26 @@ export default function Orders() {
         mode: 'success',
         message: 'Orders Record Fetch Succefully.'
       })
+      
+      const dataFormatter = (rawData) => {
+        const curedData = {};
+        curedData.orderId = rawData?.orderId;
+        curedData.productName = rawData?.product.productName;
+        curedData.orderItemId = rawData?.orderItemId;
+        curedData.resourcesId = rawData?.resourcesId;
+        curedData.description = rawData?.description; 
+        curedData.quantity = rawData?.quantity;
+        curedData.cost = rawData?.cost;
+        curedData.recordStatusId = rawData?.recordStatusId;
+        curedData.orderDate = rawData?.createdDate;
+
+        return curedData;
+      }
 
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+        arr.push(dataFormatter(response.payload[key]));
       }
 
       setOrders(arr);
