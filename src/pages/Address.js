@@ -274,7 +274,7 @@ export default function Addresses() {
   };
 
   const getAddressTypeList = async () => {
-    const response = await getAddresses();
+    const response = await getAddressTypes();
     if (response.payload.title == "Success") {
 
       var arr = [];

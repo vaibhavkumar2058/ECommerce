@@ -116,9 +116,10 @@ span.content a.contact-info {
 }
 
 .product-view {
-  width: 160px;
-  height: 160px;
+  width: 60px;
+  height: 60px;
   margin-bottom: 30px;
+
 }
 
 .notification {

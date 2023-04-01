@@ -187,6 +187,7 @@ export default function AddressModel({
     const isEnable = !newAddress?.city
       || !newAddress?.stateId
       || !newAddress?.countryId
+      || !newAddress?.addressTypeId
       || !newAddress?.town
       || !newAddress?.pincode || !newAddress?.landMark
       || !newAddress?.recordStatusId;
@@ -254,7 +255,7 @@ export default function AddressModel({
                 <Form.Label>Address Type</Form.Label>
                 <Dropdown
                   name="addressTypeId"
-                  placeholder='Select Address Type'
+                  placeholder='Select AddressType'
                   fluid
                   search
                   selection
