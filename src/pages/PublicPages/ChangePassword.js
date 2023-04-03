@@ -12,9 +12,9 @@ export default () => {
   const {
     changepassword,
   } = useFetchLogins();
-
+  const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
   const [newPassword, setNewPassword] = useState({
-    resourcesId: null,
+    resourcesId: userInfo.resourcesId,
     oldPassword: "",
     newPassword: "",
     newConfirmPassword: "",
@@ -60,16 +60,16 @@ export default () => {
       <section className="bg-soft d-flex align-items-center my-5 mt-lg-6 mb-lg-5">
         <Container>
           {hide && (<Row className="justify-content-center">
-            <p className="text-center">
+            {/* <p className="text-center">
               
                 Back to sign in
            
-            </p>
+            </p> */}
             <Col xs={12} className="d-flex align-items-center justify-content-center">
               <div className="bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
                 <h3 className="mb-4">Change password</h3>
                 <Form>
-                  <Form.Group id="resourcesId" className="mb-4">
+                  {/* <Form.Group id="resourcesId" className="mb-4">
                     <Form.Label>ResourcesId</Form.Label>
                     <InputGroup>
 
@@ -81,7 +81,7 @@ export default () => {
                         onChange={changeHandler}
                       />
                     </InputGroup>
-                  </Form.Group>
+                  </Form.Group> */}
                   <Form.Group id="oldPassword" className="mb-4">
                     <Form.Label>oldPassword</Form.Label>
                     <InputGroup>
@@ -129,11 +129,11 @@ export default () => {
             </Col>
           </Row>)}
           {!hide && (<Row className="justify-content-center">
-          <p className="text-center">
+          {/* <p className="text-center">
             
               Back to sign in
          
-          </p>
+          </p> */}
           <Col xs={12} className="d-flex align-items-center justify-content-center">
             <div className="bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
               <h3 className="mb-4">Password Change successfully</h3>

@@ -79,7 +79,7 @@ export default () => {
                 </div>
                 <Form className="mt-4">
                   <Form.Group id="email" className="mb-4">
-                    <Form.Label>Your Email</Form.Label>
+                    <Form.Label> Email</Form.Label>
                     <InputGroup>
                       <InputGroup.Text>
                       </InputGroup.Text>
@@ -94,7 +94,7 @@ export default () => {
                   </Form.Group>
                   <Form.Group>
                     <Form.Group id="password" className="mb-4">
-                      <Form.Label>Your Password</Form.Label>
+                      <Form.Label> Password</Form.Label>
                       <InputGroup>
                         <InputGroup.Text>
                         </InputGroup.Text>
