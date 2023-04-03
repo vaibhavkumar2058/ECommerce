@@ -46,6 +46,7 @@ export default function ResourceAttachments() {
     resourcesId: null,
     filesId: null,
     resourceAttachmentTypeId: null,
+    attachmentStatusTypeId:null,
     //visibleToCustomer: true,
     description: "",
    
@@ -73,6 +74,7 @@ export default function ResourceAttachments() {
     { dataField: 'resourceAttachmentsId', text: 'ResourceAttachmentsId ', sort: true, hidden: true },
     { dataField: 'resourcesId', text: ' resourcesId', sort: true, hidden: true },
     { dataField: 'fileName', text: 'File Name', sort: true },
+    { dataField: 'attachmentStatusTypeId', text: 'AttachmentStatus Type', sort: true },
     { dataField: 'documentType', text: 'Document Type', sort: true,headerStyle: () => {
       return { width: "230px" };
     } },
@@ -178,6 +180,7 @@ export default function ResourceAttachments() {
         const curedData = {};
          curedData.resourceAttachmentsId = rawData?.resourceAttachmentsId;
          curedData.fileName = rawData?.files?.fileName;
+         curedData.attachmentStatusTypeId =rawData?.attachmentStatusType?.attachmentStatusTypeName;
          curedData.documentType = rawData?.resourceAttachmentType?.displayText;
          curedData.resourcesId = rawData?.resourcesId;
          curedData.resourcesImage = 'data:'+ rawData?.files?.fileMimeType +';base64,'+ rawData?.resourceAttachment?.files?.base64;

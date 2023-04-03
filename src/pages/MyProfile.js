@@ -9,6 +9,7 @@ import Select from 'react-select';
 import { Dropdown } from 'semantic-ui-react'
 import useFetchResources from '../hooks/useFetchResources';
 import ResourceAttachments from './ResourceAttachments';
+import Addresses from './Address';
 import useFetchGender from "../hooks/useFetchGender";
 import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
 import useFetchRole from "../hooks/useFetchRole";
@@ -64,6 +65,7 @@ export default () => {
   const getResourcesById = async (id) => {
     const response = await resourcesById(id);
     if (response.payload.title == "Success") {
+      debugger
       setResource(response.payload);
     }
     else {
@@ -229,32 +231,10 @@ export default () => {
             /></div>
           </Form.Group>
 
-              {/* <div class="col-md-4 col-lg-4">
-                <Dropdown>
-                  <Dropdown.Toggle  >
-
-                    Gender
-                    <Form.Control
-                      type="text"
-                      name="genderId"
-                      placeholder="Gender"
-                      value={resource?.genderId}
-                    />
-
-                  </Dropdown.Toggle>
-
-                  <Dropdown.Menu>
-                    <Dropdown.Item href="#/action-1">Female</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">Male </Dropdown.Item>
-
-                  </Dropdown.Menu>
-                </Dropdown>
-
-</div> */}
+              
             </div>
             <div class="row">
-
-              <div class="col-md-2 col-lg-2">
+              {/* <div class="col-md-2 col-lg-2">
                 <Form.Group>
                   <Form.Label>Address</Form.Label>
                   <Form.Control 
@@ -263,9 +243,9 @@ export default () => {
                     placeholder="Address"
                     value={resource?.address.city} />
                 </Form.Group>
-              </div>
+              </div> */}
 
-              <div class="col-md-2 col-lg-2">
+              {/* <div class="col-md-2 col-lg-2">
                 <Form.Group>
                   <Form.Label>Address</Form.Label>
                   <Form.Control as="textarea" rows={1}
@@ -274,9 +254,9 @@ export default () => {
                     placeholder="Address"
                     value={resource?.address.town} />
                 </Form.Group>
-              </div>
+              </div> */}
 
-              <div class="col-md-2 col-lg-2">
+              {/* <div class="col-md-2 col-lg-2">
                 <Form.Group>
                   <Form.Label>Address</Form.Label>
                   <Form.Control as="textarea" rows={1}
@@ -285,9 +265,9 @@ export default () => {
                     placeholder="Address"
                     value={resource?.address.locality} />
                 </Form.Group>
-              </div>
+              </div> */}
 
-              <div class="col-md-2 col-lg-2">
+              {/* <div class="col-md-2 col-lg-2">
                 <Form.Group>
                   <Form.Label>Address</Form.Label>
                   <Form.Control as="textarea" rows={1}
@@ -296,18 +276,18 @@ export default () => {
                     placeholder="Address"
                     value={resource?.address.pincode} />
                 </Form.Group>
-              </div>
+              </div> */}
 
-              <div class="col-md-2 col-lg-2">
+              {/* <div class="col-md-2 col-lg-2">
                 <Form.Group>
                   <Form.Label>Address</Form.Label>
                   <Form.Control as="textarea" rows={1}
                     type="text"
                     name="addressId"
                     placeholder="Address"
-                    value={resource?.address.landMark} />
+                    value={resource?.landMark} />
                 </Form.Group>
-              </div>
+              </div> */}
             </div>
         <div class="row">
           <div class="col-md-8 col-lg-8"></div>
@@ -317,6 +297,15 @@ export default () => {
         </div>
       </div>
       </Tab >
+
+      <Tab eventKey="address" title="Address" >
+      <div>
+       <Addresses></Addresses>
+      </div>
+
+
+    </Tab>
+
     <Tab eventKey="documents" title="Documents" >
       <div>
         <ResourceAttachments></ResourceAttachments>
