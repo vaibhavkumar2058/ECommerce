@@ -16,7 +16,6 @@ import Product from "../pages/Product";
 import File from "../pages/File";
 import Security from "../pages/Security";
 import AddressType from "../pages/AddressType";
-
 import Address from "../pages/Address";
 import Cart from "../pages/Cart";
 import Invoice from "../pages/Invoice";
@@ -37,6 +36,7 @@ import Role from "../pages/Role";
 import Folder from "../pages/Folder";
 import ProductAttachments from "../pages/ProductAttachments";
 import Resources from "../pages/Resources"
+import AttachmentStatusType from "../pages/AttachmentStatusType"
 import OrderStatus from "../pages/OrderStatus"
 import ShoppingList from "../pages/ShoppingList"
 import ItemList from "../pages/ItemList"
@@ -110,6 +110,8 @@ const NavbarComp = () => {
           <Route exact path="/dashboard" element={<ProtectedRoute><Sidebar/><Topbar/><Dashboard /></ProtectedRoute>}/>
           <Route exact path="/signin" element={<Signin />}/>
           <Route exact path="/signup" element={<Signup/>}/>
+          {(admin && <Route exact path="/attachmentStatusType" element={<ProtectedRoute><Sidebar/><Topbar/> <AttachmentStatusType /></ProtectedRoute>} />)}
+
           <Route path="/" element={<Navigate replace to="/signin" />} />
           {(admin && <Route exact path="/orderItem" element={<ProtectedRoute><Sidebar/><Topbar/> <OrderItem /></ProtectedRoute>} />)}
           {((admin||agent||dealer||customer) &&<Route exact path="/changepassword" element={<ProtectedRoute><Sidebar/><Topbar/><ChangePassword/></ProtectedRoute>}/>)}

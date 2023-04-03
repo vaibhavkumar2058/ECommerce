@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
-import useFetchResourceAttachments from "../hooks/useFetchResourceAttachments";
-import ResourceAttachmentsModel from "../components/ResourceAttachmentsModel";
+import useFetchAttachmentStatusType from "../hooks/useFetchAttachmentStatusType";
+import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
+import AttachmentStatusTypeModel from "../components/AttachmentStatusTypeModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
@@ -24,17 +25,17 @@ const MyExportCSV = (props) => {
   );
 };
 
-export default function ResourceAttachments() {
-  const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
-  const resourceId= userInfo?.resourcesId;
-  const [resourceAttachmentses, setResourceAttachmentses] = useState([]);
+export default function AttachmentStatusTypes() {
+
+  const [attachmentStatusTypes, setAttachmentStatusTypes] = useState([]);
+  const [recordStatusList, setRecordStatusList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
   const handleClose = () => {
-    getAllResourceAttachmentses(resourceId);
+    getAllAttachmentStatusTypes();
     setIsEdit(false);
     setIsDelete(false);
     setShow(false);
@@ -42,14 +43,10 @@ export default function ResourceAttachments() {
   const handleShow = () => setShow(true);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-  const [resourceAttachmentes, setResourceAttachments] = useState({
-    resourcesId: null,
-    filesId: null,
-    resourceAttachmentTypeId: null,
-    attachmentStatusTypeId:null,
-    //visibleToCustomer: true,
-    description: "",
-   
+  const [attachmentStatusType, setAttachmentStatusType] = useState({
+    AttachmentStatusTypeName:null,
+    recordStatusId:null,
+    
       });
 
   const [id, setId] = useState(null);
@@ -62,28 +59,26 @@ export default function ResourceAttachments() {
   });
 
   const { 
-    addResourceAttachments,
-    updateResourceAttachments,
-    deleteResourceAttachments,
-    getResourceAttachmentses,
-    resourceAttachmentsById,
-  } = useFetchResourceAttachments();
+    addAttachmentStatusType,
+    updateAttachmentStatusType,
+    deleteAttachmentStatusType,
+    getAttachmentStatusTypes,
+    attachmentStatusTypeById,
+  } = useFetchAttachmentStatusType();
+
+  const { 
+    getRecordStatuss,
+  } = useFetchRecordStatus();
+  
 
   const columns = [
+    { dataField: 'attachmentStatusTypeId', text: 'AttachmentStatusType ', sort: true, hidden: true },
+    { dataField: 'attachmentStatusTypeName', text: 'AttachmentStatusTypeName', sort: true,  },
 
-    { dataField: 'resourceAttachmentsId', text: 'ResourceAttachmentsId ', sort: true, hidden: true },
-    { dataField: 'resourcesId', text: ' resourcesId', sort: true, hidden: true },
-    { dataField: 'fileName', text: 'File Name', sort: true },
-    { dataField: 'attachmentStatusTypeId', text: 'AttachmentStatus Type', sort: true },
-    { dataField: 'documentType', text: 'Document Type', sort: true,headerStyle: () => {
-      return { width: "230px" };
+    { dataField: 'recordStatusId', text: 'RecordStatus', sort: true,headerStyle: () => {
+      return { width: "100px" };
     } },
-    // { dataField: 'description', text: 'Description', sort: true,headerStyle: () => {
-    //   return { width: "200px" };
-    // } },
-    //{ dataField: 'visibleToCustomer', text: 'VisibleToCustomer', sort: true ,headerStyle: () => {
-      //return { width: "200px" };
-    //}},
+    
     
     // columns follow dataField and text structure
     {
@@ -93,18 +88,18 @@ export default function ResourceAttachments() {
         return (
           <><button
             className="btn btn-primary btn-xs"
-            onClick={() => handleView(row.resourceAttachmentsId, row.name)}
+            onClick={() => handleView(row.attachmentStatusTypeId, row.name)}
           >
             View
           </button>
             <button
               className="btn btn-primary btn-xs"
-              onClick={() => handleEdit(row.resourceAttachmentsId, row)}
+              onClick={() => handleEdit(row.attachmentStatusTypeId, row)}
             >
               Edit
             </button><button
               className="btn btn-danger btn-xs"
-              onClick={() => handleDelete(row.resourceAttachmentsId, row.name)}
+              onClick={() => handleDelete(row.attachmentStatusTypeId, row.name)}
             >
               Delete
             </button></>
@@ -114,15 +109,18 @@ export default function ResourceAttachments() {
   ];
 
   useEffect(() => {
-    if (ResourceAttachments.length == 0) {
-      getAllResourceAttachmentses(resourceId);
+    getRecordStatusList();
+    if (attachmentStatusTypes.length == 0) {
+      getAllAttachmentStatusTypes();
       setLoading(false)
     }
-  }, [ResourceAttachments]);
+  }, [attachmentStatusTypes]);
+
+  
 
 
   const defaultSorted = [{
-    dataField: 'ResourceAttachmentsId',
+    dataField: 'attachmentStatusTypeId',
     order: 'desc'
   }];
 
@@ -136,8 +134,8 @@ export default function ResourceAttachments() {
   };
 
   const handleEdit = (rowId, row) => {
-    setResourceAttachments(row);
-    //getResourceAttachmentsById(rowId);
+    setAttachmentStatusType(row);
+     getAttachmentStatusTypeById(rowId);
     setId(rowId);
     setIsEdit(true);
     setShow(true);
@@ -167,52 +165,60 @@ export default function ResourceAttachments() {
       console.log('sizePerPage', sizePerPage);
     }
   });
+  const getRecordStatusList = async () => {
+    const response = await getRecordStatuss();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        arr.push(response.payload[key]);
+      }
+      setRecordStatusList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'Address Fetch Failed.'
+      })
+    }
+  };
+  
 
 
-  const getAllResourceAttachmentses = async (resourceId) => {
-    const response = await getResourceAttachmentses(resourceId);
+
+  const getAllAttachmentStatusTypes = async () => {
+    const response = await getAttachmentStatusTypes();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',
-        message: 'ResourceAttachments Record Fetch Succefully.'
+        message: 'AttachmentStatusType Record Fetch Succefully.'
       })
-      const dataFormatter = (rawData) => {
-        const curedData = {};
-         curedData.resourceAttachmentsId = rawData?.resourceAttachmentsId;
-         curedData.fileName = rawData?.files?.fileName;
-         curedData.attachmentStatusTypeId =rawData?.attachmentStatusType?.attachmentStatusTypeName;
-         curedData.documentType = rawData?.resourceAttachmentType?.displayText;
-         curedData.resourcesId = rawData?.resourcesId;
-         curedData.resourcesImage = 'data:'+ rawData?.files?.fileMimeType +';base64,'+ rawData?.resourceAttachment?.files?.base64;
-        return curedData;
-
-      }
 
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-       arr.push(dataFormatter(response.payload[key]));
+        arr.push(response.payload[key]);
       }
 
-      setResourceAttachmentses(arr);
+      setAttachmentStatusTypes(arr);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'ResourceAttachments Fetch Failed.'
+        message: 'AttachmentStatusType Fetch Failed.'
       })
     }
   };
 
-  const getResourceAttachmentsById = async (id) => {
-    const response = await resourceAttachmentsById(id);
+  const getAttachmentStatusTypeById = async (id) => {
+    const response = await attachmentStatusTypeById(id);
     if (response.payload.title == "Success") {
-      setResourceAttachments(response.payload);
+      setAttachmentStatusType(response.payload);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'ResourceAttachments Get Failed.'
+        message: 'AttachmentStatusType Get Failed.'
       })
     }
   };
@@ -239,11 +245,11 @@ export default function ResourceAttachments() {
     <>
       <div className="m-t-40">
         {loading && <div>A moment please...</div>}
-        {resourceAttachmentses && (<div>
+        {attachmentStatusTypes && (<div>
           <ToolkitProvider
             bootstrap4
-            keyField='resourceAttachmentsId'
-            data={resourceAttachmentses}
+            keyField='attachmentStatusTypeId'
+            data={attachmentStatusTypes}
             columns={columns}
             search
           >
@@ -257,11 +263,11 @@ export default function ResourceAttachments() {
                     <div className="col-lg-6">
                       <div className="row">
                         <div className="app-right col-lg-12">
-                          {/* <div className="app-float-right p-1">
-                          <MyExportCSV {...props.csvProps} /></div> */}
+                          <div className="app-float-right p-1">
+                          <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
                           <Button variant="primary" onClick={handleShow}>
-                            Add ResourceAttachments
+                            Add AttachmentStatusType
                           </Button>
                           </div>
                         </div>
@@ -285,26 +291,27 @@ export default function ResourceAttachments() {
         </div>)}
         {/* <!--- Model Box ---> */}
         <div className="model_box">
-          <Modal
+          <Modal dialogClassName="my-modal" 
             show={show}
             onHide={handleClose}
             backdrop="static"
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Add ResourceAttachments</Modal.Title>
+              <Modal.Title>Add AttachmentStatusType</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <ResourceAttachmentsModel
-                onAddResourceAttachments={addResourceAttachments}
-                onUpdateResourceAttachments={updateResourceAttachments}
-                onDeleteResourceAttachments={deleteResourceAttachments}
-                onGetResourceAttachments={resourceAttachmentsById}
+              <AttachmentStatusTypeModel
+                onAddAttachmentStatusType={addAttachmentStatusType}
+                onUpdateAttachmentStatusType={updateAttachmentStatusType}
+                onDeleteAttachmentStatusType={deleteAttachmentStatusType}
+                onGetAttachmentStatusType={attachmentStatusTypeById}
                 onClose={handleClose}
                 isEdit={isEdit}
                 isDelete={isDelete}
                 id={id}
-                resourceAttachmentsData={resourceAttachmentses}
+                attachmentStatusTypeData={attachmentStatusType}
+                recordStatusList={recordStatusList}
               />
             </Modal.Body>
 
