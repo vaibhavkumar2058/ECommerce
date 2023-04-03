@@ -197,6 +197,7 @@ export default function Orders() {
 
       var arr = [];
       for (var key in response.payload) {
+        if (key !== 'title')
         arr.push(response.payload[key]);
       }
       setRecordStatusList(arr);
@@ -214,6 +215,7 @@ export default function Orders() {
 
       var arr = [];
       for (var key in response.payload) {
+        if (key !== 'title')
         arr.push(response.payload[key]);
       }
       setcategoryTypeList(arr);
@@ -231,6 +233,7 @@ export default function Orders() {
 
       var arr = [];
       for (var key in response.payload) {
+        if (key !== 'title')
         arr.push(response.payload[key]);
       }
       setproductList(arr);
@@ -248,6 +251,7 @@ export default function Orders() {
 
       var arr = [];
       for (var key in response.payload) {
+        if (key !== 'title')
         arr.push(response.payload[key]);
       }
       setmeasurementTypeList(arr);
@@ -265,6 +269,7 @@ export default function Orders() {
 
       var arr = [];
       for (var key in response.payload) {
+        if (key !== 'title')
         arr.push(response.payload[key]);
       }
       setmeasurementValueList(arr);

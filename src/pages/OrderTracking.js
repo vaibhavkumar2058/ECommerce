@@ -187,6 +187,7 @@ export default function OrderTracking() {
 
       var arr = [];
       for (var key in response.payload) {
+        if (key !== 'title')
         arr.push(response.payload[key]);
       }
       setRecordStatusList(arr);
@@ -204,6 +205,7 @@ export default function OrderTracking() {
     if (response.payload.title == "Success") {
       var arr = [];
       for (var key in response.payload) {
+        if (key !== 'title')
         arr.push(response.payload[key]);
       }
       setOrderStatusList(arr);

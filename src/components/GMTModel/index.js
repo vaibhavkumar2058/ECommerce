@@ -166,7 +166,7 @@ export default function GMTModel({
             <Form.Label>Resource<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
-              name="resource"
+              name="resourceId"
               placeholder="Enter Resource"
               value={newGMT?.resourceId}
               onChange={changeHandler}
@@ -216,7 +216,7 @@ export default function GMTModel({
           <div className="row">
             <div className="col-md-6">
          
-          <Form.Group className="mb-3" controlId="recordStatus">
+          <Form.Group className="mb-3" controlId="recordStatusId">
             <Form.Label>Status<span className="required">*</span></Form.Label>
             <Dropdown
               name="recordStatusId"
