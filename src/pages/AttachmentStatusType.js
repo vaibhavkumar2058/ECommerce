@@ -44,7 +44,8 @@ export default function AttachmentStatusTypes() {
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [attachmentStatusType, setAttachmentStatusType] = useState({
-    AttachmentStatusTypeName:null,
+    attachmentStatusTypeName:null,
+    description :"",
     recordStatusId:null,
     
       });
@@ -73,8 +74,8 @@ export default function AttachmentStatusTypes() {
 
   const columns = [
     { dataField: 'attachmentStatusTypeId', text: 'AttachmentStatusType ', sort: true, hidden: true },
-    { dataField: 'attachmentStatusTypeName', text: 'AttachmentStatusTypeName', sort: true,  },
-
+    { dataField: 'attachmentStatusTypeName', text: 'AttachmentStatusTypeName', sort: true  },
+    { dataField: 'description', text: 'Description', sort: true  },
     { dataField: 'recordStatusId', text: 'RecordStatus', sort: true,headerStyle: () => {
       return { width: "100px" };
     } },
@@ -178,7 +179,7 @@ export default function AttachmentStatusTypes() {
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Address Fetch Failed.'
+        message: 'AttachmentStatusType Fetch Failed.'
       })
     }
   };

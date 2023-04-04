@@ -166,6 +166,7 @@ export default function Gender() {
 
       var arr = [];
       for (var key in response.payload) {
+        if (key !== 'title')
         arr.push(response.payload[key]);
       }
       setRecordStatusList(arr);

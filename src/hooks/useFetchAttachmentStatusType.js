@@ -14,7 +14,7 @@ import {
 
   export default function useFetchAttachmentStatusTypes() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/address";
+  const hapyCarURL = "https://localhost:7062/attachmentStatusType";
 
   const API = useAPI();
   const SUCCESS = "Success";

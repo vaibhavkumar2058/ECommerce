@@ -180,6 +180,7 @@ export default function Notifications() {
 
       var arr = [];
       for (var key in response.payload) {
+        if (key !== 'title')
         arr.push(response.payload[key]);
       }
       setRecordStatusList(arr);
@@ -198,6 +199,7 @@ export default function Notifications() {
 
       var arr = [];
       for (var key in response.payload) {
+        if (key !== 'title')
         arr.push(response.payload[key]);
       }
       setNotificationTypeList(arr);

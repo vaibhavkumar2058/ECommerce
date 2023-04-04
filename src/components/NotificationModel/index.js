@@ -130,7 +130,7 @@ export default function NotificationModel({
     setNotificationTypeOptions(notificationTypeList.map((notificationType,item) =>(
       {
       key: item,
-      text: notificationType.actionName,
+      text: notificationType.notificationTypeName,
     value: notificationType.notificationTypeId,
     })).filter((item) => item));
     }, [notificationTypeList]);

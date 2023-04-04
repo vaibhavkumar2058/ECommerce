@@ -208,6 +208,7 @@ export default function ItemCosts() {
 
       var arr = [];
       for (var key in response.payload) {
+        if (key !== 'title')
         arr.push(response.payload[key]);
       }
       setRecordStatusList(arr);
@@ -225,6 +226,7 @@ export default function ItemCosts() {
 
       var arr = [];
       for (var key in response.payload) {
+        if (key !== 'title')
         arr.push(response.payload[key]);
       }
       setProductList(arr);
@@ -242,6 +244,7 @@ export default function ItemCosts() {
 
       var arr = [];
       for (var key in response.payload) {
+        if (key !== 'title')
         arr.push(response.payload[key]);
       }
       setMeasurementValueList(arr);
@@ -259,6 +262,7 @@ export default function ItemCosts() {
 
       var arr = [];
       for (var key in response.payload) {
+        if (key !== 'title')
         arr.push(response.payload[key]);
       }
       setMeasurementTypeList(arr);
