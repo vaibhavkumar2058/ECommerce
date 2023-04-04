@@ -16,11 +16,10 @@ import Product from "../pages/Product";
 import File from "../pages/File";
 import Security from "../pages/Security";
 import AddressType from "../pages/AddressType";
-
 import Address from "../pages/Address";
 import Cart from "../pages/Cart";
 import Invoice from "../pages/Invoice";
-import Country from "../pages/Country";
+import Country from "../pages/country";
 import Gender from "../pages/Gender";
 import GMT from "../pages/GMT";
 import ItemCost from "../pages/ItemCost";

@@ -226,6 +226,7 @@ export default function Resourcess() {
 
       var arr = [];
       for (var key in response.payload) {
+        if (key !== 'title')
         arr.push(response.payload[key]);
       }
       setRecordStatusList(arr);
@@ -243,6 +244,7 @@ export default function Resourcess() {
 
       var arr = [];
       for (var key in response.payload) {
+        if (key !== 'title')
         arr.push(response.payload[key]);
       }
       setGendersList(arr);
@@ -261,6 +263,7 @@ export default function Resourcess() {
 
       var arr = [];
       for (var key in response.payload) {
+        if (key !== 'title')
         arr.push(response.payload[key]);
       }
       setRolesList(arr);

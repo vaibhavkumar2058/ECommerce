@@ -110,7 +110,7 @@ export default function Addresses() {
       return { width: "100px" };
     } },
     { dataField: 'locality', text: 'Locality', sort: true,headerStyle: () => {
-      return { width: "100px" };
+      return { width: "120px" };
     } },
     { dataField: 'pincode', text: 'Pincode', sort: true,headerStyle: () => {
       return { width: "120px" };
@@ -125,7 +125,7 @@ export default function Addresses() {
       return { width: "200px" };
     }},
     { dataField: 'landMark', text: 'LandMark', sort: true,headerStyle: () => {
-      return { width: "100px" };
+      return { width: "120px" };
     } },
     { dataField: 'recordStatusId', text: 'RecordStatus', sort: true,headerStyle: () => {
       return { width: "100px" };
@@ -226,6 +226,7 @@ export default function Addresses() {
 
       var arr = [];
       for (var key in response.payload) {
+        if (key !== 'title')
         arr.push(response.payload[key]);
       }
       setRecordStatusList(arr);
@@ -243,6 +244,7 @@ export default function Addresses() {
 
       var arr = [];
       for (var key in response.payload) {
+        if (key !== 'title')
         arr.push(response.payload[key]);
       }
       setCountryList(arr);
@@ -261,6 +263,7 @@ export default function Addresses() {
 
       var arr = [];
       for (var key in response.payload) {
+        if (key !== 'title')
         arr.push(response.payload[key]);
       }
       setStateList(arr);
@@ -279,6 +282,7 @@ export default function Addresses() {
 
       var arr = [];
       for (var key in response.payload) {
+        if (key !== 'title')
         arr.push(response.payload[key]);
       }
       setAddressTypeList(arr);
