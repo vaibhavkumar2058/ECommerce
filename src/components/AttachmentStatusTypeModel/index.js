@@ -21,8 +21,8 @@ export default function AttachmentStatusTypeModel({
     
 }) {
     const [newAttachmentStatusType, setNewAttachmentStatusType] = useState({
-        AttachmentStatusTypeName: null,
-        Description: "",
+        attachmentStatusTypeName: null,
+        description: "",
         recordStatusId: null,
     });
     const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus, item) => (
@@ -127,9 +127,8 @@ export default function AttachmentStatusTypeModel({
         if (isEdit) {
             setButtonType("Update");
         }
-        const isEnable = !newAttachmentStatusType?.AttachmentStatusTypeId
-            || !newAttachmentStatusType?.AttachmentStatusTypeName
-            || !newAttachmentStatusType?.Description
+        const isEnable =  !newAttachmentStatusType?.attachmentStatusTypeName
+            || !newAttachmentStatusType?.description
             || !newAttachmentStatusType?.recordStatusId;
         setSaveDisabled(isEnable);
     }, [newAttachmentStatusType]);
@@ -158,34 +157,20 @@ export default function AttachmentStatusTypeModel({
             {!isDelete && (
                 <Form>
                     <div className="row">
-                    <div className="col-md-6">
-                            <Form.Group className="mb-3" controlId="AttachmentStatusTypeId">
-                                <Form.Label>AttachmentStatusType<span className="required">*</span></Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    name="AttachmentStatusTypeId"
-                                    placeholder=" Select AttachmentStatusType"
-                                    value={newAttachmentStatusType?.AttachmentStatusTypeId}
-                                    onChange={changeHandler}
-                                />
-                            </Form.Group>
-                        </div>
+                    
                         <div className="col-md-6">
                             <Form.Group className="mb-3" controlId="AttachmentStatusTypeName">
                                 <Form.Label>AttachmentStatusTypeName<span className="required">*</span></Form.Label>
                                 <Form.Control
                                     type="text"
-                                    name="AttachmentStatusTypeName"
+                                    name="attachmentStatusTypeName"
                                     placeholder=" Select AttachmentStatusTypeName"
-                                    value={newAttachmentStatusType?.AttachmentStatusTypeName}
+                                    value={newAttachmentStatusType?.attachmentStatusTypeName}
                                     onChange={changeHandler}
                                 />
                             </Form.Group>
-                        </div>
-                    </div>
-                   
-                    <div className="row">
-                        <div className="col-md-6">
+                            </div>
+                            <div className="col-md-6">
                             <Form.Group className="mb-3" controlId="description">
                                 <Form.Label>Description</Form.Label>
                                 <Form.Control
@@ -197,6 +182,11 @@ export default function AttachmentStatusTypeModel({
                                 />
                             </Form.Group>
                         </div>
+                       
+                    </div>
+                   
+                    <div className="row">
+                        
                         <div className="col-md-6">
                             <Form.Group className="mb-3" controlId="recordStatusId">
                                 <Form.Label>Status<span className="required">*</span></Form.Label>
@@ -284,7 +274,7 @@ AttachmentStatusTypeModel.defaultProps = {
     isDelete: false,
     onClose: null,
     id: null,
-    AttachmentStatusTypeData: null,
+    attachmentStatusTypeData: null,
     recordStatusList: null,
 };
 

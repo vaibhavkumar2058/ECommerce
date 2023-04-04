@@ -44,8 +44,8 @@ export default function AttachmentStatusTypes() {
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [attachmentStatusType, setAttachmentStatusType] = useState({
-    AttachmentStatusTypeName:null,
-    Description :"",
+    attachmentStatusTypeName:null,
+    description :"",
     recordStatusId:null,
     
       });
@@ -179,7 +179,7 @@ export default function AttachmentStatusTypes() {
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Address Fetch Failed.'
+        message: 'AttachmentStatusType Fetch Failed.'
       })
     }
   };
