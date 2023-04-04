@@ -45,6 +45,7 @@ export default function AttachmentStatusTypes() {
   const [isDelete, setIsDelete] = useState(false);
   const [attachmentStatusType, setAttachmentStatusType] = useState({
     AttachmentStatusTypeName:null,
+    Description :"",
     recordStatusId:null,
     
       });
@@ -73,8 +74,8 @@ export default function AttachmentStatusTypes() {
 
   const columns = [
     { dataField: 'attachmentStatusTypeId', text: 'AttachmentStatusType ', sort: true, hidden: true },
-    { dataField: 'attachmentStatusTypeName', text: 'AttachmentStatusTypeName', sort: true,  },
-
+    { dataField: 'attachmentStatusTypeName', text: 'AttachmentStatusTypeName', sort: true  },
+    { dataField: 'description', text: 'Description', sort: true  },
     { dataField: 'recordStatusId', text: 'RecordStatus', sort: true,headerStyle: () => {
       return { width: "100px" };
     } },

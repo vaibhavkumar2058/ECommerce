@@ -18,11 +18,11 @@ export default function AttachmentStatusTypeModel({
     onClose,
     attachmentStatusTypeData,
     recordStatusList = [],
-    //recordStatus,
+    
 }) {
     const [newAttachmentStatusType, setNewAttachmentStatusType] = useState({
         AttachmentStatusTypeName: null,
-        Description: null,
+        Description: "",
         recordStatusId: null,
     });
     const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus, item) => (
