@@ -1,13 +1,18 @@
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 import React, { useState, useEffect } from "react";
-import Button from "react-bootstrap/Button";
-import useFetchCart from "../hooks/useFetchCart";
-import useFetchOrder from "../hooks/useFetchOrder";
+import useFetchCarts from '../../hooks/useFetchCart';
+import useFetchOrders from '../../hooks/useFetchOrder';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ConfirmOrder from '../ComfirmOrderModel';
 
 
-export default function OrderSummaryList() {
+export default function OrderSummaryLists() {
   const [carts, setCarts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const [error, setError] = useState(null);
 
   const [messageStatus, setMessageStatus] = useState({
@@ -25,12 +30,12 @@ export default function OrderSummaryList() {
 
   const {
     placeOrder,
-  } = useFetchOrder();
+  } = useFetchOrders();
 
   const {
     getCartListByResourcesId,
 
-  } = useFetchCart();
+  } = useFetchCarts();
 
   useEffect(() => {
     if (carts.length == 0) {
@@ -41,17 +46,17 @@ export default function OrderSummaryList() {
     }
   }, [carts]);
 
-  const  ConfirmOrders = async () => {
-    placeOrders.orderItems = carts;
-    const response = await  placeOrder(placeOrders);
-    if (response.payload.title == "Success") {
-      alert("Order Placed Successfully..");
-      window.location.href = "/orderPlacedList";
-      setCarts([]);
-    }
-    else {
-    }
-  };
+  // const  ConfirmOrders = async () => {
+  //   placeOrders.orderItems = carts;
+  //   const response = await  placeOrder(placeOrders);
+  //   if (response.payload.title == "Success") {
+  //     alert("Order Placed Successfully..");
+  //     window.location.href = "/orderPlacedList";
+  //     setCarts([]);
+  //   }
+  //   else {
+  //   }
+  // };
 
   const getAllCarts = async (resourcesId) => {
 
@@ -91,6 +96,14 @@ export default function OrderSummaryList() {
 
   return (
     <>
+     <Button variant="primary" onClick={handleShow}>
+     Place to order
+      </Button>
+   <Modal
+   show={show}
+   onHide={handleClose}
+   backdrop="static"
+   keyboard={false}>
       <div className="m-t-40">
         {loading && <div>A moment please...</div>}
         {carts && (<div>
@@ -128,12 +141,12 @@ export default function OrderSummaryList() {
             <div class=" col-md-1 col-lg-1"></div>
             <div class=" col-md-2 col-lg-2"><Button variant="primary">Cancel Order</Button>{' '}</div>
             <div class=" col-md-2 col-lg-2">
-              <Button variant="secondary"
+              {/* <Button variant="secondary"
                 onClick={() => ConfirmOrders()}
 >
                 Confirm Order
-              </Button>
-              
+              </Button> */}
+           <ConfirmOrder></ConfirmOrder>
 
             </div>
             <div class=" col-md-1 col-lg-1"></div>
@@ -141,6 +154,7 @@ export default function OrderSummaryList() {
 
         </div>)}
       </div>
-    </>
+      </Modal></>
+
   );
 };

@@ -38,7 +38,7 @@ import ProductAttachments from "../pages/ProductAttachments";
 import Resources from "../pages/Resources"
 import AttachmentStatusType from "../pages/AttachmentStatusType"
 import OrderStatus from "../pages/OrderStatus"
-import ShoppingList from "../pages/ShoppingList"
+//import ShoppingList from "../pages/ShoppingList"
 import ItemList from "../pages/ItemList"
 import ZMap from "../pages/ZMap"
 import Dashboard from "../pages/DashBoard"
@@ -76,7 +76,7 @@ const NavbarComp = () => {
           {(admin && <Route exact path="/vehicleType" element={<ProtectedRoute><Sidebar/><Topbar/> <VehicleType /></ProtectedRoute>} />)}
           {(admin && <Route exact path="/resources" element={<ProtectedRoute><Sidebar/><Topbar/> <Resources/></ProtectedRoute>}/>)}
           {((admin||agent||dealer||customer) && <Route exact path="/order" element={<ProtectedRoute><Sidebar/><Topbar/><Order/></ProtectedRoute>}/>)}
-          {((admin||agent||dealer||customer) &&<Route exact path="/shoppinglist" element={<ProtectedRoute><Sidebar/><Topbar/> <ShoppingList /></ProtectedRoute>} />)}
+          {/* {((admin||agent||dealer||customer) &&<Route exact path="/shoppinglist" element={<ProtectedRoute><Sidebar/><Topbar/> <ShoppingList /></ProtectedRoute>} />)} */}
           {(admin && <Route exact path="/itemCost" element={<ProtectedRoute><Sidebar/><Topbar/><ItemCost/></ProtectedRoute>}/>)}
           {((admin||agent||dealer||customer)  && <Route exact path="/cart" element={<ProtectedRoute><Sidebar/><Topbar/> <Cart/></ProtectedRoute>}/>)}
           {(admin && <Route exact path="/GMT" element={<ProtectedRoute><Sidebar/><Topbar/> <GMT/></ProtectedRoute>}/>)}
