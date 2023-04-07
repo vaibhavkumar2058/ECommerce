@@ -115,7 +115,11 @@ export default function Addresses() {
     { dataField: 'pincode', text: 'Pincode', sort: true,headerStyle: () => {
       return { width: "120px" };
     } },
+<<<<<<< HEAD
     { dataField: 'addressTypeId', text: 'AddressType', sort: true,headerStyle: () => {
+=======
+    { dataField: 'addressTypeId', text: 'Address Type ', sort: true,headerStyle: () => {
+>>>>>>> b83c8e30d27558e278123e6a56cc0fb2e143f873
       return { width: "150px" };
     } },
     { dataField: 'isDefault', text: 'IsDefault', sort: true ,headerStyle: () => {

@@ -75,12 +75,12 @@ export default function States() {
   } = useFetchRecordStatus();
 
   const columns = [
-
-    { dataField: 'stateId', text: 'State Id', sort: true, hidden: true , hidden:true },
-    { dataField: 'stateName', text: 'State', sort: true , hidden:true},
-    { dataField: 'countryId', text: 'Country', sort: true , hidden:true },
+ 
+    { dataField: 'stateId', text: 'State Id', sort: true, hidden: true } ,
+    { dataField: 'stateName', text: 'State', sort: true  },
+    { dataField: 'countryId', text: 'CountryId', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
-    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true , hidden:true },
+    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true  },
      // columns follow dataField and text structure
     {
       dataField: "Actions",

@@ -283,7 +283,12 @@ export default function ItemCostModel({
 
           <Form.Group className="mb-3" controlId="customTypeId">
             <Form.Label>Custom Type<span className="required">*</span></Form.Label>
+<<<<<<< HEAD
             <Dropdown
+=======
+            <Form.Control
+              type="text"
+>>>>>>> b83c8e30d27558e278123e6a56cc0fb2e143f873
               name="customTypeId"
               placeholder="Select Custom Type"
               fluid

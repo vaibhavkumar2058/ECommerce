@@ -63,6 +63,7 @@ import Topbar from "../pages/Topbar";
 
 const NavbarComp = () => {
   const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
+  debugger
   const admin=userInfo?.role?.admin;
   const agent=userInfo?.role?.agent;
   const dealer=userInfo?.role?.dealer;

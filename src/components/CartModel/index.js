@@ -19,11 +19,9 @@ export default function CartModel({
   id,
   onClose,
   cartData,
-
   recordStatusList = [],
   productList = [],
 
-  // recordStatuses,
 }) {
   const [newCart, setNewCart] = useState({
     resourcesId: null,
@@ -53,7 +51,7 @@ export default function CartModel({
       text: product.productName,
       value: product.productId,
     })).filter((item) => item));
-
+ 
   const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus, item) => (
     {
       key: item,
@@ -153,6 +151,7 @@ export default function CartModel({
       })).filter((item) => item));
   }, [productList]);
 
+  
   useEffect(() => {
     setRecordStatusOptions(recordStatusList.map((recordStatus, item) => (
       {
@@ -167,10 +166,11 @@ export default function CartModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newCart?.resourcesId ||
-      !newCart?.productId || !newCart?.cost ||
-      !newCart?.quantity ||
-      !newCart?.recordStatusId;
+      !newCart?.resourcesId
+      || !newCart?.productId
+      || !newCart?.cost
+      || !newCart?.quantity
+      || !newCart?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newCart]);
 
@@ -204,7 +204,7 @@ export default function CartModel({
                 controlId="formCart"
               >
 
-                <Form.Label>Resources<span className="required">*</span></Form.Label>
+<Form.Label>Resources<span className="required">*</span></Form.Label>
                 <Form.Control
                   type="resourceId"
                   name="resourcesId"
@@ -346,6 +346,7 @@ CartModel.propTypes = {
   * produtList for object type
   */
   produtList: PropTypes.any,
+
   /**
   
  * recordStatusList for object type
@@ -363,7 +364,6 @@ CartModel.defaultProps = {
   onClose: null,
   id: null,
   cartData: null,
-
   productList: null,
   recordStatusList: null,
 

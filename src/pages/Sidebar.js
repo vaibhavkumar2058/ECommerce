@@ -91,8 +91,6 @@ export default (props = {}) => {
             </span><span className="sidebar-text">Cart </span></span></a></li>)}
             {(admin && <li className="nav-item active"><a href="itemCost" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
             </span><span className="sidebar-text">ItemCost </span></span></a></li>)}
-            {(admin && <li className="nav-item active"><a href="measurementValue" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
-            </span><span className="sidebar-text">MeasurementValue </span></span></a></li>)}
             {(admin && <li className="nav-item active"><a href="orderStatus" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
             </span><span className="sidebar-text">OrderStatus </span></span></a></li>)}
 

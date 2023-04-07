@@ -84,13 +84,13 @@ export default function Carts() {
 
 
   const columns = [
-    { dataField: 'cartId', text: 'Cart Id', sort: true, hidden: true },
-    { dataField: 'resourcesId', text: 'Resources Id', sort: true  },
-    { dataField: 'productId', text: ' Product Id', sort: true },
+    { dataField: 'cartId', text: 'Cart ', sort: true, hidden: true },
+    { dataField: 'resourcesId', text: 'Resources ', sort: true  },
+    { dataField: 'productId', text: ' Product ', sort: true },
     { dataField: 'cost', text: 'Cost', sort: true },
     { dataField: 'quantity', text: 'Quantity', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
-    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true },
+    { dataField: 'recordStatusId', text: 'RecordStatus', sort: true },
     // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -121,6 +121,7 @@ export default function Carts() {
 
   useEffect(() => {
     getProductList();
+
     getRecordStatusList();
     if (carts.length == 0) {
       getAllCarts();
@@ -154,7 +155,6 @@ export default function Carts() {
 
   const handleEdit = (rowId, row) => {
     setCart(row);
-    //getCartsById(rowId);
     setId(rowId);
     setIsEdit(true);
     setShow(true);
@@ -203,7 +203,7 @@ export default function Carts() {
       })
     }
   };
-
+ 
   const getRecordStatusList = async () => {
     const response = await getRecordStatuss();
     if (response.payload.title == "Success") {
@@ -359,7 +359,7 @@ export default function Carts() {
                 id={id}
                 cartData={cart}
                 products={products}
-                productList={productList}
+    
                 recordStatusList={recordStatusList}
                
               />
