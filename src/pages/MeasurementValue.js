@@ -46,7 +46,7 @@ export default function MeasurementValues() {
   const [measurementValue, setMeasurementValue] = useState({
     value: "",
     description:"",
-    RecordStatusId:"1",
+    recordStatusId:"1",
       });
 
   const [id, setId] = useState(null);
@@ -73,9 +73,9 @@ export default function MeasurementValues() {
   const columns = [
 
     { dataField: 'measurementValueId', text: 'MeasurementValue Id', sort: true, hidden: true },
-    { dataField: 'value', text: ' value', sort: true },
+    { dataField: 'value', text: ' Value', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
-    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true, hidden: true },
+    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true,  },
     // columns follow dataField and text structure
     {
       dataField: "Actions",

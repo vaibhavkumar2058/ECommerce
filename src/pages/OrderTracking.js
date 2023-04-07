@@ -88,10 +88,9 @@ export default function OrderTracking() {
 
 
   const columns = [
-    { dataField: 'orderTrackingId', text: 'orderTracking Id', sort: true, hidden: true },
-    { dataField: 'orderId', text: 'Order Id', sort: true , hidden: true},
-    
-    { dataField: 'orderStatusId', text: 'OrderStatus Id', sort: true, hidden: true },
+    { dataField: 'orderTrackingId', text: 'Order Tracking ', sort: true, hidden: true },
+    { dataField: 'orderId', text: 'Order', sort: true },
+    { dataField: 'orderStatusId', text: 'Order Status ', sort: true},
     { dataField: 'description', text: 'Description', sort: true},
     
     

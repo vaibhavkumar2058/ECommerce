@@ -65,8 +65,8 @@ export default function RecordStatuss() {
 
   const columns = [
     
-    { dataField: 'recordStatusId', text: ' RecordStatusId', sort: true,hidden: true },
-    { dataField: 'actionName', text: 'ActionName', sort: true },
+    { dataField: 'recordStatusId', text: ' Record Status', sort: true,hidden: true },
+    { dataField: 'actionName', text: 'Action Name', sort: true },
         { dataField: 'description', text: 'Description', sort: true },
         // columns follow dataField and text structure
     {

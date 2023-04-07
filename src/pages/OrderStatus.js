@@ -74,10 +74,9 @@ export default function OrderStatus() {
 
   const columns = [
     { dataField: 'orderStatusId', text: 'orderStatus Id', sort: true, hidden: true },
-    { dataField: 'orderStatusName', text: 'OrderStatus Name', sort: true },
-    
+    { dataField: 'orderStatusName', text: 'OrderStatus', sort: true },
     { dataField: 'recordStatusId', text: 'RecordStatus Id', sort: true , hidden: true},
-    { dataField: 'description', text: 'Description', sort: true,},
+    { dataField: 'description', text: 'Description', sort: true},
     
     
     // columns follow dataField and text structure

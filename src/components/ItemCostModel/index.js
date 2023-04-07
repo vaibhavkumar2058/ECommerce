@@ -232,7 +232,7 @@ export default function ItemCostModel({
           </div>
           <div className="col-md-6">
           <Form.Group className="mb-3" controlId="measurementTypeId">
-            <Form.Label>MeasurementType<span className="required">*</span></Form.Label>
+            <Form.Label>Measurement Type<span className="required">*</span></Form.Label>
             <Dropdown
               name="measurementTypeId"
               placeholder=" Select measurementType"
@@ -250,7 +250,7 @@ export default function ItemCostModel({
             <div className="col-md-6">
 
           <Form.Group className="mb-3" controlId="MeasurementValueId">
-            <Form.Label>MeasurementValue<span className="required">*</span></Form.Label>
+            <Form.Label>Measurement Value<span className="required">*</span></Form.Label>
             <Dropdown
               name="measurementValueId"
               placeholder="Select measurementValue"
@@ -266,7 +266,7 @@ export default function ItemCostModel({
           <div className="col-md-6">
 
           <Form.Group className="mb-3" controlId="customTypeId">
-            <Form.Label>CustomType<span className="required">*</span></Form.Label>
+            <Form.Label>Custom Type<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="customTypeId"

@@ -138,7 +138,7 @@ export default function RecordStatusModel({
             className={styles.stFormContainer}
             controlId="actionName"
           >
-            <Form.Label>ActionName<span className="required">*</span></Form.Label>
+            <Form.Label>Action Name<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="actionName"
