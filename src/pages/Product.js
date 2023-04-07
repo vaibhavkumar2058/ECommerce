@@ -114,6 +114,12 @@ export default function Products() {
       }, text: ' Category', sort: true
     },
     {
+      dataField: 'RecordStatus',headerStyle: () => {
+        return { width: "100px" };
+      }, text: ' Status', sort: true
+    },
+    
+    {
       dataField: 'productName',
       headerStyle: () => {
         return { width: "100px" };

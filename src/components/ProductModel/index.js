@@ -204,7 +204,7 @@ export default function ProductModel({
                     <Form.Control
                       type="text"
                       name="productName"
-                      placeholder="ProductName"
+                      placeholder="Product Name"
                       value={newProduct?.productName}
                       onChange={changeHandler}
                     />
@@ -216,7 +216,7 @@ export default function ProductModel({
                     <Form.Label>Category Type<span className="required">*</span></Form.Label>
                     <Dropdown
                       name="categoryTypeId"
-                      placeholder='Select CategoryType'
+                      placeholder='Select Category Type'
                       fluid
                       search
                       selection

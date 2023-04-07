@@ -345,11 +345,11 @@ export default function AddressModel({
             </div>
             <div className="col-md-6">
               <Form.Group className="mb-3" controlId="defaultAddressTypeId">
-                <Form.Label>DefaultAddressType</Form.Label>
+                <Form.Label>Default Address Type</Form.Label>
                 <Form.Control
                   type="text"
                   name="defaultAddressTypeId"
-                  placeholder=" Select DefaultAddressTypeId"
+                  placeholder=" Select Default Address Type"
                   value={newAddress?.defaultAddressTypeId}
                   onChange={changeHandler}
                 />
@@ -374,7 +374,7 @@ export default function AddressModel({
                 <Form.Label>Status<span className="required">*</span></Form.Label>
                 <Dropdown
                   name="recordStatusId"
-                  placeholder='Select RecordStatus'
+                  placeholder='Select Status'
                   fluid
                   search
                   selection

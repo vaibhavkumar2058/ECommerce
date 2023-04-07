@@ -7,20 +7,20 @@ import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
 
-export default function AddressTypeModel({
-  onAddAddressType,
-  onUpdateAddressType,
-  onDeleteAddressType,
+export default function CustomTypeModel({
+  onAddCustomType,
+  onUpdateCustomType,
+  onDeleteCustomType,
   isEdit,
   isDelete,
-  onGetAddressType,
+  onGetCustomType,
   id,
   onClose,
-  addressTypeData,
+  customTypeData,
   recordStatusList = [],
  }) {
-  const [newAddressType, setNewAddressType] = useState({
-    addressTypeName:"",
+  const [newCustomType, setNewCustomType] = useState({
+    customTypeName:"",
     description:"",
     recordStatusId:null,
   });
@@ -52,8 +52,8 @@ export default function AddressTypeModel({
   };
 
   const changeHandler = (e) => {
-    setNewAddressType({
-      ...newAddressType,
+    setNewCustomType({
+      ...newCustomType,
       [e.target.name]: e.target.value,
     });
   };
@@ -63,7 +63,7 @@ export default function AddressTypeModel({
   const saveHandler = async () => {
 
     if (isEdit) {
-      const response = await onUpdateAddressType(id, newAddressType);
+      const response = await onUpdateCustomType(id, newCustomType);
       if (response.payload.title == "Success") {
         onClose(true);
       }
@@ -75,11 +75,11 @@ export default function AddressTypeModel({
       }
     }
     else {
-      const response = await onAddAddressType(newAddressType);
+      const response = await onAddCustomType(newCustomType);
       if (response.payload.title == "Success") {
         setMessageStatus({
           mode: 'success',
-          message: 'AddressType Record Saved Succefully.'
+          message: 'CustomType Record Saved Succefully.'
         })
         onClose(true);
         console.log(response.payload);
@@ -87,32 +87,32 @@ export default function AddressTypeModel({
       else {
         setMessageStatus({
           mode: 'danger',
-          message: 'AddressType Save Failed.'
+          message: 'CustomType Save Failed.'
         })
       }
     }
   };
 
   const deleteHandler = async () => {
-    const response = await onDeleteAddressType(id);
+    const response = await onDeleteCustomType(id);
     if (response.payload.title == "Success") {
       onClose(true);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'AddressType Delete Failed.'
+        message: 'CustomType Delete Failed.'
       })
     }
   };
 
   const dropdownHandler = (event,{name,value}) => {
-    setNewAddressType((currentAddressType) => ({...currentAddressType, [name]: value}));
+    setNewCustomType((currentCustomType) => ({...currentCustomType, [name]: value}));
   }
 
   useEffect(() => {
     if (isEdit) {
-      setNewAddressType(addressTypeData);
+      setNewCustomType(customTypeData);
     }
   }, []);
 
@@ -131,9 +131,9 @@ export default function AddressTypeModel({
       setButtonType("Update");
     }
     const isEnable =
-       !newAddressType?.recordStatusId ;
+       !newCustomType?.recordStatusId ;
     setSaveDisabled(isEnable);
-  }, [newAddressType]);
+  }, [newCustomType]);
 
   return (
     <>
@@ -161,12 +161,12 @@ export default function AddressTypeModel({
             className={styles.stFormContainer}
             controlId="formAddressType"
           >
-            <Form.Label>Address Type<span className="required">*</span></Form.Label>
+            <Form.Label>Custom Type<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
-              name="addressTypeName"
-              placeholder=" Select Address Type"
-              value={newAddressType?.addressTypeName}
+              name="customTypeName"
+              placeholder=" Select Custom Type"
+              value={newCustomType?.customTypeName}
               onChange={changeHandler}
             />
           </Form.Group>
@@ -176,7 +176,7 @@ export default function AddressTypeModel({
               type="text"
               name="description"
               placeholder="Description"
-              value={newAddressType?.description}
+              value={newCustomType?.description}
               onChange={changeHandler}
             />
           </Form.Group>
@@ -189,7 +189,7 @@ export default function AddressTypeModel({
               search
               selection
               options={recordStatusOptions}
-              value = {newAddressType?.recordStatusId}
+              value = {newCustomType?.recordStatusId}
               onChange={dropdownHandler}
             />
           </Form.Group>
@@ -213,23 +213,23 @@ export default function AddressTypeModel({
   );
 }
 
-AddressTypeModel.propTypes = {
+CustomTypeModel.propTypes = {
   /**
-   * Callback function for Add AddressType
+   * Callback function for Add CustomType
    */
-  onAddAddressType: PropTypes.func,
+  onAddCustomType: PropTypes.func,
   /**
-   * Callback function for Update AddressType
+   * Callback function for Update CustomType
    */
-  onUpdateAddressType: PropTypes.func,
+  onUpdateCustomType: PropTypes.func,
   /**
-   * Callback function for Delete AddressType
+   * Callback function for Delete CustomType
    */
-  onDeleteAddressType: PropTypes.func,
+  onDeleteCustomType: PropTypes.func,
   /**
-   * Callback function for Get AddressType
+   * Callback function for Get CustomType
    */
-  onGetAddressType: PropTypes.func,
+  onGetCustomType: PropTypes.func,
   /**
    * isEdit for bool type
    */
@@ -239,7 +239,7 @@ AddressTypeModel.propTypes = {
    */
   isDelete: PropTypes.bool,
   /**
-   * Callback function for Get AddressType
+   * Callback function for Get CustomType
    */
   onClose: PropTypes.func,
   /**
@@ -247,25 +247,25 @@ AddressTypeModel.propTypes = {
    */
   id: PropTypes.number,
   /**
- * addressTypeData for object type
+ * customTypeData for object type
  */
-  addressTypeData: PropTypes.any,
+  customTypeData: PropTypes.any,
   /**
  * recordStatusData for object type
  */
   recordStatusList: PropTypes.any,
 };
 
-AddressTypeModel.defaultProps = {
-  onAddAddressType: null,
-  onUpdateAddressType: null,
-  onDeleteAddressType: null,
-  onGetAddressType: null,
+CustomTypeModel.defaultProps = {
+  onAddCustomType: null,
+  onUpdateCustomType: null,
+  onDeleteCustomType: null,
+  onGetCustomType: null,
   isEdit: false,
   isDelete: false,
   onClose: null,
   id: null,
-  addressTypeData: null,
+  customTypeData: null,
   recordStatusList:null,
 };
 

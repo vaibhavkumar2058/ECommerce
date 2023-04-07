@@ -6,6 +6,7 @@ import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
 import useFetchProduct from "../hooks/useFetchProduct";
 import useFetchMeasurementValue from "../hooks/useFetchMeasurementValue";
 import useFetchMeasurementType from "../hooks/useFetchMeasurementType";
+import useFetchCustomType from "../hooks/useFetchCustomType";
 import ItemCostModel from "../components/ItemCostModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
@@ -35,6 +36,7 @@ export default function ItemCosts() {
   const [productList, setProductList] = useState([]);
   const [measurementValueList, setMeasurementValueList] = useState([]);
   const [measurementTypeList, setMeasurementTypeList] = useState([]);
+  const [customTypeList, setCustomTypeList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -89,21 +91,25 @@ export default function ItemCosts() {
   const { 
     getMeasurementTypes,
   } = useFetchMeasurementType();
+  const { 
+    getCustomTypes,
+  } = useFetchCustomType();
+
 
 
   const columns = [
 
     { dataField: 'itemCostId', text: 'ItemCost Id', sort: true, hidden: true},
-    { dataField: 'productId', text: ' Product Id', sort: true ,hidden: true,headerStyle: () => {
+    { dataField: 'productId', text: ' Product', sort: true ,headerStyle: () => {
       return { width: "120px" };
     } },
-    { dataField: 'measurementTypeId', text: 'MeasurementType Id', sort: true , hidden: true,headerStyle: () => {
+    { dataField: 'measurementTypeId', text: 'Measurement Type', sort: true ,headerStyle: () => {
       return { width: "200px" };
     } },
-    { dataField: 'measurementValueId', text: 'MeasurementValue Id', sort: true, hidden: true,headerStyle: () => {
+    { dataField: 'measurementValueId', text: 'Measurement Value', sort: true,headerStyle: () => {
       return { width: "200px" };
     }  },
-    { dataField: 'customTypeId', text: 'CustomType Id', sort: true,hidden: true,headerStyle: () => {
+    { dataField: 'customTypeId', text: 'Custom Type', sort: true,headerStyle: () => {
       return { width: "150px" };
     }  },
     { dataField: 'price', text: 'Price', sort: true,headerStyle: () => {
@@ -112,7 +118,7 @@ export default function ItemCosts() {
     { dataField: 'description', text: 'Description', sort: true,headerStyle: () => {
       return { width: "150px" };
     }  },
-    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true , hidden: true,headerStyle: () => {
+    { dataField: 'recordStatusId', text: 'Status', sort: true , hidden: true,headerStyle: () => {
       return { width: "180px" };
     } },
     // columns follow dataField and text structure
@@ -148,6 +154,7 @@ export default function ItemCosts() {
     getProductList();
     getMeasurementValueList();
     getMeasurementTypeList();
+    getCustomTypeList();
     if (itemcosts.length == 0) {
       getAllItemCosts();
       setLoading(false)
@@ -253,6 +260,24 @@ export default function ItemCosts() {
       setMessageStatus({
         mode: 'danger',
         message: 'State Fetch Failed.'
+      })
+    }
+  };
+  const getCustomTypeList = async () => {
+    const response = await getCustomTypes();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        if (key !== 'title')
+        arr.push(response.payload[key]);
+      }
+      setCustomTypeList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'CustomType Fetch Failed.'
       })
     }
   };
@@ -405,6 +430,7 @@ export default function ItemCosts() {
                 productList={productList}
                 measurementTypeList={measurementTypeList}
                 measurementValueList={measurementValueList}
+                customTypeList={customTypeList}
               />
             </Modal.Body>
 

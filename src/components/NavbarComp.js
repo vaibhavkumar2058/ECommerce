@@ -55,6 +55,7 @@ import Sidebar from "../pages/Sidebar";
 import Signup from "../pages/PublicPages/Signup";
 import OrderReports from "../pages/OrderReports";
 import NotificationType from "../pages/NotificationType";
+import CustomType from "../pages/CustomType";
 import Emailverification from "../pages/PublicPages/Emailverification";
 import Topbar from "../pages/Topbar";
 
@@ -114,6 +115,7 @@ const NavbarComp = () => {
 
           <Route path="/" element={<Navigate replace to="/signin" />} />
           {(admin && <Route exact path="/orderItem" element={<ProtectedRoute><Sidebar/><Topbar/> <OrderItem /></ProtectedRoute>} />)}
+          {(admin && <Route exact path="/customType" element={<ProtectedRoute><Sidebar/><Topbar/> <CustomType /></ProtectedRoute>} />)}
           {((admin||agent||dealer||customer) &&<Route exact path="/changepassword" element={<ProtectedRoute><Sidebar/><Topbar/><ChangePassword/></ProtectedRoute>}/>)}
           <Route exact path="/forgotpassword" element={<ForgotPassword/>}/>
           <Route exact path="/emailverification" element={<Emailverification/>}/>

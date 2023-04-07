@@ -58,7 +58,8 @@ export default (props = {}) => {
             </span><span className="sidebar-text">ItemList </span></span></a></li>)}
             {((admin || agent || dealer || customer) && <li className="nav-item "><a href="orderPlacedList" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
             </span><span className="sidebar-text">OrderPlacedList </span></span></a></li>)}
-            
+            {(admin && <li className="nav-item active"><a href="customType" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
+            </span><span className="sidebar-text">CustomType </span></span></a></li>)}
 
              {(admin && <li className="nav-item "><a href="recordStatus" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
              </span><span className="sidebar-text">RecordStatus </span></span></a></li>)}

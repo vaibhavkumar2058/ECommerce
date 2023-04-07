@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
-import useFetchAddress from "../hooks/useFetchAddress";
+import useFetchCustomType from "../hooks/useFetchCustomType";
 import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
-import useFetchCountry from "../hooks/useFetchCountry";
-import useFetchState from "../hooks/useFetchState";
-import useFetchAddressType from "../hooks/useFetchAddressType";
-import AddressModel from "../components/AddressModel";
+import CustomTypeModel from "../components/CustomTypeModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
@@ -28,20 +25,16 @@ const MyExportCSV = (props) => {
   );
 };
 
-export default function Addresses() {
-
-  const [addresses, setAddresses] = useState([]);
+export default function CustomTypes() {
   const [recordStatusList, setRecordStatusList] = useState([]);
-  const [countryList, setCountryList] = useState([]);
-  const [stateList, setStateList] = useState([]);
-  const [addressTypeList, setAddressTypeList] = useState([]);
+  const [customTypes, setCustomTypes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
   const handleClose = () => {
-    getAllAddresses();
+    getAllCustomTypes();
     setIsEdit(false);
     setIsDelete(false);
     setShow(false);
@@ -49,17 +42,9 @@ export default function Addresses() {
   const handleShow = () => setShow(true);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-  const [address, setAddress] = useState({
-    countryId:null,
-    stateId:null,
-    city:"",
-    town:"",
-    locality:"",
-    pincode:null,
-    addressTypeId:null,
-    landMark:"",
-    isDefault:"",
-    defaultAddressTypeId:null,
+  const [customType, setCustomType] = useState({
+    customTypeName: "",
+    description:"",
     recordStatusId:null,
     
       });
@@ -74,63 +59,23 @@ export default function Addresses() {
   });
 
   const { 
-    addAddress,
-    updateAddress,
-    deleteAddress,
-    getAddresses,
-    addressById,
-  } = useFetchAddress();
+    addCustomType,
+    updateCustomType,
+    deleteCustomType,
+    getCustomTypes,
+    customTypeById,
+  } = useFetchCustomType();
 
   const { 
     getRecordStatuss,
   } = useFetchRecordStatus();
-  const { 
-    getStates,
-  } = useFetchState();
-  const { 
-    getCountries,
-  } = useFetchCountry();
-  const { 
-    getAddressTypes,
-  } = useFetchAddressType();
-
 
   const columns = [
-    { dataField: 'addressId', text: 'Address ', sort: true, hidden: true },
-    { dataField: 'countryId', text: 'Country ', sort: true,headerStyle: () => {
-      return { width: "120px" };
-    }  },
-    { dataField: 'stateId', text: 'State ', sort: true ,headerStyle: () => {
-      return { width: "100px" };
-    }},
-    { dataField: 'city', text: 'City', sort: true,headerStyle: () => {
-      return { width: "100px" };
-    } },
-    { dataField: 'town', text: 'Town', sort: true,headerStyle: () => {
-      return { width: "100px" };
-    } },
-    { dataField: 'locality', text: 'Locality', sort: true,headerStyle: () => {
-      return { width: "120px" };
-    } },
-    { dataField: 'pincode', text: 'Pincode', sort: true,headerStyle: () => {
-      return { width: "120px" };
-    } },
-    { dataField: 'addressTypeId', text: 'AddressType', sort: true,headerStyle: () => {
-      return { width: "150px" };
-    } },
-    { dataField: 'isDefault', text: 'IsDefault', sort: true ,headerStyle: () => {
-      return { width: "120px" };
-    }},
-    { dataField: 'defaultAddressTypeId', text: 'Default Address Type', sort: true ,headerStyle: () => {
-      return { width: "200px" };
-    }},
-    { dataField: 'landMark', text: 'LandMark', sort: true,headerStyle: () => {
-      return { width: "120px" };
-    } },
-    { dataField: 'recordStatusId', text: 'Status', sort: true,headerStyle: () => {
-      return { width: "100px" };
-    } },
-    
+
+    { dataField: 'customTypeId', text: 'CustomType', sort: true, hidden: true },
+    { dataField: 'customTypeName', text: 'CustomTypeName', sort: true, },
+    { dataField: 'description', text: ' Description', sort: true },
+    { dataField: 'recordStatusId', text: ' RecordStatus', sort: true },
     
     // columns follow dataField and text structure
     {
@@ -140,18 +85,18 @@ export default function Addresses() {
         return (
           <><button
             className="btn btn-primary btn-xs"
-            onClick={() => handleView(row.addressId, row.name)}
+            onClick={() => handleView(row.customTypeId, row.name)}
           >
             View
           </button>
             <button
               className="btn btn-primary btn-xs"
-              onClick={() => handleEdit(row.addressId, row)}
+              onClick={() => handleEdit(row.customTypeId, row)}
             >
               Edit
             </button><button
               className="btn btn-danger btn-xs"
-              onClick={() => handleDelete(row.addressId, row.name)}
+              onClick={() => handleDelete(row.customTypeId, row.name)}
             >
               Delete
             </button></>
@@ -162,20 +107,15 @@ export default function Addresses() {
 
   useEffect(() => {
     getRecordStatusList();
-    getCountryList();
-    getStateList();
-    getAddressTypeList();
-    if (addresses.length == 0) {
-      getAllAddresses();
+    if (customTypes.length == 0) {
+      getAllCustomTypes();
       setLoading(false)
     }
-  }, [addresses]);
-
-  
+  }, [customTypes]);
 
 
   const defaultSorted = [{
-    dataField: 'addressId',
+    dataField: 'customTypeId',
     order: 'desc'
   }];
 
@@ -189,8 +129,8 @@ export default function Addresses() {
   };
 
   const handleEdit = (rowId, row) => {
-    setAddress(row);
-    //getAddressById(rowId);
+    setCustomType(row);
+    //getCustomTypesById(rowId);
     setId(rowId);
     setIsEdit(true);
     setShow(true);
@@ -220,6 +160,7 @@ export default function Addresses() {
       console.log('sizePerPage', sizePerPage);
     }
   });
+
   const getRecordStatusList = async () => {
     const response = await getRecordStatuss();
     if (response.payload.title == "Success") {
@@ -234,75 +175,18 @@ export default function Addresses() {
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Address Fetch Failed.'
-      })
-    }
-  };
-  const getCountryList = async () => {
-    const response = await getCountries();
-    if (response.payload.title == "Success") {
-
-      var arr = [];
-      for (var key in response.payload) {
-        if (key !== 'title')
-        arr.push(response.payload[key]);
-      }
-      setCountryList(arr);
-    }
-    else {
-      setMessageStatus({
-        mode: 'danger',
-        message: 'Address Fetch Failed.'
-      })
-    }
-  };
-
-  const getStateList = async () => {
-    const response = await getStates();
-    if (response.payload.title == "Success") {
-
-      var arr = [];
-      for (var key in response.payload) {
-        if (key !== 'title')
-        arr.push(response.payload[key]);
-      }
-      setStateList(arr);
-    }
-    else {
-      setMessageStatus({
-        mode: 'danger',
-        message: 'Address Fetch Failed.'
-      })
-    }
-  };
-
-  const getAddressTypeList = async () => {
-    const response = await getAddressTypes();
-    if (response.payload.title == "Success") {
-
-      var arr = [];
-      for (var key in response.payload) {
-        if (key !== 'title')
-        arr.push(response.payload[key]);
-      }
-      setAddressTypeList(arr);
-    }
-    else {
-      setMessageStatus({
-        mode: 'danger',
-        message: 'Address Fetch Failed.'
+        message: 'RecordStatus Fetch Failed.'
       })
     }
   };
 
 
-
-  const getAllAddresses = async () => {
-    const response = await getAddresses();
+  const getAllCustomTypes = async () => {
+    const response = await getCustomTypes();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',
-        message: 'Address Record Fetch Succefully.'
+        message: 'CustomTypes Record Fetch Succefully.'
       })
 
       var arr = [];
@@ -311,25 +195,25 @@ export default function Addresses() {
         arr.push(response.payload[key]);
       }
 
-      setAddresses(arr);
+      setCustomTypes(arr);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Address Fetch Failed.'
+        message: 'CustomType Fetch Failed.'
       })
     }
   };
 
-  const getAddressById = async (id) => {
-    const response = await addressById(id);
+  const getCustomTypeById = async (id) => {
+    const response = await customTypeById(id);
     if (response.payload.title == "Success") {
-      setAddress(response.payload);
+      setCustomType(response.payload);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Address Get Failed.'
+        message: 'CustomType Get Failed.'
       })
     }
   };
@@ -356,11 +240,11 @@ export default function Addresses() {
     <>
       <div className="m-t-40">
         {loading && <div>A moment please...</div>}
-        {addresses && (<div>
+        {customTypes && (<div>
           <ToolkitProvider
             bootstrap4
-            keyField='addressId'
-            data={addresses}
+            keyField='customTypeId'
+            data={customTypes}
             columns={columns}
             search
           >
@@ -378,7 +262,7 @@ export default function Addresses() {
                           <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
                           <Button variant="primary" onClick={handleShow}>
-                            Add Address
+                            Add CustomType
                           </Button>
                           </div>
                         </div>
@@ -402,30 +286,27 @@ export default function Addresses() {
         </div>)}
         {/* <!--- Model Box ---> */}
         <div className="model_box">
-          <Modal dialogClassName="my-modal" 
+          <Modal
             show={show}
             onHide={handleClose}
             backdrop="static"
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Add Address</Modal.Title>
+              <Modal.Title>Add CustomType</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <AddressModel
-                onAddAddress={addAddress}
-                onUpdateAddress={updateAddress}
-                onDeleteAddress={deleteAddress}
-                onGetAddress={addressById}
+              <CustomTypeModel
+                onAddCustomType={addCustomType}
+                onUpdateCustomType={updateCustomType}
+                onDeleteCustomType={deleteCustomType}
+                onGetCustomType={customTypeById}
                 onClose={handleClose}
                 isEdit={isEdit}
                 isDelete={isDelete}
                 id={id}
-                addressData={address}
+                customTypeData={customType}
                 recordStatusList={recordStatusList}
-                countryList={countryList}
-                stateList={stateList}
-                addressTypeList={addressTypeList}
               />
             </Modal.Body>
 

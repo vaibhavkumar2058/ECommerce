@@ -23,6 +23,7 @@ export default function ItemCostModel({
   productList = [],
   measurementValueList = [],
   measurementTypeList =[],
+  customTypeList=[],
 }) {
   const [newItemCost, setNewItemCost] = useState({
     productId: null,
@@ -65,6 +66,13 @@ export default function ItemCostModel({
     key: item,
     text: measurementType.name,
     value: measurementType.measurementTypeId,
+  })).filter((item) => item));
+  debugger;
+  const [customTypeOptions, setCustomTypeOptions] = useState(customTypeList.map((customType,item) =>(
+    {
+    key: item,
+    text: customType.customTypename,
+    value: customType.customTypeId,
   })).filter((item) => item));
   const [saveDisabled, setSaveDisabled] = useState(true);
   const [buttonType, setButtonType] = useState("Save");
@@ -131,7 +139,7 @@ export default function ItemCostModel({
   };
 
   const dropdownHandler = (event,{name,value}) => {
-    setNewItemCost((currentItemCost) => ({...currentItemCost, [name]: value}));
+    setNewItemCost((currentItemCost) => ({...currentItemCost,[name]: value}));
     
   }
 
@@ -176,6 +184,14 @@ export default function ItemCostModel({
             value: measurementType.measurementTypeId,
           })).filter((item) => item));
           }, [measurementTypeList]);
+          useEffect(() => { 
+            setCustomTypeOptions(customTypeList.map((customType,item) =>(
+              {
+              key: item,
+              text: customType.customTypename,
+              value: customType.customTypeId,
+            })).filter((item) => item));
+            }, [customTypeList]);
     
   
   
@@ -232,10 +248,10 @@ export default function ItemCostModel({
           </div>
           <div className="col-md-6">
           <Form.Group className="mb-3" controlId="measurementTypeId">
-            <Form.Label>MeasurementType<span className="required">*</span></Form.Label>
+            <Form.Label>Measurement Type<span className="required">*</span></Form.Label>
             <Dropdown
               name="measurementTypeId"
-              placeholder=" Select measurementType"
+              placeholder=" Select Measurement Type"
               fluid
               search
               selection
@@ -250,10 +266,10 @@ export default function ItemCostModel({
             <div className="col-md-6">
 
           <Form.Group className="mb-3" controlId="MeasurementValueId">
-            <Form.Label>MeasurementValue<span className="required">*</span></Form.Label>
+            <Form.Label>Measurement Value<span className="required">*</span></Form.Label>
             <Dropdown
               name="measurementValueId"
-              placeholder="Select measurementValue"
+              placeholder="Select Measurement Value"
               fluid
               search
               selection
@@ -266,13 +282,16 @@ export default function ItemCostModel({
           <div className="col-md-6">
 
           <Form.Group className="mb-3" controlId="customTypeId">
-            <Form.Label>CustomType<span className="required">*</span></Form.Label>
-            <Form.Control
-              type="text"
+            <Form.Label>Custom Type<span className="required">*</span></Form.Label>
+            <Dropdown
               name="customTypeId"
-              placeholder=" Select CustomType"
+              placeholder="Select Custom Type"
+              fluid
+              search
+              selection
+              options={customTypeOptions}
               value={newItemCost?.customTypeId}
-              onChange={changeHandler}
+              onChange={dropdownHandler}
             />
           </Form.Group>
           </div>
@@ -391,6 +410,10 @@ ItemCostModel.propTypes = {
  * measurementTypeList for object type
  */
    measurementTypeList: PropTypes.any,
+   /**
+ * customTypeList for object type
+ */
+   customTypeList: PropTypes.any,
 };
 
 ItemCostModel.defaultProps = {
@@ -407,4 +430,5 @@ ItemCostModel.defaultProps = {
   productList:null,
   measurementTypeList:null,
   measurementValueList:null,
+  customTypeList:null,
 };

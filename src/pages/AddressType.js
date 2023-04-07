@@ -72,10 +72,10 @@ export default function AddressTypes() {
 
   const columns = [
 
-    { dataField: 'addressTypeId', text: 'AddressType', sort: true, hidden: true },
-    { dataField: 'addressTypeName', text: 'AddressTypeName', sort: true, },
+    { dataField: 'addressTypeId', text: 'AddressType Id', sort: true, hidden: true },
+    { dataField: 'addressTypeName', text: 'Address Type', sort: true, },
     { dataField: 'description', text: ' Description', sort: true },
-    { dataField: 'recordStatusId', text: ' RecordStatus', sort: true },
+    { dataField: 'recordStatusId', text: ' Status', sort: true },
     
     // columns follow dataField and text structure
     {
@@ -262,7 +262,7 @@ export default function AddressTypes() {
                           <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
                           <Button variant="primary" onClick={handleShow}>
-                            Add AddressType
+                            Add Address Type
                           </Button>
                           </div>
                         </div>
