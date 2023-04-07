@@ -3,7 +3,6 @@ import Button from "react-bootstrap/Button";
 import useFetchCart from "../hooks/useFetchCart";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from "react-router-dom";
-import OrderSummaryLists from "../components/CartPopupModel";
 
 
 export default function ShoppingList() {
@@ -18,9 +17,9 @@ export default function ShoppingList() {
     description: "",
     recordStatusId: null,
   });
-  // const Placetoorder = () => {
-  //   window.location.href = "/orderSummaryList";
-  // }
+  const Placetoorder = () => {
+    window.location.href = "/orderSummaryList";
+  }
 
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
@@ -116,15 +115,12 @@ export default function ShoppingList() {
           )}
           <div class="row">
             <div class="col-md-8 col-lg-8"></div>
-            {/* <div class="col-md-4 col-lg-4"><Button variant="secondary"
+            <div class="col-md-4 col-lg-4"><Button variant="secondary"
              onClick={() => Placetoorder()}
             >
               Place to order
             
-            </Button></div> */}
-            <div class="col-md-4 col-lg-4">
-            <OrderSummaryLists></OrderSummaryLists>
-            </div>
+            </Button></div>
             
             <div class="col-md-2 col-lg-2"></div>
           </div>

@@ -6,8 +6,6 @@ import { Nav, Badge, Image, Button, Dropdown, Accordion, Navbar } from 'react-bo
 import useFetchNotifications from "../hooks/useFetchNotification";
 import useFetchCart from "../hooks/useFetchCart";
 import { Routes } from "./routes";
-import ShoppingList from "../components/ShoppingListModel";
-import ShoppingLists from "../components/ShoppingListModel";
 
 export default (props = {}) => {
   const location = "";
@@ -101,9 +99,9 @@ export default (props = {}) => {
               <Badge className="notification" bg="secondary">{notifications?.length}</Badge><img src="https://png.pngtree.com/png-clipart/20190705/original/pngtree-vvector-notification-icon-png-image_4232478.jpg" width="35" height="35"></img>
             </a>
             </li>
-            <li className="nav-item dropdown">
-              <Badge className="notification cart" bg="secondary">{cart?.length}</Badge><ShoppingLists></ShoppingLists>
-            
+            <li className="nav-item dropdown"><a href="Shoppinglist" >
+              <Badge className="notification cart" bg="secondary">{cart?.length}</Badge><img src="https://cdn-icons-png.flaticon.com/512/1413/1413908.png" width="35" height="35"></img>
+            </a> 
             </li>
 
             <li className="nav-item dropdown ms-lg-3"><a className="nav-link dropdown-toggle pt-1 px-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
