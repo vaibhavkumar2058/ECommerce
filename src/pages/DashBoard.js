@@ -12,50 +12,7 @@ import {
 
 
 export default function Dashboard() {
-    const data = [
-        {
-            name: '2023-01-01T00:00:00',
-            uv: 4000,
-            pv: 2400,
-            amt: 2400,
-        },
-        {
-            name: '2023-01-01T00:00:00',
-            uv: 2390,
-            pv: 3800,
-            amt: 2500,
-        },
-        {
-            name: '2023-02-25T00:00:00',
-            uv: 3000,
-            pv: 1398,
-            amt: 2210,
-        },
-        {
-            name: '2023-03-06T00:00:00',
-            uv: 2000,
-            pv: 9800,
-            amt: 2290,
-        },
-        {
-            name: '2023-03-09T00:00:00',
-            uv: 2780,
-            pv: 3908,
-            amt: 2000,
-        },
-        {
-            name: '2023-03-10T00:00:00',
-            uv: 1890,
-            pv: 4800,
-            amt: 2181,
-        },
-        {
-            name: '2023-02-25T00:00:00',
-            uv: 3490,
-            pv: 4300,
-            amt: 2100,
-        },
-    ];
+
     const [newGMT, setNewGMT] = useState({
         resourcesId: 6,
         longitude: 0,
@@ -83,8 +40,6 @@ export default function Dashboard() {
             getProductOrders();
         }
     }, [productOrders]);
-
-    console.log("info", productOrders);
 
     useEffect(() => {
         if (productSales.length == 0) {
@@ -119,8 +74,7 @@ export default function Dashboard() {
         if (response.payload.title == "Success") {
             const dataFormatter = (rawData) => {
                 const curedData = {};
-                curedData.productName = rawData?.productName;
-                curedData.orders = rawData?.orders;
+                curedData.orderCount = rawData?.orderCount;
                 curedData.orderDate = new Date(rawData.orderDate).getDate();
                 return curedData;
             }
@@ -241,14 +195,12 @@ export default function Dashboard() {
                             stroke="red" />
                     </LineChart>  */}
                      <LineChart width={500} height={300} data={productOrders}>
-                        <Line type="monotone" dataKey="productName" stroke="#8884d8"
+                        <Line type="monotone" dataKey="orderCount" stroke="#8884d8"
                             strokeWidth={4} activeDot={{ r: 8 }} />
-                        <Line type="monotone" dataKey="orders" stroke="orange"
+                        <Line type="monotone" dataKey="orderDate" stroke="orange"
                             strokeWidth={4} activeDot={{ r: 8 }} />
-                        <XAxis dataKey="orderDate" 
-                        scale="time"
-                        type="number"/>
-                        <YAxis  />
+                        <XAxis />
+                        <YAxis />
                         <Tooltip contentStyle={{ backgroundColor: 'maroon' }} />
                         <Legend />
                     </LineChart>
