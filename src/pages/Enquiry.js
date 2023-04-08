@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 import CustomMap from '../pages/CustomMap';
+import useFetchGMTs from "../hooks/useFetchGMT";
 
 const mapStyles = {
   width: '100%',
@@ -10,6 +11,12 @@ const mapStyles = {
 class MapView extends Component {
   constructor() {
     super();
+    // const { 
+    //   getRecordByResourcesId
+    // } = useFetchGMTs();
+    // const z= getRecordByResourcesId(11);
+
+   
     this.state = {
       name: "React"
     };
