@@ -24,14 +24,14 @@ export default function CustomMap({ google, locations = [] }) {
             
             center={locations[0]}
             initialCenter={locations[0]}
-            zoom={locations.length === 1 ? 18 : 18}
+            zoom={locations.length === 1 ? 15 : 15}
             disableDefaultUI={true}
         >
             {locations.map(
-                coords => <Marker position={coords} icon={iconPin} >
-                    {/* <InfoWindow>
+                coords => <Marker position={coords} >
+                    <InfoWindow>
                             Shop Kiran Rent House
-                    </InfoWindow> */}
+                    </InfoWindow>
                 </Marker>
             )}
 

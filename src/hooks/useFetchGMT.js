@@ -186,13 +186,46 @@ import {
           })
         );
       });
-      
   };
+      
+  const getRecordByResourcesId = (resourcesId) => {
+    dispatch(getGMTBeginAction());
+    return API.get(`${hapyCarURL}/list/${resourcesId}`,
+      null,
+      { suppressErrors: [400] }
+    )
+      .then(({ data }) =>
+        dispatch(
+          getGMTSuccessAction({
+            ...data,
+            title: SUCCESS,
+          })
+        )
+      )
+      .catch((error) => {
+        let errorMsg = "error msg from copy file";
+        if (error.response.data.GMT) {
+          const [errors] = error.response.data.GMT;
+          errorMsg = errors;
+        }
+        dispatch(
+          getGMTFailureAction({
+            ...errorMsg,
+            title: ERROR,
+            errorMsg,
+          })
+        );
+      });
+
+  };
+
+
   return {
     addGMT,
     updateGMT,
     deleteGMT,
     getGMTs,
     GMTById,
+    getRecordByResourcesId,
   };
 }

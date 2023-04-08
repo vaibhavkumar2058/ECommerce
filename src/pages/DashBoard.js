@@ -230,24 +230,6 @@ export default function Dashboard() {
                     </PieChart>
                 </div>
                 <div className="col-md-6">
-                    <LineChart
-                        width={500}
-                        height={300}
-                        data={data}
-                        margin={{
-                            top: 5,
-                            right: 30,
-                            left: 20,
-                            bottom: 5,
-                        }}
-                    >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
-                        <YAxis dataKey="uv" />
-                        <Tooltip />
-                        <Legend />
-                        <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
-                    </LineChart>
                     {/* <LineChart width={500} height={300} data={productOrders}>
                         <CartesianGrid />
                         <XAxis dataKey="orderDate" />
@@ -257,8 +239,8 @@ export default function Dashboard() {
                             stroke="green" />
                         <Line yAxisId="right-axis" type="monotone" dataKey="productName"
                             stroke="red" />
-                    </LineChart> */}
-                    {/* <LineChart width={500} height={300} data={productOrders}>
+                    </LineChart>  */}
+                     <LineChart width={500} height={300} data={productOrders}>
                         <Line type="monotone" dataKey="productName" stroke="#8884d8"
                             strokeWidth={4} activeDot={{ r: 8 }} />
                         <Line type="monotone" dataKey="orders" stroke="orange"
@@ -269,7 +251,7 @@ export default function Dashboard() {
                         <YAxis  />
                         <Tooltip contentStyle={{ backgroundColor: 'maroon' }} />
                         <Legend />
-                    </LineChart> */}
+                    </LineChart>
                 </div>
 
             </div>
