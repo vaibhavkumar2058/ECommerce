@@ -67,11 +67,11 @@ export default function ItemCostModel({
     text: measurementType.name,
     value: measurementType.measurementTypeId,
   })).filter((item) => item));
-  debugger;
+
   const [customTypeOptions, setCustomTypeOptions] = useState(customTypeList.map((customType,item) =>(
     {
     key: item,
-    text: customType.customTypename,
+    text: customType.customTypeName,
     value: customType.customTypeId,
   })).filter((item) => item));
   const [saveDisabled, setSaveDisabled] = useState(true);
@@ -188,7 +188,7 @@ export default function ItemCostModel({
             setCustomTypeOptions(customTypeList.map((customType,item) =>(
               {
               key: item,
-              text: customType.customTypename,
+              text: customType.customTypeName,
               value: customType.customTypeId,
             })).filter((item) => item));
             }, [customTypeList]);
@@ -200,6 +200,7 @@ export default function ItemCostModel({
     if (isEdit) {
       setButtonType("Update");
     }
+    debugger
     const isEnable =
       !newItemCost?.productId || !newItemCost?.measurementTypeId || !newItemCost?.measurementValueId || !newItemCost?.customTypeId || !newItemCost?.price|| !newItemCost?.recordStatusId;
     setSaveDisabled(isEnable);
@@ -283,8 +284,7 @@ export default function ItemCostModel({
 
           <Form.Group className="mb-3" controlId="customTypeId">
             <Form.Label>Custom Type<span className="required">*</span></Form.Label>
-            <Form.Control
-              type="text"
+            <Dropdown
               name="customTypeId"
               placeholder="Select Custom Type"
               fluid

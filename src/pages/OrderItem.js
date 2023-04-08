@@ -79,11 +79,11 @@ export default function OrderItems() {
 
   const columns = [
 
-    { dataField: 'productId', text: '  Product', sort: true,hidden:true},
-    { dataField: 'orderId', text: ' Order', sort: true,hidden:true},
+    { dataField: 'productId', text: '  Product', sort: true,},
+    { dataField: 'orderId', text: ' Order', sort: true,},
     { dataField: 'cost', text: 'Cost', sort: true },
     { dataField: 'quantity', text: 'Quantity', sort: true },
-    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true,hidden:true },
+    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true, },
     // columns follow dataField and text structure
     {
       dataField: "Actions",
