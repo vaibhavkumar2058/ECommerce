@@ -91,6 +91,10 @@ span.content a.contact-info {
   width: 68px;
  
 }
+.rm-p
+{
+  padding: 0px!important;
+}
 .column {
   float: left;
   width: 33.33%;

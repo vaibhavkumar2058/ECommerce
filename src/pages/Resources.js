@@ -12,7 +12,7 @@ import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.m
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit';
-
+import Enquiry from "../pages/Enquiry";
 
 const { SearchBar, ClearSearchButton } = Search;
 
@@ -36,14 +36,17 @@ export default function Resourcess() {
   const [error, setError] = useState(null);
 
   const [show, setShow] = useState(false);
+  const [showMap, setShowMap] = useState(false);
   // const handleClose = () => setShow(false);
   const handleClose = () => {
     getAllResourcess();
     setIsEdit(false);
     setIsDelete(false);
     setShow(false);
+    setShowMap(false);
   };
   const handleShow = () => setShow(true);
+  const handleShowMap = () => setShowMap(true);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [resources, setResources] = useState({
@@ -62,7 +65,6 @@ export default function Resourcess() {
     recordStatusId:null,
     resourcesAttachmentType:3,
     filesId:null,
-
   });
 
   const [id, setId] = useState(null);
@@ -144,7 +146,7 @@ export default function Resourcess() {
             className="btn btn-primary btn-xs"
             onClick={() => handleView(row.resourcesId, row.name)}
           >
-            View
+            Track
           </button>
             <button
               className="btn btn-primary btn-xs"
@@ -184,7 +186,7 @@ export default function Resourcess() {
 
   const handleView = (rowId, name) => {
     console.log(rowId, name);
-    //1 YourCellName
+    setShowMap(true);
   };
 
   const handleEdit = (rowId, row) => {
@@ -432,6 +434,25 @@ export default function Resourcess() {
                 recordStatusList={recordStatusList}
                 
               />
+            </Modal.Body>
+
+          </Modal>
+          {/* Model Box Finsihs */}
+        </div>
+        
+                {/* <!--- Model Box ---> */}
+                <div>
+          <Modal dialogClassName="my-modal" 
+            show={showMap}
+            onHide={handleClose}
+            backdrop="static"
+            keyboard={false}
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>Track Location</Modal.Title>
+            </Modal.Header>
+            <Modal.Body className="rm-p" >
+            <Enquiry></Enquiry>
             </Modal.Body>
 
           </Modal>
