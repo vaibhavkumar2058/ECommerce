@@ -26,7 +26,7 @@ class MapView extends Component {
   render() {
     return (
       <div>
-        <div style={{ width: 300, height: 300 }}>
+        <div style={{ width: 500, height: 500 }}>
           <CustomMap google={this.props.google} locations={[{
             lat: this.locations.lat,
             lng: this.locations.lng
