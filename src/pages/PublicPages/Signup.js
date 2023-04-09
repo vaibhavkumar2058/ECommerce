@@ -61,9 +61,7 @@ export default () => {
   const navigate = useNavigate();
   const saveHandler = async () => {
     // setShowNavbar(!showNavbar)
-    debugger;
     const response = await addResources(newSignup);
-    debugger;
     if (response.payload.title == "Success") {
       setError({ status: true, msg: "Login Success", type: 'success' })
       setHide(false);

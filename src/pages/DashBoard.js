@@ -184,16 +184,6 @@ export default function Dashboard() {
                     </PieChart>
                 </div>
                 <div className="col-md-6">
-                    {/* <LineChart width={500} height={300} data={productOrders}>
-                        <CartesianGrid />
-                        <XAxis dataKey="orderDate" />
-                        <YAxis yAxisId="left-axis" />
-                        <YAxis yAxisId="right-axis" orientation="right" />
-                        <Line yAxisId="left-axis" type="monotone" dataKey="orders"
-                            stroke="green" />
-                        <Line yAxisId="right-axis" type="monotone" dataKey="productName"
-                            stroke="red" />
-                    </LineChart>  */}
                      <LineChart width={500} height={300} data={productOrders}>
                         <Line type="monotone" dataKey="orderCount" stroke="#8884d8"
                             strokeWidth={4} activeDot={{ r: 8 }} />

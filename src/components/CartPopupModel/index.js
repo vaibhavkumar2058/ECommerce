@@ -68,7 +68,6 @@ export default function OrderSummaryLists() {
       })
       const dataFormatter = (rawData) => {
         const curedData = {};
-        debugger;
         curedData.resourcesId = rawData?.resourcesId;
         curedData.productId = rawData?.productId;
         curedData.productName = rawData?.product?.productName;

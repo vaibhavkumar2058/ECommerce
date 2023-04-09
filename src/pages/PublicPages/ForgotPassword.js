@@ -37,7 +37,6 @@ export default () => {
   }, [hide]);
 
   const saveHandler = async () => {
-   debugger;
     const response = await forgotPassword(newReset.email);
     if (response.payload.title == "Success") {
    setHide(false);

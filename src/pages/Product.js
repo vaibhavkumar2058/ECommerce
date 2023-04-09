@@ -95,7 +95,6 @@ export default function Products() {
       dataField: "productImage",
       text: "Photo",
       headerStyle: () => {
-        debugger;
         return { width: "60px" };
       },
       formatter: (cellContent, row) => {

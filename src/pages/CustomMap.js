@@ -1,5 +1,6 @@
-import React, { Component } from "react";
-import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
+import React, { useState, useEffect } from "react";
+import { Map, Marker, InfoWindow } from 'google-maps-react';
+import useFetchGMTs from "../hooks/useFetchGMT";
 
 export default function CustomMap({ google, locations = [] }) {
     var iconPin = {
@@ -7,34 +8,71 @@ export default function CustomMap({ google, locations = [] }) {
         fillColor: 'red',
         fillOpacity: 0.8,
         scale: 0.015, //to reduce the size of icons
-       };
+    };
+
+    const {
+        getRecordByResourcesId
+    } = useFetchGMTs();
+
+    const [locationList, setLocationList] = useState([]);
+
+    useEffect(() => {
+        if (locationList.length == 0) {
+            getLocationList();
+        }
+    }, [locationList]);
+
+    const getLocationList = async () => {
+        const response = await getRecordByResourcesId(11);
+        if (response.payload.title == "Success") {
+            const dataFormatter = (rawData) => {
+
+                const curedData = {};
+                curedData.lat = rawData?.latitude;
+                curedData.lng = rawData?.longitude;
+                return curedData;
+            }
+
+            var arr = [];
+            for (var key in response.payload) {
+                if (key !== 'title')
+                    arr.push(dataFormatter(response.payload[key]));
+            }
+
+            setLocationList(arr);
+            debugger;
+        }
+        else {
+        }
+    };
 
     return (
-        <Map
-            google={google}
-            containerStyle={{
-                position: "absolute",
-                width: "100%",
-                height: "100%"
-            }}
-            style={{
-                width: "100%",
-                height: "100%"
-            }}
-            
-            center={locations[0]}
-            initialCenter={locations[0]}
-            zoom={locations.length === 1 ? 15 : 15}
-            disableDefaultUI={true}
-        >
-            {locations.map(
-                coords => <Marker position={coords} >
-                    <InfoWindow>
-                            Shop Kiran Rent House
-                    </InfoWindow>
-                </Marker>
-            )}
+        <>
+            {locationList.length > 0 && (<Map
+                google={google}
+                containerStyle={{
+                    position: "absolute",
+                    width: "100%",
+                    height: "100%"
+                }}
+                style={{
+                    width: "100%",
+                    height: "100%"
+                }}
 
-        </Map>
+                center={locationList[0]}
+                initialCenter={locationList[0]}
+                zoom={locationList.length === 1 ? 15 : 15}
+                disableDefaultUI={true}
+            >
+                {locationList.map(
+                    coords => <Marker position={coords} >
+                        <InfoWindow>
+                            Shop Kiran Rent House
+                        </InfoWindow>
+                    </Marker>
+                )}
+            </Map>)}
+        </>
     )
 };

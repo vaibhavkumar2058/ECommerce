@@ -54,7 +54,7 @@ import {
 
   // GMT ADD  ACTIONS
   const addGMT = (GMT) => {
-    debugger;
+
     return API.post(
       hapyCarURL,
       { data: GMT },

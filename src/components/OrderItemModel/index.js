@@ -36,7 +36,6 @@ const [productOptions, setProductOptions] = useState(productList.map((product,it
   text: product.productName,
   value: product.productId,
 })).filter((item) => item));
-debugger;
 const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus,item) =>(
   {
   key: item,
@@ -75,7 +74,6 @@ const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.
   const saveHandler = async () => {
     newOrderItem.file = fileSelected;
     if (isEdit) {
-      debugger;
       const response = await onUpdateOrderItem(id, newOrderItem);
       if (response.payload.title == "Success") {
         onClose(true);

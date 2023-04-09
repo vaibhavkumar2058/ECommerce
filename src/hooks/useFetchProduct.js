@@ -56,7 +56,6 @@ import {
   // Product ADD  ACTIONS
 
   const addProduct = (product ,attachment) => {
-    debugger;
     const formData = new FormData();
     Object.keys(product).forEach((key) => formData.append(key,product[key]));
 

@@ -39,7 +39,6 @@ export default function OrderStatusModel({
     status: false,
     message: "",
   });
-  debugger;
   const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus,item) =>(
     {
     key: item,

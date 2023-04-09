@@ -54,7 +54,6 @@ import {
 
   // CustomType ADD  ACTIONS
   const addCustomType = (customType) => {
-    debugger;
     return API.post(
       hapyCarURL,
       { data: customType },
