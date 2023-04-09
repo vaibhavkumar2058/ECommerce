@@ -106,8 +106,8 @@ export default (props = {}) => {
 
             <li className="nav-item dropdown ms-lg-3"><a className="nav-link dropdown-toggle pt-1 px-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <Dropdown>
-                <Dropdown.Toggle variant="success" id="dropdown-basic">
-                 <img src="https://static.vecteezy.com/system/resources/previews/008/442/086/original/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg" width="30" height="30"></img>
+                <Dropdown.Toggle variant="success" id="dropdown-basic" className="profile-img" >
+                 <img className="profile-img" src="https://static.vecteezy.com/system/resources/previews/008/442/086/original/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg" width="30" height="30"></img>
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>

@@ -91,6 +91,11 @@ span.content a.contact-info {
   width: 68px;
  
 }
+.profile-img
+{
+  padding: 0px!important;
+  border-radius: 50%!important;
+}
 .rm-p
 {
   padding: 0px!important;
