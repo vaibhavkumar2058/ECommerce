@@ -236,7 +236,6 @@ export default function ItemList() {
 
       const dataFormatter = (rawData) => {
         const curedData = {};
-        debugger
         curedData.productId = rawData?.productId;
         curedData.productName = rawData?.product?.productName;
         curedData.description = rawData?.product?.description;
@@ -255,7 +254,6 @@ export default function ItemList() {
         if (key !== 'title')
           arr.push(dataFormatter(response.payload[key]));
       }
-
       setItemCosts(arr);
     }
     else {

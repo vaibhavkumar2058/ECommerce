@@ -51,6 +51,39 @@ import {
       });
 
   };
+  // ItemCost GET  ACTIONS
+  const getItemsCosts = () => {
+    debugger
+    dispatch(getItemCostBeginAction());
+    return API.get(hapyCarURL,
+      null,
+      { suppressErrors: [400] }
+    )
+      .then(({ data }) =>
+        dispatch(
+          getItemCostSuccessAction({
+            ...data,
+            title: SUCCESS,
+          })
+        )
+      )
+      .catch((error) => {
+        let errorMsg = "error msg from copy file";
+        if (error.response.data.itemCost) {
+          const [errors] = error.response.data.itemCost;
+          errorMsg = errors;
+        }
+        dispatch(
+          getItemCostFailureAction({
+            ...errorMsg,
+            title: ERROR,
+            errorMsg,
+          })
+        );
+      });
+
+  };
+
 
   // ItemCost ADD  ACTIONS
   const addItemCost = (itemCost) => {
@@ -191,6 +224,7 @@ import {
     addItemCost,
     updateItemCost,
     deleteItemCost,
+    getItemsCosts,
     getItemCosts,
     itemCostById,
   };

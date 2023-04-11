@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
+import { propTypes } from "react-bootstrap/esm/Image";
 
 
 
@@ -24,6 +25,7 @@ export default function ItemCostModel({
   measurementValueList = [],
   measurementTypeList =[],
   customTypeList=[],
+  categoryTypeList=[],
 }) {
   const [newItemCost, setNewItemCost] = useState({
     productId: null,
@@ -32,6 +34,7 @@ export default function ItemCostModel({
     customTypeId: null,
     price:null,
     description: "",
+    categoryTypeId: null,
     recordStatusId:null,
 
   });
@@ -74,6 +77,12 @@ export default function ItemCostModel({
     text: customType.customTypeName,
     value: customType.customTypeId,
   })).filter((item) => item));
+  const [categoryTypeOptions, setCategoryTypeOptions] = useState(categoryTypeList.map((categoryType, item) => (
+    {
+      key: item,
+      text: categoryType.categoryTypeName,
+      value: categoryType.categoryTypeId,
+    })).filter((item) => item));
   const [saveDisabled, setSaveDisabled] = useState(true);
   const [buttonType, setButtonType] = useState("Save");
 
@@ -192,6 +201,15 @@ export default function ItemCostModel({
               value: customType.customTypeId,
             })).filter((item) => item));
             }, [customTypeList]);
+            useEffect(() => {
+              setCategoryTypeOptions(categoryTypeList.map((categoryType, item) => (
+                {
+                  key: item,
+                  text: categoryType.categoryTypeName,
+                  value: categoryType.categoryTypeId,
+                })).filter((item) => item));
+          
+            }, [categoryTypeList]);
     
   
   
@@ -202,7 +220,7 @@ export default function ItemCostModel({
     }
     debugger
     const isEnable =
-      !newItemCost?.productId || !newItemCost?.measurementTypeId || !newItemCost?.measurementValueId || !newItemCost?.customTypeId || !newItemCost?.price|| !newItemCost?.recordStatusId;
+      !newItemCost?.productId || !newItemCost?.categoryTypeId|| !newItemCost?.measurementTypeId || !newItemCost?.measurementValueId || !newItemCost?.customTypeId || !newItemCost?.price|| !newItemCost?.recordStatusId|| !newItemCost?.description;
     setSaveDisabled(isEnable);
   }, [newItemCost]);
 
@@ -324,6 +342,21 @@ export default function ItemCostModel({
           </div>
           </div>
           <div className="row">
+          <div className="col-md-6">
+          <Form.Group className="mb-3" controlId="categoryType">
+                    <Form.Label>Category Type<span className="required">*</span></Form.Label>
+                    <Dropdown
+                      name="categoryTypeId"
+                      placeholder='Select Category Type'
+                      fluid
+                      search
+                      selection
+                      options={categoryTypeOptions}
+                      value={newItemCost?.categoryTypeId}
+                      onChange={dropdownHandler}
+                    />
+                  </Form.Group>
+                  </div>
             <div className="col-md-6">
           <Form.Group className="mb-3" controlId="recordStatusId">
             <Form.Label>Status<span className="required">*</span></Form.Label>
@@ -370,6 +403,10 @@ ItemCostModel.propTypes = {
    */
   onDeleteItemCost: PropTypes.func,
   /**
+   * callback function for Get ItemsCost
+   */
+  onGetItemsCost: propTypes.func,
+  /**
    * Callback function for Get ItemCost
    */
   onGetItemCost: PropTypes.func,
@@ -415,6 +452,10 @@ ItemCostModel.propTypes = {
  * customTypeList for object type
  */
    customTypeList: PropTypes.any,
+   /**
+ * categoryTypeList for object type
+ */
+   categoryTypeList: PropTypes.any,
 };
 
 ItemCostModel.defaultProps = {
@@ -432,4 +473,5 @@ ItemCostModel.defaultProps = {
   measurementTypeList:null,
   measurementValueList:null,
   customTypeList:null,
+  categoryTypeList:null,
 };
