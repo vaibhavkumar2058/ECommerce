@@ -227,24 +227,27 @@ export default function Carts() {
   const getAllCarts = async () => {
     const response = await getCarts();
     if (response.payload.title == "Success") {
-      const productList = await getProducts();
-      if (productList.payload.title == "Success") {
-        var carr = [];
-      for (var key in productList.payload) {
-        carr.push(productList.payload[key]);
-      }
-        setProducts(carr);
-      }
       
       setMessageStatus({
         mode: 'success',
         message: 'Carts Record Fetch Succefully.'
       })
+      const dataFormatter = (rawData) => {
+        const curedData = {};
+        curedData.cartId=rawData?.cartId
+        curedData.resourcesId=rawData?.resources?.firstName+rawData?.resources?.middleName+rawData?.resources?.lastName;
+        curedData.productId=rawData?.product?.productName;
+        curedData.cost=rawData?.cost;
+        curedData.quantity=rawData?.quantity;
+        curedData.description=rawData?.description;
+        curedData.recordStatusId=rawData?.recordStatus.actionName;
+        return curedData;
+      }
 
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+        arr.push(dataFormatter(response.payload[key]));
       }
 
       setCarts(arr);

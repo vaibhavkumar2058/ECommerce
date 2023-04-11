@@ -57,6 +57,7 @@ export default function Addresses() {
     locality:"",
     pincode:null,
     addressTypeId:null,
+    addressLine:"",
     landMark:"",
     isDefault:"",
     defaultAddressTypeId:null,
@@ -110,6 +111,9 @@ export default function Addresses() {
       return { width: "100px" };
     } },
     { dataField: 'locality', text: 'Locality', sort: true,headerStyle: () => {
+      return { width: "120px" };
+    } },
+    { dataField: 'addressLine', text: 'Address Line', sort: true,headerStyle: () => {
       return { width: "120px" };
     } },
     { dataField: 'pincode', text: 'Pincode', sort: true,headerStyle: () => {

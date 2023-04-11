@@ -30,6 +30,7 @@ export default function AddressModel({
     town: "",
     locality: "",
     pincode: null,
+    addressLine:"",
     addressTypeId: null,
     landMark: "",
     isDefault: "",
@@ -188,6 +189,7 @@ export default function AddressModel({
       || !newAddress?.stateId
       || !newAddress?.countryId
       || !newAddress?.addressTypeId
+      || !newAddress?.addressLine
       || !newAddress?.town
       || !newAddress?.pincode || !newAddress?.landMark
       || !newAddress?.recordStatusId;
@@ -385,6 +387,20 @@ export default function AddressModel({
               </Form.Group>
             </div>
           </div>
+           <div className="row">
+            <div className="col-md-6">
+              <Form.Group className="mb-3" controlId="addressLine">
+                <Form.Label>Address Line</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="addressLine"
+                  placeholder=" Select addressLine"
+                  value={newAddress?.addressLine}
+                  onChange={changeHandler}
+                />
+              </Form.Group>
+            </div>
+            </div> 
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel

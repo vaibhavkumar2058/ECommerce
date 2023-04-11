@@ -99,7 +99,7 @@ export default function Orders() {
 
   const columns = [ 
     { dataField: 'orderItemId', text: ' OrderItemId', sort: true, hidden:true},
-    { dataField: 'orderId', text: 'Order Id', sort: true},    
+    { dataField: 'orderId', text: 'Order Id', sort: true ,hidden:true},    
     { dataField: 'productName', text: 'product', sort: true},
     { dataField: 'quantity', text: 'quantity', sort: true},    
     { dataField: 'cost', text: ' cost', sort: true },
