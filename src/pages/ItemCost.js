@@ -7,6 +7,7 @@ import useFetchProduct from "../hooks/useFetchProduct";
 import useFetchMeasurementValue from "../hooks/useFetchMeasurementValue";
 import useFetchMeasurementType from "../hooks/useFetchMeasurementType";
 import useFetchCustomType from "../hooks/useFetchCustomType";
+import useFetchCategoryType from "../hooks/useFetchCategoryType";
 import ItemCostModel from "../components/ItemCostModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
@@ -37,6 +38,7 @@ export default function ItemCosts() {
   const [measurementValueList, setMeasurementValueList] = useState([]);
   const [measurementTypeList, setMeasurementTypeList] = useState([]);
   const [customTypeList, setCustomTypeList] = useState([]);
+  const [categoryTypeList, setCategoryTypeList] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -44,6 +46,7 @@ export default function ItemCosts() {
   // const handleClose = () => setShow(false);
   const handleClose = () => {
     getAllItemCosts();
+   
     setIsEdit(false);
     setIsDelete(false);
     setShow(false);
@@ -59,6 +62,7 @@ export default function ItemCosts() {
     customTypeId: null,
     price:null,
     description: "",
+    categoryTypeId: null, 
     recordStatusId:null,
       });
 
@@ -76,7 +80,9 @@ export default function ItemCosts() {
     updateItemCost,
     deleteItemCost,
     getItemCosts,
+    getItemsCosts,
     itemCostById,
+    
   } = useFetchItemCost();
 
   const { 
@@ -94,12 +100,16 @@ export default function ItemCosts() {
   const { 
     getCustomTypes,
   } = useFetchCustomType();
+  const {
+    getCategoryTypes,
+  } = useFetchCategoryType();
 
 
 
   const columns = [
 
-    { dataField: 'itemCostId', text: 'ItemCost Id', sort: true, hidden: true},
+    { dataField: 'itemCostId', text: 'ItemCost', sort: true, hidden: true},
+
     { dataField: 'productId', text: ' Product', sort: true ,headerStyle: () => {
       return { width: "120px" };
     } },
@@ -118,6 +128,9 @@ export default function ItemCosts() {
     { dataField: 'description', text: 'Description', sort: true,headerStyle: () => {
       return { width: "150px" };
     }  },
+    { dataField: 'categoryTypeId', text: ' Category Type', sort: true ,headerStyle: () => {
+      return { width: "120px" };
+    } },
     { dataField: 'recordStatusId', text: 'Status', sort: true , hidden: true,headerStyle: () => {
       return { width: "180px" };
     } },
@@ -155,8 +168,10 @@ export default function ItemCosts() {
     getMeasurementValueList();
     getMeasurementTypeList();
     getCustomTypeList();
+    getCategoryTypeList();
     if (itemcosts.length == 0) {
       getAllItemCosts();
+    
       setLoading(false)
     }
   }, [itemcosts]);
@@ -227,6 +242,25 @@ export default function ItemCosts() {
       })
     }
   };
+  const getCategoryTypeList = async () => {
+    const response = await getCategoryTypes();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        if (key !== 'title')
+        arr.push(response.payload[key]);
+      }
+      setCategoryTypeList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'categoryType Fetch Failed.'
+      })
+    }
+  };
+
   const getProductList = async () => {
     const response = await getProducts();
     if (response.payload.title == "Success") {
@@ -302,7 +336,7 @@ export default function ItemCosts() {
 
 
   const getAllItemCosts = async () => {
-    const response = await getItemCosts();
+    const response = await getItemsCosts();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',
@@ -338,6 +372,7 @@ export default function ItemCosts() {
     }
   };
 
+  
   const selectRow = {
     mode: 'checkbox',
     clickToSelect: true,
@@ -422,6 +457,7 @@ export default function ItemCosts() {
                 onDeleteItemCost={deleteItemCost}
                 onGetItemCost={itemCostById}
                 onClose={handleClose}
+               // onGetItemsCost={getItemsCosts}
                 isEdit={isEdit}
                 isDelete={isDelete}
                 id={id}
@@ -431,6 +467,8 @@ export default function ItemCosts() {
                 measurementTypeList={measurementTypeList}
                 measurementValueList={measurementValueList}
                 customTypeList={customTypeList}
+                categoryTypeList={categoryTypeList}
+
               />
             </Modal.Body>
 
