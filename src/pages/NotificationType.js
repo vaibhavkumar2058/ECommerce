@@ -74,7 +74,7 @@ export default function NotificationType() {
 
      { dataField: 'notificationTypeId', text: 'NotificationTypeId', sort: true,hidden:true },
      { dataField: 'notificationTypeName', text: 'NotificationTypeName', sort: true },
-     { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true,hidden:true },
+     { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true},
       { dataField: 'description', text: 'Description', sort: true },
     
       
@@ -188,11 +188,17 @@ export default function NotificationType() {
         mode: 'success',
         message: 'NotificationType Record Fetch Succefully.'
       })
-
+      const dataFormatter = (rawData) => {
+        const curedData = {};
+        curedData.notificationTypeName=rawData?.notificationTypeName;
+        curedData.description=rawData?.description;
+        curedData.recordStatusId=rawData?.recordStatus.actionName;
+        return curedData;
+      }
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+        arr.push(dataFormatter(response.payload[key]));    
       }
 
       setNotificationTypes(arr);

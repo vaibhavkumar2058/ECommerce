@@ -45,7 +45,7 @@ export default function CategoryTypes() {
     const [categoryType, setCategoryType] = useState({
         categoryTypeName: "",
         description: "",
-        recordStatusId:null,
+        recordStatusId: null,
     });
 
     const [id, setId] = useState(null);
@@ -56,7 +56,7 @@ export default function CategoryTypes() {
         status: false,
         message: "",
     });
- 
+
     const {
         addCategoryType,
         updateCategoryType,
@@ -65,13 +65,13 @@ export default function CategoryTypes() {
         categoryTypeById,
     } = useFetchCategorytype();
 
-    const { 
+    const {
         getRecordStatuss,
-      } = useFetchRecordStatus();
+    } = useFetchRecordStatus();
 
     const columns = [
 
-        { dataField: 'categoryTypeId', text: 'CategoryType ', sort: true,},
+        { dataField: 'categoryTypeId', text: 'CategoryType ', sort: true, hidden: true },
         { dataField: 'categoryTypeName', text: ' Category Type Name', sort: true },
         { dataField: 'description', text: 'Description', sort: true },
         { dataField: 'recordStatusId', text: 'RecordStatus', sort: true },
@@ -163,22 +163,22 @@ export default function CategoryTypes() {
     const getRecordStatusList = async () => {
         const response = await getRecordStatuss();
         if (response.payload.title == "Success") {
-    
-          var arr = [];
-          for (var key in response.payload) {
-            if (key !== 'title')
-            arr.push(response.payload[key]);
-          }
-          setRecordStatusList(arr);
+
+            var arr = [];
+            for (var key in response.payload) {
+                if (key !== 'title')
+                    arr.push(response.payload[key]);
+            }
+            setRecordStatusList(arr);
         }
         else {
-          setMessageStatus({
-            mode: 'danger',
-            message: 'State Fetch Failed.'
-          })
+            setMessageStatus({
+                mode: 'danger',
+                message: 'State Fetch Failed.'
+            })
         }
-      };
-    
+    };
+
 
 
     const getAllCategoryTypes = async () => {
@@ -188,11 +188,20 @@ export default function CategoryTypes() {
                 mode: 'success',
                 message: 'CategoryTypes Record Fetch Succefully.'
             })
+            const dataFormatter = (rawData) => {
+                const curedData = {};
+                curedData.categoryTypeId = rawData?.categoryTypeId;
+                curedData.categoryTypeName = rawData?.categoryTypeName;
+                curedData.description = rawData?.description;
+                curedData.recordStatusId = rawData?.recordStatus.actionName;
+
+                return curedData;
+            }
 
             var arr = [];
             for (var key in response.payload) {
                 if (key !== 'title')
-                arr.push(response.payload[key]);
+                    arr.push(dataFormatter(response.payload[key]));
             }
 
             setCategoryTypes(arr);

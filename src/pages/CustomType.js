@@ -44,10 +44,10 @@ export default function CustomTypes() {
   const [isDelete, setIsDelete] = useState(false);
   const [customType, setCustomType] = useState({
     customTypeName: "",
-    description:"",
-    recordStatusId:null,
-    
-      });
+    description: "",
+    recordStatusId: null,
+
+  });
 
   const [id, setId] = useState(null);
 
@@ -58,7 +58,7 @@ export default function CustomTypes() {
     message: "",
   });
 
-  const { 
+  const {
     addCustomType,
     updateCustomType,
     deleteCustomType,
@@ -66,7 +66,7 @@ export default function CustomTypes() {
     customTypeById,
   } = useFetchCustomType();
 
-  const { 
+  const {
     getRecordStatuss,
   } = useFetchRecordStatus();
 
@@ -76,7 +76,7 @@ export default function CustomTypes() {
     { dataField: 'customTypeName', text: 'CustomTypeName', sort: true, },
     { dataField: 'description', text: ' Description', sort: true },
     { dataField: 'recordStatusId', text: ' RecordStatus', sort: true },
-    
+
     // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -168,7 +168,7 @@ export default function CustomTypes() {
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+          arr.push(response.payload[key]);
       }
       setRecordStatusList(arr);
     }
@@ -188,11 +188,18 @@ export default function CustomTypes() {
         mode: 'success',
         message: 'CustomTypes Record Fetch Succefully.'
       })
+      const dataFormatter = (rawData) => {
+        const curedData = {};
+        curedData.customTypeName=rawData?.customTypeName;
+        curedData.description=rawData?.description;
+        curedData.recordStatusId=rawData?.recordStatus.actionName;
+        return curedData;
+      }
 
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+          arr.push(dataFormatter(response.payload[key]));
       }
 
       setCustomTypes(arr);
@@ -259,11 +266,11 @@ export default function CustomTypes() {
                       <div className="row">
                         <div className="app-right col-lg-12">
                           <div className="app-float-right p-1">
-                          <MyExportCSV {...props.csvProps} /></div>
+                            <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
-                          <Button variant="primary" onClick={handleShow}>
-                            Add CustomType
-                          </Button>
+                            <Button variant="primary" onClick={handleShow}>
+                              Add CustomType
+                            </Button>
                           </div>
                         </div>
                       </div>

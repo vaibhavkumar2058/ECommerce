@@ -169,12 +169,20 @@ export default function Country() {
         mode: 'success',
         message: 'Country Record Fetch Succefully.'
       })
+      const dataFormatter = (rawData) => {
+        const curedData = {};
+        curedData.countryName=rawData?.countryName;
+        curedData.regionCode=rawData?.regionCode;
+        curedData.description=rawData?.description;
+        curedData.recordStatusId=rawData?.recordStatus.actionName;
+        return curedData;
+            }
+
 
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
-      }
+        arr.push(dataFormatter(response.payload[key]));      }
 
       setCountries(arr);
     }

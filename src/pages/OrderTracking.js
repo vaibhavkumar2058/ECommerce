@@ -226,11 +226,17 @@ export default function OrderTracking() {
         mode: 'success',
         message: 'OrderTracking Record Fetch Succefully.'
       })
-
+      const dataFormatter = (rawData) => {
+        const curedData = {};
+        curedData.orderId = rawData?.orderId;
+        curedData.orderStatusId = rawData?.orderStatus.orderStatusName;
+        curedData.description=rawData?.description;
+        return curedData;
+      }
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+        arr.push(dataFormatter(response.payload[key]));
       }
 
       setOrderTrackinges(arr);

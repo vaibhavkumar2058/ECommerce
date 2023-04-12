@@ -342,11 +342,22 @@ export default function ItemCosts() {
         mode: 'success',
         message: 'ItemCosts Record Fetch Succefully.'
       })
+      const dataFormatter = (rawData) => {
+        const curedData = {};
+        curedData.productId=rawData?.product.productName;
+        curedData.measurementTypeId=rawData?.measurementType.name;
+        curedData.measurementValueId=rawData?.measurementValue.value;
+        curedData.customTypeId=rawData?.customType.customTypeName;
+        curedData.description=rawData?.description;
+        curedData.price=rawData?.price;
+  
+        return curedData;
+      }
 
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+        arr.push(dataFormatter(response.payload[key]));
       }
 
       setItemCosts(arr);
