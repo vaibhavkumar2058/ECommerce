@@ -81,9 +81,11 @@ export default function Notifications() {
 
     { dataField: 'notificationTypeId', text: 'NotificationTypeId', sort: true, hidden: true},
     { dataField: 'notificationId', text: 'NotificationId', sort: true, hidden: true},
-    { dataField: 'notificationName', text: ' NotificationName', sort: true },
+    { dataField: 'notificationName', text: 'NotificationName', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
-    { dataField: 'recordStatusId', text: ' RecordStatus', sort: true},
+    { dataField: 'recordStatusId', text: 'recordStatusId', sort: true},
+    { dataField: 'recordStatus', text: 'Status', sort: true},
+
     // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -222,9 +224,11 @@ export default function Notifications() {
       })
       const dataFormatter = (rawData) => {
         const curedData = {};
+        curedData.notificationId=rawData?.notificationId;
         curedData.notificationName=rawData?.notificationName;
         curedData.description=rawData?.description;
-        curedData.recordStatusId=rawData?.recordStatus.actionName;
+        curedData.recordStatusId=rawData?.recordStatusId;
+        curedData.recordStatus=rawData?.recordStatus.actionName;
         return curedData;
       }
       var arr = [];

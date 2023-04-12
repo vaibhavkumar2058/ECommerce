@@ -72,9 +72,10 @@ export default function Gender() {
 
   const columns = [
 
-     { dataField: 'genderId', text: 'GenderId', sort: true,hidden:true },
+     { dataField: 'genderId', text: 'genderId', sort: true,hidden:true },
      { dataField: 'genderName', text: ' GenderName', sort: true },
-     { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true},
+     { dataField: 'recordStatusId', text: 'RecordStatusId',hidden:true, sort: true},
+     { dataField: 'recordStatus', text: 'Status', sort: true},
       { dataField: 'description', text: 'Description', sort: true },
     
     // columns follow dataField and text structure
@@ -189,9 +190,12 @@ export default function Gender() {
       })
       const dataFormatter = (rawData) => {
         const curedData = {};
+        curedData.genderId=rawData?.genderId;
         curedData.genderName=rawData?.genderName;
         curedData.description=rawData?.description;
-        curedData.recordStatusId=rawData?.recordStatus.actionName;
+        curedData.recordStatusId=rawData?.recordStatusId;
+        curedData.recordStatus=rawData?.recordStatus.actionName;
+
         return curedData;
       }
       var arr = [];

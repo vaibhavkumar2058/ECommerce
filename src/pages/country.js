@@ -72,11 +72,13 @@ export default function Country() {
 
   const columns = [
 
-    { dataField: 'countryId', text: 'Country Id', sort: true, hidden: true },
-    { dataField: 'countryName', text: ' CountryName', sort: true },
+    { dataField: 'countryId', text: 'countryId', sort: true, hidden: true },
+    { dataField: 'countryName', text: ' Country Name', sort: true },
     { dataField: 'regionCode', text: 'RegionCode', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
-    { dataField: 'recordStatusId', text: ' RecordStatus', sort: true },
+    { dataField: 'recordStatusId', text: ' recordStatusId',hidden:true, sort: true },
+    { dataField: 'recordStatus', text: 'Status', sort: true },
+
         // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -171,10 +173,12 @@ export default function Country() {
       })
       const dataFormatter = (rawData) => {
         const curedData = {};
+        curedData.countryId=rawData?.countryId;
         curedData.countryName=rawData?.countryName;
         curedData.regionCode=rawData?.regionCode;
         curedData.description=rawData?.description;
-        curedData.recordStatusId=rawData?.recordStatus.actionName;
+        curedData.recordStatusId=rawData?.recordStatusId;
+        curedData.recordStatus=rawData?.recordStatus.actionName;
         return curedData;
             }
 

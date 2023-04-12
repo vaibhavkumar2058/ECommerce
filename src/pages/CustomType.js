@@ -72,10 +72,12 @@ export default function CustomTypes() {
 
   const columns = [
 
-    { dataField: 'customTypeId', text: 'CustomType', sort: true, hidden: true },
+    { dataField: 'customTypeId', text: 'customTypeId', sort: true, hidden: true },
     { dataField: 'customTypeName', text: 'CustomTypeName', sort: true, },
     { dataField: 'description', text: ' Description', sort: true },
-    { dataField: 'recordStatusId', text: ' RecordStatus', sort: true },
+    { dataField: 'recordStatusId', text: ' recordStatusId',hidden:true, sort: true },
+    { dataField: 'recordStatus', text: ' Status', sort: true },
+
 
     // columns follow dataField and text structure
     {
@@ -190,9 +192,12 @@ export default function CustomTypes() {
       })
       const dataFormatter = (rawData) => {
         const curedData = {};
+        curedData.customTypeId=rawData?.customTypeId;
         curedData.customTypeName=rawData?.customTypeName;
         curedData.description=rawData?.description;
-        curedData.recordStatusId=rawData?.recordStatus.actionName;
+        curedData.recordStatusId=rawData?.recordStatusId;
+        curedData.recordStatus=rawData?.recordStatus.actionName;
+
         return curedData;
       }
 

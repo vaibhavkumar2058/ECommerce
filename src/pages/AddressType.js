@@ -72,10 +72,11 @@ export default function AddressTypes() {
 
   const columns = [
 
-    { dataField: 'addressTypeId', text: 'AddressType Id', sort: true, hidden: true },
+    { dataField: 'addressTypeId', text: 'addressTypeId', sort: true, hidden: true },
     { dataField: 'addressTypeName', text: 'Address Type', sort: true, },
-    { dataField: 'description', text: ' Description', sort: true },
-    { dataField: 'recordStatusId', text: ' Status', sort: true },
+    { dataField: 'description', text: 'Description', sort: true },
+    { dataField: 'recordStatusId', text: 'recordStatusId',hidden:true, sort: true },
+    { dataField: 'recordStatus', text: 'Status', sort: true },
     
     // columns follow dataField and text structure
     {
@@ -191,8 +192,10 @@ export default function AddressTypes() {
       const dataFormatter = (rawData) => {
         const curedData = {};
         curedData.addressTypeId=rawData?.addressTypeId;
+        curedData.addressTypeName=rawData?.addressTypeName;
         curedData.description=rawData?.description;
-        curedData.recordStatusId=rawData?.recordStatus.actionName;
+        curedData.recordStatusId=rawData?.recordStatusId;
+        curedData.recordStatus=rawData?.recordStatus.actionName;
 
         return curedData;
       }

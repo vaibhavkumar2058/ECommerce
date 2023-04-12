@@ -87,10 +87,12 @@ export default function Carts() {
     { dataField: 'cartId', text: 'Cart ', sort: true, hidden: true },
     { dataField: 'resourcesId', text: 'resourcesId', sort: true, hidden: true },
     { dataField: 'resourceName', text: 'Resource', sort: true, },
+    { dataField: 'productId', text: 'productId', sort: true, hidden: true },
     { dataField: 'productName', text: 'Product', sort: true },
     { dataField: 'cost', text: 'Cost', sort: true },
     { dataField: 'quantity', text: 'Quantity', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
+    { dataField: 'recordStatusId', text: 'recordStatusId', sort: true, hidden: true },
     { dataField: 'recordStatus', text: 'Status', sort: true },
     // columns follow dataField and text structure
     {

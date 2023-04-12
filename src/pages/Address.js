@@ -97,11 +97,17 @@ export default function Addresses() {
 
 
   const columns = [
-    { dataField: 'addressId', text: 'Address ', sort: true, hidden: true },
-    { dataField: 'countryId', text: 'Country ', sort: true,headerStyle: () => {
+    { dataField: 'addressId', text: 'Address Id', sort: true, hidden: true },
+    { dataField: 'countryId', text: 'Country Id', sort: true, hidden: true,headerStyle: () => {
       return { width: "120px" };
     }  },
-    { dataField: 'stateId', text: 'State ', sort: true ,headerStyle: () => {
+    { dataField: 'countryName', text: 'Country', sort: true,headerStyle: () => {
+      return { width: "120px" };
+    }  },
+    { dataField: 'stateId', text: 'State Id', hidden: true, sort: true ,headerStyle: () => {
+      return { width: "100px" };
+    }},
+    { dataField: 'stateName', text: 'State',  sort: true ,headerStyle: () => {
       return { width: "100px" };
     }},
     { dataField: 'city', text: 'City', sort: true,headerStyle: () => {
@@ -119,7 +125,10 @@ export default function Addresses() {
     { dataField: 'pincode', text: 'Pincode', sort: true,headerStyle: () => {
       return { width: "120px" };
     } },
-    { dataField: 'addressTypeId', text: 'Address Type ', sort: true,headerStyle: () => {
+    { dataField: 'addressTypeId', text: 'AddressType Id',hidden:true, sort: true,headerStyle: () => {
+      return { width: "150px" };
+    } },
+    { dataField: 'addressTypename', text: 'AddressType',hidden:true, sort: true,headerStyle: () => {
       return { width: "150px" };
     } },
     { dataField: 'isDefault', text: 'IsDefault', sort: true ,headerStyle: () => {
@@ -131,7 +140,10 @@ export default function Addresses() {
     { dataField: 'landMark', text: 'LandMark', sort: true,headerStyle: () => {
       return { width: "120px" };
     } },
-    { dataField: 'recordStatusId', text: 'Status', sort: true,headerStyle: () => {
+    { dataField: 'recordStatusId', text: 'recordStatusId',hidden:true, sort: true,headerStyle: () => {
+      return { width: "100px" };
+    } },
+    { dataField: 'recordStatus', text: 'Status', sort: true,headerStyle: () => {
       return { width: "100px" };
     } },
     
@@ -311,17 +323,21 @@ export default function Addresses() {
       const dataFormatter = (rawData) => {
         const curedData = {};
         curedData.addressId=rawData?.addressId;
-        curedData.countryId=rawData?.country.countryName;
-        curedData.stateId=rawData?.state.stateName;
+        curedData.countryId=rawData?.country.countryId;
+        curedData.countryName=rawData?.country.countryName;
+        curedData.stateId=rawData?.state.stateId;
+        curedData.stateName=rawData?.state.stateName;
         curedData.city=rawData?.city;
         curedData.town=rawData?.town;
         curedData.locality=rawData?.locality;
+        curedData.addressLine=rawData?.addressLine;
         curedData.pincode=rawData?.pincode;
         curedData.addressTypeId=rawData?.addressType.addressTypeName;
         curedData.isDefault=rawData?.isDefault;
         curedData.defaultAddressTypeId=rawData?.defaultAddressTypeId;
         curedData.landMark=rawData?.landMark;
-        curedData.recordStatusId=rawData?.recordStatus.actionName;
+        curedData.recordStatusId=rawData?.recordStatus.recordStatusId;
+        curedData.recordStatus=rawData?.recordStatus.actionName;
         
         return curedData;
       }

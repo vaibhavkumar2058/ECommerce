@@ -73,10 +73,12 @@ export default function MeasurementTypes() {
 
   const columns = [
 
-    { dataField: 'measurementTypeId', text: 'MeasurementType Id', sort: true , hidden: true },
-    { dataField: 'name', text: ' Name', sort: true },
+    { dataField: 'measurementTypeId', text: 'measurementTypeId', sort: true , hidden: true },
+    { dataField: 'measurementTypeName', text: 'MeasurementType', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
-    { dataField: 'recordStatusId', text: 'Status', sort: true },
+    { dataField: 'recordStatusId', text: 'recordStatusId',hidden:true, sort: true },
+    { dataField: 'recordStatus', text: 'Status', sort: true },
+
     // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -190,11 +192,15 @@ export default function MeasurementTypes() {
         mode: 'success',
         message: 'MeasurementTypes Record Fetch Succefully.'
       })
+      debugger;
       const dataFormatter = (rawData) => {
         const curedData = {};
-        curedData.name=rawData?.name;
+        curedData.measurementTypeId=rawData?.measurementTypeId;
+        curedData.measurementTypeName=rawData?.name;
         curedData.description=rawData?.description;
-        curedData.recordStatusId=rawData?.recordStatus.actionName;
+        curedData.recordStatusId=rawData?.recordStatusId;
+        curedData.recordStatus=rawData?.recordStatus.actionName;
+
 
         return curedData;
       }

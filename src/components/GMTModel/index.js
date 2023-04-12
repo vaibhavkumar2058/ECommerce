@@ -22,7 +22,7 @@ export default function GMTModel({
   recordStatusList = [],
  }) {
   const [newGMT, setNewGMT] = useState({
-    resourceId:null,
+    resourcesId:null,
     longitude:null,
     latitude:null,
    // trackTime:null ,
@@ -131,7 +131,7 @@ export default function GMTModel({
     }
     const isEnable =
     
-    !newGMT?.resourceId || !newGMT?.longitude || !newGMT?.latitude||   !newGMT?.recordStatusId;
+    !newGMT?.resourcesId || !newGMT?.longitude || !newGMT?.latitude||   !newGMT?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newGMT]);
 
@@ -166,9 +166,9 @@ export default function GMTModel({
             <Form.Label>Resource<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
-              name="resourceId"
+              name="resourcesId"
               placeholder="Enter Resource"
-              value={newGMT?.resourceId}
+              value={newGMT?.resourcesId}
               onChange={changeHandler}
             />
           </Form.Group>

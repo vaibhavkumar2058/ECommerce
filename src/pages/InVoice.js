@@ -83,12 +83,15 @@ export default function Invoices() {
   const columns = [
     { dataField: 'invoiceId', text: 'invoiceId', sort: true, hidden: true },
     { dataField: 'resourcesId', text: 'ResourcesId', sort: true, hidden: true  },
-    { dataField: 'orderId', text: ' OrderId', sort: true },
+    { dataField: 'resourceName', text: 'Resource', sort: true },
+    { dataField: 'orderId', text: ' OrderId',hidden:true, sort: true },
     { dataField: 'totalIncludeTax', text: 'totalIncludeTax', sort: true },
     { dataField: 'total', text: 'Total', sort: true },
     //{ dataField: 'invoiceDate', text: 'InvoiceDate', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
-    { dataField: 'recordStatusId', text: ' RecordStatus', sort: true},
+    { dataField: 'recordStatusId', text: 'recordStatusId',hidden:true, sort: true},
+    { dataField: 'recordStatus', text: 'Status', sort: true},
+
     // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -208,11 +211,15 @@ export default function Invoices() {
       })
       const dataFormatter = (rawData) => {
         const curedData = {};
+        curedData.invoiceId=rawData?.invoiceId;
+        curedData.resourcesId=rawData?.resourcesId;
+        curedData.resourceName=rawData?.resources?.firstName+rawData?.resources?.middleName+rawData?.resources?.lastName;
         curedData.orderId=rawData?.orderId;
         curedData.totalIncludeTax=rawData?.totalIncludeTax;
         curedData.total=rawData?.total;
         curedData.description=rawData?.description;
-        curedData.recordStatusId=rawData?.recordStatus.actionName;
+        curedData.recordStatusId=rawData?.recordStatusId;
+        curedData.recordStatus=rawData?.recordStatus.actionName;
 
         return curedData;
       }

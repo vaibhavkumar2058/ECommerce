@@ -44,7 +44,7 @@ export default function GMTs() {
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [GMT, setGMT] = useState({
-    resourceId:null,
+    resourcesId:null,
     longitude:null,
     latitude:null,
     //trackTime:null ,
@@ -76,12 +76,15 @@ export default function GMTs() {
 
   const columns = [
     { dataField: 'gmtId', text: 'GMT', sort: true, hidden: true },
-    { dataField: 'resourceId', text: 'Resource', sort: true },
+    { dataField: 'resourcesId', text: 'resourcesId',hidden:true, sort: true },
+    { dataField: 'resourceName', text: 'Resource', sort: true },
     { dataField: 'longitude', text: ' Longitude', sort: true },
     { dataField: 'latitude', text: 'Latitude', sort: true },
     //{ dataField: 'trackTime', text: 'TrackTime', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
-    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true },
+    { dataField: 'recordStatusId', text: 'RecordStatusId',hidden:true, sort: true },
+    { dataField: 'recordStatus', text: 'Status', sort: true },
+
         // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -194,11 +197,14 @@ export default function GMTs() {
       })
       const dataFormatter = (rawData) => {
         const curedData = {};
-        curedData.resourceId=rawData?.resourceId;
+        curedData.gmtId=rawData?.gmtId;
+        curedData.resourcesId=rawData?.resourcesId;
+        curedData.resourceName=rawData?.resources?.firstName+rawData?.resources?.middleName+rawData?.resources?.lastName;
         curedData.longitude=rawData?.longitude;
         curedData.latitude=rawData?.latitude;
         curedData.description=rawData?.description;
-        curedData.recordStatusId=rawData?.recordStatus.actionName;
+        curedData.recordStatusId=rawData?.recordStatusId;
+        curedData.recordStatus=rawData?.recordStatus.actionName;
         return curedData;
       }
 

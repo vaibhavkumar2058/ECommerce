@@ -71,10 +71,12 @@ export default function CategoryTypes() {
 
     const columns = [
 
-        { dataField: 'categoryTypeId', text: 'CategoryType ', sort: true, hidden: true },
+        { dataField: 'categoryTypeId', text: 'categoryTypeId ', sort: true, hidden: true },
         { dataField: 'categoryTypeName', text: ' Category Type Name', sort: true },
         { dataField: 'description', text: 'Description', sort: true },
-        { dataField: 'recordStatusId', text: 'RecordStatus', sort: true },
+        { dataField: 'recordStatusId', text: 'recordStatusId',hidden:true, sort: true },
+        { dataField: 'recordStatus', text: 'Status', sort: true },
+
 
         // columns follow dataField and text structure
         {
@@ -193,7 +195,8 @@ export default function CategoryTypes() {
                 curedData.categoryTypeId = rawData?.categoryTypeId;
                 curedData.categoryTypeName = rawData?.categoryTypeName;
                 curedData.description = rawData?.description;
-                curedData.recordStatusId = rawData?.recordStatus.actionName;
+                curedData.recordStatusId = rawData?.recordStatusId;
+                curedData.recordStatus = rawData?.recordStatus.actionName;
 
                 return curedData;
             }

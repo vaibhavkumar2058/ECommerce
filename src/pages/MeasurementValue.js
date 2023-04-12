@@ -72,10 +72,12 @@ export default function MeasurementValues() {
 
   const columns = [
 
-    { dataField: 'measurementValueId', text: 'MeasurementValue Id', sort: true, hidden: true },
-    { dataField: 'value', text: ' Value', sort: true },
+    { dataField: 'measurementValueId', text: 'measurementValueId', sort: true, hidden: true },
+    { dataField: 'measurementValueName', text: 'MeasurementValue', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
-    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true,  },
+    { dataField: 'recordStatusId', text: 'RecordStatusId',hidden:true, sort: true,  },
+    { dataField: 'recordStatus', text: 'Status', sort: true },
+
     // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -188,9 +190,11 @@ export default function MeasurementValues() {
       })
       const dataFormatter = (rawData) => {
         const curedData = {};
-        curedData.value=rawData?.value;
+        curedData.measurementValueId=rawData?.measurementValueId;
+        curedData.measurementValueName=rawData?.value;
         curedData.description=rawData?.description;
-        curedData.recordStatusId=rawData?.recordStatus.actionName;
+        curedData.recordStatusId=rawData?.recordStatusId;
+        curedData.recordStatus=rawData?.recordStatus.actionName;
         return curedData;
       }
       var arr = [];

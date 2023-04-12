@@ -120,8 +120,9 @@ export default function MeasurementTypeModel({
         if (isEdit) {
             setButtonType("Update");
         }
+        debugger
         const isEnable =
-            !newMeasurementType?.name || !newMeasurementType?.description;
+            !newMeasurementType?.name || !newMeasurementType?.description|| !newMeasurementType?.recordStatusId;
         setSaveDisabled(isEnable);
     }, [newMeasurementType]);
 
