@@ -38,6 +38,7 @@ export default function ResourcesModel({
     addressId:null,
     attachment: null,
     resourcesAttachmentTypeId: 1003,
+    resourcesImage:"",
   });
 
 
@@ -88,11 +89,27 @@ export default function ResourcesModel({
     });
   };
 
+  const getBase64 = (file, cb) => {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+        cb(reader.result)
+    };
+    reader.onerror = function (error) {
+        console.log('Error: ', error);
+    };
+}
 
   const saveFileSelected = (e) => {
+    let idCardBase64 = '';
+getBase64(e.target.files[0], (result) => {
+     idCardBase64 = result;
+});
     //in case you wan to print the file selected
-    //console.log(e.target.files[0]);
+    console.log(idCardBase64);
+
     setFileSelected(e.target.files[0]);
+    debugger
   };
 
   const saveHandler = async () => {
@@ -183,6 +200,7 @@ export default function ResourcesModel({
     if (isEdit) {
       setButtonType("Update");
     }
+    debugger
     const isEnable =
       !newResources?.firstName
       || !newResources?.roleId || !newResources?.genderId
@@ -217,7 +235,7 @@ export default function ResourcesModel({
         <div className="">
           <Form>
             <div className="row">
-              <div className="col-md-6">
+              <div className="col-md-4">
                 <Form.Group
                   className={styles.stFormContainer}
                   controlId="formResources">
@@ -231,7 +249,7 @@ export default function ResourcesModel({
                   />
                 </Form.Group>
               </div>
-              <div className="col-md-6">
+              <div className="col-md-4">
                 <Form.Group className="mb-3" controlId="middleName">
                   <Form.Label>MiddleName</Form.Label>
                   <Form.Control
@@ -243,9 +261,9 @@ export default function ResourcesModel({
                   />
                 </Form.Group>
               </div>
-            </div>
-            <div className="row">
-              <div className="col-md-6">
+         
+           
+              <div className="col-md-4">
                 <Form.Group className="mb-3" controlId="lastName">
                   <Form.Label>LastName</Form.Label>
                   <Form.Control
@@ -257,17 +275,10 @@ export default function ResourcesModel({
                   />
                 </Form.Group>
               </div>
-              <div className="col-md-6">
-                <Form.Group>
-                  <Form.Label>Resources Image</Form.Label>
-                </Form.Group>
-                <Form.Group>
-                  <input type="file" onChange={saveFileSelected} />
-                </Form.Group>
               </div>
-            </div>
+              
             <div className="row">
-              <div className="col-md-6">
+              <div className="col-md-4">
                 <Form.Group className="mb-3" controlId="roleId">
                   <Form.Label>Role</Form.Label>
                   <Dropdown
@@ -282,7 +293,7 @@ export default function ResourcesModel({
                   />
                 </Form.Group>
               </div>
-              <div className="col-md-6">
+              <div className="col-md-4">
                 <Form.Group className="mb-3" controlId="genderId">
                   <Form.Label>Gender</Form.Label>
                   <Dropdown
@@ -297,9 +308,8 @@ export default function ResourcesModel({
                   />
                 </Form.Group>
               </div>
-            </div>
-            <div className="row">
-              <div className="col-md-6">
+           
+              <div className="col-md-4">
                 <Form.Group className="mb-3" controlId="mobileNumber">
                   <Form.Label>MobileNumber</Form.Label>
                   <Form.Control
@@ -311,7 +321,9 @@ export default function ResourcesModel({
                   />
                 </Form.Group>
               </div>
-              <div className="col-md-6">
+              </div>
+            <div className="row">
+              <div className="col-md-4">
                 <Form.Group className="mb-3" controlId="email">
                   <Form.Label>Email</Form.Label>
                   <Form.Control
@@ -323,9 +335,8 @@ export default function ResourcesModel({
                   />
                 </Form.Group>
               </div>
-            </div>
-            <div className="row">
-              <div className="col-md-6">
+           
+              <div className="col-md-4">
                 <Form.Group className="mb-3" controlId="password">
                   <Form.Label>Password</Form.Label>
                   <Form.Control
@@ -337,7 +348,7 @@ export default function ResourcesModel({
                   />
                 </Form.Group>
               </div>
-              <div className="col-md-6">
+              <div className="col-md-4">
                 <Form.Group className="mb-3" controlId="recordStatusId">
                   <Form.Label>Status</Form.Label>
                   <Dropdown
@@ -350,6 +361,21 @@ export default function ResourcesModel({
                     value={newResources?.recordStatusId}
                     onChange={dropdownHandler}
                   />
+                </Form.Group>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-6">
+                <Form.Group>
+                  <Form.Label>Resources Image</Form.Label>
+                </Form.Group>
+                <Form.Group>
+                  <input type="file" onChange={saveFileSelected} 
+                   encType="multipart/form-data" 
+                  />
+                  <img className="product-view" src={newResources?.resourcesImage}>
+                </img>
+                
                 </Form.Group>
               </div>
             </div>
