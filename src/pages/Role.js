@@ -105,7 +105,7 @@ Geocode.fromLatLng(newGMT.latitude, newGMT.longitude).then(
     { dataField: 'roleId', text: ' Role Id', sort: true , hidden:true},
     { dataField: 'roleName', text: ' RoleName', sort: true},
     { dataField: 'description', text: 'Description', sort: true },
-    {dataField: 'recordStatusId',text: 'RecordStatusId',sort: true , hidden:true},
+    {dataField: 'recordStatusId',text: 'RecordStatus',sort: true , hidden:true},
     // columns follow dataField and text structure
     {
       dataField: "Actions",

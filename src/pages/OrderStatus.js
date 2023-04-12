@@ -73,9 +73,9 @@ export default function OrderStatus() {
   } = useFetchRecordStatus();
 
   const columns = [
-    { dataField: 'orderStatusId', text: 'orderStatus Id', sort: true, hidden: true },
-    { dataField: 'orderStatusName', text: 'OrderStatus', sort: true },
-    { dataField: 'recordStatusId', text: 'RecordStatus Id', sort: true , hidden: true},
+    { dataField: 'orderStatusId', text: 'Order Status', sort: true, hidden: true },
+    { dataField: 'orderStatusName', text: 'Order Status Name', sort: true },
+    { dataField: 'recordStatusId', text: 'RecordStatus ', sort: true},
     { dataField: 'description', text: 'Description', sort: true},
     
     
@@ -189,11 +189,18 @@ export default function OrderStatus() {
         mode: 'success',
         message: 'OrderStatus Record Fetch Succefully.'
       })
+      const dataFormatter = (rawData) => {
+        const curedData = {};
+        curedData.orderStatusName = rawData?.orderStatusName;
+        curedData.recordStatusId = rawData?.recordStatus.actionName;
+        curedData.description=rawData?.description;
+        return curedData;
+      }
 
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+        arr.push(dataFormatter(response.payload[key]));
       }
 
       setOrderStatuses(arr);
