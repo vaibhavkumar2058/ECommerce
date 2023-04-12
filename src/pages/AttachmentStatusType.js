@@ -73,10 +73,11 @@ export default function AttachmentStatusTypes() {
   
 
   const columns = [
-    { dataField: 'attachmentStatusTypeId', text: 'AttachmentStatusType ', sort: true, hidden: true },
+    { dataField: 'attachmentStatusTypeId', text: 'attachmentStatusTypeId ', sort: true, hidden: true },
     { dataField: 'attachmentStatusTypeName', text: 'AttachmentStatusTypeName', sort: true  },
     { dataField: 'description', text: 'Description', sort: true  },
-    { dataField: 'recordStatusId', text: 'RecordStatus', sort: true,headerStyle: () => {
+   { dataField: 'recordStatusId', text: 'recordStatusId ', sort: true, hidden: true },
+    { dataField: 'recordStatus', text: 'Status', sort: true,headerStyle: () => {
       return { width: "100px" };
     } },
     
@@ -195,10 +196,21 @@ export default function AttachmentStatusTypes() {
         message: 'AttachmentStatusType Record Fetch Succefully.'
       })
 
+      const dataFormatter = (rawData) => {
+        const curedData = {};
+        curedData.attachmentStatusTypeId=rawData?.attachmentStatusTypeId;
+        curedData.attachmentStatusTypeName=rawData?.attachmentStatusTypeName;
+        curedData.description=rawData?.description;
+        curedData.recordStatusId=rawData?.recordStatusId;
+        curedData.recordStatus=rawData?.recordStatus.actionName;
+
+        return curedData;
+      }
+
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+        arr.push(dataFormatter(response.payload[key]));
       }
 
       setAttachmentStatusTypes(arr);

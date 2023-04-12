@@ -72,7 +72,7 @@ export default function CustomTypes() {
 
   const columns = [
 
-    { dataField: 'customTypeId', text: 'customTypeId', sort: true, hidden: true },
+    { dataField: 'customTypeId', text: 'customTypeId', sort: true, },
     { dataField: 'customTypeName', text: 'CustomTypeName', sort: true, },
     { dataField: 'description', text: ' Description', sort: true },
     { dataField: 'recordStatusId', text: ' recordStatusId',hidden:true, sort: true },
@@ -190,6 +190,7 @@ export default function CustomTypes() {
         mode: 'success',
         message: 'CustomTypes Record Fetch Succefully.'
       })
+      debugger
       const dataFormatter = (rawData) => {
         const curedData = {};
         curedData.customTypeId=rawData?.customTypeId;
