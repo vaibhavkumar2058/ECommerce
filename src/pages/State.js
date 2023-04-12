@@ -76,11 +76,14 @@ export default function States() {
 
   const columns = [
  
-    { dataField: 'stateId', text: 'State Id', sort: true, hidden: true } ,
+    { dataField: 'stateId', text: 'stateId', sort: true, hidden: true } ,
     { dataField: 'stateName', text: 'State', sort: true  },
-    { dataField: 'countryId', text: 'CountryId', sort: true },
+    { dataField: 'countryId', text: 'CountryId',hidden:true, sort: true },
+    { dataField: 'countryName', text: 'Country', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
-    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true  },
+    { dataField: 'recordStatusId', text: 'RecordStatusId',hidden:true, sort: true  },
+    { dataField: 'recordStatus', text: 'Status', sort: true  },
+
      // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -210,11 +213,23 @@ export default function States() {
         mode: 'success',
         message: 'States Record Fetch Succefully.'
       })
+      const dataFormatter = (rawData) => {
+        const curedData = {};
+        curedData.stateId=rawData?.stateId;
+        curedData.stateName=rawData?.stateName;
+        curedData.countryId=rawData?.countryId;
+        curedData.countryName=rawData?.countryName;
+        curedData.description=rawData?.description;
+        curedData.recordStatusId=rawData?.recordStatusId;
+        curedData.recordStatus=rawData?.recordStatus.actionName;
 
+
+        return curedData;
+      }
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+        arr.push(dataFormatter(response.payload[key]));
       }
 
       setStates(arr);

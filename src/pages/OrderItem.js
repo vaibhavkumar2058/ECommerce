@@ -79,11 +79,14 @@ export default function OrderItems() {
 
   const columns = [
 
-    { dataField: 'productId', text: '  Product', sort: true,},
-    { dataField: 'orderId', text: ' Order', sort: true,},
+    { dataField: 'productId', text: 'productId',hidden:true, sort: true,},
+    { dataField: 'productName', text: 'productName', sort: true,},
+    { dataField: 'orderId', text: ' orderId', sort: true,hidden:true},
     { dataField: 'cost', text: 'Cost', sort: true },
     { dataField: 'quantity', text: 'Quantity', sort: true },
-    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true, },
+    { dataField: 'recordStatusId', text: 'RecordStatusId',hidden:true, sort: true, },
+    { dataField: 'recordStatus', text: 'Status', sort: true, },
+
     // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -221,11 +224,23 @@ export default function OrderItems() {
         mode: 'success',
         message: 'OrderItems Record Fetch Succefully.'
       })
+      const dataFormatter = (rawData) => {
+        const curedData = {};
+        curedData.orderItemId=rawData?.orderItemId;
+        curedData.productId=rawData?.productId;
+        curedData.productName=rawData?.product.productName;
+        // curedData.orderId=rawData?.orderId;
+        // curedData.cost=rawData?.cost;
+        // curedData.quantity=rawData?.quantity;
+        // curedData.recordStatusId=rawData?.recordStatusId;
+        // curedData.recordStatus=rawData?.recordStatus.actionName;
+        return curedData;
+      }
 
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+        arr.push(dataFormatter(response.payload[key]));    
       }
 
       setOrderItems(arr);

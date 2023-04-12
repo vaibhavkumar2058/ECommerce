@@ -102,10 +102,13 @@ Geocode.fromLatLng(newGMT.latitude, newGMT.longitude).then(
 
   const columns = [
 
-    { dataField: 'roleId', text: ' Role Id', sort: true , hidden:true},
+    { dataField: 'roleId', text: 'roleId', sort: true , hidden:true},
     { dataField: 'roleName', text: ' RoleName', sort: true},
     { dataField: 'description', text: 'Description', sort: true },
-    {dataField: 'recordStatusId',text: 'RecordStatus',sort: true , hidden:true},
+    {dataField: 'recordStatusId',text: 'recordStatusId',sort: true , hidden:true},
+    { dataField: 'recordStatus', text: 'Status', sort: true },
+
+
     // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -223,11 +226,20 @@ Geocode.fromLatLng(newGMT.latitude, newGMT.longitude).then(
         mode: 'success',
         message: 'Roles Record Fetch Succefully.'
       })
+      const dataFormatter = (rawData) => {
+        const curedData = {};
+        curedData.roleId=rawData?.roleId;
+        curedData.roleName=rawData?.roleName;
+        curedData.description=rawData?.description;
+        curedData.recordStatusId=rawData?.recordStatusId;
+        curedData.recordStatus=rawData?.recordStatus.actionName;
 
+        return curedData;
+      }
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+        arr.push(dataFormatter(response.payload[key]));
       }
 
       setRoles(arr);
