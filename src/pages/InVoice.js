@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
-import useFetchInvoice from "../hooks/useFetchInvoice";
+import useFetchInvoices from "../hooks/useFetchInVoice";
 import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
 import InvoiceModel from "../components/InvoiceModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -74,7 +74,7 @@ export default function Invoices() {
     deleteInvoice,
     getInvoice,
     invoiceById,
-  } = useFetchInvoice();
+  } = useFetchInvoices();
 
   const { 
     getRecordStatuss,
