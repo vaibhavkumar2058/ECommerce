@@ -31,7 +31,7 @@ export default function InvoiceModel({
     
   });
 
-  const [fileSelected, setFileSelected] = useState();
+ 
 
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
@@ -68,7 +68,7 @@ export default function InvoiceModel({
   
 
   const saveHandler = async () => {
-    newInvoice.file = fileSelected;
+    
     if (isEdit) {
       const response = await onUpdateInvoice(id, newInvoice);
       if (response.payload.title == "Success") {
@@ -138,6 +138,7 @@ export default function InvoiceModel({
     if (isEdit) {
       setButtonType("Update");
     }
+    debugger
     const isEnable = !newInvoice?.resourcesId || !newInvoice?.orderId    ||  !newInvoice?.total   || !newInvoice?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newInvoice]);
