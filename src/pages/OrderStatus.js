@@ -73,9 +73,10 @@ export default function OrderStatus() {
   } = useFetchRecordStatus();
 
   const columns = [
-    { dataField: 'orderStatusId', text: 'Order Status', sort: true, hidden: true },
+    { dataField: 'orderStatusId', text: 'orderStatusId', sort: true, hidden: true },
     { dataField: 'orderStatusName', text: 'Order Status Name', sort: true },
-    { dataField: 'recordStatusId', text: 'RecordStatus ', sort: true},
+    { dataField: 'recordStatusId', text: 'recordStatusId',hidden:true, sort: true},
+    { dataField: 'recordStatus', text: 'Status', sort: true},
     { dataField: 'description', text: 'Description', sort: true},
     
     
@@ -191,8 +192,10 @@ export default function OrderStatus() {
       })
       const dataFormatter = (rawData) => {
         const curedData = {};
+        curedData.orderStatusId=rawData?.orderStatusId;
         curedData.orderStatusName = rawData?.orderStatusName;
-        curedData.recordStatusId = rawData?.recordStatus.actionName;
+        curedData.recordStatusId=rawData?.recordStatusId;
+        curedData.recordStatus = rawData?.recordStatus.actionName;
         curedData.description=rawData?.description;
         return curedData;
       }

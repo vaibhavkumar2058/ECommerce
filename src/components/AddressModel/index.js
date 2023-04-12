@@ -220,7 +220,7 @@ export default function AddressModel({
       {!isDelete && (
         <Form>
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-md-4">
               <Form.Group className="mb-3" controlId="stateId">
                 <Form.Label>State<span className="required">*</span></Form.Label>
                 <Dropdown
@@ -235,7 +235,7 @@ export default function AddressModel({
                 />
               </Form.Group>
             </div>
-            <div className="col-md-6">
+            <div className="col-md-4">
               <Form.Group className="mb-3" controlId="countryId">
                 <Form.Label>Country<span className="required">*</span></Form.Label>
                 <Dropdown
@@ -250,9 +250,8 @@ export default function AddressModel({
                 />
               </Form.Group>
             </div>
-          </div>
-          <div className="row">
-            <div className="col-md-6">
+          
+            <div className="col-md-4">
               <Form.Group className="mb-3" controlId="addressTypeId">
                 <Form.Label>AddressType</Form.Label>
                 <Dropdown
@@ -267,7 +266,9 @@ export default function AddressModel({
                 />
               </Form.Group>
             </div>
-            <div className="col-md-6">
+            </div>
+          <div className="row">
+            <div className="col-md-4">
               <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>City<span className="required">*</span></Form.Label>
                 <Form.Control
@@ -279,9 +280,8 @@ export default function AddressModel({
                 />
               </Form.Group>
             </div>
-          </div>
-          <div className="row">
-            <div className="col-md-6">
+          
+            <div className="col-md-4">
               <Form.Group className="mb-3" controlId="town">
                 <Form.Label>Town<span className="required">*</span></Form.Label>
                 <Form.Control
@@ -293,7 +293,7 @@ export default function AddressModel({
                 />
               </Form.Group>
             </div>
-            <div className="col-md-6">
+            <div className="col-md-4">
               <Form.Group className="mb-3" controlId="locality">
                 <Form.Label>Locality</Form.Label>
                 <Form.Control
@@ -307,7 +307,7 @@ export default function AddressModel({
             </div>
           </div>
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-md-4">
               <Form.Group className="mb-3" controlId="pincode">
                 <Form.Label>PinCode<span className="required">*</span></Form.Label>
                 <Form.Control
@@ -319,7 +319,7 @@ export default function AddressModel({
                 />
               </Form.Group>
             </div>
-            <div className="col-md-6">
+            <div className="col-md-4">
               <Form.Group className="mb-3" controlId="isDefault">
                 <Form.Label>IsDefault</Form.Label>
                 <Form.Control
@@ -331,9 +331,7 @@ export default function AddressModel({
                 />
               </Form.Group>
             </div>
-          </div>
-          <div className="row">
-            <div className="col-md-6">
+                     <div className="col-md-4">
               <Form.Group className="mb-3" controlId="landMark">
                 <Form.Label>LandMark<span className="required">*</span></Form.Label>
                 <Form.Control
@@ -345,7 +343,9 @@ export default function AddressModel({
                 />
               </Form.Group>
             </div>
-            <div className="col-md-6">
+            </div>
+          <div className="row">
+            <div className="col-md-4">
               <Form.Group className="mb-3" controlId="defaultAddressTypeId">
                 <Form.Label>Default Address Type</Form.Label>
                 <Form.Control
@@ -357,9 +357,8 @@ export default function AddressModel({
                 />
               </Form.Group>
             </div>
-          </div>
-          <div className="row">
-            <div className="col-md-6">
+         
+            <div className="col-md-4">
               <Form.Group className="mb-3" controlId="description">
                 <Form.Label>Description</Form.Label>
                 <Form.Control
@@ -371,7 +370,7 @@ export default function AddressModel({
                 />
               </Form.Group>
             </div>
-            <div className="col-md-6">
+            <div className="col-md-4">
               <Form.Group className="mb-3" controlId="recordStatusId">
                 <Form.Label>Status<span className="required">*</span></Form.Label>
                 <Dropdown
@@ -388,7 +387,7 @@ export default function AddressModel({
             </div>
           </div>
            <div className="row">
-            <div className="col-md-6">
+            <div className="col-md-4">
               <Form.Group className="mb-3" controlId="addressLine">
                 <Form.Label>Address Line</Form.Label>
                 <Form.Control

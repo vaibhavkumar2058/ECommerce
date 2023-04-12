@@ -54,7 +54,7 @@ import {
 
   // Invoice ADD  ACTIONS
   const addInvoice = (invoice) => {
-    debugger;
+
     return API.post(
       hapyCarURL,
       { data: invoice },
