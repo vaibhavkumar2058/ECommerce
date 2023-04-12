@@ -83,7 +83,7 @@ export default function Notifications() {
     { dataField: 'notificationId', text: 'NotificationId', sort: true, hidden: true},
     { dataField: 'notificationName', text: ' NotificationName', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
-    { dataField: 'recordStatusId', text: ' RecordStatus', sort: true, hidden: true },
+    { dataField: 'recordStatusId', text: ' RecordStatus', sort: true},
     // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -220,11 +220,17 @@ export default function Notifications() {
         mode: 'success',
         message: 'Notifications Record Fetch Succefully.'
       })
-
+      const dataFormatter = (rawData) => {
+        const curedData = {};
+        curedData.notificationName=rawData?.notificationName;
+        curedData.description=rawData?.description;
+        curedData.recordStatusId=rawData?.recordStatus.actionName;
+        return curedData;
+      }
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+        arr.push(dataFormatter(response.payload[key]));    
       }
 
       setNotifications(arr);

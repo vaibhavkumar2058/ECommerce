@@ -74,7 +74,7 @@ export default function Gender() {
 
      { dataField: 'genderId', text: 'GenderId', sort: true,hidden:true },
      { dataField: 'genderName', text: ' GenderName', sort: true },
-     { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true,hidden:true },
+     { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true},
       { dataField: 'description', text: 'Description', sort: true },
     
     // columns follow dataField and text structure
@@ -187,11 +187,17 @@ export default function Gender() {
         mode: 'success',
         message: 'Gender Record Fetch Succefully.'
       })
-
+      const dataFormatter = (rawData) => {
+        const curedData = {};
+        curedData.genderName=rawData?.genderName;
+        curedData.description=rawData?.description;
+        curedData.recordStatusId=rawData?.recordStatus.actionName;
+        return curedData;
+      }
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+        arr.push(dataFormatter(response.payload[key]));
       }
 
       setGenders(arr);
