@@ -31,7 +31,7 @@ export default function Carts() {
   const [carts, setCarts] = useState([]);
   const [productList, setProductList] = useState([]);
   const [recordStatusList ,setRecordStatusList] = useState([]);
-  const [products, setProducts  ] = useState();
+  //const [products, setProducts  ] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -85,12 +85,13 @@ export default function Carts() {
 
   const columns = [
     { dataField: 'cartId', text: 'Cart ', sort: true, hidden: true },
-    { dataField: 'resourcesId', text: 'Resources ', sort: true  },
-    { dataField: 'productId', text: ' Product ', sort: true },
+    { dataField: 'resourcesId', text: 'resourcesId', sort: true, hidden: true },
+    { dataField: 'resourceName', text: 'Resource', sort: true, },
+    { dataField: 'productName', text: 'Product', sort: true },
     { dataField: 'cost', text: 'Cost', sort: true },
     { dataField: 'quantity', text: 'Quantity', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
-    { dataField: 'recordStatusId', text: 'RecordStatus', sort: true },
+    { dataField: 'recordStatus', text: 'Status', sort: true },
     // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -121,7 +122,6 @@ export default function Carts() {
 
   useEffect(() => {
     getProductList();
-
     getRecordStatusList();
     if (carts.length == 0) {
       getAllCarts();
@@ -129,24 +129,12 @@ export default function Carts() {
     }
   }, [carts]);
 
-  
-
-  useEffect(() => {
-    if (carts.length == 0) {
-      getAllCarts();
-      setLoading(false)
-    }
-  }, [carts]);
-
-
   const defaultSorted = [{
     dataField: 'cartId',
     order: 'desc'
   }];
 
-
   const emptyDataMessage = () => { return 'No Data to Display'; }
-
 
   const handleView = (rowId, name) => {
     console.log(rowId, name);
@@ -227,24 +215,30 @@ export default function Carts() {
   const getAllCarts = async () => {
     const response = await getCarts();
     if (response.payload.title == "Success") {
-      const productList = await getProducts();
-      if (productList.payload.title == "Success") {
-        var carr = [];
-      for (var key in productList.payload) {
-        carr.push(productList.payload[key]);
-      }
-        setProducts(carr);
-      }
       
       setMessageStatus({
         mode: 'success',
         message: 'Carts Record Fetch Succefully.'
       })
+      const dataFormatter = (rawData) => {
+        const curedData = {};
+        curedData.cartId=rawData?.cartId;
+        curedData.resourcesId=rawData?.resourcesId;
+        curedData.resourceName=rawData?.resources?.firstName+rawData?.resources?.middleName+rawData?.resources?.lastName;
+        curedData.productId=rawData?.productId;
+        curedData.productName=rawData?.product?.productName;
+        curedData.cost=rawData?.cost;
+        curedData.quantity=rawData?.quantity;
+        curedData.description=rawData?.description;
+        curedData.recordStatusId=rawData?.recordStatusId;
+        curedData.recordStatus=rawData?.recordStatus.actionName;
+        return curedData;
+      }
 
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+        arr.push(dataFormatter(response.payload[key]));
       }
 
       setCarts(arr);
@@ -358,7 +352,7 @@ export default function Carts() {
                 isDelete={isDelete}
                 id={id}
                 cartData={cart}
-                products={products}
+                productList={productList}
     
                 recordStatusList={recordStatusList}
                
