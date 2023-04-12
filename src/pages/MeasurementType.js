@@ -76,7 +76,7 @@ export default function MeasurementTypes() {
     { dataField: 'measurementTypeId', text: 'MeasurementType Id', sort: true , hidden: true },
     { dataField: 'name', text: ' Name', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
-
+    { dataField: 'recordStatusId', text: 'Status', sort: true },
     // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -190,12 +190,18 @@ export default function MeasurementTypes() {
         mode: 'success',
         message: 'MeasurementTypes Record Fetch Succefully.'
       })
+      const dataFormatter = (rawData) => {
+        const curedData = {};
+        curedData.name=rawData?.name;
+        curedData.description=rawData?.description;
+        curedData.recordStatusId=rawData?.recordStatus.actionName;
 
+        return curedData;
+      }
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
-      }
+        arr.push(dataFormatter(response.payload[key]));      }
 
       setMeasurementTypes(arr);
     }

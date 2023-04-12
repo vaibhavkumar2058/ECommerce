@@ -188,11 +188,19 @@ export default function AddressTypes() {
         mode: 'success',
         message: 'AddressTypes Record Fetch Succefully.'
       })
+      const dataFormatter = (rawData) => {
+        const curedData = {};
+        curedData.addressTypeId=rawData?.addressTypeId;
+        curedData.description=rawData?.description;
+        curedData.recordStatusId=rawData?.recordStatus.actionName;
+
+        return curedData;
+      }
 
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+        arr.push(dataFormatter(response.payload[key]));
       }
 
       setAddressTypes(arr);

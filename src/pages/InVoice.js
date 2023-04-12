@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
-import useFetchInvoice from "../hooks/useFetchInvoice";
+import useFetchInvoices from "../hooks/useFetchInVoice";
 import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
 import InvoiceModel from "../components/InvoiceModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -74,7 +74,7 @@ export default function Invoices() {
     deleteInvoice,
     getInvoice,
     invoiceById,
-  } = useFetchInvoice();
+  } = useFetchInvoices();
 
   const { 
     getRecordStatuss,
@@ -83,12 +83,12 @@ export default function Invoices() {
   const columns = [
     { dataField: 'invoiceId', text: 'invoiceId', sort: true, hidden: true },
     { dataField: 'resourcesId', text: 'ResourcesId', sort: true, hidden: true  },
-    { dataField: 'orderId', text: ' OrderId', sort: true, hidden: true },
+    { dataField: 'orderId', text: ' OrderId', sort: true },
     { dataField: 'totalIncludeTax', text: 'totalIncludeTax', sort: true },
     { dataField: 'total', text: 'Total', sort: true },
     //{ dataField: 'invoiceDate', text: 'InvoiceDate', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
-    { dataField: 'recordStatusId', text: ' RecordStatus', sort: true, hidden: true },
+    { dataField: 'recordStatusId', text: ' RecordStatus', sort: true},
     // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -206,11 +206,20 @@ export default function Invoices() {
         mode: 'success',
         message: 'Invoices Record Fetch Succefully.'
       })
+      const dataFormatter = (rawData) => {
+        const curedData = {};
+        curedData.orderId=rawData?.orderId;
+        curedData.totalIncludeTax=rawData?.totalIncludeTax;
+        curedData.total=rawData?.total;
+        curedData.description=rawData?.description;
+        curedData.recordStatusId=rawData?.recordStatus.actionName;
 
+        return curedData;
+      }
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+        arr.push(dataFormatter(response.payload[key]));    
       }
 
       setInvoices(arr);

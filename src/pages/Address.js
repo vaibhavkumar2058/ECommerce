@@ -57,6 +57,7 @@ export default function Addresses() {
     locality:"",
     pincode:null,
     addressTypeId:null,
+    addressLine:"",
     landMark:"",
     isDefault:"",
     defaultAddressTypeId:null,
@@ -110,6 +111,9 @@ export default function Addresses() {
       return { width: "100px" };
     } },
     { dataField: 'locality', text: 'Locality', sort: true,headerStyle: () => {
+      return { width: "120px" };
+    } },
+    { dataField: 'addressLine', text: 'Address Line', sort: true,headerStyle: () => {
       return { width: "120px" };
     } },
     { dataField: 'pincode', text: 'Pincode', sort: true,headerStyle: () => {
@@ -304,11 +308,27 @@ export default function Addresses() {
         mode: 'success',
         message: 'Address Record Fetch Succefully.'
       })
-
+      const dataFormatter = (rawData) => {
+        const curedData = {};
+        curedData.addressId=rawData?.addressId;
+        curedData.countryId=rawData?.country.countryName;
+        curedData.stateId=rawData?.state.stateName;
+        curedData.city=rawData?.city;
+        curedData.town=rawData?.town;
+        curedData.locality=rawData?.locality;
+        curedData.pincode=rawData?.pincode;
+        curedData.addressTypeId=rawData?.addressType.addressTypeName;
+        curedData.isDefault=rawData?.isDefault;
+        curedData.defaultAddressTypeId=rawData?.defaultAddressTypeId;
+        curedData.landMark=rawData?.landMark;
+        curedData.recordStatusId=rawData?.recordStatus.actionName;
+        
+        return curedData;
+      }
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+        arr.push(dataFormatter(response.payload[key]));
       }
 
       setAddresses(arr);

@@ -186,11 +186,17 @@ export default function MeasurementValues() {
         mode: 'success',
         message: 'MeasurementValues Record Fetch Succefully.'
       })
-
+      const dataFormatter = (rawData) => {
+        const curedData = {};
+        curedData.value=rawData?.value;
+        curedData.description=rawData?.description;
+        curedData.recordStatusId=rawData?.recordStatus.actionName;
+        return curedData;
+      }
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+        arr.push(dataFormatter(response.payload[key]));    
       }
 
       setMeasurementValues(arr);

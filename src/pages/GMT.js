@@ -81,7 +81,7 @@ export default function GMTs() {
     { dataField: 'latitude', text: 'Latitude', sort: true },
     //{ dataField: 'trackTime', text: 'TrackTime', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
-    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true, hidden: true },
+    { dataField: 'recordStatusId', text: 'RecordStatusId', sort: true },
         // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -192,12 +192,20 @@ export default function GMTs() {
         mode: 'success',
         message: 'GMTs Record Fetch Succefully.'
       })
+      const dataFormatter = (rawData) => {
+        const curedData = {};
+        curedData.resourceId=rawData?.resourceId;
+        curedData.longitude=rawData?.longitude;
+        curedData.latitude=rawData?.latitude;
+        curedData.description=rawData?.description;
+        curedData.recordStatusId=rawData?.recordStatus.actionName;
+        return curedData;
+      }
 
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
-      }
+        arr.push(dataFormatter(response.payload[key]));      }
 
       setGMTs(arr);
     }
