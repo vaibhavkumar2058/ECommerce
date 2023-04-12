@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
-import useFetchInvoices from "../hooks/useFetchInVoice";
+import useFetchInvoices from "../hooks/useFetchInvoice";
 import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
 import InvoiceModel from "../components/InvoiceModel";
 import 'bootstrap/dist/css/bootstrap.min.css';

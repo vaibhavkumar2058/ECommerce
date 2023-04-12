@@ -89,11 +89,12 @@ export default function OrderTracking() {
 
   const columns = [
     { dataField: 'orderTrackingId', text: 'Order Tracking ', sort: true, hidden: true },
-    { dataField: 'orderId', text: 'Order', sort: true },
+    { dataField: 'orderId', text: 'Order', sort: true,hidden: true },
     { dataField: 'orderStatusId', text: 'Order Status ', sort: true},
     { dataField: 'description', text: 'Description', sort: true},
-    
-    
+    { dataField: 'recordStatusId', text: 'recordStatusId', sort: true, hidden: true },
+    { dataField: 'recordStatus', text: 'Status', sort: true},
+
     // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -231,6 +232,8 @@ export default function OrderTracking() {
         curedData.orderId = rawData?.orderId;
         curedData.orderStatusId = rawData?.orderStatus.orderStatusName;
         curedData.description=rawData?.description;
+        curedData.recordStatusId=rawData?.recordStatusId;
+        curedData.recordStatus=rawData?.recordStatus.actionName;
         return curedData;
       }
       var arr = [];

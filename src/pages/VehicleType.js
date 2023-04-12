@@ -75,8 +75,9 @@ export default function VehicleType() {
     { dataField: 'vehicleTypeId', text: ' VehicleTypeId', sort: true, hidden: true},
     { dataField: 'vehicleTypeName', text: ' VehicleTypeName', sort: true  },
     { dataField: 'description', text: 'Description', sort: true },
-    { dataField: 'recordStatuId' , text:'RecordStatusId' , sort: true , hidden: true},
-   
+    { dataField: 'recordStatusId', text: 'recordStatusId', sort: true, hidden: true},
+    { dataField: 'recordStatus', text: 'Status', sort: true},
+
     // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -187,11 +188,19 @@ export default function VehicleType() {
         mode: 'success',
         message: 'VehicleType Record Fetch Succefully.'
       })
+      const dataFormatter = (rawData) => {
+        const curedData = {};
+        curedData.vehicleTypeName=rawData?.vehicleTypeName;
+        curedData.description=rawData?.description;
+        curedData.recordStatusId=rawData?.recordStatusId;
+        curedData.recordStatus=rawData?.recordStatus.actionName;
+        return curedData;
+      }
 
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+        arr.push(dataFormatter(response.payload[key]));
       }
 
       setVehicleTypes(arr);
