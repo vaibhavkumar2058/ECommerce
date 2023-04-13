@@ -54,7 +54,7 @@ import {
 
   // Notification ADD  ACTIONS
   const addNotification = (notification) => {
-    debugger;
+
     return API.post(
       hapyCarURL,
       { data: notification },

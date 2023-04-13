@@ -90,7 +90,8 @@ export default function OrderTracking() {
   const columns = [
     { dataField: 'orderTrackingId', text: 'Order Tracking ', sort: true, hidden: true },
     { dataField: 'orderId', text: 'Order', sort: true,hidden: true },
-    { dataField: 'orderStatusId', text: 'Order Status ', sort: true},
+    { dataField: 'orderStatus', text: 'Order Status ', sort: true},
+     { dataField: 'orderStatusId', text: 'orderStatusId ', sort: true},
     { dataField: 'description', text: 'Description', sort: true},
     { dataField: 'recordStatusId', text: 'recordStatusId', sort: true, hidden: true },
     { dataField: 'recordStatus', text: 'Status', sort: true},
@@ -227,10 +228,13 @@ export default function OrderTracking() {
         mode: 'success',
         message: 'OrderTracking Record Fetch Succefully.'
       })
+      debugger
       const dataFormatter = (rawData) => {
         const curedData = {};
+        curedData.orderTrackingId=rawData.orderTrackingId;
         curedData.orderId = rawData?.orderId;
-        curedData.orderStatusId = rawData?.orderStatus.orderStatusName;
+        curedData.orderStatus = rawData?.orderStatus.orderStatusName;
+        curedData.orderStatusId = rawData?.orderStatusId;
         curedData.description=rawData?.description;
         curedData.recordStatusId=rawData?.recordStatusId;
         curedData.recordStatus=rawData?.recordStatus.actionName;

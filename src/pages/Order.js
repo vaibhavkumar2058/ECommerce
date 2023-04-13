@@ -301,7 +301,7 @@ export default function Orders() {
         const curedData = {};
         curedData.orderId = rawData?.orderId;
         curedData.productId=rawData?.productId;
-        curedData.productName = rawData?.productName;
+        curedData.productName = rawData?.product?.productName;
         curedData.orderItemId = rawData?.orderItemId;
         curedData.description = rawData?.description; 
         curedData.quantity = rawData?.quantity;

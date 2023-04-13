@@ -190,6 +190,7 @@ export default function VehicleType() {
       })
       const dataFormatter = (rawData) => {
         const curedData = {};
+        curedData.vehicleTypeId=rawData.vehicleTypeId;
         curedData.vehicleTypeName=rawData?.vehicleTypeName;
         curedData.description=rawData?.description;
         curedData.recordStatusId=rawData?.recordStatusId;
