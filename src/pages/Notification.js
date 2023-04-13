@@ -78,10 +78,10 @@ export default function Notifications() {
   } = useFetchNotificationType();
   
   const columns = [
-
-    { dataField: 'notificationTypeId', text: 'NotificationTypeId', sort: true, hidden: true},
-    { dataField: 'notificationId', text: 'NotificationId', sort: true, hidden: true},
+    { dataField: 'notificationId', text: 'notificationId', sort: true, hidden: true},
     { dataField: 'notificationName', text: 'NotificationName', sort: true },
+    { dataField: 'notificationTypeId', text: 'notificationTypeId', sort: true, hidden: true},
+    { dataField: 'notificationTypeName', text: 'notificationTypeName', sort: true, hidden: true},
     { dataField: 'description', text: 'Description', sort: true },
     { dataField: 'recordStatusId', text: 'recordStatusId', sort: true, hidden: true},
     { dataField: 'recordStatus', text: 'Status', sort: true},
@@ -120,6 +120,7 @@ export default function Notifications() {
     getRecordStatusList();
     getNotificationTypeList();
     if (notifications.length == 0) {
+
       getAllNotifications();
       setLoading(false)
     }
@@ -218,14 +219,18 @@ export default function Notifications() {
   const getAllNotifications = async () => {
     const response = await getNotifications();
     if (response.payload.title == "Success") {
+  
       setMessageStatus({
         mode: 'success',
         message: 'Notifications Record Fetch Succefully.'
       })
       const dataFormatter = (rawData) => {
+        debugger
         const curedData = {};
         curedData.notificationId=rawData?.notificationId;
         curedData.notificationName=rawData?.notificationName;
+        curedData.notificationTypeId=rawData.notificationTypeId;
+        curedData.notificationTypeName=rawData.notificationType?.notificationTypeName
         curedData.description=rawData?.description;
         curedData.recordStatusId=rawData?.recordStatusId;
         curedData.recordStatus=rawData?.recordStatus.actionName;

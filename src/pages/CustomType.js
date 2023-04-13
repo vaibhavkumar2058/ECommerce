@@ -73,7 +73,7 @@ export default function CustomTypes() {
   const columns = [
 
     { dataField: 'customTypeId', text: 'customTypeId', sort: true, },
-    { dataField: 'customTypeName', text: 'CustomTypeName', sort: true, },
+    { dataField: 'customTypeName', text: 'Custom Type', sort: true, },
     { dataField: 'description', text: ' Description', sort: true },
     { dataField: 'recordStatusId', text: ' recordStatusId',hidden:true, sort: true },
     { dataField: 'recordStatus', text: ' Status', sort: true },

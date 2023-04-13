@@ -108,8 +108,8 @@ export default (props = {}) => {
             {(admin && <li className="nav-item active"><a href="resourceAttachments" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
                 </span><span className="sidebar-text">ResourceAttachments </span></span></a></li>)}
             {(admin && <li className="nav-item active"><a href="tax" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> </span><span className="sidebar-text">Tax</span></span></a></li>)}
-            {/* {((admin || agent || dealer || customer) && <li className="nav-item "><a href="orderPlacedList" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
-            </span><span className="sidebar-text">OrderPlacedList </span></span></a></li>)} */}
+            {((admin || agent || dealer || customer) && <li className="nav-item active"><a href="orderItem" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
+            </span><span className="sidebar-text">orderItem </span></span></a></li>)}
             {/* {(admin && <li className="nav-item active"><a href="GMT" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
              </span><span className="sidebar-text">GMT </span></span></a></li>)} */}
             <li className="nav-item active"><a href="enquiry" className="nav-link"><span className="sidebar-icon"><svg className="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">

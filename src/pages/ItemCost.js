@@ -108,18 +108,30 @@ export default function ItemCosts() {
 
   const columns = [
 
-    { dataField: 'itemCostId', text: 'ItemCost', sort: true, hidden: true},
+    { dataField: 'itemCostId', text: 'itemCostId', sort: true, hidden: true},
 
-    { dataField: 'productId', text: ' Product', sort: true ,headerStyle: () => {
+    { dataField: 'productId', text: ' productId', sort: true ,headerStyle: () => {
       return { width: "120px" };
     } },
-    { dataField: 'measurementTypeId', text: 'Measurement Type', sort: true ,headerStyle: () => {
+    { dataField: 'productName', text: ' Product', sort: true ,headerStyle: () => {
+      return { width: "120px" };
+    } },
+    { dataField: 'measurementTypeId', text: 'measurementTypeId', sort: true , hidden: true,headerStyle: () => {
       return { width: "200px" };
     } },
-    { dataField: 'measurementValueId', text: 'Measurement Value', sort: true,headerStyle: () => {
+    { dataField: 'measurementType', text: 'Measurement Type', sort: true ,headerStyle: () => {
+      return { width: "200px" };
+    } },
+    { dataField: 'measurementValueId', text: 'measurementValueId', sort: true, hidden: true,headerStyle: () => {
       return { width: "200px" };
     }  },
-    { dataField: 'customTypeId', text: 'Custom Type', sort: true,headerStyle: () => {
+     { dataField: 'measurementValue', text: 'Measurement Value', sort: true,headerStyle: () => {
+      return { width: "200px" };
+    }  },
+    { dataField: 'customTypeId', text: 'customTypeId', sort: true, hidden: true,headerStyle: () => {
+      return { width: "150px" };
+    }  },
+    { dataField: 'customType', text: 'Custom Type', sort: true,headerStyle: () => {
       return { width: "150px" };
     }  },
     { dataField: 'price', text: 'Price', sort: true,headerStyle: () => {
@@ -128,10 +140,16 @@ export default function ItemCosts() {
     { dataField: 'description', text: 'Description', sort: true,headerStyle: () => {
       return { width: "150px" };
     }  },
-    { dataField: 'categoryTypeId', text: ' Category Type', sort: true ,headerStyle: () => {
+    { dataField: 'categoryTypeName', text: 'Category Type', sort: true ,headerStyle: () => {
+      return { width: "150px" };
+    } },
+    { dataField: 'categoryTypeId', text: 'categoryTypeId', sort: true,hidden: true ,headerStyle: () => {
       return { width: "120px" };
     } },
-    { dataField: 'recordStatusId', text: 'Status', sort: true , hidden: true,headerStyle: () => {
+    { dataField: 'recordStatusId', text: 'recordStatusId', sort: true, hidden: true ,headerStyle: () => {
+      return { width: "180px" };
+    } },
+    { dataField: 'recordStatus', text: 'Status', sort: true ,headerStyle: () => {
       return { width: "180px" };
     } },
     // columns follow dataField and text structure
@@ -344,13 +362,21 @@ export default function ItemCosts() {
       })
       const dataFormatter = (rawData) => {
         const curedData = {};
-        curedData.productId=rawData?.product.productName;
-        curedData.measurementTypeId=rawData?.measurementType.name;
-        curedData.measurementValueId=rawData?.measurementValue.value;
-        curedData.customTypeId=rawData?.customType.customTypeName;
+        curedData.itemCostId=rawData.itemCostId;
+        curedData.productName=rawData?.product.productName; 
+        curedData.productId=rawData?.productId;
+        curedData.measurementTypeId=rawData?.measurementTypeId;
+        curedData.measurementType=rawData?.measurementType.name;
+        curedData.measurementValueId=rawData?.measurementValueId;
+        curedData.measurementValue=rawData?.measurementValue.value;
+        curedData.customType=rawData?.customType.customTypeName;
+         curedData.customTypeId=rawData?.customTypeId;
+         curedData.categoryTypeId=rawData?.product?.categoryTypeId;
+         curedData.categoryTypeName=rawData?.product?.categoryType.categoryTypeName;
         curedData.description=rawData?.description;
         curedData.price=rawData?.price;
-  
+        curedData.recordStatusId=rawData?.recordStatusId;
+        curedData.recordStatus=rawData?.recordStatus.actionName;
         return curedData;
       }
 

@@ -229,11 +229,11 @@ export default function OrderItems() {
         curedData.orderItemId=rawData?.orderItemId;
         curedData.productId=rawData?.productId;
         curedData.productName=rawData?.product.productName;
-        // curedData.orderId=rawData?.orderId;
-        // curedData.cost=rawData?.cost;
-        // curedData.quantity=rawData?.quantity;
-        // curedData.recordStatusId=rawData?.recordStatusId;
-        // curedData.recordStatus=rawData?.recordStatus.actionName;
+         curedData.orderId=rawData?.orderId;
+         curedData.cost=rawData?.cost;
+        curedData.quantity=rawData?.quantity;
+        curedData.recordStatusId=rawData?.recordStatusId;
+        curedData.recordStatus=rawData?.recordStatus.actionName;
         return curedData;
       }
 
