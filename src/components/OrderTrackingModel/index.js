@@ -52,7 +52,7 @@ export default function OrderTrackingModel({
     text: orderStatus.orderStatusName,
     value: orderStatus.orderStatusId,
   })).filter((item) => item));
-  const [fileSelected, setFileSelected] = useState();
+  
 
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
@@ -87,7 +87,7 @@ export default function OrderTrackingModel({
   
 
   const saveHandler = async () => {
-    newOrderTracking.file = fileSelected;
+
     if (isEdit) {
       const response = await onUpdateOrderTracking(id, newOrderTracking);
       if (response.payload.title == "Success") {
