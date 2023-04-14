@@ -116,7 +116,7 @@ export default function NotificationModel({
   };
 
   const dropdownHandler = (event,{name,value}) => {
-    setNewNotification((currentNotification) => ({...currentNotification, event,[name]: value}));
+    setNewNotification((currentNotification) => ({...currentNotification,[name]: value}));
     
     
   }
@@ -187,7 +187,7 @@ export default function NotificationModel({
             
           </Form.Group>
           <Form.Group className="mb-3" controlId="notificationType">
-            <Form.Label>NotificationType<span className="required">*</span></Form.Label>
+            <Form.Label>Notification Type<span className="required">*</span></Form.Label>
             <Dropdown
               name="notificationTypeId"
               placeholder='Select notificationType'
@@ -202,7 +202,7 @@ export default function NotificationModel({
           </div>
           <div className="col-md-6">
           <Form.Group>
-            <Form.Label>NotificationName<span className="required">*</span></Form.Label>
+            <Form.Label>Notification Name<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="notificationName"
