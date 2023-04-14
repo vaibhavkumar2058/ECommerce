@@ -98,15 +98,15 @@ export default function Orders() {
   } = useFetchMeasurementValue();
 
   const columns = [ 
-    { dataField: 'orderItemId', text: ' OrderItemId', sort: true, hidden:true},
-    { dataField: 'orderId', text: 'Order Id', sort: true ,hidden:true}, 
-    { dataField: 'productId', text: 'productId', sort: true ,hidden:true},    
+    { dataField: 'orderItemId', text: ' OrderItemId', sort: true ,},
+    { dataField: 'orderId', text: 'Order Id', sort: true ,}, 
+    { dataField: 'productId', text: 'productId', sort: true ,hidden:true,},    
    { dataField: 'productName', text: 'product', sort: true},
     { dataField: 'quantity', text: 'quantity', sort: true},    
     { dataField: 'cost', text: ' cost', sort: true },
     { dataField: 'description', text: 'Description', sort: true },
     { dataField: 'orderDate', text: 'OrderDate', sort: true },
-    { dataField: 'recordStatusId', text: 'recordStatusId', sort: true ,hidden:true},
+    { dataField: 'recordStatusId', text: 'recordStatusId', sort: true ,hidden:true,},
     { dataField: 'recordStatus', text: 'Status', sort: true },
   
 
@@ -300,15 +300,15 @@ export default function Orders() {
       const dataFormatter = (rawData) => {
         const curedData = {};
         curedData.orderId = rawData?.orderId;
-        curedData.productId=rawData?.productId;
-        curedData.productName = rawData?.product?.productName;
         curedData.orderItemId = rawData?.orderItemId;
-        curedData.description = rawData?.description; 
-        curedData.quantity = rawData?.quantity;
-        curedData.cost = rawData?.cost;
-        curedData.recordStatusId = rawData?.recordStatusId;
-        curedData.recordStatus = rawData?.recordStatus.actionName;
-        curedData.orderDate = rawData?.createdDate;
+         curedData.productId=rawData?.productId;
+         curedData.productName = rawData?.product?.productName;
+         curedData.description = rawData?.description; 
+         curedData.quantity = rawData?.quantity;
+         curedData.cost = rawData?.cost;
+         curedData.recordStatusId = rawData?.recordStatusId;
+         curedData.recordStatus = rawData?.recordStatus.actionName;
+        // curedData.orderDate = rawData?.createdDate;
 
         return curedData;
       }
