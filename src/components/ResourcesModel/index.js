@@ -234,7 +234,7 @@ getBase64(e.target.files[0], (result) => {
         <div className="">
           <Form>
             <div className="row">
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <Form.Group
                   className={styles.stFormContainer}
                   controlId="formResources">
@@ -248,7 +248,7 @@ getBase64(e.target.files[0], (result) => {
                   />
                 </Form.Group>
               </div>
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <Form.Group className="mb-3" controlId="middleName">
                   <Form.Label>MiddleName</Form.Label>
                   <Form.Control
@@ -262,7 +262,7 @@ getBase64(e.target.files[0], (result) => {
               </div>
          
            
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <Form.Group className="mb-3" controlId="lastName">
                   <Form.Label>LastName</Form.Label>
                   <Form.Control
@@ -274,10 +274,7 @@ getBase64(e.target.files[0], (result) => {
                   />
                 </Form.Group>
               </div>
-              </div>
-              
-            <div className="row">
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <Form.Group className="mb-3" controlId="roleId">
                   <Form.Label>Role</Form.Label>
                   <Dropdown
@@ -292,7 +289,12 @@ getBase64(e.target.files[0], (result) => {
                   />
                 </Form.Group>
               </div>
-              <div className="col-md-4">
+              
+              </div>
+              
+            <div className="row">
+              
+              <div className="col-md-3">
                 <Form.Group className="mb-3" controlId="genderId">
                   <Form.Label>Gender</Form.Label>
                   <Dropdown
@@ -308,7 +310,7 @@ getBase64(e.target.files[0], (result) => {
                 </Form.Group>
               </div>
            
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <Form.Group className="mb-3" controlId="mobileNumber">
                   <Form.Label>MobileNumber</Form.Label>
                   <Form.Control
@@ -320,9 +322,7 @@ getBase64(e.target.files[0], (result) => {
                   />
                 </Form.Group>
               </div>
-              </div>
-            <div className="row">
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <Form.Group className="mb-3" controlId="email">
                   <Form.Label>Email</Form.Label>
                   <Form.Control
@@ -335,7 +335,7 @@ getBase64(e.target.files[0], (result) => {
                 </Form.Group>
               </div>
            
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <Form.Group className="mb-3" controlId="password">
                   <Form.Label>Password</Form.Label>
                   <Form.Control
@@ -347,7 +347,22 @@ getBase64(e.target.files[0], (result) => {
                   />
                 </Form.Group>
               </div>
-              <div className="col-md-4">
+              </div>
+            <div className="row">
+            <div className="col-md-3">
+                <Form.Group>
+                  <Form.Label>Resources Image</Form.Label>
+                </Form.Group>
+                <Form.Group>
+                  <input type="file" onChange={saveFileSelected} 
+                   encType="multipart/form-data" 
+                  />
+                  <img className="product-view" src={newResources?.resourcesImage}>
+                </img>
+                
+                </Form.Group>
+              </div>
+              <div className="col-md-3">
                 <Form.Group className="mb-3" controlId="recordStatusId">
                   <Form.Label>Status</Form.Label>
                   <Dropdown
@@ -363,21 +378,9 @@ getBase64(e.target.files[0], (result) => {
                 </Form.Group>
               </div>
             </div>
-            <div className="row">
-              <div className="col-md-6">
-                <Form.Group>
-                  <Form.Label>Resources Image</Form.Label>
-                </Form.Group>
-                <Form.Group>
-                  <input type="file" onChange={saveFileSelected} 
-                   encType="multipart/form-data" 
-                  />
-                  <img className="product-view" src={newResources?.resourcesImage}>
-                </img>
-                
-                </Form.Group>
-              </div>
-            </div>
+            
+              
+      
             {/* <div className="row">
               <div className="col-md-6"> */}
                 <Modal.Footer>
