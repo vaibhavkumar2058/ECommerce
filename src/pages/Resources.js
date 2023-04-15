@@ -30,8 +30,8 @@ const MyExportCSV = (props) => {
 export default function Resourcess() {
   const [recordStatusList, setRecordStatusList] = useState([]);
   const [resourcess, setResourcess] = useState([]);
-  const[ roleList, setRolesList]=useState([]);
-  const[genderList,setGendersList]=useState([]);
+  const [roleList, setRolesList] = useState([]);
+  const [genderList, setGendersList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -53,18 +53,17 @@ export default function Resourcess() {
     firstName: "",
     middleName: "",
     lastName: "",
-    roleId:null,
-    genderId:null,
-    mobileNumber:null,
-    addressId:null,
+    roleId: null,
+    genderId: null,
+    mobileNumber: null,
     bloodGroup: "",
     email: "",
     password: "",
     isEmailVerified: true,
     isMobileVerified: true,
-    recordStatusId:null,
-    resourcesAttachmentType:3,
-    filesId:null,
+    recordStatusId: null,
+    resourcesAttachmentType: 3,
+    filesId: null,
   });
 
   const [id, setId] = useState(null);
@@ -90,10 +89,10 @@ export default function Resourcess() {
   const {
     getGenders,
   } = useFetchGender();
-  const { 
+  const {
     getRecordStatuss,
   } = useFetchRecordStatus();
-  
+
   const columns = [
 
     { dataField: 'resourcesId', text: 'resourcesId', sort: true, hidden: true },
@@ -104,7 +103,7 @@ export default function Resourcess() {
         return { width: "60px" };
       },
       formatter: (cellContent, row) => {
-        
+
         return (
           <>
             <img className="resources-image" src={row.resourcesImage}>
@@ -113,12 +112,16 @@ export default function Resourcess() {
         );
       },
     },
-    { dataField: 'resourceName', text: 'Name', sort: true , headerStyle: () => {
-      return { width: "120px" };
-    }},
-    { dataField: 'mobileNumber', text: 'Contact', sort: true , headerStyle: () => {
-      return { width: "80px  " };
-    }},
+    {
+      dataField: 'resourceName', text: 'Name', sort: true, headerStyle: () => {
+        return { width: "120px" };
+      }
+    },
+    {
+      dataField: 'mobileNumber', text: 'Contact', sort: true, headerStyle: () => {
+        return { width: "80px  " };
+      }
+    },
     // { dataField: 'email', text: 'Email', sort: true, headerStyle: () => {
     //   return { width: "150px" };
     // } },
@@ -229,7 +232,7 @@ export default function Resourcess() {
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+          arr.push(response.payload[key]);
       }
       setRecordStatusList(arr);
     }
@@ -247,7 +250,7 @@ export default function Resourcess() {
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+          arr.push(response.payload[key]);
       }
       setGendersList(arr);
     }
@@ -266,7 +269,7 @@ export default function Resourcess() {
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+          arr.push(response.payload[key]);
       }
       setRolesList(arr);
     }
@@ -286,36 +289,36 @@ export default function Resourcess() {
         mode: 'success',
         message: 'Resources Record Fetch Succefully.'
       })
-    const dataFormatter = (rawData) => {
+      const dataFormatter = (rawData) => {
         const curedData = {};
         curedData.resourcesId = rawData?.resourcesId;
         curedData.firstName = rawData?.firstName;
         curedData.middleName = rawData?.middleName;
         curedData.lastName = rawData?.lastName;
-        curedData.resourceName= rawData?.firstName + rawData?.middleName + rawData?.lastName;
+        curedData.resourceName = rawData?.firstName + rawData?.middleName + rawData?.lastName;
         curedData.bloodGroup = rawData?.bloodGroup;
         curedData.roleId = rawData?.role?.roleId;
         curedData.genderId = rawData?.gender?.genderId;
-        curedData.mobileNumber=rawData?.mobileNumber;
+        curedData.mobileNumber = rawData?.mobileNumber;
         curedData.resourceAttachmentTypeId = rawData?.resourceAttachment?.resourceAttachmentTypeId ?? 1003;
         curedData.countryId = rawData?.address?.country.countryId;
-        curedData.stateId=rawData?.address?.state.stateId;
-        curedData.addressTypeId=rawData?.address?.addressTypeId;
-        curedData.email=rawData?.email;
-        curedData.password=rawData?.password;
-        curedData.isEmailVerified=rawData?.isEmailVerified;
-        curedData.isMobileVerified=rawData?.isMobileVerified;
+        curedData.stateId = rawData?.address?.state.stateId;
+        curedData.addressTypeId = rawData?.address?.addressTypeId;
+        curedData.email = rawData?.email;
+        curedData.password = rawData?.password;
+        curedData.isEmailVerified = rawData?.isEmailVerified;
+        curedData.isMobileVerified = rawData?.isMobileVerified;
         curedData.recordStatusId = rawData?.recordStatusId;
-        curedData.filesId=rawData?.resourceAttachment?.files?.filesId ?? 0;
-        if(rawData?.resourceAttachment)
-        curedData.resourcesImage = 'data:'+ rawData?.resourceAttachment?.files?.fileMimeType +';base64,'+ rawData?.resourceAttachment?.files?.base64;
+        curedData.filesId = rawData?.resourceAttachment?.files?.filesId ?? 0;
+        if (rawData?.resourceAttachment)
+          curedData.resourcesImage = 'data:' + rawData?.resourceAttachment?.files?.fileMimeType + ';base64,' + rawData?.resourceAttachment?.files?.base64;
         return curedData;
       }
 
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(dataFormatter(response.payload[key]));
+          arr.push(dataFormatter(response.payload[key]));
       }
 
       setResourcess(arr);
@@ -409,7 +412,7 @@ export default function Resourcess() {
         </div>)}
         {/* <!--- Model Box ---> */}
         <div>
-          <Modal dialogClassName="my-modal" 
+          <Modal dialogClassName="my-modal"
             show={show}
             onHide={handleClose}
             backdrop="static"
@@ -432,17 +435,17 @@ export default function Resourcess() {
                 roleList={roleList}
                 genderList={genderList}
                 recordStatusList={recordStatusList}
-                
+
               />
             </Modal.Body>
 
           </Modal>
           {/* Model Box Finsihs */}
         </div>
-        
-                {/* <!--- Model Box ---> */}
-                <div>
-          <Modal dialogClassName="my-modal" 
+
+        {/* <!--- Model Box ---> */}
+        <div>
+          <Modal dialogClassName="my-modal"
             show={showMap}
             onHide={handleClose}
             backdrop="static"
@@ -452,7 +455,7 @@ export default function Resourcess() {
               <Modal.Title>Track Location</Modal.Title>
             </Modal.Header>
             <Modal.Body className="rm-p" >
-            <Enquiry></Enquiry>
+              <Enquiry></Enquiry>
             </Modal.Body>
 
           </Modal>
