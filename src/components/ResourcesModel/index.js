@@ -35,8 +35,7 @@ export default function ResourcesModel({
     isEmailVerified: true,
     isMobileVerified: true,
     recordStatusId: 1,
-    addressId:null,
-    attachment: null,
+   attachment: null,
     resourcesAttachmentTypeId: 1003,
     resourcesImage:"",
   });

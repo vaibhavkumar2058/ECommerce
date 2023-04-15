@@ -30,10 +30,10 @@ const MyExportCSV = (props) => {
 
 export default function Orders() {
   const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
-  const admin=userInfo?.role?.admin;
-  const agent=userInfo?.role?.agent;
-  const dealer=userInfo?.role?.dealer;
-  const customer=userInfo?.role?.customer;
+  const admin = userInfo?.role?.admin;
+  const agent = userInfo?.role?.agent;
+  const dealer = userInfo?.role?.dealer;
+  const customer = userInfo?.role?.customer;
 
 
   const [recordStatusList, setRecordStatusList] = useState([]);
@@ -57,12 +57,12 @@ export default function Orders() {
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [order, setOrder] = useState({
-    orderItemId:null,
-    resourcesId:null,
-    orderDate:null,
-    recordStatusId:null,
-    description:"",
-      });
+    orderItemId: null,
+    resourcesId: null,
+    orderDate: null,
+    recordStatusId: null,
+    description: "",
+  });
 
   const [id, setId] = useState(null);
 
@@ -73,7 +73,7 @@ export default function Orders() {
     message: "",
   });
 
-  const { 
+  const {
     addOrder,
     updateOrder,
     deleteOrder,
@@ -81,34 +81,38 @@ export default function Orders() {
     orderById,
     placeOrder,
   } = useFetchOrder();
-  const { 
+  const {
     getRecordStatuss,
   } = useFetchRecordStatus();
-  const { 
+  const {
     getCategoryTypes,
   } = useFetchCategoryType();
-  const { 
+  const {
     getProducts,
   } = useFetchProduct();
-  const { 
+  const {
     getMeasurementTypes,
   } = useFetchMeasurementType();
-  const { 
+  const {
     getMeasurementValues,
   } = useFetchMeasurementValue();
 
-  const columns = [ 
-    { dataField: 'orderItemId', text: ' OrderItemId', sort: true ,},
-    { dataField: 'orderId', text: 'Order Id', sort: true ,}, 
-    { dataField: 'productId', text: 'productId', sort: true ,hidden:true,},    
-   { dataField: 'productName', text: 'product', sort: true},
-    { dataField: 'quantity', text: 'quantity', sort: true},    
-    { dataField: 'cost', text: ' cost', sort: true },
+  const columns = [
+    { dataField: 'orderItemId', text: ' OrderItemId', sort: true, hidden: true, },
+    { dataField: 'orderId', text: 'Order Id', sort: true, },
+    { dataField: 'productId', text: 'productId', sort: true, hidden: true, },
+    { dataField: 'productName', text: 'product', sort: true ,hidden: true, },
+    { dataField: 'quantity', text: 'quantity', sort: true , hidden: true,},
+    { dataField: 'cost', text: ' cost', sort: true, hidden: true, },
     { dataField: 'description', text: 'Description', sort: true },
-    { dataField: 'orderDate', text: 'OrderDate', sort: true },
-    { dataField: 'recordStatusId', text: 'recordStatusId', sort: true ,hidden:true,},
+    { dataField: 'orderDate', text: 'Order Date', sort: true ,headerStyle: () => {
+      return { width: "250px" };
+    }},
+    { dataField: 'orderStatusId', text: 'orderStatusId', sort: true, hidden: true, },
+    { dataField: 'orderStatusName', text: 'OrderStatus', sort: true },
+    { dataField: 'recordStatusId', text: 'recordStatusId', sort: true, hidden: true, },
     { dataField: 'recordStatus', text: 'Status', sort: true },
-  
+
 
 
     // columns follow dataField and text structure
@@ -129,7 +133,7 @@ export default function Orders() {
             >
               Edit
             </button>
-            { admin && <button
+            {admin && <button
               className="btn btn-danger btn-xs"
               onClick={() => handleDelete(row.orderId, row.name)}
             >
@@ -204,7 +208,7 @@ export default function Orders() {
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+          arr.push(response.payload[key]);
       }
       setRecordStatusList(arr);
     }
@@ -222,7 +226,7 @@ export default function Orders() {
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+          arr.push(response.payload[key]);
       }
       setcategoryTypeList(arr);
     }
@@ -240,7 +244,7 @@ export default function Orders() {
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+          arr.push(response.payload[key]);
       }
       setproductList(arr);
     }
@@ -258,7 +262,7 @@ export default function Orders() {
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+          arr.push(response.payload[key]);
       }
       setmeasurementTypeList(arr);
     }
@@ -276,7 +280,7 @@ export default function Orders() {
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+          arr.push(response.payload[key]);
       }
       setmeasurementValueList(arr);
     }
@@ -296,18 +300,21 @@ export default function Orders() {
         mode: 'success',
         message: 'Orders Record Fetch Succefully.'
       })
-      
+
       const dataFormatter = (rawData) => {
         const curedData = {};
         curedData.orderId = rawData?.orderId;
         curedData.orderItemId = rawData?.orderItemId;
-         curedData.productId=rawData?.productId;
-         curedData.productName = rawData?.product?.productName;
-         curedData.description = rawData?.description; 
-         curedData.quantity = rawData?.quantity;
-         curedData.cost = rawData?.cost;
-         curedData.recordStatusId = rawData?.recordStatusId;
-         curedData.recordStatus = rawData?.recordStatus.actionName;
+        curedData.orderDate = rawData?.orderDate;
+        curedData.orderStatusId = rawData?.orderStatusId;
+        curedData.orderStatusName = rawData?.orderStatus?.orderStatusName;
+        curedData.productId = rawData?.productId;
+        curedData.productName = rawData?.product?.productName;
+        curedData.description = rawData?.description;
+        curedData.quantity = rawData?.quantity;
+        curedData.cost = rawData?.cost;
+        curedData.recordStatusId = rawData?.recordStatusId;
+        curedData.recordStatus = rawData?.recordStatus.actionName;
         // curedData.orderDate = rawData?.createdDate;
 
         return curedData;
@@ -316,7 +323,7 @@ export default function Orders() {
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(dataFormatter(response.payload[key]));
+          arr.push(dataFormatter(response.payload[key]));
       }
 
       setOrders(arr);
@@ -383,11 +390,11 @@ export default function Orders() {
                       <div className="row">
                         <div className="app-right col-lg-12">
                           <div className="app-float-right p-1">
-                          <MyExportCSV {...props.csvProps} /></div>
+                            <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
-                          <Button variant="primary" onClick={handleShow}>
-                            Add Order
-                          </Button>
+                            <Button variant="primary" onClick={handleShow}>
+                              Add Order
+                            </Button>
                           </div>
                         </div>
                       </div>
