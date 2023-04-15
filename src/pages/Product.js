@@ -108,14 +108,24 @@ export default function Products() {
       },
     },
     {
-      dataField: 'productName',headerStyle: () => {
+      dataField: 'categoryType',headerStyle: () => {
         return { width: "100px" };
       }, text: ' Category', sort: true
     },
     {
-      dataField: 'RecordStatus',headerStyle: () => {
+      dataField: 'categoryTypeId',headerStyle: () => {
+        return { width: "100px" };
+      }, text: ' categoryTypeId', sort: true,hidden:true,
+    },
+    {
+      dataField: 'recordStatus',headerStyle: () => {
         return { width: "100px" };
       }, text: ' Status', sort: true
+    },
+    {
+      dataField: 'recordStatusId',headerStyle: () => {
+        return { width: "100px" };
+      }, text: ' recordStatusId', sort: true,hidden:true,
     },
     
     {
@@ -266,11 +276,13 @@ export default function Products() {
         curedData.productId = rawData?.productId;
         curedData.productName = rawData?.productName;
         curedData.description = rawData?.description;
-        curedData.categoryTypeId = rawData?.categoryType?.categoryTypeId;
+        curedData.categoryTypeId = rawData?.categoryTypeId;
+        curedData.categoryType = rawData?.categoryType?.categoryTypeName;
         curedData.fileName = rawData?.productAttachments?.files?.fileName;
         curedData.productImage = 'data:'+ rawData?.productAttachments?.files.fileMimeType +';base64,'+ rawData?.productAttachments?.files?.base64;
         curedData.filesId = rawData?.productAttachments?.files?.filesId ? rawData?.productAttachments?.files?.filesId : 0;
         curedData.recordStatusId = rawData?.recordStatusId;
+        curedData.recordStatus = rawData?.recordStatus?.actionName;
         return curedData;
       }
 
