@@ -192,7 +192,7 @@ export default function ProductModel({
       )}
       {!isDelete && (
         <Form>
-          <div calss="row">
+          <div calss="col-md-12">
             <div className="col-md-8">
               <div className="row">
                 <div className="col-md-6">

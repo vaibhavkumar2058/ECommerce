@@ -70,7 +70,7 @@ span.content {
 }
 
 span.content a.contact-info {
-  color: #767cad;
+  color: #344e90;
   font-size: 14px;
   font-weight: 600;
   line-height: 20px;
@@ -122,6 +122,44 @@ span.content a.contact-info {
 .m-center {
   text-align: center;
   padding: 10px;
+}
+
+.msapp
+{
+  font-size: 22px;
+}
+
+.w-p-100
+{
+  width: 100% ;
+}
+
+.drop-menu
+{
+  margin-left: -168px!important;
+}
+
+.test
+{
+  height: 320px;
+  overflow-y: scroll;
+}
+
+.brdr
+{
+  border-style: groove;
+}
+
+.pro-sales
+{
+  background-color: #344e90;
+    padding: 10px 0px;
+    color: white;
+    font-size: x-large;
+    font-weight: bolder;
+    text-align: center;
+    /* border-radius: 5px; */
+    margin-bottom:10px;
 }
 
 .product-view {

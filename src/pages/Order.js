@@ -99,7 +99,8 @@ export default function Orders() {
 
   const columns = [
     { dataField: 'orderItemId', text: ' OrderItemId', sort: true, hidden: true, },
-    { dataField: 'orderId', text: 'Order Id', sort: true, },
+    { dataField: 'orderId', text: 'Order Id', sort: true,hidden: true, },
+    { dataField: 'orderName', text: 'Order', sort: true},
     { dataField: 'productId', text: 'productId', sort: true, hidden: true, },
     { dataField: 'productName', text: 'product', sort: true ,hidden: true, },
     { dataField: 'quantity', text: 'quantity', sort: true , hidden: true,},
@@ -108,10 +109,10 @@ export default function Orders() {
     { dataField: 'orderDate', text: 'Order Date', sort: true ,headerStyle: () => {
       return { width: "250px" };
     }},
-    { dataField: 'orderStatusId', text: 'orderStatusId', sort: true, hidden: true, },
+    { dataField: 'orderStatusId', text: 'orderStatusId', sort: true, hidden: true },
     { dataField: 'orderStatusName', text: 'OrderStatus', sort: true },
-    { dataField: 'recordStatusId', text: 'recordStatusId', sort: true, hidden: true, },
-    { dataField: 'recordStatus', text: 'Status', sort: true },
+    { dataField: 'recordStatusId', text: 'recordStatusId', sort: true, hidden: true },
+    { dataField: 'recordStatus', text: 'Status', sort: true, hidden: true },
 
 
 
@@ -304,6 +305,7 @@ export default function Orders() {
       const dataFormatter = (rawData) => {
         const curedData = {};
         curedData.orderId = rawData?.orderId;
+        curedData.orderName = 'MSO-' + rawData?.orderId;
         curedData.orderItemId = rawData?.orderItemId;
         curedData.orderDate = rawData?.orderDate;
         curedData.orderStatusId = rawData?.orderStatusId;

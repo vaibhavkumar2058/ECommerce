@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SimpleBar from 'simplebar-react';
 import { CSSTransition } from 'react-transition-group';
 import { Nav, Badge, Image, Button, Dropdown, Accordion, Navbar } from 'react-bootstrap';
@@ -30,12 +30,12 @@ export default (props = {}) => {
     getNotificationListByResourcesId,
   } = useFetchNotifications();
 
-  // useEffect(() => {
-  //   if (notifications.length == 0) {
-  //     getNotificationsByResourcesId(6);
+  useEffect(() => {
+    if (notifications.length == 0) {
+      getNotificationsByResourcesId(6);
 
-  //   }
-  // }, [notifications]);
+    }
+  }, [notifications]);
 
   const getNotificationsByResourcesId = async (id) => {
     const response = await getNotificationListByResourcesId(id);
@@ -78,10 +78,12 @@ export default (props = {}) => {
   };
 
     return (
-      <nav className="navbar navbar-top navbar-expand navbar-dashboard navbar-dark ps-0 pe-2 pb-0">
+      <nav className="navbar navbar-top navbar-expand navbar-dashboard navbar-dark ps-0 pe-2">
       <div className="container-fluid px-0">
         <div className="d-flex justify-content-between w-100" id="navbarSupportedContent">
-          <div className="d-flex align-items-center"><button id="sidebar-toggle" className="sidebar-toggle me-3 btn btn-icon-only d-none d-lg-inline-block align-items-center justify-content-center"></button>
+          <div className="d-flex align-items-center">         
+          <img src="https://hives.blob.core.windows.net/qcimages/trademark/8339765/imageshrine/ae9c217163adacd1b7a7e34544f279d0.jpg" height="80" width="200" alt="Manthra Soaps"></img>
+          
           </div>
           <ul className="navbar-nav align-items-center">
           <li className="nav-item dropdown"><a href="notifications" >

@@ -115,17 +115,17 @@ export default function Products() {
     {
       dataField: 'categoryTypeId',headerStyle: () => {
         return { width: "100px" };
-      }, text: ' categoryTypeId', sort: true,hidden:true,
+      }, text: ' categoryTypeId', sort: true, hidden:true,
     },
     {
       dataField: 'recordStatus',headerStyle: () => {
         return { width: "100px" };
-      }, text: ' Status', sort: true
+      }, text: ' Status', sort: true, hidden:true,
     },
     {
       dataField: 'recordStatusId',headerStyle: () => {
         return { width: "100px" };
-      }, text: ' recordStatusId', sort: true,hidden:true,
+      }, text: ' recordStatusId', sort: true, hidden:true,
     },
     
     {

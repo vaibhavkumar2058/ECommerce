@@ -89,12 +89,13 @@ export default function OrderTracking() {
 
   const columns = [
     { dataField: 'orderTrackingId', text: 'Order Tracking ', sort: true, hidden: true },
-    { dataField: 'orderId', text: 'Order', sort: true,hidden: true },
+    { dataField: 'orderName', text: 'Order', sort: true},
+    { dataField: 'orderId', text: 'Order', sort: true, hidden: true},
     { dataField: 'orderStatus', text: 'Order Status ', sort: true},
-     { dataField: 'orderStatusId', text: 'orderStatusId ', sort: true},
+     { dataField: 'orderStatusId', text: 'orderStatusId ', sort: true,hidden: true },
     { dataField: 'description', text: 'Description', sort: true},
     { dataField: 'recordStatusId', text: 'recordStatusId', sort: true, hidden: true },
-    { dataField: 'recordStatus', text: 'Status', sort: true},
+    { dataField: 'recordStatus', text: 'Status', sort: true,hidden: true },
 
     // columns follow dataField and text structure
     {
@@ -232,6 +233,7 @@ export default function OrderTracking() {
       const dataFormatter = (rawData) => {
         const curedData = {};
         curedData.orderTrackingId=rawData.orderTrackingId;
+        curedData.orderName = 'MSO-' + rawData?.orderId;
         curedData.orderId = rawData?.orderId;
         curedData.orderStatus = rawData?.orderStatus.orderStatusName;
         curedData.orderStatusId = rawData?.orderStatusId;

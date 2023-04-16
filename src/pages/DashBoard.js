@@ -159,6 +159,9 @@ export default function Dashboard() {
         <>
             <div className="row">
                 <div className="col-md-6">
+                    <div className="col-md-12 pro-sales">
+                        <span>Product Sales</span>
+                    </div>
                     <PieChart width={500} height={320}>
                         <Pie
                             data={productSales}
@@ -184,7 +187,10 @@ export default function Dashboard() {
                     </PieChart>
                 </div>
                 <div className="col-md-6">
-                     <LineChart width={500} height={300} data={productOrders}>
+                    <div className="col-md-12 pro-sales">
+                        <span>Product Orders</span>
+                    </div>
+                    <LineChart width={500} height={300} data={productOrders}>
                         <Line type="monotone" dataKey="orderCount" stroke="#8884d8"
                             strokeWidth={4} activeDot={{ r: 8 }} />
                         <Line type="monotone" dataKey="orderDate" stroke="orange"
@@ -199,9 +205,15 @@ export default function Dashboard() {
             </div>
             <div className="row">
                 <div className="col-md-6">
+                    <div className="col-md-12 pro-sales">
+                        <span>Products </span>
+                    </div>
                     <Product></Product>
                 </div>
                 <div className="col-md-6">
+                <div className="col-md-12 pro-sales">
+                        <span>Users </span>
+                    </div>
                     <Resources></Resources>
                 </div>
             </div>
