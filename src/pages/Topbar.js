@@ -32,7 +32,7 @@ export default (props = {}) => {
 
   useEffect(() => {
     if (notifications.length == 0) {
-      getNotificationsByResourcesId(6);
+      getNotificationsByResourcesId(12);
 
     }
   }, [notifications]);

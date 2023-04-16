@@ -77,6 +77,11 @@ span.content a.contact-info {
   letter-spacing: 0;
 }
 
+.content
+{
+  background-color: lightblue;
+}
+
 .required {
   color: red;
   font-size: 14px;
