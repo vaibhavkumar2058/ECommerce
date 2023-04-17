@@ -191,10 +191,26 @@ export default function ProductModel({
         </>
       )}
       {!isDelete && (
+        
         <Form>
           <div calss="col-md-12">
             <div className="col-md-8">
               <div className="row">
+              <div className="col-md-6">
+                  <Form.Group className="mb-3" controlId="categoryType">
+                    <Form.Label>Category Type<span className="required">*</span></Form.Label>
+                    <Dropdown
+                      name="categoryTypeId"
+                      placeholder='Select Category Type'
+                      fluid
+                      search
+                      selection
+                      options={categoryOptions}
+                      value={newProduct?.categoryTypeId}
+                      onChange={dropdownHandler}
+                    />
+                  </Form.Group>
+                </div>
                 <div className="col-md-6">
                   <Form.Group
                     className={styles.stFormContainer}
@@ -207,22 +223,6 @@ export default function ProductModel({
                       placeholder="Product Name"
                       value={newProduct?.productName}
                       onChange={changeHandler}
-                    />
-                  </Form.Group>
-                </div>
-
-                <div className="col-md-6">
-                  <Form.Group className="mb-3" controlId="categoryType">
-                    <Form.Label>Category Type<span className="required">*</span></Form.Label>
-                    <Dropdown
-                      name="categoryTypeId"
-                      placeholder='Select Category Type'
-                      fluid
-                      search
-                      selection
-                      options={categoryOptions}
-                      value={newProduct?.categoryTypeId}
-                      onChange={dropdownHandler}
                     />
                   </Form.Group>
                 </div>

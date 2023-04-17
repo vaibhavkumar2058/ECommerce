@@ -160,11 +160,11 @@ export default function CategorytypeModel({
             className={styles.stFormContainer}
             controlId="formCategoryType"
           >
-            <Form.Label>Category Type Name<span className="required">*</span></Form.Label>
+            <Form.Label>Category Type<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="categoryTypeName"
-              placeholder="Enter CategoryType"
+              placeholder="Category Type"
               value={newCategoryType?.categoryTypeName}
               onChange={changeHandler}
             />

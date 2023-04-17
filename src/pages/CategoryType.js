@@ -305,7 +305,7 @@ export default function CategoryTypes() {
                         keyboard={false}
                     >
                         <Modal.Header closeButton>
-                            <Modal.Title>Add CategoryType</Modal.Title>
+                            <Modal.Title>Add Category Type</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                             <CategorytypeModel
