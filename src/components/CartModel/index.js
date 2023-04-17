@@ -208,7 +208,7 @@ export default function CartModel({
                 <Form.Control
                   type="resourceId"
                   name="resourcesId"
-                  placeholder=" Select Resources"
+                  placeholder="Resources"
                   value={newCart?.resourcesId}
                   onChange={changeHandler}
                 />
@@ -237,7 +237,7 @@ export default function CartModel({
                 <Form.Control
                   type="cost"
                   name="cost"
-                  placeholder=" Select Cost"
+                  placeholder="Cost"
                   value={newCart?.cost}
                   onChange={changeHandler}
                 />
@@ -249,7 +249,7 @@ export default function CartModel({
                 <Form.Control
                   type="quantity"
                   name="quantity"
-                  placeholder=" Select Quantity"
+                  placeholder="Quantity"
                   value={newCart?.quantity}
                   onChange={changeHandler}
                 />

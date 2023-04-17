@@ -280,7 +280,7 @@ export default function AttachmentStatusTypes() {
                           <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
                           <Button variant="primary" onClick={handleShow}>
-                            Add AttachmentStatusType
+                            Add Attachment Status Type
                           </Button>
                           </div>
                         </div>
@@ -311,7 +311,7 @@ export default function AttachmentStatusTypes() {
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Add AttachmentStatusType</Modal.Title>
+              <Modal.Title>Add Attachment Status Type</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <AttachmentStatusTypeModel

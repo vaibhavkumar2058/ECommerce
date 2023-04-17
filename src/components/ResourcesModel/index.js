@@ -126,6 +126,11 @@ getBase64(e.target.files[0], (result) => {
       }
     }
     else {
+      // navigator.geolocation.getCurrentPosition((position) => {
+      //           newGMT.latitude = position.coords.latitude;
+      //           newGMT.longitude = position.coords.longitude;
+                
+      //       });
 
       const response = await onAddResources(newResources);
       if (response.payload.title == "Success") {

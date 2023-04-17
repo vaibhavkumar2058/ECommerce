@@ -298,7 +298,7 @@ debugger
                 <Form.Label>Measurement Value<span className="required">*</span></Form.Label>
                 <Dropdown
                   name="measurementValueId"
-                  placeholder="Enter MeasurementValue"
+                  placeholder="Select MeasurementValue"
                   fluid
                   search
                   selection
@@ -313,7 +313,7 @@ debugger
                 <Form.Label>Measurement Type</Form.Label>
                 <Dropdown
                   name="measurementTypeId"
-                  placeholder="Enter MeasurementType"
+                  placeholder="Select MeasurementType"
                   fluid
                   search
                   selection
@@ -332,7 +332,7 @@ debugger
                 <Form.Control
                   type="text"
                   name="cost"
-                  placeholder="Enter Price"
+                  placeholder="Price"
                   value={placeOrder?.cost}
                   onChange={changeHandler}
                 />
@@ -344,7 +344,7 @@ debugger
                 <Form.Control
                   type="text"
                   name="quantity"
-                  placeholder="Enter Quantity"
+                  placeholder="Quantity"
                   value={placeOrder?.quantity}
                   onChange={changeHandler}
                 />

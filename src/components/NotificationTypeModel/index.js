@@ -160,11 +160,11 @@ export default function NotificationTypeModel({
             className={styles.stFormContainer}
             controlId="formNotificationType"
           >
-            <Form.Label>NotificationType Name<span className="required">*</span></Form.Label>
+            <Form.Label>Notification Type Name<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="notificationTypeName"                                                                                                                                   
-              placeholder="Enter NotificationTypeName"
+              placeholder="Notification Type Name"
               value={newNotificationType?.notificationTypeName}
               onChange={changeHandler}
             />
@@ -215,7 +215,7 @@ export default function NotificationTypeModel({
 
 NotificationTypeModel.propTypes = {
   /**
-   * Callback function for Add NotificationType
+   * Callback function for Add Notification Type
    */
   onAddNotificationType: PropTypes.func,
   /**

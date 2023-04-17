@@ -183,7 +183,7 @@ export default function StateModel({
             <Form.Control
               type="text"
               name="stateName"
-              placeholder="Select StateName"
+              placeholder="State Name"
               value={newState?.stateName}
               onChange={changeHandler}
             />

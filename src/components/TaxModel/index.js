@@ -201,7 +201,7 @@ export default function TaxModel({
             <Form.Control
               type="text"
               name="taxValue"
-              placeholder="TaxValue"
+              placeholder="Tax Value"
               value={newTax?.taxValue}
               onChange={changeHandler}
             />
@@ -216,7 +216,7 @@ export default function TaxModel({
             <Form.Control
               type="text"
               name="taxDescription"
-              placeholder="TaxDescription"
+              placeholder="Tax Description"
               value={newTax?.taxDescription}
               onChange={changeHandler}
             />

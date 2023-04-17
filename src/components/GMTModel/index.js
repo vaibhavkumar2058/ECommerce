@@ -167,7 +167,7 @@ export default function GMTModel({
             <Form.Control
               type="text"
               name="resourcesId"
-              placeholder="Enter Resource"
+              placeholder="Resource"
               value={newGMT?.resourcesId}
               onChange={changeHandler}
             />

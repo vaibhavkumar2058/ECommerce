@@ -202,7 +202,7 @@ export default function OrderTrackingModel({
             <Form.Control
               type="text"
               name="orderId"
-              placeholder="Select Order"
+              placeholder="Order"
               value={newOrderTracking?.orderId}
               onChange={changeHandler}
             />

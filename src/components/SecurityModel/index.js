@@ -167,7 +167,7 @@ export default function SecurityModel({
             <Form.Control
               type="text"
               name="questionId"
-              placeholder="Select Question"
+              placeholder="Question"
               value={newSecurity?.questionId}
               onChange={changeHandler}
             />
@@ -179,7 +179,7 @@ export default function SecurityModel({
             <Form.Control
               type="text"
               name="answerId"
-              placeholder="Select Answer"
+              placeholder="Answer"
               value={newSecurity?.answerId}
               onChange={changeHandler}
             />

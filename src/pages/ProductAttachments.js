@@ -237,7 +237,7 @@ export default function ProductAttachments() {
                           <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
                           <Button variant="primary" onClick={handleShow}>
-                            Add ProductAttachments
+                            Add Product Attachments
                           </Button>
                           </div>
                         </div>
@@ -268,7 +268,7 @@ export default function ProductAttachments() {
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Add ProductAttachments</Modal.Title>
+              <Modal.Title>Add Product Attachments</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <ProductAttachmentsModel

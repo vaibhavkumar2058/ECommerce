@@ -274,7 +274,7 @@ export default function CategoryTypes() {
                                                         <MyExportCSV {...props.csvProps} /></div>
                                                     <div className="app-float-right p-1">
                                                         <Button variant="primary" onClick={handleShow}>
-                                                            Add CategoryType
+                                                            Add Category Type
                                                         </Button>
                                                     </div>
                                                 </div>
@@ -305,7 +305,7 @@ export default function CategoryTypes() {
                         keyboard={false}
                     >
                         <Modal.Header closeButton>
-                            <Modal.Title>Add CategoryType</Modal.Title>
+                            <Modal.Title>Add Category Type</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                             <CategorytypeModel

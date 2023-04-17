@@ -14,7 +14,7 @@ import {
 export default function Dashboard() {
 
     const [newGMT, setNewGMT] = useState({
-        resourcesId: 6,
+        resourcesId: null,
         longitude: 0,
         latitude: 0,
         description: "logged coordinates",

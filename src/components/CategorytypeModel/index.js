@@ -164,7 +164,7 @@ export default function CategorytypeModel({
             <Form.Control
               type="text"
               name="categoryTypeName"
-              placeholder="Enter CategoryType"
+              placeholder="CategoryType"
               value={newCategoryType?.categoryTypeName}
               onChange={changeHandler}
             />

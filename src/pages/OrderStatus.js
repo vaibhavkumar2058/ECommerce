@@ -74,7 +74,7 @@ export default function OrderStatus() {
 
   const columns = [
     { dataField: 'orderStatusId', text: 'orderStatusId', sort: true, hidden: true },
-    { dataField: 'orderStatusName', text: 'Order Status Name', sort: true },
+    { dataField: 'orderStatusName', text: 'Order Status', sort: true },
     { dataField: 'recordStatusId', text: 'recordStatusId',hidden:true, sort: true},
     { dataField: 'recordStatus', text: 'Status', sort: true},
     { dataField: 'description', text: 'Description', sort: true},
@@ -273,7 +273,7 @@ export default function OrderStatus() {
                           <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
                           <Button variant="primary" onClick={handleShow}>
-                            Add OrderStatus
+                            Add Order Status
                           </Button>
                           </div>
                         </div>
@@ -304,7 +304,7 @@ export default function OrderStatus() {
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Add OrderStatus</Modal.Title>
+              <Modal.Title>Add Order Status</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <OrderStatusModel

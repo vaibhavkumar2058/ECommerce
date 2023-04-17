@@ -315,7 +315,7 @@ export default function OrderTracking() {
                           <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
                           <Button variant="primary" onClick={handleShow}>
-                            Add OrderTracking
+                            Add Order Tracking
                           </Button>
                           </div>
                         </div>
@@ -346,7 +346,7 @@ export default function OrderTracking() {
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Add OrderTracking</Modal.Title>
+              <Modal.Title>Add Order Tracking</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <OrderTrackingModel

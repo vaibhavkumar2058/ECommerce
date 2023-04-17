@@ -233,7 +233,7 @@ export default function RecordStatuss() {
                           <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
                           <Button variant="primary" onClick={handleShow}>
-                            Add RecordStatus
+                            Add Record Status
                           </Button>
                           </div>
                         </div>
@@ -264,7 +264,7 @@ export default function RecordStatuss() {
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Add RecordStatus</Modal.Title>
+              <Modal.Title>Add Record Status</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <RecordStatusModel

@@ -167,7 +167,7 @@ export default function VehicleTypeModel({
             <Form.Control
               type="text"
               name="vehicleTypeName"
-              placeholder="Enter VehicleTypeName"
+              placeholder="VehicleType Name"
               value={newVehicleType?.vehicleTypeName}
               onChange={changeHandler}
             />

@@ -270,7 +270,7 @@ export default function MeasurementValues() {
                           <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
                           <Button variant="primary" onClick={handleShow}>
-                            Add MeasurementValue
+                            Add Measurement Value
                           </Button>
                           </div>
                         </div>
@@ -301,7 +301,7 @@ export default function MeasurementValues() {
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Add MeasurementValue</Modal.Title>
+              <Modal.Title>Add Measurement Value</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <MeasurementValueModel

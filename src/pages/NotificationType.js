@@ -272,7 +272,7 @@ export default function NotificationType() {
                           <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
                           <Button variant="primary" onClick={handleShow}>
-                            Add NotificationType
+                            Add Notification Type
                           </Button>
                           </div>
                         </div>
@@ -303,7 +303,7 @@ export default function NotificationType() {
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Add NotificationType</Modal.Title>
+              <Modal.Title>Add Notification Type</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <NotificationTypeModel

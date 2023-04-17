@@ -166,7 +166,7 @@ export default function CountryModel({
             <Form.Control
               type="text"
               name="countryName"
-              placeholder="Enter Country"
+              placeholder="Country"
               value={newCountry?.countryName}
               onChange={changeHandler}
             />
@@ -178,7 +178,7 @@ export default function CountryModel({
             <Form.Control
               type="text"
               name="regionCode"
-              placeholder="regioncode"
+              placeholder="Region"
               value={newCountry?.regionCode}
               onChange={changeHandler}
             />

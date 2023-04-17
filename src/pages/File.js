@@ -87,6 +87,8 @@ export default function Files() {
     { dataField: 'fileName', text: 'fileName', sort: true },
     { dataField: 'fileMimeType', text: 'File Mime Type', sort: true },
     { dataField: 'externalURL', text: 'ExternalURL', sort: true },
+    { dataField: 'recordStatusId', text: 'recordStatus', sort: true, hidden: true },
+    { dataField: 'recordStatus', text: 'Status', sort: true },
     //{ dataField: 'archived', text: 'Archived', sort: true },
     //{ dataField: 'azureBlobId', text: 'azureBlobId', sort: true },
     // columns follow dataField and text structure
@@ -218,11 +220,21 @@ export default function Files() {
         mode: 'success',
         message: 'Files Record Fetch Succefully.'
       })
+      const dataFormatter = (rawData) => {
+        const curedData = {};
+        curedData.filesId=rawData?.filesId;
+        curedData.fileName=rawData?.fileName;
+        curedData.fileMimeType=rawData?.fileMimeType;
+        curedData.externalURL=rawData?.externalURL;
+        curedData.recordStatusId=rawData?.recordStatusId;
+        curedData.recordStatus=rawData?.recordStatus.actionName;
+        return curedData;
+      }
 
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+        arr.push(dataFormatter(response.payload[key]));
       }
 
       setFiles(arr);

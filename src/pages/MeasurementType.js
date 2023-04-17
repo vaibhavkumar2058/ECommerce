@@ -276,7 +276,7 @@ export default function MeasurementTypes() {
                           <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
                           <Button variant="primary" onClick={handleShow}>
-                            Add MeasurementType
+                            Add Measurement Type
                           </Button>
                           </div>
                         </div>
@@ -307,7 +307,7 @@ export default function MeasurementTypes() {
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Add MeasurementType</Modal.Title>
+              <Modal.Title>Add Measurement Type</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <MeasurementTypeModel

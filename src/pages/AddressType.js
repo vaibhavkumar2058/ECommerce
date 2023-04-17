@@ -304,7 +304,7 @@ export default function AddressTypes() {
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Add AddressType</Modal.Title>
+              <Modal.Title>Add Address Type</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <AddressTypeModel

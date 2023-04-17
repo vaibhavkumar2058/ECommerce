@@ -165,7 +165,7 @@ export default function AddressTypeModel({
             <Form.Control
               type="text"
               name="addressTypeName"
-              placeholder=" Select Address Type"
+              placeholder="Address Type"
               value={newAddressType?.addressTypeName}
               onChange={changeHandler}
             />

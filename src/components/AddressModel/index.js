@@ -274,7 +274,7 @@ export default function AddressModel({
                 <Form.Control
                   type="text"
                   name="city"
-                  placeholder=" Select City"
+                  placeholder="City"
                   value={newAddress?.city}
                   onChange={changeHandler}
                 />
@@ -287,7 +287,7 @@ export default function AddressModel({
                 <Form.Control
                   type="text"
                   name="town"
-                  placeholder=" Select Town"
+                  placeholder="Town"
                   value={newAddress?.town}
                   onChange={changeHandler}
                 />
@@ -299,7 +299,7 @@ export default function AddressModel({
                 <Form.Control
                   type="text"
                   name="locality"
-                  placeholder=" Select Locality"
+                  placeholder="Locality"
                   value={newAddress?.locality}
                   onChange={changeHandler}
                 />
@@ -313,7 +313,7 @@ export default function AddressModel({
                 <Form.Control
                   type="text"
                   name="pincode"
-                  placeholder=" Select Pincode"
+                  placeholder="Pincode"
                   value={newAddress?.pincode}
                   onChange={changeHandler}
                 />
@@ -325,7 +325,7 @@ export default function AddressModel({
                 <Form.Control
                   type="text"
                   name="isDefault"
-                  placeholder=" Select IsDefault"
+                  placeholder="IsDefault"
                   value={newAddress?.isDefault}
                   onChange={changeHandler}
                 />
@@ -337,7 +337,7 @@ export default function AddressModel({
                 <Form.Control
                   type="text"
                   name="landMark"
-                  placeholder=" Select LandMark"
+                  placeholder="LandMark"
                   value={newAddress?.landMark}
                   onChange={changeHandler}
                 />
@@ -351,7 +351,7 @@ export default function AddressModel({
                 <Form.Control
                   type="text"
                   name="defaultAddressTypeId"
-                  placeholder=" Select Default Address Type"
+                  placeholder="Default Address Type"
                   value={newAddress?.defaultAddressTypeId}
                   onChange={changeHandler}
                 />
@@ -364,7 +364,7 @@ export default function AddressModel({
                 <Form.Control
                   type="text"
                   name="description"
-                  placeholder=" Select Description"
+                  placeholder="Description"
                   value={newAddress?.description}
                   onChange={changeHandler}
                 />

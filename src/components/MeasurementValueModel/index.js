@@ -162,7 +162,7 @@ export default function MeasurementValueModel({
             <Form.Control
               type="text"
               name="value"
-              placeholder="Enter MeasurementValue"
+              placeholder="Measurement Value"
               value={newMeasurementValue?.value}
               onChange={changeHandler}
             />
@@ -191,7 +191,7 @@ export default function MeasurementValueModel({
               onChange={dropdownHandler}
             />
           </Form.Group>
-          
+
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel

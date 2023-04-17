@@ -149,7 +149,7 @@ export default function ResourceAttachmentsModel({
             <Form.Control
               type="text"
               name="resourcesId"
-              placeholder="Enter ResourceId"
+              placeholder="Resource"
               value={newResourceAttachments?.resourcesId}
               onChange={changeHandler}
             />
@@ -159,7 +159,7 @@ export default function ResourceAttachmentsModel({
             <Form.Control
               type="text"
               name="resourceAttachmentTypeId"
-              placeholder=" Enter ResourceAttachmentTypeId"
+              placeholder="Resource Attachment Type"
               value={newResourceAttachments?.resourceAttachmentTypeId}
               onChange={changeHandler}
             />

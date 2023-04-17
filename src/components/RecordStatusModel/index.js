@@ -142,7 +142,7 @@ export default function RecordStatusModel({
             <Form.Control
               type="text"
               name="actionName"
-              placeholder="Select Action"
+              placeholder="Action"
               value={newRecordStatus?.actionName}
               onChange={changeHandler}
             />

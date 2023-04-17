@@ -248,6 +248,22 @@ export default function ItemCostModel({
         <Form>
           <div className="row">
             <div className="col-md-6">
+            <Form.Group className="mb-3" controlId="categoryType">
+                    <Form.Label>Category Type<span className="required">*</span></Form.Label>
+                    <Dropdown
+                      name="categoryTypeId"
+                      placeholder='Select Category Type'
+                      fluid
+                      search
+                      selection
+                      options={categoryTypeOptions}
+                      value={newItemCost?.categoryTypeId}
+                      onChange={dropdownHandler}
+                    />
+                  </Form.Group>
+          
+          </div>
+          <div className="col-md-6">
           <Form.Group
             className={styles.stFormContainer}
             controlId="formItemCost"
@@ -264,21 +280,7 @@ export default function ItemCostModel({
               onChange={dropdownHandler}
             />
           </Form.Group>
-          </div>
-          <div className="col-md-6">
-          <Form.Group className="mb-3" controlId="measurementTypeId">
-            <Form.Label>Measurement Type<span className="required">*</span></Form.Label>
-            <Dropdown
-              name="measurementTypeId"
-              placeholder=" Select Measurement Type"
-              fluid
-              search
-              selection
-              options={measurementTypeOptions}
-              value={newItemCost?.measurementTypeId}
-              onChange={dropdownHandler}
-            />
-          </Form.Group>
+         
           </div>
           </div>
           <div className="row">
@@ -299,7 +301,23 @@ export default function ItemCostModel({
           </Form.Group>
           </div>
           <div className="col-md-6">
-
+             <Form.Group className="mb-3" controlId="measurementTypeId">
+            <Form.Label>Measurement Type<span className="required">*</span></Form.Label>
+            <Dropdown
+              name="measurementTypeId"
+              placeholder=" Select Measurement Type"
+              fluid
+              search
+              selection
+              options={measurementTypeOptions}
+              value={newItemCost?.measurementTypeId}
+              onChange={dropdownHandler}
+            />
+          </Form.Group>
+          </div>
+          </div>
+          <div className="row">
+          <div className="col-md-6">
           <Form.Group className="mb-3" controlId="customTypeId">
             <Form.Label>Custom Type<span className="required">*</span></Form.Label>
             <Dropdown
@@ -314,8 +332,6 @@ export default function ItemCostModel({
             />
           </Form.Group>
           </div>
-          </div>
-          <div className="row">
             <div className="col-md-6">
           <Form.Group className="mb-3" controlId="price">
             <Form.Label>Price<span className="required">*</span></Form.Label>
@@ -328,6 +344,8 @@ export default function ItemCostModel({
             />
           </Form.Group>
           </div>
+          </div>
+          <div className="row">
           <div className="col-md-6">
           <Form.Group className="mb-3" controlId="description">
             <Form.Label>Description</Form.Label>
@@ -340,23 +358,9 @@ export default function ItemCostModel({
             />
           </Form.Group>
           </div>
-          </div>
-          <div className="row">
-          <div className="col-md-6">
-          <Form.Group className="mb-3" controlId="categoryType">
-                    <Form.Label>Category Type<span className="required">*</span></Form.Label>
-                    <Dropdown
-                      name="categoryTypeId"
-                      placeholder='Select Category Type'
-                      fluid
-                      search
-                      selection
-                      options={categoryTypeOptions}
-                      value={newItemCost?.categoryTypeId}
-                      onChange={dropdownHandler}
-                    />
-                  </Form.Group>
-                  </div>
+          
+          
+          
             <div className="col-md-6">
           <Form.Group className="mb-3" controlId="recordStatusId">
             <Form.Label>Status<span className="required">*</span></Form.Label>
@@ -371,9 +375,9 @@ export default function ItemCostModel({
               onChange={dropdownHandler}
             />
           </Form.Group>
+          
           </div>
           </div>
-
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel

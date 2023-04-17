@@ -18,7 +18,7 @@ export default function AttachmentStatusTypeModel({
     onClose,
     attachmentStatusTypeData,
     recordStatusList = [],
-    
+
 }) {
     const [newAttachmentStatusType, setNewAttachmentStatusType] = useState({
         attachmentStatusTypeName: null,
@@ -107,7 +107,7 @@ export default function AttachmentStatusTypeModel({
 
     }
 
-    
+
     useEffect(() => {
         if (isEdit) {
             setNewAttachmentStatusType(attachmentStatusTypeData);
@@ -127,7 +127,7 @@ export default function AttachmentStatusTypeModel({
         if (isEdit) {
             setButtonType("Update");
         }
-        const isEnable =  !newAttachmentStatusType?.attachmentStatusTypeName
+        const isEnable = !newAttachmentStatusType?.attachmentStatusTypeName
             || !newAttachmentStatusType?.description
             || !newAttachmentStatusType?.recordStatusId;
         setSaveDisabled(isEnable);
@@ -156,38 +156,37 @@ export default function AttachmentStatusTypeModel({
             )}
             {!isDelete && (
                 <Form>
-                    <div className="row">
-                    
-                        <div className="col-md-6">
+                   
+
+                      
                             <Form.Group className="mb-3" controlId="AttachmentStatusTypeName">
                                 <Form.Label>Attachment Status Type Name<span className="required">*</span></Form.Label>
                                 <Form.Control
                                     type="text"
                                     name="attachmentStatusTypeName"
-                                    placeholder=" Select AttachmentStatusTypeName"
+                                    placeholder="Attachment Status Type"
                                     value={newAttachmentStatusType?.attachmentStatusTypeName}
                                     onChange={changeHandler}
                                 />
                             </Form.Group>
-                            </div>
-                            <div className="col-md-6">
+                       
                             <Form.Group className="mb-3" controlId="description">
                                 <Form.Label>Description</Form.Label>
                                 <Form.Control
                                     type="text"
                                     name="description"
-                                    placeholder=" Select Description"
+                                    placeholder="Description"
                                     value={newAttachmentStatusType?.description}
                                     onChange={changeHandler}
                                 />
                             </Form.Group>
-                        </div>
                        
-                    </div>
+
                    
-                    <div className="row">
-                        
-                        <div className="col-md-6">
+
+             
+
+                      
                             <Form.Group className="mb-3" controlId="recordStatusId">
                                 <Form.Label>Status<span className="required">*</span></Form.Label>
                                 <Dropdown
@@ -201,8 +200,7 @@ export default function AttachmentStatusTypeModel({
                                     onChange={dropdownHandler}
                                 />
                             </Form.Group>
-                        </div>
-                    </div>
+                        
                     <Modal.Footer>
                         <Button variant="secondary" onClick={onClose}>
                             Cancel

@@ -168,7 +168,7 @@ export default function RoleModel({
             <Form.Control
               type="text"
               name="roleName"
-              placeholder="Select Role"
+              placeholder="Role"
               value={newRole?.roleName}
               onChange={changeHandler}
             />

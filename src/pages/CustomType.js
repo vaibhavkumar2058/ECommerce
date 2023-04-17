@@ -275,7 +275,7 @@ export default function CustomTypes() {
                             <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
                             <Button variant="primary" onClick={handleShow}>
-                              Add CustomType
+                              Add Custom Type
                             </Button>
                           </div>
                         </div>
@@ -306,7 +306,7 @@ export default function CustomTypes() {
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Add CustomType</Modal.Title>
+              <Modal.Title>Add Custom Type</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <CustomTypeModel

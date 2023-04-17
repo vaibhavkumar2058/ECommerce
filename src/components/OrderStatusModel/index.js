@@ -173,7 +173,7 @@ export default function OrderStatusModel({
             <Form.Control
               type="text"
               name="orderStatusName"
-              placeholder="Enter orderStatus"
+              placeholder="Order Status"
               value={newOrderStatus?.orderStatusName}
               onChange={changeHandler}
             />

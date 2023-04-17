@@ -271,7 +271,7 @@ export default function VehicleType() {
                           <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
                           <Button variant="primary" onClick={handleShow}>
-                            Add Vehicletype
+                            Add Vehicle Type
                           </Button>
                           </div>
                         </div>
@@ -302,7 +302,7 @@ export default function VehicleType() {
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Add VehicleType</Modal.Title>
+              <Modal.Title>Add Vehicle Type</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <VehicleTypeModel

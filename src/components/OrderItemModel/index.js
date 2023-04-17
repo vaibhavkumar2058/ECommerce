@@ -201,7 +201,7 @@ const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.
             <Form.Control
               type="text"
               name="orderId"
-              placeholder=" select Order"
+              placeholder=" Order"
               value={newOrderItem?.orderId}
               onChange={changeHandler}
             />

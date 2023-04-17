@@ -188,7 +188,7 @@ export default function FileModel({
             <Form.Label>Folder<span className="required">*</span></Form.Label>
             <Dropdown
               name="folderId"
-              placeholder="Select FolderId"
+              placeholder="Folder"
               fluid
               search
               selection
@@ -202,7 +202,7 @@ export default function FileModel({
             <Form.Control
               type="text"
               name="resourceId"
-              placeholder="Select resourceId"
+              placeholder="Resource"
               value={newFile?.resourceId}
               onChange={changeHandler}
             />
@@ -212,7 +212,7 @@ export default function FileModel({
             <Form.Label>Status<span className="required">*</span></Form.Label>
             <Dropdown
               name="recordStatusId"
-              placeholder='Select RecordStatusId'
+              placeholder='Select Status'
               fluid
               search
               selection

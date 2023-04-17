@@ -239,7 +239,7 @@ export default function ResourceAttachmentType() {
                           <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
                           <Button variant="primary" onClick={handleShow}>
-                            Add ResourceAttachmentType
+                            Add Resource Attachment Type
                           </Button>
                           </div>
                         </div>
@@ -270,7 +270,7 @@ export default function ResourceAttachmentType() {
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Add ResourceAttachmentType</Modal.Title>
+              <Modal.Title>Add Resource Attachment Type</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <ResourceAttachmentTypeModel

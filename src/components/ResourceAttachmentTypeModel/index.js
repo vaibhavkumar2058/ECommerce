@@ -144,7 +144,7 @@ export default function ResourceAttachmentTypeModel({
             <Form.Control
               type="text"
               name="displayText"
-              placeholder="Select Displaytext"
+              placeholder="Display Text"
               value={newResourceAttachmentType?.displayText}
               onChange={changeHandler}
             />
@@ -156,7 +156,7 @@ export default function ResourceAttachmentTypeModel({
             <Form.Control
               type="text"
               name="sortOrder"
-              placeholder="Select SortOrder"
+              placeholder="Sort Order"
               value={newResourceAttachmentType?.sortOrder}
               onChange={changeHandler}
             />
@@ -170,7 +170,7 @@ export default function ResourceAttachmentTypeModel({
             <Form.Control
               type="text"
               name="isActive"
-              placeholder="Select IsActive"
+              placeholder="IsActive"
               value={newResourceAttachmentType?.isActive}
               onChange={changeHandler}
             />
@@ -182,7 +182,7 @@ export default function ResourceAttachmentTypeModel({
             <Form.Control
               type="text"
               name="description"
-              placeholder="Select Description"
+              placeholder="Description"
               value={newResourceAttachmentType?.description}
               onChange={changeHandler}
             />

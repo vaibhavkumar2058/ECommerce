@@ -156,7 +156,7 @@ export default function MeasurementTypeModel({
                         <Form.Control
                             type="text"
                             name="name"
-                            placeholder="Enter MeasurementType"
+                            placeholder="Measurement Type"
                             value={newMeasurementType?.name}
                             onChange={changeHandler}
                         />

@@ -165,7 +165,7 @@ export default function CustomTypeModel({
             <Form.Control
               type="text"
               name="customTypeName"
-              placeholder=" Select Custom Type"
+              placeholder="Custom Type"
               value={newCustomType?.customTypeName}
               onChange={changeHandler}
             />

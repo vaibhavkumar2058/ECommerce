@@ -110,7 +110,7 @@ export default function ItemCosts() {
 
     { dataField: 'itemCostId', text: 'itemCostId', sort: true, hidden: true},
 
-    { dataField: 'productId', text: ' productId', sort: true ,headerStyle: () => {
+    { dataField: 'productId', text: ' productId', sort: true, hidden: true ,headerStyle: () => {
       return { width: "120px" };
     } },
     { dataField: 'productName', text: ' Product', sort: true ,headerStyle: () => {

@@ -190,7 +190,7 @@ export default function NotificationModel({
             <Form.Label>Notification Type<span className="required">*</span></Form.Label>
             <Dropdown
               name="notificationTypeId"
-              placeholder='Select notificationType'
+              placeholder='Notification Type'
               fluid
               search
               selection
@@ -206,7 +206,7 @@ export default function NotificationModel({
             <Form.Control
               type="text"
               name="notificationName"
-              placeholder="NotificationName"
+              placeholder="Notification Name"
               value={newNotification?.notificationName}
               onChange={changeHandler}
             />

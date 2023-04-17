@@ -218,7 +218,7 @@ export default function States() {
         curedData.stateId=rawData?.stateId;
         curedData.stateName=rawData?.stateName;
         curedData.countryId=rawData?.countryId;
-        curedData.countryName=rawData?.country?.countryName;
+        curedData.countryName=rawData?.countryId?.countryName;
         curedData.description=rawData?.description;
         curedData.recordStatusId=rawData?.recordStatusId;
         curedData.recordStatus=rawData?.recordStatus.actionName;
