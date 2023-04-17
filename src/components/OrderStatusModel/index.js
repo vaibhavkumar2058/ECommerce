@@ -178,6 +178,16 @@ export default function OrderStatusModel({
               onChange={changeHandler}
             />
           </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Description</Form.Label>
+            <Form.Control
+              type="text"
+              name="description"
+              placeholder="Description"
+              value={newOrderStatus?.description}
+              onChange={changeHandler}
+            />
+          </Form.Group>
           <Form.Group className="mb-3" controlId="recordStatus">
             <Form.Label>Status<span className="required">*</span></Form.Label>
             <Dropdown
@@ -192,19 +202,6 @@ export default function OrderStatusModel({
             />
           </Form.Group>
 
-
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Description</Form.Label>
-            <Form.Control
-              type="text"
-              name="description"
-              placeholder="Description"
-              value={newOrderStatus?.description}
-              onChange={changeHandler}
-            />
-          </Form.Group>
-
-          
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel

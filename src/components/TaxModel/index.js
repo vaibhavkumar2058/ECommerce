@@ -197,7 +197,7 @@ export default function TaxModel({
           </div>
           <div className="col-md-6">
           <Form.Group className="mb-3" controlId="TaxValue">
-            <Form.Label>TaxValue<span className="required">*</span></Form.Label>
+            <Form.Label>Tax Value<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="taxValue"
@@ -212,7 +212,7 @@ export default function TaxModel({
             <div className="col-md-6">
 
           <Form.Group className="mb-3" controlId="TaxDescription">
-            <Form.Label>TaxDescription</Form.Label>
+            <Form.Label>Tax Description</Form.Label>
             <Form.Control
               type="text"
               name="taxDescription"

@@ -158,7 +158,7 @@ export default function MeasurementValueModel({
             className={styles.stFormContainer}
             controlId="formMeasurementValue"
           >
-            <Form.Label>MeasurementValue<span className="required">*</span></Form.Label>
+            <Form.Label>Measurement Value<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="value"
@@ -191,10 +191,6 @@ export default function MeasurementValueModel({
               onChange={dropdownHandler}
             />
           </Form.Group>
-
-
-          
-          
           
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>

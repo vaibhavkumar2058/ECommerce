@@ -155,7 +155,7 @@ export default function ResourceAttachmentsModel({
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="attachmentType">
-            <Form.Label>ResourceAttachmentType<span className="required">*</span></Form.Label>
+            <Form.Label>Resource Attachment Type<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="resourceAttachmentTypeId"

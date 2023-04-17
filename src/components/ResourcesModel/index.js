@@ -238,7 +238,7 @@ getBase64(e.target.files[0], (result) => {
                 <Form.Group
                   className={styles.stFormContainer}
                   controlId="formResources">
-                  <Form.Label>FirstName <span className="required">*</span></Form.Label>
+                  <Form.Label>First Name <span className="required">*</span></Form.Label>
                   <Form.Control
                     type="text"
                     name="firstName"
@@ -250,7 +250,7 @@ getBase64(e.target.files[0], (result) => {
               </div>
               <div className="col-md-3">
                 <Form.Group className="mb-3" controlId="middleName">
-                  <Form.Label>MiddleName</Form.Label>
+                  <Form.Label>Middle Name</Form.Label>
                   <Form.Control
                     type="text"
                     name="middleName"
@@ -264,7 +264,7 @@ getBase64(e.target.files[0], (result) => {
            
               <div className="col-md-3">
                 <Form.Group className="mb-3" controlId="lastName">
-                  <Form.Label>LastName</Form.Label>
+                  <Form.Label>Last Name</Form.Label>
                   <Form.Control
                     type="text"
                     name="lastName"
@@ -312,7 +312,7 @@ getBase64(e.target.files[0], (result) => {
            
               <div className="col-md-3">
                 <Form.Group className="mb-3" controlId="mobileNumber">
-                  <Form.Label>MobileNumber</Form.Label>
+                  <Form.Label>Mobile Number</Form.Label>
                   <Form.Control
                     type="text"
                     name="mobileNumber"
