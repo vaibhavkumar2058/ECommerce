@@ -256,7 +256,7 @@ export default function AddressModel({
                 <Form.Label>Address Type</Form.Label>
                 <Dropdown
                   name="addressTypeId"
-                  placeholder='Select AddressType'
+                  placeholder='Select Address Type'
                   fluid
                   search
                   selection

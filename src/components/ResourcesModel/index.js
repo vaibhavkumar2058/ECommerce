@@ -247,7 +247,7 @@ getBase64(e.target.files[0], (result) => {
                   <Form.Control
                     type="text"
                     name="firstName"
-                    placeholder="FirstName"
+                    placeholder="First Name"
                     value={newResources?.firstName}
                     onChange={changeHandler}
                   />
@@ -259,7 +259,7 @@ getBase64(e.target.files[0], (result) => {
                   <Form.Control
                     type="text"
                     name="middleName"
-                    placeholder="MiddleName"
+                    placeholder="Middle Name"
                     value={newResources?.middleName}
                     onChange={changeHandler}
                   />
@@ -273,25 +273,23 @@ getBase64(e.target.files[0], (result) => {
                   <Form.Control
                     type="text"
                     name="lastName"
-                    placeholder="LastName"
+                    placeholder="Last Name"
                     value={newResources?.lastName}
                     onChange={changeHandler}
                   />
                 </Form.Group>
               </div>
               <div className="col-md-3">
-                <Form.Group className="mb-3" controlId="roleId">
-                  <Form.Label>Role</Form.Label>
-                  <Dropdown
-                    name="roleId"
-                    placeholder='Select Role'
-                    fluid
-                    search
-                    selection
-                    options={roleOptions}
-                    value={newResources?.roleId}
-                    onChange={dropdownHandler}
+                <Form.Group>
+                  <Form.Label>Photo</Form.Label>
+                </Form.Group>
+                <Form.Group>
+                <img className="product-view" src={newResources?.resourcesImage}>
+                </img>
+                  <input type="file" onChange={saveFileSelected} 
+                   encType="multipart/form-data" 
                   />
+                               
                 </Form.Group>
               </div>
               
@@ -321,7 +319,7 @@ getBase64(e.target.files[0], (result) => {
                   <Form.Control
                     type="text"
                     name="mobileNumber"
-                    placeholder="MobileNumber"
+                    placeholder="Mobile Number"
                     value={newResources?.mobileNumber}
                     onChange={changeHandler}
                   />
@@ -355,18 +353,21 @@ getBase64(e.target.files[0], (result) => {
               </div>
             <div className="row">
             <div className="col-md-3">
-                <Form.Group>
-                  <Form.Label>Resources Image</Form.Label>
-                </Form.Group>
-                <Form.Group>
-                  <input type="file" onChange={saveFileSelected} 
-                   encType="multipart/form-data" 
+                <Form.Group className="mb-3" controlId="roleId">
+                  <Form.Label>Role</Form.Label>
+                  <Dropdown
+                    name="roleId"
+                    placeholder='Select Role'
+                    fluid
+                    search
+                    selection
+                    options={roleOptions}
+                    value={newResources?.roleId}
+                    onChange={dropdownHandler}
                   />
-                  <img className="product-view" src={newResources?.resourcesImage}>
-                </img>
-                
                 </Form.Group>
               </div>
+            
               <div className="col-md-3">
                 <Form.Group className="mb-3" controlId="recordStatusId">
                   <Form.Label>Status</Form.Label>

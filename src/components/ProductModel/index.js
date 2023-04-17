@@ -191,69 +191,40 @@ export default function ProductModel({
         </>
       )}
       {!isDelete && (
+        
         <Form>
-          <div className="row">
-            <div calss="col-md-12">
-              <div className="col-md-8">
-                <div className="row">
-                  <div className="col-md-6">
-                    <Form.Group className="mb-3" controlId="categoryType">
-                      <Form.Label>Category Type<span className="required">*</span></Form.Label>
-                      <Dropdown
-                        name="categoryTypeId"
-                        placeholder='Select Category Type'
-                        fluid
-                        search
-                        selection
-                        options={categoryOptions}
-                        value={newProduct?.categoryTypeId}
-                        onChange={dropdownHandler}
-                      />
-                    </Form.Group>
-                  </div>
-                  <div className="col-md-6">
-                    <Form.Group
-                      className={styles.stFormContainer}
-                      controlId="formProduct">
-                      <Form.Label>Product Name<span className="required">*</span></Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="productName"
-                        placeholder="Product Name"
-                        value={newProduct?.productName}
-                        onChange={changeHandler}
-                      />
-                    </Form.Group>
-                  </div>
+          <div calss="col-md-12">
+            <div className="col-md-8">
+              <div className="row">
+              <div className="col-md-6">
+                  <Form.Group className="mb-3" controlId="categoryType">
+                    <Form.Label>Category Type<span className="required">*</span></Form.Label>
+                    <Dropdown
+                      name="categoryTypeId"
+                      placeholder='Select Category Type'
+                      fluid
+                      search
+                      selection
+                      options={categoryOptions}
+                      value={newProduct?.categoryTypeId}
+                      onChange={dropdownHandler}
+                    />
+                  </Form.Group>
                 </div>
-                <div className="row">
-                  <div className="col-md-6">
-                    <Form.Group className="mb-3" controlId="description">
-                      <Form.Label>Description</Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="description"
-                        placeholder="Description"
-                        value={newProduct?.description}
-                        onChange={changeHandler}
-                      />
-                    </Form.Group>
-                  </div>
-                  <div className="col-md-6">
-                    <Form.Group className="mb-3" controlId="recordStatus">
-                      <Form.Label>Status<span className="required">*</span></Form.Label>
-                      <Dropdown
-                        name="recordStatusId"
-                        placeholder='Select Status'
-                        fluid
-                        search
-                        selection
-                        options={recordStatusOptions}
-                        value={newProduct?.recordStatusId}
-                        onChange={dropdownHandler}
-                      />
-                    </Form.Group>
-                  </div>
+                <div className="col-md-6">
+                  <Form.Group
+                    className={styles.stFormContainer}
+                    controlId="formProduct"
+                  >
+                    <Form.Label>Product Name<span className="required">*</span></Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="productName"
+                      placeholder="Product Name"
+                      value={newProduct?.productName}
+                      onChange={changeHandler}
+                    />
+                  </Form.Group>
                 </div>
               </div>
               <div className="col-md-3">
