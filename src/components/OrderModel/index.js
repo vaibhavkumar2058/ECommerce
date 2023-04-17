@@ -261,7 +261,7 @@ debugger
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="categoryTypeId">
-                <Form.Label>CategoryType<span className="required">*</span></Form.Label>
+                <Form.Label>Category Type<span className="required">*</span></Form.Label>
                 <Dropdown
                   name="categoryTypeId"
                   placeholder='Select CategoryType'

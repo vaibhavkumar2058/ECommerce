@@ -140,7 +140,7 @@ export default function ResourceAttachmentTypeModel({
          <div className="row">
           <div className="col-md-6">
           <Form.Group classId="mb-3" controlId="displayText">
-            <Form.Label>Displaytext<span className="required">*</span></Form.Label>
+            <Form.Label>Display Text<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="displayText"
@@ -152,7 +152,7 @@ export default function ResourceAttachmentTypeModel({
           </div>
           <div className="col-md-6">
           <Form.Group className="mb-3" controlId="sortOrder">
-            <Form.Label>SortOrder<span className="required">*</span></Form.Label>
+            <Form.Label>Sort Order<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="sortOrder"
@@ -166,7 +166,7 @@ export default function ResourceAttachmentTypeModel({
           <div className="row">
           <div className="col-md-6">
           <Form.Group className="mb-3" controlId="isActive">
-            <Form.Label>IsActive<span className="required">*</span></Form.Label>
+            <Form.Label>Is Active<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="isActive"

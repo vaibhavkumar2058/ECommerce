@@ -163,7 +163,7 @@ export default function VehicleTypeModel({
             className={styles.stFormContainer}
             controlId="formVehicleType"
           >
-            <Form.Label>VehicleTypeName<span className="required">*</span></Form.Label>
+            <Form.Label>VehicleType Name<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="vehicleTypeName"

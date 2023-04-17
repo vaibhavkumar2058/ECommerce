@@ -187,7 +187,7 @@ export default function FolderModel({
           </div>
           <div className="col-md-6">
           <Form.Group className="mb-3" controlId="ParentFolderId">
-            <Form.Label>ParentFolder<span className="required">*</span></Form.Label>
+            <Form.Label>Parent Folder<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="parentFolderId"
@@ -201,7 +201,7 @@ export default function FolderModel({
           <div className="row">
           <div className="col-md-6">
           <Form.Group className="mb-3" controlId="folderName">
-            <Form.Label>FolderName<span className="required">*</span></Form.Label>
+            <Form.Label>Folder Name<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="folderName"
@@ -213,7 +213,7 @@ export default function FolderModel({
           </div>
           <div className="col-md-6">
           <Form.Group className="mb-3" controlId="isSystemGenerated">
-            <Form.Label>IsSystemGenerated</Form.Label>
+            <Form.Label>Is System Generated</Form.Label>
             <Form.Control
               type="text"
               name="isSystemGenerated"

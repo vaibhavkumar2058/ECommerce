@@ -179,7 +179,7 @@ export default function StateModel({
             className={styles.stFormContainer}
             controlId="formState"
           >
-            <Form.Label>StateName<span className="required">*</span></Form.Label>
+            <Form.Label>State Name<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="stateName"

@@ -152,7 +152,7 @@ export default function MeasurementTypeModel({
                         className={styles.stFormContainer}
                         controlId="formEnquiry"
                     >
-                        <Form.Label>MeasurementType<span className="required">*</span></Form.Label>
+                        <Form.Label>Measurement Type<span className="required">*</span></Form.Label>
                         <Form.Control
                             type="text"
                             name="name"
