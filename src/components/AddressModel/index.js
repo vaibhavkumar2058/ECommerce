@@ -253,7 +253,7 @@ export default function AddressModel({
           
             <div className="col-md-4">
               <Form.Group className="mb-3" controlId="addressTypeId">
-                <Form.Label>AddressType</Form.Label>
+                <Form.Label>Address Type</Form.Label>
                 <Dropdown
                   name="addressTypeId"
                   placeholder='Select AddressType'

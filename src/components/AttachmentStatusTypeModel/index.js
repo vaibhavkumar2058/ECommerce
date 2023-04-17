@@ -160,7 +160,7 @@ export default function AttachmentStatusTypeModel({
                     
                         <div className="col-md-6">
                             <Form.Group className="mb-3" controlId="AttachmentStatusTypeName">
-                                <Form.Label>AttachmentStatusTypeName<span className="required">*</span></Form.Label>
+                                <Form.Label>Attachment Status Type Name<span className="required">*</span></Form.Label>
                                 <Form.Control
                                     type="text"
                                     name="attachmentStatusTypeName"
@@ -192,7 +192,7 @@ export default function AttachmentStatusTypeModel({
                                 <Form.Label>Status<span className="required">*</span></Form.Label>
                                 <Dropdown
                                     name="recordStatusId"
-                                    placeholder='Select RecordStatus'
+                                    placeholder='Select Status'
                                     fluid
                                     search
                                     selection

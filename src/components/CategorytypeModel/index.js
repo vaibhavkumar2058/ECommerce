@@ -160,7 +160,7 @@ export default function CategorytypeModel({
             className={styles.stFormContainer}
             controlId="formCategoryType"
           >
-            <Form.Label>CategoryTypename<span className="required">*</span></Form.Label>
+            <Form.Label>Category Type Name<span className="required">*</span></Form.Label>
             <Form.Control
               type="text"
               name="categoryTypeName"
