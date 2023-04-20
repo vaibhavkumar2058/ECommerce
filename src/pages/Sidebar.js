@@ -104,10 +104,10 @@ export default (props = {}) => {
             <span className="sidebar-text">Cart </span></span></a></li>)}
             {/* {(admin && <li className="nav-item active"><a href="vehicleType" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
             </span><span className="sidebar-text">VehicleType </span></span></a></li>)} */}
-            {/* {(admin && <li className="nav-item active"><a href="productAttachments" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
-            </span><span className="sidebar-text">ProductAttachments </span></span></a></li>)}
+            {/* {/* {(admin && <li className="nav-item active"><a href="productAttachments" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
+            </span><span className="sidebar-text">ProductAttachments </span></span></a></li>)} */}
             {(admin && <li className="nav-item active"><a href="resourceAttachments" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
-                </span><span className="sidebar-text">ResourceAttachments </span></span></a></li>)} */}
+                </span><span className="sidebar-text">ResourceAttachments </span></span></a></li>)} 
             {/* {(admin && <li className="nav-item active"><a href="tax" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> </span><span className="sidebar-text">Tax</span></span></a></li>)} */}
             {/* {((admin || agent || dealer || customer) && <li className="nav-item active"><a href="orderItem" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
             </span><span className="sidebar-text">orderItem </span></span></a></li>)} */}
