@@ -16,6 +16,7 @@ import Product from "../pages/Product";
 import File from "../pages/File";
 import Security from "../pages/Security";
 import AddressType from "../pages/AddressType";
+import ApproveStatus from "../pages/ApproveStatus";
 import Address from "../pages/Address";
 import Cart from "../pages/Cart";
 import Invoice from "../pages/Invoice";
@@ -96,6 +97,7 @@ const NavbarComp = () => {
           {(admin && <Route exact path="/productAttachments" element={<ProtectedRoute><Sidebar/><Topbar/><ProductAttachments/></ProtectedRoute>}/>)}
           {((admin||agent||dealer||customer) && <Route exact path="/orderPlacedList" element={<ProtectedRoute><Sidebar/><Topbar/><OrderPlacedList/></ProtectedRoute>}/>)}
          {((admin||agent||dealer||customer) && <Route exact path="/itemList" element={<ProtectedRoute><Sidebar/><Topbar/><ItemList/></ProtectedRoute>}/>)}
+         {(admin && <Route exact path="/approveStatus" element={<ProtectedRoute><Sidebar/><Topbar/> <ApproveStatus/></ProtectedRoute>}/>)}
 
           {(admin && <Route exact path="/role" element={<ProtectedRoute><Sidebar/><Topbar/> <Role /></ProtectedRoute>} />)}
           {(admin && <Route exact path="/file" element={<ProtectedRoute><Sidebar/><Topbar/><File /></ProtectedRoute>} />)}
