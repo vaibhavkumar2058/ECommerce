@@ -34,6 +34,7 @@ import ResourceAttachmentType from "../pages/ResouceAttachmentType";
 import ResourceAttachments from "../pages/ResourceAttachments";
 import Role from "../pages/Role";
 import Folder from "../pages/Folder";
+import Approve from "../pages/Approve";
 import ProductAttachments from "../pages/ProductAttachments";
 import Resources from "../pages/Resources"
 import AttachmentStatusType from "../pages/AttachmentStatusType"
@@ -96,7 +97,7 @@ const NavbarComp = () => {
           {(admin && <Route exact path="/productAttachments" element={<ProtectedRoute><Sidebar/><Topbar/><ProductAttachments/></ProtectedRoute>}/>)}
           {((admin||agent||dealer||customer) && <Route exact path="/orderPlacedList" element={<ProtectedRoute><Sidebar/><Topbar/><OrderPlacedList/></ProtectedRoute>}/>)}
          {((admin||agent||dealer||customer) && <Route exact path="/itemList" element={<ProtectedRoute><Sidebar/><Topbar/><ItemList/></ProtectedRoute>}/>)}
-
+         {(admin && <Route exact path="/approve" element={<ProtectedRoute><Sidebar/><Topbar/> <Approve /></ProtectedRoute>} />)}
           {(admin && <Route exact path="/role" element={<ProtectedRoute><Sidebar/><Topbar/> <Role /></ProtectedRoute>} />)}
           {(admin && <Route exact path="/file" element={<ProtectedRoute><Sidebar/><Topbar/><File /></ProtectedRoute>} />)}
           {(admin && <Route exact path="/security" element={<ProtectedRoute><Sidebar/><Topbar/><Security /></ProtectedRoute>} />)}
