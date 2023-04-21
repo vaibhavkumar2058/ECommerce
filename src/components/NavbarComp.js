@@ -34,6 +34,7 @@ import RecordStatus from "../pages/RecordStatus";
 import ResourceAttachmentType from "../pages/ResouceAttachmentType";
 import ResourceAttachments from "../pages/ResourceAttachments";
 import Role from "../pages/Role";
+import DiscountType from "../pages/DiscountType";
 import Folder from "../pages/Folder";
 import Approve from "../pages/Approve";
 import ProductAttachments from "../pages/ProductAttachments";
@@ -60,6 +61,7 @@ import NotificationType from "../pages/NotificationType";
 import CustomType from "../pages/CustomType";
 import Emailverification from "../pages/PublicPages/Emailverification";
 import Topbar from "../pages/Topbar";
+import DiscountTypes from "../pages/DiscountType";
 
 
 
@@ -100,6 +102,7 @@ const NavbarComp = () => {
          {((admin||agent||dealer||customer) && <Route exact path="/itemList" element={<ProtectedRoute><Sidebar/><Topbar/><ItemList/></ProtectedRoute>}/>)}
          {(admin && <Route exact path="/approve" element={<ProtectedRoute><Sidebar/><Topbar/> <Approve /></ProtectedRoute>} />)}
          {(admin && <Route exact path="/approveStatus" element={<ProtectedRoute><Sidebar/><Topbar/> <ApproveStatus/></ProtectedRoute>}/>)}
+         {(admin && <Route exact path="/discountType" element={<ProtectedRoute><Sidebar/><Topbar/> <DiscountType /></ProtectedRoute>} />)}
 
           {(admin && <Route exact path="/role" element={<ProtectedRoute><Sidebar/><Topbar/> <Role /></ProtectedRoute>} />)}
           {(admin && <Route exact path="/file" element={<ProtectedRoute><Sidebar/><Topbar/><File /></ProtectedRoute>} />)}
