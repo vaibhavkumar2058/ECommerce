@@ -7,12 +7,13 @@ import useFetchRole from "../hooks/useFetchRole";
 import useFetchGender from "../hooks/useFetchGender";
 import ResourcesModel from "../components/ResourcesModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
+//import 'react-bootstrap-table-neuxt/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit';
 import Enquiry from "../pages/Enquiry";
+import MyProfile from "./MyProfile";
 
 const { SearchBar, ClearSearchButton } = Search;
 
@@ -34,9 +35,11 @@ export default function Resourcess() {
   const [genderList, setGendersList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const [viewDetails, setViewDetails] = useState(false);
   const [show, setShow] = useState(false);
   const [showMap, setShowMap] = useState(false);
+
+
   // const handleClose = () => setShow(false);
   const handleClose = () => {
     getAllResourcess();
@@ -44,9 +47,11 @@ export default function Resourcess() {
     setIsDelete(false);
     setShow(false);
     setShowMap(false);
+    setViewDetails(false)
   };
   const handleShow = () => setShow(true);
   const handleShowMap = () => setShowMap(true);
+ // const handleViewDetail =()=> setViewDetails(true)
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [resources, setResources] = useState({
@@ -161,7 +166,15 @@ export default function Resourcess() {
               onClick={() => handleDelete(row.resourcesId, row.name)}
             >
               Delete
-            </button></>
+            </button>
+            <button
+             className="btn btn-primary btn-xs"
+              onClick={()=> handleviewDetails()}
+             >
+              ViewDetails
+             
+            </button>
+            </>
         );
       },
     },
@@ -205,6 +218,10 @@ export default function Resourcess() {
     setIsDelete(true);
     setShow(true);
   };
+ const handleviewDetails =(rowId, name)=>{
+    setId(rowId);
+    setViewDetails(true);
+ }
 
   const pagination = paginationFactory({
     page: 1,
@@ -456,6 +473,23 @@ export default function Resourcess() {
             </Modal.Header>
             <Modal.Body className="rm-p" >
               <Enquiry></Enquiry>
+            </Modal.Body>
+
+          </Modal>
+          {/* Model Box Finsihs */}
+        </div>
+        <div>
+          <Modal dialogClassName="my-modal"
+            show={viewDetails}
+            onHide={handleClose}
+            backdrop="static"
+            keyboard={false}
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>My Profile</Modal.Title>
+            </Modal.Header>
+            <Modal.Body  >
+            <MyProfile></MyProfile>
             </Modal.Body>
 
           </Modal>

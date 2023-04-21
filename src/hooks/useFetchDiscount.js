@@ -186,6 +186,37 @@ import {
         );
       });
       
+  };const getRecordByName = (discountName) => {
+    return API.get(`${hapyCarURL}/${discountName}`,
+      null,
+      { suppressErrors: [400] }
+    )
+      .then(({ data
+
+      }) =>
+
+        dispatch(
+            discountAction({
+            ...data,
+            title: SUCCESS,
+          })
+        )
+      )
+      .catch((error) => {
+        let errorMsg = "error msg from copy file";
+        if (error.response.data.discount) {
+          const [errors] = error.response.data.discount;
+          errorMsg = errors;
+        }
+        dispatch(
+            discountAction({
+            ...errorMsg,
+            title: ERROR,
+            errorMsg,
+          })
+        );
+      });
+      
   };
   return {
     addDiscount,
@@ -193,5 +224,6 @@ import {
     deleteDiscount,
     getDiscounts,
     discountById,
+    getRecordByName,
   };
 }

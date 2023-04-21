@@ -95,7 +95,6 @@ export default () => {
   const getResourcesById = async (id) => {
     const response = await resourcesById(id);
     if (response.payload.title == "Success") {
-      debugger
       setResource(response.payload);
     }
     else {
