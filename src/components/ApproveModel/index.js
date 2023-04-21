@@ -18,6 +18,7 @@ export default function ApproveModel({
   onClose,
   approveData,
   recordStatusList = [],
+  approveStatusList = [],
   //recordStatus,
 }) {
   const [newApprove, setNewApprove] = useState({
@@ -36,6 +37,13 @@ export default function ApproveModel({
       text: recordStatus.actionName,
       value: recordStatus.recordStatusId,
     })).filter((item) => item));
+    const [approveStatusOptions, setApproveStatusOptions] = useState(approveStatusList.map((approveStatus, item) => (
+      {
+        key: item,
+        text: approveStatus.approveStatusName,
+        value: approveStatus.approveStatusId,
+      })).filter((item) => item));
+  
 
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
@@ -128,6 +136,14 @@ export default function ApproveModel({
         value: recordStatus.recordStatusId,
       })).filter((item) => item));
   }, [recordStatusList]);
+  useEffect(() => {
+    setApproveStatusOptions(approveStatusList.map((approveStatus, item) => (
+      {
+        key: item,
+        text: approveStatus.approveStatusName,
+        value: approveStatus.approveStatusId,
+      })).filter((item) => item));
+  }, [approveStatusList]);
 
   useEffect(() => {
     if (isEdit) {
@@ -194,7 +210,7 @@ export default function ApproveModel({
           <div className="row">
             <div className="col-md-6">
               <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Comment<span className="required">*</span></Form.Label>
+                <Form.Label>Comment</Form.Label>
                 <Form.Control
                   type="text"
                   name="comment"
@@ -208,12 +224,15 @@ export default function ApproveModel({
             <div className="col-md-6">
             <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Approve Status<span className="required">*</span></Form.Label>
-                <Form.Control
-                  type="text"
+                <Dropdown
                   name="approveStatusId"
-                  placeholder="Approve Status"
+                  placeholder='Select Approve Status'
+                  fluid
+                  search
+                  selection
+                  options={approveStatusOptions}
                   value={newApprove?.approveStatusId}
-                  onChange={changeHandler}
+                  onChange={dropdownHandler}
                 />
               </Form.Group>
             </div>
@@ -294,7 +313,10 @@ ApproveModel.propTypes = {
    * recordStatusList for object type
    */
   recordStatusList: PropTypes.any,
-  
+  /**
+   * approveStatusList for object type
+   */
+  approveStatusList: PropTypes.any,
 };
 
 ApproveModel.defaultProps = {
@@ -308,5 +330,6 @@ ApproveModel.defaultProps = {
   id: null,
   approveData: null,
   recordStatusList: null,
+  approveStatusList: null,
 };
 
