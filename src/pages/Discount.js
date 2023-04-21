@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
 import useFetchDiscount from "../hooks/useFetchDiscount";
 import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
+import useFetchDiscountType from "../hooks/useFetchDiscountType";
 import DiscountModel from "../components/DiscountModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
@@ -27,6 +28,7 @@ const MyExportCSV = (props) => {
 
 export default function Discounts() {
   const [recordStatusList, setRecordStatusList] = useState([]);
+  const [discountTypeList, setDiscountTypeList] = useState([]);
   const [discounts, setDiscounts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -44,7 +46,7 @@ export default function Discounts() {
   const [isDelete, setIsDelete] = useState(false);
   const [discount, setDiscount] = useState({
     discountCode:"",
-    discountType:null,
+    discountTypeId:null,
     discountValue:null,
     isActive:"",
     description:"",
@@ -72,12 +74,15 @@ export default function Discounts() {
   const { 
     getRecordStatuss,
   } = useFetchRecordStatus();
+  const { 
+    getDiscountTypes,
+  } = useFetchDiscountType();
 
   const columns = [
 
     { dataField: 'discountId', text: 'DiscountId', sort: true, hidden: true },
     { dataField: 'discountCode', text: 'Discount Code', sort: true, },
-    { dataField: 'discountType', text: 'Discount Type', sort: true, },
+    { dataField: 'discountTypeId', text: 'discountTypeId',hidden:true, sort: true, },
     { dataField: 'discountValue', text: 'Discount Value', sort: true, },
     { dataField: 'isActive', text: 'IsActive', sort: true, },
     { dataField: 'description', text: 'Description', sort: true },
@@ -114,11 +119,13 @@ export default function Discounts() {
 
   useEffect(() => {
     getRecordStatusList();
+    getDiscountTypeList();
     if (discounts.length == 0) {
       getAllDiscounts();
       setLoading(false)
     }
   }, [discounts]);
+  
 
 
   const defaultSorted = [{
@@ -186,6 +193,24 @@ export default function Discounts() {
       })
     }
   };
+  const getDiscountTypeList = async () => {
+    const response = await getDiscountTypes();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        if (key !== 'title')
+        arr.push(response.payload[key]);
+      }
+      setDiscountTypeList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'DiscountType Fetch Failed.'
+      })
+    }
+  };
 
 
   const getAllDiscounts = async () => {
@@ -199,7 +224,7 @@ export default function Discounts() {
         const curedData = {};
         curedData.discountId=rawData?.discountId;
         curedData.discountCode=rawData?.discountCode;
-        curedData.discountType=rawData?.discountType;
+        curedData.discountTypeId=rawData?.discountTypeId;
         curedData.discountValue=rawData?.discountValue;
         curedData.isActive=rawData?.isActive;
         curedData.description=rawData?.description;
@@ -327,6 +352,7 @@ export default function Discounts() {
                 id={id}
                 discountData={discount}
                 recordStatusList={recordStatusList}
+                discountTypeList={discountTypeList}
               />
             </Modal.Body>
 

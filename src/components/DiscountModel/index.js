@@ -18,10 +18,12 @@ export default function DiscountModel({
   onClose,
   discountData,
   recordStatusList = [],
+  discountTypeList=[],
+
  }) {
   const [newDiscount, setNewDiscount] = useState({
     discountCode:"",
-    discountType:null,
+    discountTypeId:null,
     discountValue:null,
     isActive:"",
     description:"",
@@ -41,6 +43,12 @@ export default function DiscountModel({
     key: item,
     text: recordStatus.actionName,
     value: recordStatus.recordStatusId,
+  })).filter((item) => item));
+  const [discountTypeOptions, setDiscountTypeOptions] = useState(discountTypeList.map((discountType,item) =>(
+    {
+    key: item,
+    text: discountType.discountTypeName,
+    value: discountType.discountTypeId,
   })).filter((item) => item));
 
 
@@ -127,7 +135,15 @@ export default function DiscountModel({
     value: recordStatus.recordStatusId,
     })).filter((item) => item));
     }, [recordStatusList]);
-  
+    useEffect(() => { 
+      setDiscountTypeOptions(discountTypeList.map((discountType,item) =>(
+        {
+        key: item,
+        text: discountType.discountTypeName,
+      value: discountType.discountTypeId,
+      })).filter((item) => item));
+      }, [discountTypeList]);
+    
 
   useEffect(() => {
     if (isEdit) {
@@ -181,13 +197,17 @@ export default function DiscountModel({
             className={styles.stFormContainer}
             controlId="formDiscountType"
           >
+           
             <Form.Label>Discount Type<span className="required">*</span></Form.Label>
-            <Form.Control
-              type="text"
-              name="discountType"
-              placeholder="Discount Type"
-              value={newDiscount?.discountType}
-              onChange={changeHandler}
+            <Dropdown
+              name="discountTypeId"
+              placeholder='Select Discount Type'
+              fluid
+              search
+              selection
+              options={discountTypeOptions}
+              value = {newDiscount?.discountTypeId}
+              onChange={dropdownHandler}
             />
           </Form.Group>
           </div>
@@ -314,6 +334,10 @@ DiscountModel.propTypes = {
  * recordStatusData for object type
  */
   recordStatusList: PropTypes.any,
+  /**
+ * discountTypeData for object type
+ */
+  discountTypeList: PropTypes.any,
 };
 
 DiscountModel.defaultProps = {
@@ -327,5 +351,6 @@ DiscountModel.defaultProps = {
   id: null,
   discountData: null,
   recordStatusList:null,
+  discountTypeList:null,
 };
 
