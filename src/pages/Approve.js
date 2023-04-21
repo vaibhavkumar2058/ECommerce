@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
 import useFetchApprove from "../hooks/useFetchApprove";
 import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
+import useFetchApproveStatus from "../hooks/useFetchApproveStatus";
 import ApproveModel from "../components/ApproveModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
@@ -29,6 +30,7 @@ export default function Approves() {
 
   const [approves, setApproves] = useState([]);
   const [recordStatusList, setRecordStatusList] = useState([]);
+  const [approveStatusList, setApproveStatusList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -73,7 +75,10 @@ export default function Approves() {
     getRecordStatuss,
   } = useFetchRecordStatus();
   
-
+  const { 
+    getApproveStatuss,
+  } = useFetchApproveStatus();
+  
 
   const columns = [
     { dataField: 'approveId', text: 'Approve Id', sort: true, hidden: true },
@@ -120,6 +125,7 @@ export default function Approves() {
 
   useEffect(() => {
     getRecordStatusList();
+    getApproveStatusList();
     if (approves.length == 0) {
       getAllApproves();
       setLoading(false)
@@ -188,6 +194,24 @@ export default function Approves() {
       setMessageStatus({
         mode: 'danger',
         message: 'Approve Fetch Failed.'
+      })
+    }
+  };
+  const getApproveStatusList = async () => {
+    const response = await getApproveStatuss();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        if (key !== 'title')
+        arr.push(response.payload[key]);
+      }
+      setApproveStatusList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'ApproveStatus Fetch Failed.'
       })
     }
   };
@@ -331,6 +355,7 @@ export default function Approves() {
                 id={id}
                 approveData={approve}
                 recordStatusList={recordStatusList}
+                approveStatusList={approveStatusList}
               />
             </Modal.Body>
 
