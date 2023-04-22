@@ -7,6 +7,7 @@ import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
 import useFetchOrders from "../../hooks/useFetchOrder";
+import useFetchDiscounts from "../../hooks/useFetchDiscount";
 
 export default function OrderModel({
   onAddOrder,
@@ -25,13 +26,25 @@ export default function OrderModel({
   measurementTypeList = [],
   measurementValueList = [],
 }) {
-  
+
   const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
 
   const [newOrder, setNewOrder] = useState({
     resourcesId: userInfo.resourcesId,
     orderItems: [],
     description: "Test",
+    discountId: null,
+  });
+
+  const [discount, setDiscount] = useState({
+    discountId: null,
+    discountCode: "",
+    discountTypeId: null,
+    discountValue: 0,
+    discountPrice: 0,
+    isActive: "",
+    description: "",
+    recordStatusId: null,
   });
 
   const [placeOrder, setPlaceOrder] = useState({
@@ -40,6 +53,37 @@ export default function OrderModel({
     quantity: null,
     description: "",
   });
+
+  const {
+    getRecordByName,
+  } = useFetchDiscounts();
+
+ 
+    const getDiscoutPrice = async () => {
+      const response = await getRecordByName(discount.discountCode);
+      if (response.payload.title == "Success") {
+        setDiscount(response.payload);
+// Logic for Discount Price
+
+        if(response.payload.discountType.discountTypeName == "Percentage")
+        {       
+          discount.discountPrice = placeOrder?.cost - (placeOrder?.cost * response.payload.discountValue)/100; 
+          console.log('discount price : ', discount.discountPrice);
+        }
+        else
+        if(response.payload.discountType.discountTypeName == "Amount")
+        {
+          discount.discountPrice = placeOrder?.cost - response.payload.discountValue;
+        }
+        setDiscount({
+          ...discount,
+          ["discountPrice"]: discount.discountPrice,
+        });
+      }
+      else {
+      }
+    };
+  
 
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
@@ -96,6 +140,13 @@ export default function OrderModel({
   const changeHandler = (e) => {
     setPlaceOrder({
       ...placeOrder,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const changeDiscountHandler = (e) => {
+    setDiscount({
+      ...discount,
       [e.target.name]: e.target.value,
     });
   };
@@ -174,6 +225,10 @@ export default function OrderModel({
   }, []);
 
   useEffect(() => {
+
+  }, [discount]);
+
+  useEffect(() => {
     setRecordStatusOptions(recordStatusList.map((recordStatus, item) => (
       {
         key: item,
@@ -219,14 +274,13 @@ export default function OrderModel({
     if (isEdit) {
       setButtonType("Update");
     }
-debugger
     const isEnable =
       !placeOrder?.productId
       || !placeOrder?.cost
       || !placeOrder?.quantity
       || !placeOrder?.measurementTypeId
       || !placeOrder?.measurementValueId
-     
+
     setSaveDisabled(isEnable);
   }, [placeOrder]);
 
@@ -324,20 +378,8 @@ debugger
               </Form.Group>
             </div>
           </div>
-          <div className="row">
 
-            <div className="col-md-6">
-              <Form.Group className="mb-3" controlId="price">
-                <Form.Label>Price</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="cost"
-                  placeholder="Price"
-                  value={placeOrder?.cost}
-                  onChange={changeHandler}
-                />
-              </Form.Group>
-            </div>
+          <div className="row">
             <div className="col-md-6">
               <Form.Group className="mb-3" >
                 <Form.Label>Quantity</Form.Label>
@@ -350,6 +392,54 @@ debugger
                 />
               </Form.Group>
 
+            </div>
+            <div className="col-md-6">
+              <Form.Group className="mb-3" controlId="price">
+                <Form.Label>Price</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="cost"
+                  placeholder="Price"
+                  value={placeOrder?.cost}
+                  onChange={changeHandler}
+                />
+              </Form.Group>
+            </div>
+            <div className="row">
+              <div className="col-md-4">
+                <Form.Group className="mb-3" >
+                  <Form.Label>Discount</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="discountCode"
+                    placeholder="Discount Code"
+                    value={discount?.discountCode}
+                    onChange={changeDiscountHandler}
+                  />
+                </Form.Group>
+
+              </div>
+              <div className="col-md-2">
+
+                <Button
+                  onClick={() => getDiscoutPrice()}
+                >
+                  Apply
+                </Button>
+              </div>
+              <div className="col-md-6">
+                <Form.Group className="mb-3" >
+                  <Form.Label>Discounted Price</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="discountPrice"
+                    placeholder="Discount Price"
+                    value={discount?.discountPrice}
+                    onChange={changeDiscountHandler}
+                  />
+                </Form.Group>
+
+              </div>
             </div>
           </div>
 
