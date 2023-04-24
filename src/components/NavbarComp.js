@@ -24,6 +24,7 @@ import Invoice from "../pages/Invoice";
 import Country from "../pages/country";
 import Gender from "../pages/Gender";
 import GMT from "../pages/GMT";
+import Banner from "../pages/Banner";
 import ItemCost from "../pages/ItemCost";
 import MeasurementType from "../pages/MeasurementType";
 import MeasurementValue from "../pages/MeasurementValue";
@@ -105,8 +106,7 @@ const NavbarComp = () => {
          {(admin && <Route exact path="/approveStatus" element={<ProtectedRoute><Sidebar/><Topbar/> <ApproveStatus/></ProtectedRoute>}/>)}
          {(admin && <Route exact path="/discountType" element={<ProtectedRoute><Sidebar/><Topbar/> <DiscountType /></ProtectedRoute>} />)}
          {((admin||agent||dealer||customer) && <Route exact path="/discount" element={<ProtectedRoute><Sidebar/><Topbar/> <Discount/></ProtectedRoute>}/>)}
-
-
+         {((admin||agent||dealer||customer) && <Route exact path="/banner" element={<ProtectedRoute><Sidebar/><Topbar/> <Banner/></ProtectedRoute>}/>)}
           {(admin && <Route exact path="/role" element={<ProtectedRoute><Sidebar/><Topbar/> <Role /></ProtectedRoute>} />)}
           {(admin && <Route exact path="/file" element={<ProtectedRoute><Sidebar/><Topbar/><File /></ProtectedRoute>} />)}
           {(admin && <Route exact path="/security" element={<ProtectedRoute><Sidebar/><Topbar/><Security /></ProtectedRoute>} />)}
