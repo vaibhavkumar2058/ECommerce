@@ -16,6 +16,7 @@ import Product from "../pages/Product";
 import File from "../pages/File";
 import Security from "../pages/Security";
 import AddressType from "../pages/AddressType";
+import BannerType from "../pages/BannerType";
 import Discount from "../pages/Discount";
 import ApproveStatus from "../pages/ApproveStatus";
 import Address from "../pages/Address";
@@ -105,6 +106,7 @@ const NavbarComp = () => {
          {(admin && <Route exact path="/approveStatus" element={<ProtectedRoute><Sidebar/><Topbar/> <ApproveStatus/></ProtectedRoute>}/>)}
          {(admin && <Route exact path="/discountType" element={<ProtectedRoute><Sidebar/><Topbar/> <DiscountType /></ProtectedRoute>} />)}
          {((admin||agent||dealer||customer) && <Route exact path="/discount" element={<ProtectedRoute><Sidebar/><Topbar/> <Discount/></ProtectedRoute>}/>)}
+         {(admin && <Route exact path="/bannerType" element={<ProtectedRoute><Sidebar/><Topbar/> <BannerType/></ProtectedRoute>}/>)}
 
 
           {(admin && <Route exact path="/role" element={<ProtectedRoute><Sidebar/><Topbar/> <Role /></ProtectedRoute>} />)}
