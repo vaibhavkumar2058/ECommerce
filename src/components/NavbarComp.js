@@ -53,6 +53,7 @@ import Dashboard from "../pages/DashBoard"
 import OrderSummaryList from "../pages/OrderSummaryList";
 import OrderPlacedList from "../pages/OrderPlacedList";
 import Tax from "../pages/Tax";
+import Box from "../pages/Box";
 import ProtectedRoute from "../pages/ProtectedRoute";
 import Signin from "../pages/PublicPages/Signin";
 import NotFound from "../pages/PublicPages/NotFound";
@@ -67,6 +68,7 @@ import CustomType from "../pages/CustomType";
 import Emailverification from "../pages/PublicPages/Emailverification";
 import Topbar from "../pages/Topbar";
 import DiscountTypes from "../pages/DiscountType";
+// import { Box } from "react-bootstrap-icons";
 
 
 
@@ -114,6 +116,7 @@ const NavbarComp = () => {
          {((admin||agent||dealer||customer) && <Route exact path="/discount" element={<ProtectedRoute><Sidebar/><Topbar/> <Discount/></ProtectedRoute>}/>)}
          {((admin||agent||dealer||customer) && <Route exact path="/banner" element={<ProtectedRoute><Sidebar/><Topbar/> <Banner/></ProtectedRoute>}/>)}
          {(admin && <Route exact path="/bannerType" element={<ProtectedRoute><Sidebar/><Topbar/> <BannerType/></ProtectedRoute>}/>)}
+         {((admin||dealer)  && <Route exact path="/box" element={<ProtectedRoute><Sidebar/><Topbar/> <Box/></ProtectedRoute>}/>)}
 
 
           {(admin && <Route exact path="/role" element={<ProtectedRoute><Sidebar/><Topbar/> <Role /></ProtectedRoute>} />)}

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
-import useFetchBanner from "../hooks/useFetchBanner";
+import useFetchBox from "../hooks/useFetchBox";
 import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
-import useFetchBannerType from "../hooks/useFetchBannerType";
-import BannerModel from "../components/BannerModel";
+import BoxModel from "../components/BoxModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
@@ -26,18 +25,17 @@ const MyExportCSV = (props) => {
   );
 };
 
-export default function Banners() {
+export default function Boxes() {
 
-  const [banners, setBanners] = useState([]);
+  const [boxes, setBoxes] = useState([]);
   const [recordStatusList, setRecordStatusList] = useState([]);
-  const [bannerTypeList, setBannerTypeList] = useState([]);
- const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
   const handleClose = () => {
-    getAllBanners();
+    getAllBoxes();
     setIsEdit(false);
     setIsDelete(false);
     setShow(false);
@@ -45,11 +43,11 @@ export default function Banners() {
   const handleShow = () => setShow(true);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-  const [banner, setBanner] = useState({
-    bannerTypeId: null,
-    title: "",
-    description: "",
-    recordStatusId: null,
+  const [box, setBox] = useState({
+    boxName: "",
+    piecesCount: null,
+    boxLimit: null,
+    recordStatus: null,
     
       });
 
@@ -63,27 +61,24 @@ export default function Banners() {
   });
 
   const { 
-    addBanner,
-    updateBanner,
-    deleteBanner,
-    getBanners,
-    bannerById,
-  } = useFetchBanner();
+    addBox,
+    updateBox,
+    deleteBox,
+    getBoxes,
+    boxById,
+  } = useFetchBox();
 
   const { 
     getRecordStatuss,
   } = useFetchRecordStatus();
   
-  const { 
-    getBannerTypes,
-  } = useFetchBannerType();
   
 
   const columns = [
-    { dataField: 'bannerId', text: 'Banner Id', sort: true, hidden: true },
-    { dataField: 'bannerTypeId', text: 'Banner Type Id', sort: true, hidden: true },
-    { dataField: 'title', text: 'Title', sort: true, },
-    { dataField: 'description', text: 'Description', sort: true },
+    { dataField: 'boxId', text: 'Box Id', sort: true, hidden: true },
+    { dataField: 'BoxName', text: 'BoxName', sort: true, hidden: true },
+    { dataField: 'PiecesCount', text: 'Pieces Count', sort: true, },
+    { dataField: 'Box Limit', text: 'Box Limit', sort: true},
     { dataField: 'recordStatusId', text: 'recordStatusId',hidden:true, sort: true,headerStyle: () => {
       return { width: "100px" };
     } },
@@ -100,18 +95,18 @@ export default function Banners() {
         return (
           <><button
             className="btn btn-primary btn-xs"
-            onClick={() => handleView(row.bannerId, row.name)}
+            onClick={() => handleView(row.boxId, row.name)}
           >
             View
           </button>
             <button
               className="btn btn-primary btn-xs"
-              onClick={() => handleEdit(row.bannerId, row)}
+              onClick={() => handleEdit(row.boxId, row)}
             >
               Edit
             </button><button
               className="btn btn-danger btn-xs"
-              onClick={() => handleDelete(row.bannerId, row.name)}
+              onClick={() => handleDelete(row.boxId, row.name)}
             >
               Delete
             </button></>
@@ -122,16 +117,15 @@ export default function Banners() {
 
   useEffect(() => {
     getRecordStatusList();
-    getBannerTypeList();
-    if (banners.length == 0) {
-      getAllBanners();
+    if (boxes.length == 0) {
+      getAllBoxes();
       setLoading(false)
     }
-  }, [banners]);
+  }, [boxes]);
 
 
   const defaultSorted = [{
-    dataField: 'bannerId',
+    dataField: 'boxId',
     order: 'desc'
   }];
 
@@ -145,8 +139,8 @@ export default function Banners() {
   };
 
   const handleEdit = (rowId, row) => {
-    setBanner(row);
-    //getBannerById(rowId);
+    setBox(row);
+    //getBoxById(rowId);
     setId(rowId);
     setIsEdit(true);
     setShow(true);
@@ -190,42 +184,26 @@ export default function Banners() {
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Banner Fetch Failed.'
-      })
-    }
-  };
-  const getBannerTypeList = async () => {
-    const response = await getBannerTypes();
-    if (response.payload.title == "Success") {
-
-      var arr = [];
-      for (var key in response.payload) {
-        if (key !== 'title')
-        arr.push(response.payload[key]);
-      }
-      setBannerTypeList(arr);
-    }
-    else {
-      setMessageStatus({
-        mode: 'danger',
-        message: 'BannerType Fetch Failed.'
+        message: 'Box Fetch Failed.'
       })
     }
   };
   
+  
 
-  const getAllBanners = async () => {
-    const response = await getBanners();
+  const getAllBoxes = async () => {
+    const response = await getBoxes();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',
-        message: 'Banner Record Fetch Succefully.'
+        message: 'Box Record Fetch Succefully.'
       })
       const dataFormatter = (rawData) => {
         const curedData = {};
-        curedData.bannerTypeId=rawData?.bannerType.bannerTypeId;
-        curedData.title=rawData?.title;
-        curedData.description=rawData?.description;
+        curedData.boxId=rawData?.boxId;
+        curedData.boxName=rawData?.boxName;
+        curedData.piecesCount=rawData?.piecesCount;
+        curedData.boxLimit=rawData?.boxLimit;
         curedData.recordStatusId=rawData?.recordStatus.recordStatusId;
         curedData.recordStatus=rawData?.recordStatus.actionName;
         
@@ -237,25 +215,25 @@ export default function Banners() {
         arr.push(dataFormatter(response.payload[key]));
       }
 
-      setBanners(arr);
+      setBoxes(arr);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Banner Fetch Failed.'
+        message: 'Box Fetch Failed.'
       })
     }
   };
 
-  const getBannerById = async (id) => {
-    const response = await bannerById(id);
+  const getBoxById = async (id) => {
+    const response = await boxById(id);
     if (response.payload.title == "Success") {
-      setBanner(response.payload);
+      setBox(response.payload);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Banner Get Failed.'
+        message: 'Box Get Failed.'
       })
     }
   };
@@ -282,11 +260,11 @@ export default function Banners() {
     <>
       <div className="m-t-40">
         {loading && <div>A moment please...</div>}
-        {banners && (<div>
+        {boxes && (<div>
           <ToolkitProvider
             bootstrap4
-            keyField='bannerId'
-            data={banners}
+            keyField='boxId'
+            data={boxes}
             columns={columns}
             search
           >
@@ -304,7 +282,7 @@ export default function Banners() {
                           <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
                           <Button variant="primary" onClick={handleShow}>
-                            Add Banner
+                            Add Box
                           </Button>
                           </div>
                         </div>
@@ -335,21 +313,20 @@ export default function Banners() {
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Add Banner</Modal.Title>
+              <Modal.Title>Add Box</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <BannerModel
-                onAddBanner={addBanner}
-                onUpdateBanner={updateBanner}
-                onDeleteBanner={deleteBanner}
-                onGetBanner={bannerById}
+              <BoxModel
+                onAddBox={addBox}
+                onUpdateBox={updateBox}
+                onDeleteBox={deleteBox}
+                onGetBox={boxById}
                 onClose={handleClose}
                 isEdit={isEdit}
                 isDelete={isDelete}
                 id={id}
-                bannerData={banner}
+                boxData={box}
                 recordStatusList={recordStatusList}
-                bannerTypeList={bannerTypeList}
               />
             </Modal.Body>
 

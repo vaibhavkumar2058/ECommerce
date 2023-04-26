@@ -7,42 +7,32 @@ import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
 
-export default function BannerModel({
-  onAddBanner,
-  onUpdateBanner,
-  onDeleteBanner,
+export default function BoxModel({
+  onAddBox,
+  onUpdateBox,
+  onDeleteBox,
   isEdit,
   isDelete,
-  onGetBanner,
+  onGetBox,
   id,
   onClose,
-  bannerData,
+  boxData,
   recordStatusList = [],
-   bannerTypeList = [],
   //recordStatus,
 }) {
-  const [newBanner, setNewBanner] = useState({
-    bannerTypeId: null,
-    title: "",
-    description: "",
-    recordStatusId: null,
+  const [newBox, setNewBox] = useState({
+    boxName: "",
+    piecesCount: null,
+    boxLimit: null,
+    recordStatus: null,
   });
   
- 
-
   const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus, item) => (
     {
       key: item,
       text: recordStatus.actionName,
       value: recordStatus.recordStatusId,
     })).filter((item) => item));
-    const [bannerTypeOptions, setBannerTypeOptions] = useState(bannerTypeList.map((bannerType, item) => (
-      {
-        key: item,
-        text: bannerType.bannerTypeName,
-        value: bannerType.bannerTypeId,
-      })).filter((item) => item));
-  
 
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
@@ -62,8 +52,8 @@ export default function BannerModel({
   };
 
   const changeHandler = (e) => {
-    setNewBanner({
-      ...newBanner,
+    setNewBox({
+      ...newBox,
       [e.target.name]: e.target.value,
     });
   };
@@ -72,7 +62,7 @@ export default function BannerModel({
   const saveHandler = async () => {
 
     if (isEdit) {
-      const response = await onUpdateBanner(id, newBanner);
+      const response = await onUpdateBox(id, newBox);
       if (response.payload.title == "Success") {
         onClose(true);
       }
@@ -84,11 +74,11 @@ export default function BannerModel({
       }
     }
     else {
-      const response = await onAddBanner(newBanner);
+      const response = await onAddBox(newBox);
       if (response.payload.title == "Success") {
         setMessageStatus({
           mode: 'success',
-          message: 'Banner Record Saved Succefully.'
+          message: 'Box Record Saved Succefully.'
         })
         onClose(true);
         console.log(response.payload);
@@ -96,34 +86,33 @@ export default function BannerModel({
       else {
         setMessageStatus({
           mode: 'danger',
-          message: 'Banner Save Failed.'
+          message: 'Box Save Failed.'
         })
       }
     }
   };
 
   const deleteHandler = async () => {
-    const response = await onDeleteBanner(id);
+    const response = await onDeleteBox(id);
     if (response.payload.title == "Success") {
       onClose(true);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Banner Delete Failed.'
+        message: 'Box Delete Failed.'
       })
     }
   };
   const dropdownHandler = (event, { name, value }) => {
-    setNewBanner((currentBanner) => ({ ...currentBanner, [name]: value }));
+    setNewBox((currentBox) => ({ ...currentBox, [name]: value }));
 
   }
 
-  
-
+ 
   useEffect(() => {
     if (isEdit) {
-      setNewBanner(bannerData);
+      setNewBox(boxData);
     }
   }, []);
 
@@ -135,25 +124,17 @@ export default function BannerModel({
         value: recordStatus.recordStatusId,
       })).filter((item) => item));
   }, [recordStatusList]);
-  useEffect(() => {
-    setBannerTypeOptions(bannerTypeList.map((bannerType, item) => (
-      {
-        key: item,
-        text: bannerType.bannerTypeName,
-        value: bannerType.bannerTypeId,
-      })).filter((item) => item));
-  }, [bannerTypeList]);
 
   useEffect(() => {
     if (isEdit) {
       setButtonType("Update");
     }
-    const isEnable = !newBanner?.bannerTypeId
-      || !newBanner?.title
-      || !newBanner?.description
-      || !newBanner?.recordStatusId;
+    const isEnable = !newBox?.boxName
+      || !newBox?.piecesCount
+      || !newBox?.boxLimit
+      || !newBox?.recordStatusId;
     setSaveDisabled(isEnable);
-  }, [newBanner]);
+  }, [newBox]);
 
 
   return (
@@ -179,51 +160,47 @@ export default function BannerModel({
       {!isDelete && (
         <Form>
           <div className="row">
-          <div className="col-md-6">
-              <Form.Group className="mb-3" controlId="recordStatusId">
-                <Form.Label>Banner Type<span className="required">*</span></Form.Label>
-                <Dropdown
-                  name="bannerTypeId"
-                  placeholder='Select Banner Type'
-                  fluid
-                  search
-                  selection
-                  options={bannerTypeOptions}
-                  value={newBanner?.bannerTypeId}
-                  onChange={dropdownHandler}
-                />
-              </Form.Group>
-            </div>
-           
-            <div className="col-md-6">
-              <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Title<span className="required">*</span></Form.Label>
+            <div className="col-md-4">
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Label>Box Name<span className="required">*</span></Form.Label>
                 <Form.Control
                   type="text"
-                  name="title"
-                  placeholder="Title"
-                  value={newBanner?.title}
+                  name="boxName"
+                  placeholder="Box Name"
+                  value={newBox?.boxName}
                   onChange={changeHandler}
                 />
               </Form.Group>
+            </div>
+            <div className="col-md-4">
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Label>Pieces Count<span className="required">*</span></Form.Label>
+                <Form.Control
+                  type="text"
+                  name="piecesCount"
+                  placeholder="Pieces Count "
+                  value={newBox?.piecesCount}
+                  onChange={changeHandler}
+                />
+              </Form.Group>
+            
             </div>
             </div>
           <div className="row">
-            <div className="col-md-6">
-              <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Description</Form.Label>
+            <div className="col-md-4">
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Label>Box Limit<span className="required">*</span></Form.Label>
                 <Form.Control
                   type="text"
-                  name="description"
-                  placeholder="Description"
-                  value={newBanner?.description}
+                  name="boxLimit"
+                  placeholder="Box Limit"
+                  value={newBox?.boxLimit}
                   onChange={changeHandler}
                 />
               </Form.Group>
             </div>
-          
-            <div className="col-md-6">
-              <Form.Group className="mb-3" controlId="recordStatusId">
+            <div className="col-md-4">
+            <Form.Group className="mb-3" controlId="recordStatusId">
                 <Form.Label>Status<span className="required">*</span></Form.Label>
                 <Dropdown
                   name="recordStatusId"
@@ -232,13 +209,12 @@ export default function BannerModel({
                   search
                   selection
                   options={recordStatusOptions}
-                  value={newBanner?.recordStatusId}
+                  value={newBox?.recordStatusId}
                   onChange={dropdownHandler}
                 />
               </Form.Group>
             </div>
-            </div>
-          
+          </div>
           
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
@@ -255,23 +231,23 @@ export default function BannerModel({
   );
 }
 
-BannerModel.propTypes = {
+BoxModel.propTypes = {
   /**
-   * Callback function for Add Banner
+   * Callback function for Add Box
    */
-  onAddBanner: PropTypes.func,
+  onAddBox: PropTypes.func,
   /**
-   * Callback function for Update Banner
+   * Callback function for Update Box
    */
-  onUpdateBanner: PropTypes.func,
+  onUpdateBox: PropTypes.func,
   /**
-   * Callback function for Delete Banner
+   * Callback function for Delete Box
    */
-  onDeleteBanner: PropTypes.func,
+  onDeleteBox: PropTypes.func,
   /**
-   * Callback function for Get Banner
+   * Callback function for Get Box
    */
-  onGetBanner: PropTypes.func,
+  onGetBox: PropTypes.func,
   /**
    * isEdit for bool type
    */
@@ -281,7 +257,7 @@ BannerModel.propTypes = {
    */
   isDelete: PropTypes.bool,
   /**
-   * Callback function for Get Banner
+   * Callback function for Get Box
    */
   onClose: PropTypes.func,
   /**
@@ -289,30 +265,23 @@ BannerModel.propTypes = {
    */
   id: PropTypes.number,
   /**
- * bannerData for object type
- */
-  bannerData: PropTypes.any,
-  /**
    * recordStatusList for object type
    */
   recordStatusList: PropTypes.any,
-  /**
-   * bannerTypeList for object type
-   */
-  bannerTypeList: PropTypes.any,
+  
 };
 
-BannerModel.defaultProps = {
-  onAddBanner: null,
-  onUpdateBanner: null,
-  onDeleteBanner: null,
-  onGetBanner: null,
+BoxModel.defaultProps = {
+  onAddBox: null,
+  onUpdateBox: null,
+  onDeleteBox: null,
+  onGetBox: null,
   isEdit: false,
   isDelete: false,
   onClose: null,
   id: null,
-  bannerData: null,
+  boxData: null,
   recordStatusList: null,
-  bannerTypeList: null,
+  
 };
 
