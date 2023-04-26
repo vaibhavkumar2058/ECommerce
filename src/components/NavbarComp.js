@@ -10,6 +10,7 @@ import {
 import { BrowserRouter as Router, Routes, Route, Link, Navigate } from "react-router-dom";
 import Enquiry from "../pages/Enquiry";
 import State from "../pages/State";
+import Lead from "../pages/Lead";
 import VehicleType from "../pages/VehicleType";
 import CategoryType from "../pages/CategoryType";
 import Product from "../pages/Product";
@@ -94,6 +95,7 @@ const NavbarComp = () => {
           {((admin||agent||dealer) && <Route exact path="/recordStatus" element={<ProtectedRoute><Sidebar/><Topbar/> <RecordStatus/></ProtectedRoute>}/>)}
           {(admin && <Route exact path="/tax" element={<ProtectedRoute><Sidebar/><Topbar/> <Tax /></ProtectedRoute>}/>)}
           {((admin||agent||dealer) && <Route exact path="/product" element={<ProtectedRoute><Sidebar/><Topbar/> <Product/></ProtectedRoute>}/>)}
+          {((admin||agent||dealer) && <Route exact path="/lead" element={<ProtectedRoute><Sidebar/><Topbar/> <Lead/></ProtectedRoute>}/>)}
           {(admin && <Route exact path="/country" element={<ProtectedRoute><Sidebar/><Topbar/> <Country/></ProtectedRoute>}/>)}
           {(admin && <Route exact path="/addressType" element={<ProtectedRoute><Sidebar/><Topbar/> <AddressType/></ProtectedRoute>}/>)}
           {(admin && <Route exact path="/address" element={<ProtectedRoute><Sidebar/><Topbar/> <Address/></ProtectedRoute>}/>)}
