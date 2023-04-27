@@ -94,7 +94,7 @@ export default function ResourcesModel({
     reader.onload = function () {
         cb(reader.result)
     };
-    reader.onerror = function (error) {
+    reader.onerror = function (error) { 
         console.log('Error: ', error);
     };
 }

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from 'react-bootstrap';
-import useFetchBanner from "../hooks/useFetchBanner";
+import useFetchLead from "../hooks/useFetchLead";
 import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
-import useFetchBannerType from "../hooks/useFetchBannerType";
-import BannerModel from "../components/BannerModel";
+import LeadModel from "../components/LeadModel";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
@@ -14,6 +13,7 @@ import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit/dist/rea
 
 
 const { SearchBar, ClearSearchButton } = Search;
+
 
 const MyExportCSV = (props) => {
   const handleClick = () => {
@@ -26,18 +26,17 @@ const MyExportCSV = (props) => {
   );
 };
 
-export default function Banners() {
+export default function Lead() {
 
-  const [banners, setBanners] = useState([]);
+  const [leads, setLeads] = useState([]);
   const [recordStatusList, setRecordStatusList] = useState([]);
-  const [bannerTypeList, setBannerTypeList] = useState([]);
- const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
   const handleClose = () => {
-    getAllBanners();
+    getAllLead();
     setIsEdit(false);
     setIsDelete(false);
     setShow(false);
@@ -45,14 +44,11 @@ export default function Banners() {
   const handleShow = () => setShow(true);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-  const [banner, setBanner] = useState({
-    bannerTypeId: null,
-    title: "",
-    description: "",
-    recordStatusId: null,
-    filesId: null,
-
-      });
+  const [lead, setLead] = useState({
+    leadCount:null,
+    resourcesId:null,
+    recordStatusId:null,
+    });
 
   const [id, setId] = useState(null);
 
@@ -64,51 +60,25 @@ export default function Banners() {
   });
 
   const { 
-    addBanner,
-    updateBanner,
-    deleteBanner,
-    getBanners,
-    bannerById,
-  } = useFetchBanner();
-
+    addLead,
+    updateLead,
+    deleteLead,
+    getLeads,
+    leadById,
+  } = useFetchLead();
   const { 
     getRecordStatuss,
   } = useFetchRecordStatus();
-  
-  const { 
-    getBannerTypes,
-  } = useFetchBannerType();
-  
 
   const columns = [
-    { dataField: 'bannerId', text: 'Banner Id', sort: true, hidden: true },
-    {
-      dataField: "bannerImage",
-      text: "Photo",
-      headerStyle: () => {
-        return { width: "60px" };
-      },
-      formatter: (cellContent, row) => {
 
-        return (
-          <>
-            <img className="banner-image" src={row.bannerimage}>
-            </img>
-          </>
-        );
-      },
-    },
-    { dataField: 'bannerId', text: 'Banner Id', sort: true, hidden: true },
-    { dataField: 'bannerTypeId', text: 'Banner Type Id', sort: true, hidden: true },
-    { dataField: 'title', text: 'Title', sort: true, },
-    { dataField: 'description', text: 'Description', sort: true },
-    { dataField: 'recordStatusId', text: 'recordStatusId',hidden:true, sort: true,headerStyle: () => {
-      return { width: "100px" };
-    } },
-    { dataField: 'recordStatus', text: 'Status', sort: true,headerStyle: () => {
-      return { width: "100px" };
-    } },
-    
+     { dataField: 'leadId', text: 'leadId', sort: true,hidden:true },
+     { dataField: 'leadCount', text: 'Lead Count', sort: true },
+     { dataField: 'resourcesId', text: 'resourcesId', sort: true,hidden:true },
+     { dataField: 'resourceName', text: 'Resource', sort: true},
+     { dataField: 'recordStatusId', text: 'RecordStatusId',hidden:true, sort: true},
+     { dataField: 'recordStatus', text: 'Status', sort: true},
+      
     
     // columns follow dataField and text structure
     {
@@ -118,18 +88,18 @@ export default function Banners() {
         return (
           <><button
             className="btn btn-primary btn-xs"
-            onClick={() => handleView(row.bannerId, row.name)}
+            onClick={() => handleView(row.leadId, row.name)}
           >
             View
           </button>
             <button
               className="btn btn-primary btn-xs"
-              onClick={() => handleEdit(row.bannerId, row)}
+              onClick={() => handleEdit(row.leadId, row)}
             >
               Edit
             </button><button
               className="btn btn-danger btn-xs"
-              onClick={() => handleDelete(row.bannerId, row.name)}
+              onClick={() => handleDelete(row.leadId, row.name)}
             >
               Delete
             </button></>
@@ -140,16 +110,15 @@ export default function Banners() {
 
   useEffect(() => {
     getRecordStatusList();
-    getBannerTypeList();
-    if (banners.length == 0) {
-      getAllBanners();
+    if (leads.length == 0) {
+      getAllLead();
       setLoading(false)
     }
-  }, [banners]);
+  }, [leads]);
 
 
   const defaultSorted = [{
-    dataField: 'bannerId',
+    dataField: 'leadId',
     order: 'desc'
   }];
 
@@ -163,8 +132,8 @@ export default function Banners() {
   };
 
   const handleEdit = (rowId, row) => {
-    setBanner(row);
-    //getBannerById(rowId);
+    setLead(row);
+    //getLeadById(rowId);
     setId(rowId);
     setIsEdit(true);
     setShow(true);
@@ -208,49 +177,28 @@ export default function Banners() {
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Banner Fetch Failed.'
+        message: 'State Fetch Failed.'
       })
     }
   };
-  const getBannerTypeList = async () => {
-    const response = await getBannerTypes();
-    if (response.payload.title == "Success") {
 
-      var arr = [];
-      for (var key in response.payload) {
-        if (key !== 'title')
-        arr.push(response.payload[key]);
-      }
-      setBannerTypeList(arr);
-    }
-    else {
-      setMessageStatus({
-        mode: 'danger',
-        message: 'BannerType Fetch Failed.'
-      })
-    }
-  };
-  
 
-  const getAllBanners = async () => {
-    const response = await getBanners();
+  const getAllLead = async () => {
+    const response = await getLeads();
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',
-        message: 'Banner Record Fetch Succefully.'
+        message: 'Lead Record Fetch Succefully.'
       })
       const dataFormatter = (rawData) => {
         const curedData = {};
-        curedData.bannerId=rawData?.bannerId;
-        curedData.bannerTypeId=rawData?.bannerType.bannerTypeId;
-        curedData.title=rawData?.title;
-        curedData.description=rawData?.description;
-        curedData.recordStatusId=rawData?.recordStatus.recordStatusId;
+        curedData.leadId=rawData?.leadId;
+        curedData.leadCount=rawData?.leadCount;
+        curedData.resourcesId=rawData?.resourcesId;
+        curedData.resourceName=rawData?.resources?.firstName+rawData?.resources?.middleName+rawData?.resources?.lastName;
+       curedData.recordStatusId=rawData?.recordStatusId;
         curedData.recordStatus=rawData?.recordStatus.actionName;
-        curedData.filesId = rawData?.bannerAttachment?.files?.filesId ?? 0;
-        if (rawData?.bannerAttachment)
-          curedData.bannerimage = 'data:' + rawData?.bannerAttachment?.files?.fileMimeType + ';base64,' + rawData?.bannerAttachment?.files?.base64;
-        
+
         return curedData;
       }
       var arr = [];
@@ -259,25 +207,25 @@ export default function Banners() {
         arr.push(dataFormatter(response.payload[key]));
       }
 
-      setBanners(arr);
+      setLeads(arr);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Banner Fetch Failed.'
+        message: 'Lead Fetch Failed.'
       })
     }
   };
 
-  const getBannerById = async (id) => {
-    const response = await bannerById(id);
+  const getLeadById = async (id) => {
+    const response = await leadById(id);
     if (response.payload.title == "Success") {
-      setBanner(response.payload);
+      setLead(response.payload);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Banner Get Failed.'
+        message: 'Lead Get Failed.'
       })
     }
   };
@@ -304,11 +252,11 @@ export default function Banners() {
     <>
       <div className="m-t-40">
         {loading && <div>A moment please...</div>}
-        {banners && (<div>
+        {lead && (<div>
           <ToolkitProvider
             bootstrap4
-            keyField='bannerId'
-            data={banners}
+            keyField='leadId'
+            data={leads}
             columns={columns}
             search
           >
@@ -326,7 +274,7 @@ export default function Banners() {
                           <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
                           <Button variant="primary" onClick={handleShow}>
-                            Add Banner
+                            Add Lead
                           </Button>
                           </div>
                         </div>
@@ -350,28 +298,27 @@ export default function Banners() {
         </div>)}
         {/* <!--- Model Box ---> */}
         <div className="model_box">
-          <Modal dialogClassName="my-modal" 
+          <Modal
             show={show}
             onHide={handleClose}
             backdrop="static"
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Add Banner</Modal.Title>
+              <Modal.Title>Add Lead</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <BannerModel
-                onAddBanner={addBanner}
-                onUpdateBanner={updateBanner}
-                onDeleteBanner={deleteBanner}
-                onGetBanner={bannerById}
+              <LeadModel
+                onAddLead={addLead}
+                onUpdateLead={updateLead}
+                onDeleteLead={deleteLead}
+                onGetLead={leadById}
                 onClose={handleClose}
                 isEdit={isEdit}
                 isDelete={isDelete}
                 id={id}
-                bannerData={banner}
+                leadData={lead}
                 recordStatusList={recordStatusList}
-                bannerTypeList={bannerTypeList}
               />
             </Modal.Body>
 

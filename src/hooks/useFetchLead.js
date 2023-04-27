@@ -3,33 +3,33 @@ import { useSelector, useDispatch } from "react-redux";
 import { useAPI } from "../services";
 
 import {
-    addBannerAction,
-    updateBannerAction,   
-    deleteBannerAction,
-    getBannerBeginAction,
-    getBannerSuccessAction,
-    getBannerFailureAction,
-    bannerAction,
-  } from "../actions/bannerActions";
+    addLeadAction,
+    updateLeadAction,   
+    deleteLeadAction,
+    getLeadBeginAction,
+    getLeadSuccessAction,
+    getLeadFailureAction,
+    leadAction,
+  } from "../actions/leadActions";
 
-  export default function useFetchBanners() {
+  export default function useFetchLead() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/banner";
+  const hapyCarURL = "https://localhost:7062/lead";
 
   const API = useAPI();
   const SUCCESS = "Success";
   const ERROR = "Error";
 
-  // Banner GET  ACTIONS
-  const getBanners = () => {
-    dispatch(getBannerBeginAction());
+  // Lead GET  ACTIONS
+  const getLeads = () => {
+    dispatch(getLeadBeginAction());
     return API.get(hapyCarURL,
       null,
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          getBannerSuccessAction({
+          getLeadSuccessAction({
             ...data,
             title: SUCCESS,
           })
@@ -37,12 +37,12 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.banner) {
-          const [errors] = error.response.data.banner;
+        if (error.response.data.lead) {
+          const [errors] = error.response.data.lead;
           errorMsg = errors;
         }
         dispatch(
-            getBannerFailureAction({
+          getLeadFailureAction({
             ...errorMsg,
             title: ERROR,
             errorMsg,
@@ -52,16 +52,16 @@ import {
 
   };
 
-  // Banner ADD  ACTIONS
-  const addBanner = (banner) => {
+  // Lead ADD  ACTIONS
+  const addLead = (lead) => {
     return API.post(
       hapyCarURL,
-      { data: banner },
+      { data: lead },
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          addBannerAction({
+          addLeadAction({
             ...data,
             title: SUCCESS,
           })
@@ -70,13 +70,13 @@ import {
 
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.banner) {
-          const [errors] = error.response.data.banner;
+        if (error.response.data.lead) {
+          const [errors] = error.response.data.lead;
           errorMsg = errors;
         }
         dispatch(
-          addBannerAction({
-            ...banner,
+          addLeadAction({
+            ...lead,
             title: ERROR,
             errorMsg,
           })
@@ -88,12 +88,11 @@ import {
 
   };
 
-  // Banner UPDATE  ACTIONS
-  const updateBanner = (bannerId, banner) => {
-    debugger;
+  // Lead UPDATE  ACTIONS
+  const updateLead = (leadId, lead) => {
 
-    return API.put(`${hapyCarURL}/${bannerId}`,
-      { data: banner},
+    return API.put(`${hapyCarURL}/${leadId}`,
+      { data: lead },
       { suppressErrors: [400] }
     )
       .then(({ data
@@ -101,7 +100,7 @@ import {
       }) =>
 
         dispatch(
-          updateBannerAction({
+          updateLeadAction({
             ...data,
             title: SUCCESS,
           })
@@ -109,13 +108,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.banner) {
-          const [errors] = error.response.data.banner;
+        if (error.response.data.lead) {
+          const [errors] = error.response.data.lead;
           errorMsg = errors;
         }
         dispatch(
-          updateBannerAction({
-            ...banner,
+          updateLeadAction({
+            ...lead,
             title: ERROR,
             errorMsg,
           })
@@ -124,15 +123,15 @@ import {
 
   };
 
-  // Banner DELETE  ACTIONS
-  const deleteBanner = (bannerId) => {
-    return API.delete(`${hapyCarURL}/${bannerId}`,
+  // Lead DELETE  ACTIONS
+  const deleteLead = (leadId) => {
+    return API.delete(`${hapyCarURL}/${leadId}`,
       null,
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
         dispatch(
-          deleteBannerAction({
+          deleteLeadAction({
             ...data,
             title: SUCCESS,
           })
@@ -140,13 +139,13 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.banner) {
-          const [errors] = error.response.data.banner;
+        if (error.response.data.lead) {
+          const [errors] = error.response.data.lead;
           errorMsg = errors;
         }
         dispatch(
-          deleteBannerAction({
-            ...bannerId,
+          deleteLeadAction({
+            ...leadId,
             title: ERROR,
             errorMsg,
           })
@@ -155,9 +154,9 @@ import {
 
   };
 
-  // Banner BY ID ACTIONS
-  const bannerById = (bannerId) => {
-    return API.get(`${hapyCarURL}/${bannerId}`,
+  //Lead BY ID ACTIONS
+  const leadById = (leadId) => {
+    return API.get(`${hapyCarURL}/${leadId}`,
       null,
       { suppressErrors: [400] }
     )
@@ -166,7 +165,7 @@ import {
       }) =>
 
         dispatch(
-            bannerAction({
+            leadAction({
             ...data,
             title: SUCCESS,
           })
@@ -174,12 +173,12 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.banner) {
-          const [errors] = error.response.data.banner;
+        if (error.response.data.lead) {
+          const [errors] = error.response.data.lead;
           errorMsg = errors;
         }
         dispatch(
-            bannerAction({
+            leadAction({
             ...errorMsg,
             title: ERROR,
             errorMsg,
@@ -189,10 +188,10 @@ import {
       
   };
   return {
-    addBanner,
-    updateBanner,
-    deleteBanner,
-    getBanners,
-    bannerById,
+    addLead,
+    updateLead,
+    deleteLead,
+    getLeads,
+    leadById,
   };
 }
