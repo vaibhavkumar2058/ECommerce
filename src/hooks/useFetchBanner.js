@@ -90,6 +90,7 @@ import {
 
   // Banner UPDATE  ACTIONS
   const updateBanner = (bannerId, banner) => {
+    debugger;
 
     return API.put(`${hapyCarURL}/${bannerId}`,
       { data: banner},
