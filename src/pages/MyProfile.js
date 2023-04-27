@@ -389,62 +389,7 @@ export default () => {
 
 
           </div>
-          <div class="row">
-            {/* <div class="col-md-2 col-lg-2">
-                <Form.Group>
-                  <Form.Label>Address</Form.Label>
-                  <Form.Control 
-                    type="text"
-                    name="addressId"
-                    placeholder="Address"
-                    value={resource?.address.city} />
-                </Form.Group>
-              </div> */}
-
-            {/* <div class="col-md-2 col-lg-2">
-                <Form.Group>
-                  <Form.Label>Address</Form.Label>
-                  <Form.Control as="textarea" rows={1}
-                    type="text"
-                    name="addressId"
-                    placeholder="Address"
-                    value={resource?.address.town} />
-                </Form.Group>
-              </div> */}
-
-            {/* <div class="col-md-2 col-lg-2">
-                <Form.Group>
-                  <Form.Label>Address</Form.Label>
-                  <Form.Control as="textarea" rows={1}
-                    type="text"
-                    name="addressId"
-                    placeholder="Address"
-                    value={resource?.address.locality} />
-                </Form.Group>
-              </div> */}
-
-            {/* <div class="col-md-2 col-lg-2">
-                <Form.Group>
-                  <Form.Label>Address</Form.Label>
-                  <Form.Control as="textarea" rows={1}
-                    type="text"
-                    name="addressId"
-                    placeholder="Address"
-                    value={resource?.address.pincode} />
-                </Form.Group>
-              </div> */}
-
-            {/* <div class="col-md-2 col-lg-2">
-                <Form.Group>
-                  <Form.Label>Address</Form.Label>
-                  <Form.Control as="textarea" rows={1}
-                    type="text"
-                    name="addressId"
-                    placeholder="Address"
-                    value={resource?.landMark} />
-                </Form.Group>
-              </div> */}
-          </div>
+         
           <div class="row">
             <div class="col-md-8 col-lg-8"></div>
             <div class="col-md-4 col-lg-4"><Button variant="secondary" onClick={() => UpdateResource()}>

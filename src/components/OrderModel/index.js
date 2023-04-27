@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { css } from "@emotion/react";
-import { Dropdown } from 'semantic-ui-react'
+import { Dropdown, Checkbox } from 'semantic-ui-react'
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
@@ -58,32 +58,38 @@ export default function OrderModel({
     getRecordByName,
   } = useFetchDiscounts();
 
- 
-    const getDiscoutPrice = async () => {
-      const response = await getRecordByName(discount.discountCode);
-      if (response.payload.title == "Success") {
-        setDiscount(response.payload);
-// Logic for Discount Price
 
-        if(response.payload.discountType.discountTypeName == "Percentage")
-        {       
-          discount.discountPrice = placeOrder?.cost - (placeOrder?.cost * response.payload.discountValue)/100; 
-          console.log('discount price : ', discount.discountPrice);
-        }
-        else
-        if(response.payload.discountType.discountTypeName == "Amount")
-        {
-          discount.discountPrice = placeOrder?.cost - response.payload.discountValue;
-        }
-        setDiscount({
-          ...discount,
-          ["discountPrice"]: discount.discountPrice,
-        });
+  const getDiscoutPrice = async () => {
+    const response = await getRecordByName(discount.discountCode);
+    if (response.payload.title == "Success") {
+      setDiscount(response.payload);
+      // Logic for Discount Price
+
+      if (response.payload.discountType.discountTypeName == "Percentage") {
+        debugger
+        discount.discountPrice = placeOrder?.quantity * (placeOrder?.cost - (placeOrder?.cost * response.payload.discountValue) / 100);
+        console.log('discount price : ', discount.discountPrice);
       }
-      else {
-      }
-    };
-  
+      else
+        if (response.payload.discountType.discountTypeName == "Amount") {
+          discount.discountPrice = (placeOrder?.quantity * placeOrder?.cost) - response.payload.discountValue;
+        }
+      setDiscount({
+        ...discount,
+        ["discountPrice"]: discount.discountPrice,
+      });
+    }
+    else {
+    }
+  };
+  const clearDiscoutPrice = () => {
+    setDiscount({
+      ...discount,
+      discountPrice: '',
+      discountCode: '',
+    });
+  }
+
 
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
@@ -348,32 +354,46 @@ export default function OrderModel({
           </div>
           <div className="row">
             <div className="col-md-6">
-              <Form.Group className="mb-3" controlId="measurementValueId">
-                <Form.Label>Measurement Value<span className="required">*</span></Form.Label>
-                <Dropdown
-                  name="measurementValueId"
-                  placeholder="Select MeasurementValue"
-                  fluid
-                  search
-                  selection
-                  options={measurementValueOptions}
-                  value={placeOrder?.measurementValueId}
-                  onChange={dropdownHandler}
-                />
-              </Form.Group>
+              <Form.Label>Measurement<span className="required">*</span></Form.Label>
+              <div className="row">
+                <div class="col-md-4 ">
+                  <Form.Group className="mb-3 measures" controlId="measurementValueId">
+                    <Dropdown
+                      name="measurementValueId"
+                      placeholder=""
+                      fluid
+                      search
+                      selection
+                      options={measurementValueOptions}
+                      value={placeOrder?.measurementValueId}
+                      onChange={dropdownHandler}
+                    />
+                  </Form.Group>
+                </div>
+                <div class="col-md-3 ">
+                  <Form.Group className="mb-3  measures" controlId="measurementValueId">
+                    <Dropdown
+                      name="measurementTypeId"
+                      placeholder=""
+                      fluid
+                      search
+                      selection
+                      options={measurementTypeOptions}
+                      value={placeOrder?.measurementTypeId}
+                      onChange={dropdownHandler}
+                    /> </Form.Group>
+                </div>
+              </div>
             </div>
             <div className="col-md-6">
-              <Form.Group className="mb-3" controlId="measurementTypeId">
-                <Form.Label>Measurement Type</Form.Label>
-                <Dropdown
-                  name="measurementTypeId"
-                  placeholder="Select MeasurementType"
-                  fluid
-                  search
-                  selection
-                  options={measurementTypeOptions}
-                  value={placeOrder?.measurementTypeId}
-                  onChange={dropdownHandler}
+              <Form.Group className="mb-3 " controlId="price">
+                <Form.Label>Price</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="cost"
+                  placeholder="Price"
+                  value={placeOrder?.cost}
+                  onChange={changeHandler}
                 />
               </Form.Group>
             </div>
@@ -383,6 +403,18 @@ export default function OrderModel({
             <div className="col-md-6">
               <Form.Group className="mb-3" >
                 <Form.Label>Quantity</Form.Label>
+                <Checkbox
+                  label='Boxes'
+                  checked={true}
+                // name="isDefault"
+                //onChange={changeHandler}
+                />
+                <Checkbox
+                  label='Individual'
+                  checked={true}
+                // name="isDefault"
+                //onChange={changeHandler}
+                />
                 <Form.Control
                   type="text"
                   name="quantity"
@@ -394,54 +426,57 @@ export default function OrderModel({
 
             </div>
             <div className="col-md-6">
-              <Form.Group className="mb-3" controlId="price">
-                <Form.Label>Price</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="cost"
-                  placeholder="Price"
-                  value={placeOrder?.cost}
-                  onChange={changeHandler}
-                />
-              </Form.Group>
-            </div>
-            <div className="row">
-              <div className="col-md-4">
-                <Form.Group className="mb-3" >
-                  <Form.Label>Discount</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="discountCode"
-                    placeholder="Discount Code"
-                    value={discount?.discountCode}
-                    onChange={changeDiscountHandler}
-                  />
-                </Form.Group>
-
-              </div>
-              <div className="col-md-2">
-
-                <Button
-                  onClick={() => getDiscoutPrice()}
-                >
-                  Apply
-                </Button>
-              </div>
-              <div className="col-md-6">
-                <Form.Group className="mb-3" >
-                  <Form.Label>Discounted Price</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="discountPrice"
-                    placeholder="Discount Price"
-                    value={discount?.discountPrice}
-                    onChange={changeDiscountHandler}
-                  />
-                </Form.Group>
+              <div className="row">
+                <div className="col-md-5">
+                  <Form.Group >
+                    <Form.Label>Discount</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="discountCode"
+                      placeholder="Discount Code"
+                      value={discount?.discountCode}
+                      onChange={changeDiscountHandler}
+                    />
+                  </Form.Group>
+                </div>
+                <div className="col-md-7">
+                  <div className="row btn-apply">
+                    <div className="col-md-5">
+                      <Button
+                        onClick={() => getDiscoutPrice()}
+                      >
+                        Apply
+                      </Button>
+                    </div>
+                    <div className="col-md-6">
+                      <Button onClick={() => clearDiscoutPrice()}
+                      >
+                        Clear
+                      </Button>
+                    </div>
+                  </div>
+                </div>
 
               </div>
             </div>
           </div>
+
+          <div className="row">
+            <div className="col-md-6">
+              <Form.Group className="mb-3" >
+                <Form.Label>Discounted Price</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="discountPrice"
+                  placeholder="Discount Price"
+                  value={discount?.discountPrice}
+                  onChange={changeDiscountHandler}
+                />
+              </Form.Group>
+
+            </div>
+          </div>
+
 
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>

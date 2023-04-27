@@ -6,6 +6,8 @@ import { Nav, Badge, Image, Button, Dropdown, Accordion, Navbar } from 'react-bo
 import useFetchNotifications from "../hooks/useFetchNotification";
 import useFetchCart from "../hooks/useFetchCart";
 import { Routes } from "./routes";
+import TopBanner from "./TopBanner";
+import logo from "../logo.png";
 
 export default (props = {}) => {
   const location = "";
@@ -80,22 +82,21 @@ export default (props = {}) => {
     return (
       <nav className="navbar navbar-top navbar-expand navbar-dashboard navbar-dark ps-0 pe-2">
       <div className="container-fluid px-0">
-        <div className="d-flex justify-content-between w-100" id="navbarSupportedContent">
+        <div className="d-flex justify-content-between" id="navbarSupportedContent">
           <div className="d-flex align-items-center">         
-          <img src="https://hives.blob.core.windows.net/qcimages/trademark/8339765/imageshrine/ae9c217163adacd1b7a7e34544f279d0.jpg" height="80" width="200" alt="Manthra Soaps"></img>
-          
+          <img src={logo} height="80" width="200" alt="Manthra Soaps"></img>
           </div>
           <ul className="navbar-nav align-items-center">
-          <li className="nav-item dropdown"><a href="notifications" >
-          <div id="_desktop_contact_link" class="header-cms-block">
+          <li className="nav-item dropdown">
+         <div> <TopBanner></TopBanner></div>
+          {/* <div id="_desktop_contact_link" class="header-cms-block">
 							<div class="wdicon"></div>
 							<span class="content">
 								<span class="service-title">Reach us:</span>
 								<a href="tel:%phone%" class="contact-info">+91 70138 35158 / 9440514453</a><br></br>
 								<a href="tel:%phone%" class="contact-info">nataraj@manthrasoaps.co.in</a>
 							</span>
-						</div>
-            </a>
+						</div> */}
             </li>
             <li className="nav-item dropdown"><a href="notifications" >
               <Badge className="notification" bg="secondary">{notifications?.length}</Badge><img src="https://png.pngtree.com/png-clipart/20190705/original/pngtree-vvector-notification-icon-png-image_4232478.jpg" width="35" height="35"></img>
