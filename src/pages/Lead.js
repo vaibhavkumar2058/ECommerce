@@ -47,6 +47,7 @@ export default function Lead() {
   const [lead, setLead] = useState({
     leadCount:null,
     resourcesId:null,
+    orderValue:null,
     recordStatusId:null,
     });
 
@@ -74,6 +75,7 @@ export default function Lead() {
 
      { dataField: 'leadId', text: 'leadId', sort: true,hidden:true },
      { dataField: 'leadCount', text: 'Lead Count', sort: true },
+     { dataField: 'orderValue', text: 'Order Value', sort: true },
      { dataField: 'resourcesId', text: 'resourcesId', sort: true,hidden:true },
      { dataField: 'resourceName', text: 'Resource', sort: true},
      { dataField: 'recordStatusId', text: 'RecordStatusId',hidden:true, sort: true},
@@ -194,6 +196,7 @@ export default function Lead() {
         const curedData = {};
         curedData.leadId=rawData?.leadId;
         curedData.leadCount=rawData?.leadCount;
+        curedData.orderValue=rawData?.orderValue;
         curedData.resourcesId=rawData?.resourcesId;
         curedData.resourceName=rawData?.resources?.firstName+rawData?.resources?.middleName+rawData?.resources?.lastName;
        curedData.recordStatusId=rawData?.recordStatusId;
