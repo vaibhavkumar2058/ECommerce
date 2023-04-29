@@ -51,6 +51,12 @@ export default (props = {}) => {
               <Dropdown.Menu className="test drop-menu" variant="dark">
                 {(admin && <li className="nav-item active"><Dropdown.Item href="role" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
                 </span><span className="sidebar-text">Role </span></span></Dropdown.Item></li>)}
+                {(admin && <li className="nav-item active"><Dropdown.Item href="banner" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
+                </span><span className="sidebar-text">Banner </span></span></Dropdown.Item></li>)}
+                {(admin && <li className="nav-item active"><Dropdown.Item href="bannerAttachments" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
+                </span><span className="sidebar-text">BannerAttachments </span></span></Dropdown.Item></li>)}
+                {(admin && <li className="nav-item active"><Dropdown.Item href="bannerType" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
+                </span><span className="sidebar-text">BannerType </span></span></Dropdown.Item></li>)}
                 {(admin && <li className="nav-item active"><Dropdown.Item href="orderStatus" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
                 </span><span className="sidebar-text">Order Status </span></span></Dropdown.Item></li>)}
                 {/* {(admin && <li className="nav-item active"><Dropdown.Item href="gender" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">

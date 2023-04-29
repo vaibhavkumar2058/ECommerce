@@ -222,8 +222,8 @@ import {
   };
 
   const getItemPrice = (itemPice) => {
-    return API.post(`${hapyCarURL}/${itemPice}`,
-      { data: null },
+    return API.post(`${hapyCarURL}/itemPrice`,
+      { data: itemPice },
       { suppressErrors: [400] }
     )
  

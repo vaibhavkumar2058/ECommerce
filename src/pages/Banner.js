@@ -92,7 +92,7 @@ export default function Banners() {
 
         return (
           <>
-            <img className="banner-image" src={row.bannerimage}>
+            <img className="banner-image" src={row.bannerImage}>
             </img>
           </>
         );
@@ -248,7 +248,7 @@ export default function Banners() {
         curedData.description=rawData?.description;
         curedData.recordStatusId=rawData?.recordStatus.recordStatusId;
         curedData.recordStatus=rawData?.recordStatus.actionName;
-        curedData.bannerImage = 'data:'+ rawData?.bannerAttachments?.files.fileMimeType +';base64,'+ rawData?.bannerAttachments?.files?.base64;
+        curedData.bannerImage ='data:'+ rawData?.bannerAttachments?.files.fileMimeType +';base64,'+ rawData?.bannerAttachments?.files?.base64;
         curedData.filesId = rawData?.bannerAttachments?.files?.filesId?? 0;
         
         return curedData;
@@ -302,7 +302,7 @@ export default function Banners() {
 
   return (
     <>
-      <div className="m-t-40">
+      <div className="">
         {loading && <div>A moment please...</div>}
         {banners && (<div>
           <ToolkitProvider
