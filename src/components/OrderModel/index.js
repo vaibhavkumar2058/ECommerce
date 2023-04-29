@@ -9,6 +9,7 @@ import Modal from 'react-bootstrap/Modal';
 import useFetchOrders from "../../hooks/useFetchOrder";
 import useFetchDiscounts from "../../hooks/useFetchDiscount";
 import useFetchItemCosts from "../../hooks/useFetchItemCost";
+import useFetchBoxes from "../../hooks/useFetchBox";
 
 
 export default function OrderModel({
@@ -73,6 +74,9 @@ export default function OrderModel({
   const {
     getRecordByName,
   } = useFetchDiscounts();
+  const {
+    getBoxes,
+  } = useFetchBoxes();
   const {
     getItemPrice,
   } = useFetchItemCosts();

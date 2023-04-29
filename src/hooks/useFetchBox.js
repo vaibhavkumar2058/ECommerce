@@ -187,11 +187,46 @@ import {
       });
       
   };
+
+  const getRecordByName = (boxName) => {
+    return API.get(`${hapyCarURL}/boxName/${boxName}`,
+      null,
+      { suppressErrors: [400] }
+    )
+      .then(({ data
+
+      }) =>
+
+        dispatch(
+            boxAction({
+            ...data,
+            title: SUCCESS,
+          })
+        )
+      )
+      .catch((error) => {
+        let errorMsg = "error msg from copy file";
+        if (error.response.data.box) {
+          const [errors] = error.response.data.box;
+          errorMsg = errors;
+        }
+        dispatch(
+            boxAction({
+            ...errorMsg,
+            title: ERROR,
+            errorMsg,
+          })
+        );
+      });
+      
+  };
   return {
     addBox,
     updateBox,
     deleteBox,
     getBoxes,
     boxById,
+    getRecordByName,
+    
   };
 }
