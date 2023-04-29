@@ -40,11 +40,11 @@ export default function OrderModel({
   });
 
   const [itemCost, setItemCost] = useState({
+    categoryTypeId: null,
     productId: null,
     measurementTypeId: null,
     measurementValueId: null,
     customTypeId: null,
-    categoryTypeId: null,
   });
 
 
@@ -60,7 +60,11 @@ export default function OrderModel({
   });
 
   const [placeOrder, setPlaceOrder] = useState({
+    categoryTypeId: null,
     productId: null,
+    measurementTypeId: null,
+    measurementValueId: null,
+    customTypeId: null,
     cost: null,
     quantity: null,
     description: "",
@@ -73,6 +77,31 @@ export default function OrderModel({
     getItemPrice,
   } = useFetchItemCosts();
 
+  const getPrice = async () => {
+    debugger
+    itemCost.categoryTypeId = 1;
+    itemCost.productId = 1;
+    itemCost.measurementTypeId =1;
+    itemCost.measurementValueId = 1;
+    itemCost.customTypeId = 1;
+
+    const response = await getItemPrice(itemCost);
+    if (response.payload.title == "Success") {
+      
+      setPlaceOrder({
+        ...placeOrder,
+        ["cost"]: response.payload.price,
+      });
+
+    }
+    else {
+
+    }
+  };
+
+  useEffect(() => {
+    
+  }, [placeOrder]);
 
   const getDiscoutPrice = async () => {
     const response = await getRecordByName(discount.discountCode);
@@ -245,7 +274,9 @@ export default function OrderModel({
 
   const dropdownHandler = (event, { name, value }) => {
     setPlaceOrder((currentPlaceOrder) => ({ ...currentPlaceOrder, [name]: value }));
+    getPrice();
   }
+
   useEffect(() => {
     if (isEdit) {
       setNewOrder(orderData);
