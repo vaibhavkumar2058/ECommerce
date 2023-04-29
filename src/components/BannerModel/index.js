@@ -27,6 +27,7 @@ export default function BannerModel({
     description: "",
     recordStatusId: null,
     attachment: null,
+      filesId: 0,
     bannerAttachmentTypeId: 1003,
     bannerImage: "",
 
@@ -73,31 +74,14 @@ export default function BannerModel({
       [e.target.name]: e.target.value,
     });
   };
-  const getBase64 = (file, cb) => {
-    let reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = function () {
-      cb(reader.result)
-    };
-    reader.onerror = function (error) {
-      console.log('Error: ', error);
-    };
-  }
-
   const saveFileSelected = (e) => {
-    let idCardBase64 = '';
-    getBase64(e.target.files[0], (result) => {
-      idCardBase64 = result;
-    });
     //in case you wan to print the file selected
-    console.log(idCardBase64);
-
+    //console.log(e.target.files[0]);
     setFileSelected(e.target.files[0]);
-
   };
 
   const saveHandler = async () => {
-
+    newBanner.attachment = fileSelected;
     if (isEdit) {
       const response = await onUpdateBanner(id, newBanner);
       if (response.payload.title == "Success") {
@@ -271,14 +255,11 @@ export default function BannerModel({
               <Form.Group>
                 <Form.Label>Photo</Form.Label>
               </Form.Group>
-              <Form.Group>
-                <img className="product-view" src={newBanner?.bannerImage}>
-                </img>
-                <input type="file" onChange={saveFileSelected}
-                  encType="multipart/form-data"
-                />
-
-              </Form.Group>
+               <Form.Group>
+                  <input type="file" onChange={saveFileSelected} />
+                  <img className="product-view" src={newBanner?.bannerImage}>
+                  </img>
+                </Form.Group>
             </div>
           </div>
           <Modal.Footer>

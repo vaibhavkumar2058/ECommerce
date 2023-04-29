@@ -8,6 +8,8 @@ import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
 import useFetchOrders from "../../hooks/useFetchOrder";
 import useFetchDiscounts from "../../hooks/useFetchDiscount";
+import useFetchItemCosts from "../../hooks/useFetchItemCost";
+
 
 export default function OrderModel({
   onAddOrder,
@@ -25,6 +27,7 @@ export default function OrderModel({
   productList = [],
   measurementTypeList = [],
   measurementValueList = [],
+  customTypeList=[],
 }) {
 
   const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
@@ -35,6 +38,15 @@ export default function OrderModel({
     description: "Test",
     discountId: null,
   });
+
+  const [itemCost, setItemCost] = useState({
+    productId: null,
+    measurementTypeId: null,
+    measurementValueId: null,
+    customTypeId: null,
+    categoryTypeId: null,
+  });
+
 
   const [discount, setDiscount] = useState({
     discountId: null,
@@ -57,6 +69,9 @@ export default function OrderModel({
   const {
     getRecordByName,
   } = useFetchDiscounts();
+  const {
+    getItemPrice,
+  } = useFetchItemCosts();
 
 
   const getDiscoutPrice = async () => {
@@ -97,6 +112,13 @@ export default function OrderModel({
     status: false,
     message: "",
   });
+
+  const [customTypeOptions, setCustomTypeOptions] = useState(customTypeList.map((customType,item) =>(
+    {
+    key: item,
+    text: customType.customTypeName,
+    value: customType.customTypeId,
+  })).filter((item) => item));
 
   const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus, item) => (
     {
@@ -231,8 +253,16 @@ export default function OrderModel({
   }, []);
 
   useEffect(() => {
-
   }, [discount]);
+
+  useEffect(() => { 
+    setCustomTypeOptions(customTypeList.map((customType,item) =>(
+      {
+      key: item,
+      text: customType.customTypeName,
+      value: customType.customTypeId,
+    })).filter((item) => item));
+    }, [customTypeList]);
 
   useEffect(() => {
     setRecordStatusOptions(recordStatusList.map((recordStatus, item) => (
@@ -475,6 +505,21 @@ export default function OrderModel({
               </Form.Group>
 
             </div>
+            <div className="col-md-6">
+          <Form.Group className="mb-3" controlId="customTypeId">
+            <Form.Label>Custom Type<span className="required">*</span></Form.Label>
+            <Dropdown
+              name="customTypeId"
+              placeholder="Select Custom Type"
+              fluid
+              search
+              selection
+              options={customTypeOptions}
+              value={placeOrder?.customTypeId}
+              onChange={dropdownHandler}
+            />
+          </Form.Group>
+          </div>
           </div>
 
 
@@ -555,6 +600,10 @@ OrderModel.propTypes = {
   * measurementValueData for object type
   */
   measurementValueList: PropTypes.any,
+   /**
+ * customTypeList for object type
+ */
+   customTypeList: PropTypes.any,
 };
 
 OrderModel.defaultProps = {
@@ -573,5 +622,6 @@ OrderModel.defaultProps = {
   productList: null,
   measurementTypeList: null,
   measurementValueList: null,
+  customTypeList:null,
 };
 

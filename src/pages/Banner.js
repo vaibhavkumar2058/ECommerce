@@ -239,6 +239,7 @@ export default function Banners() {
         mode: 'success',
         message: 'Banner Record Fetch Succefully.'
       })
+      debugger
       const dataFormatter = (rawData) => {
         const curedData = {};
         curedData.bannerId=rawData?.bannerId;
@@ -247,9 +248,8 @@ export default function Banners() {
         curedData.description=rawData?.description;
         curedData.recordStatusId=rawData?.recordStatus.recordStatusId;
         curedData.recordStatus=rawData?.recordStatus.actionName;
-        curedData.filesId = rawData?.bannerAttachment?.files?.filesId ?? 0;
-        if (rawData?.bannerAttachment)
-          curedData.bannerimage = 'data:' + rawData?.bannerAttachment?.files?.fileMimeType + ';base64,' + rawData?.bannerAttachment?.files?.base64;
+        curedData.bannerImage = 'data:'+ rawData?.bannerAttachments?.files.fileMimeType +';base64,'+ rawData?.bannerAttachments?.files?.base64;
+        curedData.filesId = rawData?.bannerAttachments?.files?.filesId?? 0;
         
         return curedData;
       }

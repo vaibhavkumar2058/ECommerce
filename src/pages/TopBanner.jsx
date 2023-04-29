@@ -1,30 +1,63 @@
 import React, { useState, useEffect } from "react";
+import useFetchBanner from "../hooks/useFetchBanner";
 
-const slides = [
-  {
-    eachSlide: 'url(https://unsplash.it/1900/1024/?image=497)',
-  },
-  {
-    eachSlide: 'url(https://unsplash.it/1900/1024/?image=291)',
-  },
-  {
-    eachSlide: 'url(https://unsplash.it/1900/1024/?image=786)',
-  },
-  {
-    eachSlide: 'url(https://unsplash.it/1900/1024/?image=768)',
-  },
-  {
-    eachSlide: 'url(https://unsplash.it/1900/1024/?image=726)',
-  },
-  {
-    eachSlide: 'url(https://unsplash.it/1900/1024/?image=821)',
-  }
-];
+// const slides = [
+//   {
+//     eachSlide: 'url(https://unsplash.it/1900/1024/?image=497)',
+//   },
+//   {
+//     eachSlide: 'url(https://unsplash.it/1900/1024/?image=291)',
+//   },
+//   {
+//     eachSlide: 'url(https://unsplash.it/1900/1024/?image=786)',
+//   },
+//   {
+//     eachSlide: 'url(https://unsplash.it/1900/1024/?image=768)',
+//   },
+//   {
+//     eachSlide: 'url(https://unsplash.it/1900/1024/?image=726)',
+//   },
+//   {
+//     eachSlide: 'url(https://unsplash.it/1900/1024/?image=821)',
+//   }
+// ];
 
 const TopBanner = () => {
+    const [slides, setBanners] = useState([]);
+    const { 
+        getBanners,
+      } = useFetchBanner();
+
+      useEffect(() => {
+        if (slides.length == 0) {
+          getAllBanners();
+        }
+      }, [slides]);
+
   const [active, setActive] = React.useState(0);
   const [autoplay, setAutoplay] = React.useState(1);
   const max = slides.length;
+
+  const getAllBanners = async () => {
+    const response = await getBanners();
+    if (response.payload.title == "Success") {
+      const dataFormatter = (rawData) => {
+        const curedData = {};
+        curedData.title=rawData?.title;
+        curedData.eachSlide = 'data:'+ rawData?.bannerAttachments?.files.fileMimeType +';base64,'+ rawData?.bannerAttachments?.files?.base64;      
+        return curedData;
+      }
+      var arr = [];
+      for (var key in response.payload) {
+        if (key !== 'title')
+        arr.push(dataFormatter(response.payload[key]));
+      }
+
+      setBanners(arr);
+    }
+    else {
+    }
+  };
 
   const intervalBetweenSlides = () => autoplay && setActive(active === max - 1 ? 0 : active + 1)
 
@@ -54,7 +87,8 @@ const TopBanner = () => {
       <div 
           className='each-slide' 
           key={ index } 
-          style={{ backgroundImage: item.eachSlide }}>
+          style={{ backgroundImage: 'url('+ item.eachSlide +')' }}
+          >
       </div> 
   ));
 
