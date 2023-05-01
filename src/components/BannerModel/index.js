@@ -18,7 +18,7 @@ export default function BannerModel({
   onClose,
   bannerData,
   recordStatusList = [],
-   bannerTypeList = [],
+  bannerTypeList = [],
   //recordStatus,
 }) {
   const [newBanner, setNewBanner] = useState({
@@ -26,9 +26,14 @@ export default function BannerModel({
     title: "",
     description: "",
     recordStatusId: null,
+    attachment: null,
+      filesId: 0,
+    bannerAttachmentTypeId: 1003,
+    bannerImage: "",
+
   });
-  
- 
+
+
 
   const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus, item) => (
     {
@@ -36,13 +41,15 @@ export default function BannerModel({
       text: recordStatus.actionName,
       value: recordStatus.recordStatusId,
     })).filter((item) => item));
-    const [bannerTypeOptions, setBannerTypeOptions] = useState(bannerTypeList.map((bannerType, item) => (
-      {
-        key: item,
-        text: bannerType.bannerTypeName,
-        value: bannerType.bannerTypeId,
-      })).filter((item) => item));
-  
+  const [bannerTypeOptions, setBannerTypeOptions] = useState(bannerTypeList.map((bannerType, item) => (
+    {
+      key: item,
+      text: bannerType.bannerTypeName,
+      value: bannerType.bannerTypeId,
+    })).filter((item) => item));
+
+
+  const [fileSelected, setFileSelected] = useState();
 
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
@@ -67,10 +74,14 @@ export default function BannerModel({
       [e.target.name]: e.target.value,
     });
   };
-
+  const saveFileSelected = (e) => {
+    //in case you wan to print the file selected
+    //console.log(e.target.files[0]);
+    setFileSelected(e.target.files[0]);
+  };
 
   const saveHandler = async () => {
-
+    newBanner.attachment = fileSelected;
     if (isEdit) {
       const response = await onUpdateBanner(id, newBanner);
       if (response.payload.title == "Success") {
@@ -119,7 +130,7 @@ export default function BannerModel({
 
   }
 
-  
+
 
   useEffect(() => {
     if (isEdit) {
@@ -179,7 +190,7 @@ export default function BannerModel({
       {!isDelete && (
         <Form>
           <div className="row">
-          <div className="col-md-6">
+            <div className="col-md-6">
               <Form.Group className="mb-3" controlId="recordStatusId">
                 <Form.Label>Banner Type<span className="required">*</span></Form.Label>
                 <Dropdown
@@ -194,7 +205,7 @@ export default function BannerModel({
                 />
               </Form.Group>
             </div>
-           
+
             <div className="col-md-6">
               <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Title<span className="required">*</span></Form.Label>
@@ -207,7 +218,7 @@ export default function BannerModel({
                 />
               </Form.Group>
             </div>
-            </div>
+          </div>
           <div className="row">
             <div className="col-md-6">
               <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -221,7 +232,7 @@ export default function BannerModel({
                 />
               </Form.Group>
             </div>
-          
+
             <div className="col-md-6">
               <Form.Group className="mb-3" controlId="recordStatusId">
                 <Form.Label>Status<span className="required">*</span></Form.Label>
@@ -237,9 +248,20 @@ export default function BannerModel({
                 />
               </Form.Group>
             </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
+
+              <Form.Group>
+                <Form.Label>Photo</Form.Label>
+              </Form.Group>
+               <Form.Group>
+                  <input type="file" onChange={saveFileSelected} />
+                  <img className="product-view" src={newBanner?.bannerImage}>
+                  </img>
+                </Form.Group>
             </div>
-          
-          
+          </div>
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel

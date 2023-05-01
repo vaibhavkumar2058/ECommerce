@@ -218,7 +218,7 @@ export default function ItemCostModel({
     if (isEdit) {
       setButtonType("Update");
     }
-    debugger
+   
     const isEnable =
       !newItemCost?.productId || !newItemCost?.categoryTypeId|| !newItemCost?.measurementTypeId || !newItemCost?.measurementValueId || !newItemCost?.customTypeId || !newItemCost?.price|| !newItemCost?.recordStatusId|| !newItemCost?.description;
     setSaveDisabled(isEnable);

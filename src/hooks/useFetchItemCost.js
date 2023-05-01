@@ -220,6 +220,37 @@ import {
       });
       
   };
+
+  const getItemPrice = (itemPice) => {
+    return API.post(`${hapyCarURL}/itemPrice`,
+      { data: itemPice },
+      { suppressErrors: [400] }
+    )
+ 
+      .then(({ data }) =>
+        dispatch(
+          getItemCostSuccessAction({
+            ...data,
+            title: SUCCESS,
+          })
+        )
+      )
+
+      .catch((error) => {
+        let errorMsg = "error msg from copy file";
+        if (error.response.data.itemCost) {
+          const [errors] = error.response.data.itemCost;
+          errorMsg = errors;
+        }
+        dispatch(
+          addItemCostAction({
+            ...itemPice,
+            title: ERROR,
+            errorMsg,
+          })
+        );
+      });
+  };
   return {
     addItemCost,
     updateItemCost,
@@ -227,5 +258,6 @@ import {
     getItemsCosts,
     getItemCosts,
     itemCostById,
+    getItemPrice,
   };
 }

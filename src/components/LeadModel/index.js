@@ -24,6 +24,7 @@ export default function LeadModel({
   const [newLead, setNewLead] = useState({
     leadCount:null,
     resourcesId:null,
+    orderValue:null,
     recordStatusId: null,
   });
   
@@ -155,11 +156,13 @@ export default function LeadModel({
       )}
       {!isDelete && (
         <Form>
+          <div className="row">
+          <div className="col-md-6">
           <Form.Group
             className={styles.stFormContainer}
             controlId="formLead"
           >
-            <Form.Label>Lead Count<span className="required">*</span></Form.Label>
+          <Form.Label>Lead Count<span className="required">*</span></Form.Label>
             <Form.Control
               type="text" 
               name="leadCount"                                                                                                                                   
@@ -168,10 +171,13 @@ export default function LeadModel({
               onChange={changeHandler}
             />
           </Form.Group>
+          </div>
+          <div className="col-md-6">
+
           <Form.Group
             className={styles.stFormContainer}
             controlId="formLead"
-          >
+          >        
             <Form.Label>Resources<span className="required">*</span></Form.Label>
             <Form.Control
               type="text" 
@@ -181,9 +187,26 @@ export default function LeadModel({
               onChange={changeHandler}
             />
           </Form.Group>
-          
+          </div>
+          </div>
+          <div className="row">
+          <div className="col-md-6">
+          <Form.Group
+            className={styles.stFormContainer}
+            controlId="formLead"
+          >
+            <Form.Label>Order Value<span className="required">*</span></Form.Label>
+            <Form.Control
+              type="text" 
+              name="orderValue"                                                                                                                                   
+              placeholder="Order value"
+              value={newLead?.orderValue}
+              onChange={changeHandler}
+            />
+          </Form.Group>
 
-          
+          </div>
+          <div className="col-md-6">
 
           <Form.Group className="mb-3" controlId="recordStatus">
             <Form.Label>Status<span className="required">*</span></Form.Label>
@@ -198,8 +221,8 @@ export default function LeadModel({
               onChange={dropdownHandler}
             />
           </Form.Group>
-
-
+</div>
+</div>
           
           
           <Modal.Footer>

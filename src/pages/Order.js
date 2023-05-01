@@ -4,6 +4,7 @@ import { Modal } from 'react-bootstrap';
 import useFetchOrder from "../hooks/useFetchOrder";
 import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
 import useFetchCategoryType from "../hooks/useFetchCategoryType";
+import useFetchCustomType from "../hooks/useFetchCustomType";
 import useFetchProduct from "../hooks/useFetchProduct";
 import useFetchMeasurementType from "../hooks/useFetchMeasurementType";
 import useFetchMeasurementValue from "../hooks/useFetchMeasurementValue";
@@ -39,6 +40,7 @@ export default function Orders() {
   const [recordStatusList, setRecordStatusList] = useState([]);
   const [categoryTypeList, setcategoryTypeList] = useState([]);
   const [productList, setproductList] = useState([]);
+  const [customTypeList, setCustomTypeList] = useState([]);
   const [measurementTypeList, setmeasurementTypeList] = useState([]);
   const [measurementValueList, setmeasurementValueList] = useState([]);
   const [orders, setOrders] = useState([]);
@@ -96,6 +98,9 @@ export default function Orders() {
   const {
     getMeasurementValues,
   } = useFetchMeasurementValue();
+  const { 
+    getCustomTypes,
+  } = useFetchCustomType();
 
   const columns = [
     { dataField: 'orderItemId', text: ' OrderItemId', sort: true, hidden: true, },
@@ -149,6 +154,7 @@ export default function Orders() {
     getRecordStatusList();
     getCategoryTypeList();
     getProductList();
+    getCustomTypeList();
     getMeasurementTypeList();
     getMeasurementValueList();
     if (orders.length == 0) {
@@ -220,6 +226,26 @@ export default function Orders() {
       })
     }
   };
+
+  const getCustomTypeList = async () => {
+    const response = await getCustomTypes();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        if (key !== 'title')
+        arr.push(response.payload[key]);
+      }
+      setCustomTypeList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'CustomType Fetch Failed.'
+      })
+    }
+  };
+
   const getCategoryTypeList = async () => {
     const response = await getCategoryTypes();
     if (response.payload.title == "Success") {
@@ -444,6 +470,7 @@ export default function Orders() {
                 productList={productList}
                 measurementTypeList={measurementTypeList}
                 measurementValueList={measurementValueList}
+                customTypeList={customTypeList}
               />
             </Modal.Body>
 

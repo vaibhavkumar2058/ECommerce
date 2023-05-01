@@ -54,9 +54,12 @@ import {
 
   // Banner ADD  ACTIONS
   const addBanner = (banner) => {
+    const formData = new FormData();
+    Object.keys(banner).forEach((key) => formData.append(key,banner[key]));
+
     return API.post(
       hapyCarURL,
-      { data: banner },
+      { data: formData },
       { suppressErrors: [400] }
     )
       .then(({ data }) =>
@@ -90,6 +93,7 @@ import {
 
   // Banner UPDATE  ACTIONS
   const updateBanner = (bannerId, banner) => {
+
 
     return API.put(`${hapyCarURL}/${bannerId}`,
       { data: banner},

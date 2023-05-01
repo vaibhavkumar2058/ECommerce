@@ -186,7 +186,9 @@ import {
         );
       });
       
-  };const getRecordByName = (discountName) => {
+  };
+  
+  const getRecordByName = (discountName) => {
     return API.get(`${hapyCarURL}/discountCode/${discountName}`,
       null,
       { suppressErrors: [400] }

@@ -50,7 +50,8 @@ export default function Banners() {
     title: "",
     description: "",
     recordStatusId: null,
-    
+    filesId: null,
+
       });
 
   const [id, setId] = useState(null);
@@ -80,6 +81,23 @@ export default function Banners() {
   
 
   const columns = [
+    { dataField: 'bannerId', text: 'Banner Id', sort: true, hidden: true },
+    {
+      dataField: "bannerImage",
+      text: "Photo",
+      headerStyle: () => {
+        return { width: "60px" };
+      },
+      formatter: (cellContent, row) => {
+
+        return (
+          <>
+            <img className="banner-image" src={row.bannerImage}>
+            </img>
+          </>
+        );
+      },
+    },
     { dataField: 'bannerId', text: 'Banner Id', sort: true, hidden: true },
     { dataField: 'bannerTypeId', text: 'Banner Type Id', sort: true, hidden: true },
     { dataField: 'title', text: 'Title', sort: true, },
@@ -221,13 +239,17 @@ export default function Banners() {
         mode: 'success',
         message: 'Banner Record Fetch Succefully.'
       })
+      debugger
       const dataFormatter = (rawData) => {
         const curedData = {};
+        curedData.bannerId=rawData?.bannerId;
         curedData.bannerTypeId=rawData?.bannerType.bannerTypeId;
         curedData.title=rawData?.title;
         curedData.description=rawData?.description;
         curedData.recordStatusId=rawData?.recordStatus.recordStatusId;
         curedData.recordStatus=rawData?.recordStatus.actionName;
+        curedData.bannerImage ='data:'+ rawData?.bannerAttachments?.files.fileMimeType +';base64,'+ rawData?.bannerAttachments?.files?.base64;
+        curedData.filesId = rawData?.bannerAttachments?.files?.filesId?? 0;
         
         return curedData;
       }
@@ -280,7 +302,7 @@ export default function Banners() {
 
   return (
     <>
-      <div className="m-t-40">
+      <div className="">
         {loading && <div>A moment please...</div>}
         {banners && (<div>
           <ToolkitProvider

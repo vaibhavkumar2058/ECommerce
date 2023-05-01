@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { css } from "@emotion/react";
-import { Dropdown } from 'semantic-ui-react'
+import { Dropdown, Checkbox } from 'semantic-ui-react'
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
 import useFetchOrders from "../../hooks/useFetchOrder";
 import useFetchDiscounts from "../../hooks/useFetchDiscount";
+import useFetchItemCosts from "../../hooks/useFetchItemCost";
+import useFetchBoxes from "../../hooks/useFetchBox";
+
 
 export default function OrderModel({
   onAddOrder,
@@ -25,6 +28,7 @@ export default function OrderModel({
   productList = [],
   measurementTypeList = [],
   measurementValueList = [],
+  customTypeList=[],
 }) {
 
   const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
@@ -35,6 +39,15 @@ export default function OrderModel({
     description: "Test",
     discountId: null,
   });
+
+  const [itemCost, setItemCost] = useState({
+    categoryTypeId: null,
+    productId: null,
+    measurementTypeId: null,
+    measurementValueId: null,
+    customTypeId: null,
+  });
+
 
   const [discount, setDiscount] = useState({
     discountId: null,
@@ -48,7 +61,11 @@ export default function OrderModel({
   });
 
   const [placeOrder, setPlaceOrder] = useState({
+    categoryTypeId: null,
     productId: null,
+    measurementTypeId: null,
+    measurementValueId: null,
+    customTypeId: null,
     cost: null,
     quantity: null,
     description: "",
@@ -57,33 +74,70 @@ export default function OrderModel({
   const {
     getRecordByName,
   } = useFetchDiscounts();
+  const {
+    getBoxes,
+  } = useFetchBoxes();
+  const {
+    getItemPrice,
+  } = useFetchItemCosts();
 
- 
-    const getDiscoutPrice = async () => {
-      const response = await getRecordByName(discount.discountCode);
-      if (response.payload.title == "Success") {
-        setDiscount(response.payload);
-// Logic for Discount Price
+  const getPrice = async () => {
+    debugger
+    itemCost.categoryTypeId = 1;
+    itemCost.productId = 1;
+    itemCost.measurementTypeId =1;
+    itemCost.measurementValueId = 1;
+    itemCost.customTypeId = 1;
 
-        if(response.payload.discountType.discountTypeName == "Percentage")
-        {       
-          discount.discountPrice = placeOrder?.cost - (placeOrder?.cost * response.payload.discountValue)/100; 
-          console.log('discount price : ', discount.discountPrice);
-        }
-        else
-        if(response.payload.discountType.discountTypeName == "Amount")
-        {
-          discount.discountPrice = placeOrder?.cost - response.payload.discountValue;
-        }
-        setDiscount({
-          ...discount,
-          ["discountPrice"]: discount.discountPrice,
-        });
+    const response = await getItemPrice(itemCost);
+    if (response.payload.title == "Success") {
+      
+      setPlaceOrder({
+        ...placeOrder,
+        ["cost"]: response.payload.price,
+      });
+
+    }
+    else {
+
+    }
+  };
+
+  useEffect(() => {
+    
+  }, [placeOrder]);
+
+  const getDiscoutPrice = async () => {
+    const response = await getRecordByName(discount.discountCode);
+    if (response.payload.title == "Success") {
+      setDiscount(response.payload);
+      // Logic for Discount Price
+
+      if (response.payload.discountType.discountTypeName == "Percentage") {
+        debugger
+        discount.discountPrice = placeOrder?.quantity * (placeOrder?.cost - (placeOrder?.cost * response.payload.discountValue) / 100);
+        console.log('discount price : ', discount.discountPrice);
       }
-      else {
-      }
-    };
-  
+      else
+        if (response.payload.discountType.discountTypeName == "Amount") {
+          discount.discountPrice = (placeOrder?.quantity * placeOrder?.cost) - response.payload.discountValue;
+        }
+      setDiscount({
+        ...discount,
+        ["discountPrice"]: discount.discountPrice,
+      });
+    }
+    else {
+    }
+  };
+  const clearDiscoutPrice = () => {
+    setDiscount({
+      ...discount,
+      discountPrice: '',
+      discountCode: '',
+    });
+  }
+
 
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
@@ -91,6 +145,13 @@ export default function OrderModel({
     status: false,
     message: "",
   });
+
+  const [customTypeOptions, setCustomTypeOptions] = useState(customTypeList.map((customType,item) =>(
+    {
+    key: item,
+    text: customType.customTypeName,
+    value: customType.customTypeId,
+  })).filter((item) => item));
 
   const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus, item) => (
     {
@@ -217,7 +278,9 @@ export default function OrderModel({
 
   const dropdownHandler = (event, { name, value }) => {
     setPlaceOrder((currentPlaceOrder) => ({ ...currentPlaceOrder, [name]: value }));
+    getPrice();
   }
+
   useEffect(() => {
     if (isEdit) {
       setNewOrder(orderData);
@@ -225,8 +288,16 @@ export default function OrderModel({
   }, []);
 
   useEffect(() => {
-
   }, [discount]);
+
+  useEffect(() => { 
+    setCustomTypeOptions(customTypeList.map((customType,item) =>(
+      {
+      key: item,
+      text: customType.customTypeName,
+      value: customType.customTypeId,
+    })).filter((item) => item));
+    }, [customTypeList]);
 
   useEffect(() => {
     setRecordStatusOptions(recordStatusList.map((recordStatus, item) => (
@@ -348,32 +419,46 @@ export default function OrderModel({
           </div>
           <div className="row">
             <div className="col-md-6">
-              <Form.Group className="mb-3" controlId="measurementValueId">
-                <Form.Label>Measurement Value<span className="required">*</span></Form.Label>
-                <Dropdown
-                  name="measurementValueId"
-                  placeholder="Select MeasurementValue"
-                  fluid
-                  search
-                  selection
-                  options={measurementValueOptions}
-                  value={placeOrder?.measurementValueId}
-                  onChange={dropdownHandler}
-                />
-              </Form.Group>
+              <Form.Label>Measurement<span className="required">*</span></Form.Label>
+              <div className="row">
+                <div class="col-md-4 ">
+                  <Form.Group className="mb-3 measures" controlId="measurementValueId">
+                    <Dropdown
+                      name="measurementValueId"
+                      placeholder=""
+                      fluid
+                      search
+                      selection
+                      options={measurementValueOptions}
+                      value={placeOrder?.measurementValueId}
+                      onChange={dropdownHandler}
+                    />
+                  </Form.Group>
+                </div>
+                <div class="col-md-3 ">
+                  <Form.Group className="mb-3  measures" controlId="measurementValueId">
+                    <Dropdown
+                      name="measurementTypeId"
+                      placeholder=""
+                      fluid
+                      search
+                      selection
+                      options={measurementTypeOptions}
+                      value={placeOrder?.measurementTypeId}
+                      onChange={dropdownHandler}
+                    /> </Form.Group>
+                </div>
+              </div>
             </div>
             <div className="col-md-6">
-              <Form.Group className="mb-3" controlId="measurementTypeId">
-                <Form.Label>Measurement Type</Form.Label>
-                <Dropdown
-                  name="measurementTypeId"
-                  placeholder="Select MeasurementType"
-                  fluid
-                  search
-                  selection
-                  options={measurementTypeOptions}
-                  value={placeOrder?.measurementTypeId}
-                  onChange={dropdownHandler}
+              <Form.Group className="mb-3 " controlId="price">
+                <Form.Label>Price</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="cost"
+                  placeholder="Price"
+                  value={placeOrder?.cost}
+                  onChange={changeHandler}
                 />
               </Form.Group>
             </div>
@@ -383,6 +468,18 @@ export default function OrderModel({
             <div className="col-md-6">
               <Form.Group className="mb-3" >
                 <Form.Label>Quantity</Form.Label>
+                <Checkbox
+                  label='Boxes'
+                  checked={true}
+                // name="isDefault"
+                //onChange={changeHandler}
+                />
+                <Checkbox
+                  label='Individual'
+                  checked={true}
+                // name="isDefault"
+                //onChange={changeHandler}
+                />
                 <Form.Control
                   type="text"
                   name="quantity"
@@ -394,54 +491,72 @@ export default function OrderModel({
 
             </div>
             <div className="col-md-6">
-              <Form.Group className="mb-3" controlId="price">
-                <Form.Label>Price</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="cost"
-                  placeholder="Price"
-                  value={placeOrder?.cost}
-                  onChange={changeHandler}
-                />
-              </Form.Group>
-            </div>
-            <div className="row">
-              <div className="col-md-4">
-                <Form.Group className="mb-3" >
-                  <Form.Label>Discount</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="discountCode"
-                    placeholder="Discount Code"
-                    value={discount?.discountCode}
-                    onChange={changeDiscountHandler}
-                  />
-                </Form.Group>
-
-              </div>
-              <div className="col-md-2">
-
-                <Button
-                  onClick={() => getDiscoutPrice()}
-                >
-                  Apply
-                </Button>
-              </div>
-              <div className="col-md-6">
-                <Form.Group className="mb-3" >
-                  <Form.Label>Discounted Price</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="discountPrice"
-                    placeholder="Discount Price"
-                    value={discount?.discountPrice}
-                    onChange={changeDiscountHandler}
-                  />
-                </Form.Group>
+              <div className="row">
+                <div className="col-md-5">
+                  <Form.Group >
+                    <Form.Label>Discount</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="discountCode"
+                      placeholder="Discount Code"
+                      value={discount?.discountCode}
+                      onChange={changeDiscountHandler}
+                    />
+                  </Form.Group>
+                </div>
+                <div className="col-md-7">
+                  <div className="row btn-apply">
+                    <div className="col-md-5">
+                      <Button
+                        onClick={() => getDiscoutPrice()}
+                      >
+                        Apply
+                      </Button>
+                    </div>
+                    <div className="col-md-6">
+                      <Button onClick={() => clearDiscoutPrice()}
+                      >
+                        Clear
+                      </Button>
+                    </div>
+                  </div>
+                </div>
 
               </div>
             </div>
           </div>
+
+          <div className="row">
+            <div className="col-md-6">
+              <Form.Group className="mb-3" >
+                <Form.Label>Discounted Price</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="discountPrice"
+                  placeholder="Discount Price"
+                  value={discount?.discountPrice}
+                  onChange={changeDiscountHandler}
+                />
+              </Form.Group>
+
+            </div>
+            <div className="col-md-6">
+          <Form.Group className="mb-3" controlId="customTypeId">
+            <Form.Label>Custom Type<span className="required">*</span></Form.Label>
+            <Dropdown
+              name="customTypeId"
+              placeholder="Select Custom Type"
+              fluid
+              search
+              selection
+              options={customTypeOptions}
+              value={placeOrder?.customTypeId}
+              onChange={dropdownHandler}
+            />
+          </Form.Group>
+          </div>
+          </div>
+
 
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
@@ -520,6 +635,10 @@ OrderModel.propTypes = {
   * measurementValueData for object type
   */
   measurementValueList: PropTypes.any,
+   /**
+ * customTypeList for object type
+ */
+   customTypeList: PropTypes.any,
 };
 
 OrderModel.defaultProps = {
@@ -538,5 +657,6 @@ OrderModel.defaultProps = {
   productList: null,
   measurementTypeList: null,
   measurementValueList: null,
+  customTypeList:null,
 };
 
