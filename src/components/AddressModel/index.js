@@ -250,6 +250,21 @@ export default function AddressModel({
                 />
               </Form.Group>
             </div>
+            <div className="col-md-4">
+              <Form.Group className="mb-3" controlId="countryId">
+                <Form.Label>Country<span className="required">*</span></Form.Label>
+                <Dropdown
+                  name="countryId"
+                  placeholder='Select Country'
+                  fluid
+                  search
+                  selection
+                  options={countryOptions}
+                  value={newAddress?.countryId}
+                  onChange={dropdownHandler}
+                />
+              </Form.Group>
+            </div>
           
             <div className="col-md-4">
               <Form.Group className="mb-3" controlId="addressTypeId">
