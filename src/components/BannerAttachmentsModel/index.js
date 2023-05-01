@@ -164,6 +164,16 @@ export default function BannerAttachmentsModel({
 
 
           </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Label>Description</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="description"
+                  placeholder="Description"
+                  value={newBannerAttachments?.description}
+                  onChange={changeHandler}
+                />
+              </Form.Group>
 
           <Form.Group>
           <input type="file" onChange={saveFileSelected} />

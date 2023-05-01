@@ -67,7 +67,7 @@ export default function BannerAttachments() {
 
   const columns = [
     { dataField: 'bannerAttachmentsId', text: 'bannerAttachmentsId', sort: true,hidden: true },
-    { dataField: 'bannerId', text: 'BannerId ', sort: true,hidden: true  },
+    { dataField: 'bannerId', text: 'Banner', sort: true},
     { dataField: 'filesId', text: 'FilesId ', sort: true ,hidden: true},
     { dataField: 'description', text: 'Description', sort: true,},
     
