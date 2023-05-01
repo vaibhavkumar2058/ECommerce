@@ -280,7 +280,18 @@ export default function AddressModel({
                 />
               </Form.Group>
             </div>
-          
+            <div className="col-md-4">
+              <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Label>City<span className="required">*</span></Form.Label>
+                <Form.Control
+                  type="text"
+                  name="city"
+                  placeholder="City"
+                  value={newAddress?.city}
+                  onChange={changeHandler}
+                />
+              </Form.Group>
+            </div>
             <div className="col-md-4">
               <Form.Group className="mb-3" controlId="town">
                 <Form.Label>Town<span className="required">*</span></Form.Label>
