@@ -451,17 +451,21 @@ export default function OrderModel({
               </div>
             </div>
             <div className="col-md-6">
-              <Form.Group className="mb-3 " controlId="price">
-                <Form.Label>Price</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="cost"
-                  placeholder="Price"
-                  value={placeOrder?.cost}
-                  onChange={changeHandler}
-                />
-              </Form.Group>
-            </div>
+          <Form.Group className="mb-3" controlId="customTypeId">
+            <Form.Label>Custom Type<span className="required">*</span></Form.Label>
+            <Dropdown
+              name="customTypeId"
+              placeholder="Select Custom Type"
+              fluid
+              search
+              selection
+              options={customTypeOptions}
+              value={placeOrder?.customTypeId}
+              onChange={dropdownHandler}
+            />
+          </Form.Group>
+          </div>
+           
           </div>
 
           <div className="row">
@@ -470,13 +474,13 @@ export default function OrderModel({
                 <Form.Label>Quantity</Form.Label>
                 <Checkbox
                   label='Boxes'
-                  checked={true}
+                  checked={false}
                 // name="isDefault"
                 //onChange={changeHandler}
                 />
                 <Checkbox
                   label='Individual'
-                  checked={true}
+                  checked={false}
                 // name="isDefault"
                 //onChange={changeHandler}
                 />
@@ -527,6 +531,18 @@ export default function OrderModel({
           </div>
 
           <div className="row">
+          <div className="col-md-6">
+              <Form.Group className="mb-3 " controlId="price">
+                <Form.Label>Price</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="cost"
+                  placeholder="Price"
+                  value={placeOrder?.cost}
+                  onChange={changeHandler}
+                />
+              </Form.Group>
+            </div>
             <div className="col-md-6">
               <Form.Group className="mb-3" >
                 <Form.Label>Discounted Price</Form.Label>
@@ -540,21 +556,7 @@ export default function OrderModel({
               </Form.Group>
 
             </div>
-            <div className="col-md-6">
-          <Form.Group className="mb-3" controlId="customTypeId">
-            <Form.Label>Custom Type<span className="required">*</span></Form.Label>
-            <Dropdown
-              name="customTypeId"
-              placeholder="Select Custom Type"
-              fluid
-              search
-              selection
-              options={customTypeOptions}
-              value={placeOrder?.customTypeId}
-              onChange={dropdownHandler}
-            />
-          </Form.Group>
-          </div>
+            
           </div>
 
 
