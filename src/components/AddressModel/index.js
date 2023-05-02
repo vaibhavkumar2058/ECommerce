@@ -250,7 +250,6 @@ export default function AddressModel({
                 />
               </Form.Group>
             </div>
-          
             <div className="col-md-4">
               <Form.Group className="mb-3" controlId="addressTypeId">
                 <Form.Label>Address Type</Form.Label>
@@ -268,6 +267,7 @@ export default function AddressModel({
             </div>
             </div>
           <div className="row">
+            
             <div className="col-md-4">
               <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>City<span className="required">*</span></Form.Label>
@@ -280,7 +280,6 @@ export default function AddressModel({
                 />
               </Form.Group>
             </div>
-          
             <div className="col-md-4">
               <Form.Group className="mb-3" controlId="town">
                 <Form.Label>Town<span className="required">*</span></Form.Label>
