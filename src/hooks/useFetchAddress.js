@@ -187,11 +187,43 @@ import {
       });
       
   };
+  const getAddressByResourceId = (resourceId) => {
+    dispatch(getAddressBeginAction());
+    return API.get(`${hapyCarURL}/resource/${resourceId}`,
+      null,
+      { suppressErrors: [400] }
+    )
+      .then(({ data }) =>
+        dispatch(
+          getAddressSuccessAction({
+            ...data,
+            title: SUCCESS,
+          })
+        )
+      )
+      .catch((error) => {
+        let errorMsg = "error msg from copy file";
+        if (error.response.data.address) {
+          const [errors] = error.response.data.address;
+          errorMsg = errors;
+        }
+        dispatch(
+          getAddressFailureAction({
+            ...errorMsg,
+            title: ERROR,
+            errorMsg,
+          })
+        );
+      });
+
+  };
+  
   return {
     addAddress,
     updateAddress,
     deleteAddress,
     getAddresses,
     addressById,
+    getAddressByResourceId
   };
 }

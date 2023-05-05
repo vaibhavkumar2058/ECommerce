@@ -24,13 +24,14 @@ export default function AddressModel({
   //recordStatus,
 }) {
   const [newAddress, setNewAddress] = useState({
+    resourcesId: null,
     countryId: null,
     stateId: null,
     city: "",
     town: "",
     locality: "",
     pincode: null,
-    addressLine:"",
+    addressLine: "",
     addressTypeId: null,
     landMark: "",
     isDefault: "",
@@ -185,7 +186,8 @@ export default function AddressModel({
     if (isEdit) {
       setButtonType("Update");
     }
-    const isEnable = !newAddress?.city
+    const isEnable = !newAddress?.resourcesId
+      || !newAddress?.city
       || !newAddress?.stateId
       || !newAddress?.countryId
       || !newAddress?.addressTypeId
@@ -265,9 +267,9 @@ export default function AddressModel({
                 />
               </Form.Group>
             </div>
-            </div>
+          </div>
           <div className="row">
-            
+
             <div className="col-md-4">
               <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>City<span className="required">*</span></Form.Label>
@@ -330,7 +332,7 @@ export default function AddressModel({
                 />
               </Form.Group>
             </div>
-                     <div className="col-md-4">
+            <div className="col-md-4">
               <Form.Group className="mb-3" controlId="landMark">
                 <Form.Label>LandMark<span className="required">*</span></Form.Label>
                 <Form.Control
@@ -342,7 +344,7 @@ export default function AddressModel({
                 />
               </Form.Group>
             </div>
-            </div>
+          </div>
           <div className="row">
             <div className="col-md-4">
               <Form.Group className="mb-3" controlId="defaultAddressTypeId">
@@ -356,7 +358,7 @@ export default function AddressModel({
                 />
               </Form.Group>
             </div>
-         
+
             <div className="col-md-4">
               <Form.Group className="mb-3" controlId="description">
                 <Form.Label>Description</Form.Label>
@@ -385,7 +387,7 @@ export default function AddressModel({
               </Form.Group>
             </div>
           </div>
-           <div className="row">
+          <div className="row">
             <div className="col-md-4">
               <Form.Group className="mb-3" controlId="addressLine">
                 <Form.Label>Address Line</Form.Label>
@@ -398,7 +400,7 @@ export default function AddressModel({
                 />
               </Form.Group>
             </div>
-            </div> 
+          </div>
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>
               Cancel

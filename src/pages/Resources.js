@@ -14,6 +14,7 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit';
 import Enquiry from "../pages/Enquiry";
 import MyProfile from "./MyProfile";
+import ResourceAttachments from "./ResourceAttachments";
 
 const { SearchBar, ClearSearchButton } = Search;
 
@@ -38,6 +39,7 @@ export default function Resourcess() {
   const [viewDetails, setViewDetails] = useState(false);
   const [show, setShow] = useState(false);
   const [showMap, setShowMap] = useState(false);
+  const [documents , setDocuments]=useState(false);
 
 
   // const handleClose = () => setShow(false);
@@ -47,7 +49,8 @@ export default function Resourcess() {
     setIsDelete(false);
     setShow(false);
     setShowMap(false);
-    setViewDetails(false)
+    setViewDetails(false);
+    setDocuments(false);
   };
   const handleShow = () => setShow(true);
   const handleShowMap = () => setShowMap(true);
@@ -174,6 +177,14 @@ export default function Resourcess() {
               ViewDetails
              
             </button>
+            <button
+             className="btn btn-primary btn-xs"
+              onClick={()=> handleDocuments()}
+             >
+              Documents
+             
+            </button>
+
             </>
         );
       },
@@ -218,11 +229,15 @@ export default function Resourcess() {
     setIsDelete(true);
     setShow(true);
   };
- const handleviewDetails =(rowId, name)=>{
+ 
+const handleviewDetails =(rowId, name)=>{
     setId(rowId);
     setViewDetails(true);
  }
-
+ const handleDocuments =(rowId, name)=>{
+    setId(rowId);
+    setDocuments(true);
+ }
   const pagination = paginationFactory({
     page: 1,
     sizePerPage: 5,
@@ -490,6 +505,23 @@ export default function Resourcess() {
             </Modal.Header>
             <Modal.Body  >
             <MyProfile></MyProfile>
+            </Modal.Body>
+
+          </Modal>
+          {/* Model Box Finsihs */}
+        </div>
+        <div>
+          <Modal dialogClassName="my-modal"
+            show={documents}
+            onHide={handleClose}
+            backdrop="static"
+            keyboard={false}
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>Documents</Modal.Title>
+            </Modal.Header>
+            <Modal.Body  >
+           <ResourceAttachments></ResourceAttachments>
             </Modal.Body>
 
           </Modal>

@@ -49,7 +49,9 @@ export default function Addresses() {
   const handleShow = () => setShow(true);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
+  const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
   const [address, setAddress] = useState({
+    resourcesId:userInfo?.resourcesId,
     countryId:null,
     stateId:null,
     city:"",
@@ -110,8 +112,9 @@ export default function Addresses() {
     { dataField: 'stateName', text: 'State',  sort: true ,headerStyle: () => {
       return { width: "100px" };
     }},
-    { dataField: 'city', text: 'City', sort: true,headerStyle: () => {
+     { dataField: 'resourcesId', text: 'Resources', sort: true, hidden: true,headerStyle: () => {
       return { width: "100px" };
+   
     } },
     { dataField: 'town', text: 'Town', sort: true,headerStyle: () => {
       return { width: "100px" };
@@ -327,6 +330,7 @@ export default function Addresses() {
         curedData.countryName=rawData?.country.countryName;
         curedData.stateId=rawData?.state.stateId;
         curedData.stateName=rawData?.state.stateName;
+        curedData.resourcesId=rawData?.resourcesId
         curedData.city=rawData?.city;
         curedData.town=rawData?.town;
         curedData.locality=rawData?.locality;

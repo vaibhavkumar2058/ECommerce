@@ -9,6 +9,10 @@ import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.m
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit';
+import { Dropdown } from 'semantic-ui-react';
+import Form from "react-bootstrap/Form";
+import useFetchApproveStatus from "../hooks/useFetchApproveStatus";
+import useFetchApprove from "../hooks/useFetchApprove";
 
 
 const { SearchBar, ClearSearchButton } = Search;
@@ -28,6 +32,7 @@ export default function ResourceAttachments() {
   const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
   const resourceId= userInfo?.resourcesId;
   const [resourceAttachmentses, setResourceAttachmentses] = useState([]);
+  const [approveStatusList, setApproveStatusList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -42,6 +47,15 @@ export default function ResourceAttachments() {
   const handleShow = () => setShow(true);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
+
+  const[ approve,setApproves]=useState(
+    {
+      resourcesId:null,
+      approverId:null,
+      approveStatusId:null,
+      comment:"",
+    }
+  );
   const [resourceAttachmentes, setResourceAttachments] = useState({
     resourcesId: null,
     filesId: null,
@@ -69,6 +83,39 @@ export default function ResourceAttachments() {
     resourceAttachmentsById,
   } = useFetchResourceAttachments();
 
+  const { 
+    getApproveStatuss,
+  } = useFetchApproveStatus();
+  const { 
+    addApprove,
+  } = useFetchApprove();
+
+
+  const [approveStatusOptions, setApproveStatusOptions] = useState(approveStatusList.map((approveStatus, item) => (
+    {
+      key: item,
+      text: approveStatus.approveStatusName,
+      value: approveStatus.approveStatusId,
+    })).filter((item) => item));
+
+    const dropdownHandler = (event, { name, value }) => {
+      setApproves((currentApprove) => ({ ...currentApprove, [name]: value }));
+  
+    }
+    useEffect(() => {
+      setApproveStatusOptions(approveStatusList.map((approveStatus, item) => (
+        {
+          key: item,
+          text: approveStatus.approveStatusName,
+          value: approveStatus.approveStatusId,
+        })).filter((item) => item));
+    }, [approveStatusList]);
+    const changeHandler = (e) => {
+      setApproves({
+        ...approve,
+        [e.target.name]: e.target.value,
+      });
+    };
   const columns = [
 
     { dataField: 'resourceAttachmentsId', text: 'ResourceAttachmentsId ', sort: true, hidden: true },
@@ -114,6 +161,7 @@ export default function ResourceAttachments() {
   ];
 
   useEffect(() => {
+    getApproveStatusList();
     if (ResourceAttachments.length == 0) {
       getAllResourceAttachmentses(resourceId);
       setLoading(false)
@@ -167,6 +215,42 @@ export default function ResourceAttachments() {
       console.log('sizePerPage', sizePerPage);
     }
   });
+
+  const handleSubmit = async () => {
+    alert("keerthana")
+approve.resourcesId=userInfo.resourcesId;
+approve.approverId=1
+approve.approveStatusId=1;
+approve.comment="test";
+    const response = await addApprove(approve);
+    if (response.payload.title == "Success") {
+      setMessageStatus({
+        mode: 'success',
+        message: 'Approve Record Saved Succefully.'
+      })
+      
+    }
+   
+  }
+  const getApproveStatusList = async () => {
+    const response = await getApproveStatuss();
+    if (response.payload.title == "Success") {
+
+      var arr = [];
+      for (var key in response.payload) {
+        if (key !== 'title')
+        arr.push(response.payload[key]);
+      }
+      setApproveStatusList(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'ApproveStatus Fetch Failed.'
+      })
+    }
+  };
+  
 
 
   const getAllResourceAttachmentses = async (resourceId) => {
@@ -251,12 +335,50 @@ export default function ResourceAttachments() {
               props => (
                 <div>
                   <div className="row m-t-5">
+                    <div className="col-lg-6 ">
                     <div className="col-lg-6 text-gred">
                       <SearchBar {...props.searchProps} /><ClearSearchButton {...props.searchProps} />
+                    </div>
+                    <div className="col-md-6">
+                    <div className="row">
+            <div className="col-md-6">
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Label>Approve Status<span className="required">*</span></Form.Label>
+                <Dropdown
+                  name="approveStatusId"
+                  placeholder='Select  Status'
+                  fluid
+                  search
+                  selection
+                  options={approveStatusOptions}
+                  value={approve?.approveStatusId}
+                  onChange={dropdownHandler}
+                />
+              </Form.Group>
+            </div>
+
+            <div className="col-md-6">
+              <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Label>Comment</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="comment"
+                  placeholder="Comment"
+                  value={approve?.comment}
+                  onChange={changeHandler}
+                />
+              </Form.Group>
+            </div>
+            </div>
+           
+            </div>
                     </div>
                     <div className="col-lg-6">
                       <div className="row">
                         <div className="app-right col-lg-12">
+                        <div className="app-float-right p-1">
+              <Button variant="primary" onClick={handleSubmit}>Submit</Button>
+            </div>
                           {/* <div className="app-float-right p-1">
                           <MyExportCSV {...props.csvProps} /></div> */}
                           <div className="app-float-right p-1">
