@@ -13,6 +13,7 @@ import { Dropdown } from 'semantic-ui-react';
 import Form from "react-bootstrap/Form";
 import useFetchApproveStatus from "../hooks/useFetchApproveStatus";
 import useFetchApprove from "../hooks/useFetchApprove";
+import useFetchFiles from "../hooks/useFetchFile";
 
 
 const { SearchBar, ClearSearchButton } = Search;
@@ -89,6 +90,9 @@ export default function ResourceAttachments() {
   const { 
     addApprove,
   } = useFetchApprove();
+ const { 
+    downloadFileById,
+  } = useFetchFiles();
 
 
   const [approveStatusOptions, setApproveStatusOptions] = useState(approveStatusList.map((approveStatus, item) => (
@@ -149,12 +153,21 @@ export default function ResourceAttachments() {
               onClick={() => handleEdit(row.resourceAttachmentsId, row)}
             >
               Edit
-            </button><button
+            </button>
+            <button
               className="btn btn-danger btn-xs"
               onClick={() => handleDelete(row.resourceAttachmentsId, row.name)}
             >
               Delete
-            </button></>
+            </button>
+            <button
+              className="btn btn-danger btn-xs"
+              onClick={() => handleDownload(row.resourceAttachmentsId, row.name)}
+            >
+              Download
+            </button>
+            </>
+            
         );
       },
     },
@@ -196,6 +209,13 @@ export default function ResourceAttachments() {
     setIsDelete(true);
     setShow(true);
   };
+  const handleDownload = async () => {
+    const response = await downloadFileById();
+    if (response.payload.title == "Success") {
+      setResourceAttachments(response.payload);
+    }
+
+  }
 
   const pagination = paginationFactory({
     page: 1,

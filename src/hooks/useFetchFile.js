@@ -192,11 +192,43 @@ import {
       });
       
   };
+
+  const downloadFileById = (fileId) => {
+    dispatch(getFileBeginAction());
+    return API.get(`${hapyCarURL}/download/${fileId}`,
+      null,
+      { suppressErrors: [400] }
+    )
+      .then(({ data }) =>
+        dispatch(
+          getFileSuccessAction({
+            ...data,
+            title: SUCCESS,
+          })
+        )
+      )
+      .catch((error) => {
+        let errorMsg = "error msg from copy file";
+        if (error.response.data.file) {
+          const [errors] = error.response.data.file;
+          errorMsg = errors;
+        }
+        dispatch(
+          getFileFailureAction({
+            ...errorMsg,
+            title: ERROR,
+            errorMsg,
+          })
+        );
+      });
+
+  };
   return {
     addFile,
     updateFile,
     deleteFile,
     getFiles,
     fileById,
+    downloadFileById
   };
 }
