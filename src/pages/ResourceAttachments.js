@@ -31,7 +31,7 @@ const MyExportCSV = (props) => {
 
 export default function ResourceAttachments() {
   const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
-  const resourceId= userInfo?.resourcesId;
+  const resourceId = userInfo?.resourcesId;
   const [resourceAttachmentses, setResourceAttachmentses] = useState([]);
   const [approveStatusList, setApproveStatusList] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -45,27 +45,28 @@ export default function ResourceAttachments() {
     setIsDelete(false);
     setShow(false);
   };
+  const hapyCarURL = "https://localhost:7062/files";
   const handleShow = () => setShow(true);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
 
-  const[ approve,setApproves]=useState(
+  const [approve, setApproves] = useState(
     {
-      resourcesId:null,
-      approverId:null,
-      approveStatusId:null,
-      comment:"",
+      resourcesId: null,
+      approverId: null,
+      approveStatusId: null,
+      comment: "",
     }
   );
   const [resourceAttachmentes, setResourceAttachments] = useState({
     resourcesId: null,
     filesId: null,
     resourceAttachmentTypeId: null,
-    attachmentStatusTypeId:null,
+    attachmentStatusTypeId: null,
     //visibleToCustomer: true,
     description: "",
-   
-      });
+
+  });
 
   const [id, setId] = useState(null);
 
@@ -76,7 +77,7 @@ export default function ResourceAttachments() {
     message: "",
   });
 
-  const { 
+  const {
     addResourceAttachments,
     updateResourceAttachments,
     deleteResourceAttachments,
@@ -84,13 +85,13 @@ export default function ResourceAttachments() {
     resourceAttachmentsById,
   } = useFetchResourceAttachments();
 
-  const { 
+  const {
     getApproveStatuss,
   } = useFetchApproveStatus();
-  const { 
+  const {
     addApprove,
   } = useFetchApprove();
- const { 
+  const {
     downloadFileById,
   } = useFetchFiles();
 
@@ -102,40 +103,43 @@ export default function ResourceAttachments() {
       value: approveStatus.approveStatusId,
     })).filter((item) => item));
 
-    const dropdownHandler = (event, { name, value }) => {
-      setApproves((currentApprove) => ({ ...currentApprove, [name]: value }));
-  
-    }
-    useEffect(() => {
-      setApproveStatusOptions(approveStatusList.map((approveStatus, item) => (
-        {
-          key: item,
-          text: approveStatus.approveStatusName,
-          value: approveStatus.approveStatusId,
-        })).filter((item) => item));
-    }, [approveStatusList]);
-    const changeHandler = (e) => {
-      setApproves({
-        ...approve,
-        [e.target.name]: e.target.value,
-      });
-    };
+  const dropdownHandler = (event, { name, value }) => {
+    setApproves((currentApprove) => ({ ...currentApprove, [name]: value }));
+
+  }
+  useEffect(() => {
+    setApproveStatusOptions(approveStatusList.map((approveStatus, item) => (
+      {
+        key: item,
+        text: approveStatus.approveStatusName,
+        value: approveStatus.approveStatusId,
+      })).filter((item) => item));
+  }, [approveStatusList]);
+  const changeHandler = (e) => {
+    setApproves({
+      ...approve,
+      [e.target.name]: e.target.value,
+    });
+  };
   const columns = [
 
     { dataField: 'resourceAttachmentsId', text: 'ResourceAttachmentsId ', sort: true, hidden: true },
     { dataField: 'resourcesId', text: ' resourcesId', sort: true, hidden: true },
+    { dataField: 'filesId', text: 'filesId', sort: true ,hidden: true},
     { dataField: 'fileName', text: 'File Name', sort: true },
     { dataField: 'attachmentStatusTypeId', text: 'AttachmentStatus Type', sort: true },
-    { dataField: 'documentType', text: 'Document Type', sort: true,headerStyle: () => {
-      return { width: "230px" };
-    } },
+    {
+      dataField: 'documentType', text: 'Document Type', sort: true, headerStyle: () => {
+        return { width: "230px" };
+      }
+    },
     // { dataField: 'description', text: 'Description', sort: true,headerStyle: () => {
     //   return { width: "200px" };
     // } },
     //{ dataField: 'visibleToCustomer', text: 'VisibleToCustomer', sort: true ,headerStyle: () => {
-      //return { width: "200px" };
+    //return { width: "200px" };
     //}},
-    
+
     // columns follow dataField and text structure
     {
       dataField: "Actions",
@@ -160,14 +164,9 @@ export default function ResourceAttachments() {
             >
               Delete
             </button>
-            <button
-              className="btn btn-danger btn-xs"
-              onClick={() => handleDownload(row.resourceAttachmentsId, row.name)}
-            >
-              Download
-            </button>
-            </>
-            
+            <a href={`${hapyCarURL}/download/${row.filesId}`}>
+              Download</a>
+          </>
         );
       },
     },
@@ -209,11 +208,15 @@ export default function ResourceAttachments() {
     setIsDelete(true);
     setShow(true);
   };
-  const handleDownload = async () => {
-    const response = await downloadFileById();
-    if (response.payload.title == "Success") {
-      setResourceAttachments(response.payload);
-    }
+  const handleDownload = (rowId) => {
+    setId(rowId);
+    handleFunction(rowId);
+  };
+
+
+  const handleFunction = async (filesId) => {
+    debugger
+    const response = await downloadFileById(5050);
 
   }
 
@@ -238,19 +241,19 @@ export default function ResourceAttachments() {
 
   const handleSubmit = async () => {
     alert("keerthana")
-approve.resourcesId=userInfo.resourcesId;
-approve.approverId=1
-approve.approveStatusId=1;
-approve.comment="test";
+    approve.resourcesId = userInfo.resourcesId;
+    approve.approverId = 1
+    approve.approveStatusId = 1;
+    approve.comment = "test";
     const response = await addApprove(approve);
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',
         message: 'Approve Record Saved Succefully.'
       })
-      
+
     }
-   
+
   }
   const getApproveStatusList = async () => {
     const response = await getApproveStatuss();
@@ -259,7 +262,7 @@ approve.comment="test";
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+          arr.push(response.payload[key]);
       }
       setApproveStatusList(arr);
     }
@@ -270,7 +273,7 @@ approve.comment="test";
       })
     }
   };
-  
+
 
 
   const getAllResourceAttachmentses = async (resourceId) => {
@@ -282,12 +285,13 @@ approve.comment="test";
       })
       const dataFormatter = (rawData) => {
         const curedData = {};
-         curedData.resourceAttachmentsId = rawData?.resourceAttachmentsId;
-         curedData.fileName = rawData?.files?.fileName;
-         curedData.attachmentStatusTypeId =rawData?.attachmentStatusType?.attachmentStatusTypeName;
-         curedData.documentType = rawData?.resourceAttachmentType?.displayText;
-         curedData.resourcesId = rawData?.resourcesId;
-         curedData.resourcesImage = 'data:'+ rawData?.files?.fileMimeType +';base64,'+ rawData?.resourceAttachment?.files?.base64;
+        curedData.resourceAttachmentsId = rawData?.resourceAttachmentsId;
+        curedData.filesId = rawData?.filesId
+        curedData.fileName = rawData?.files?.fileName;
+        curedData.attachmentStatusTypeId = rawData?.attachmentStatusType?.attachmentStatusTypeName;
+        curedData.documentType = rawData?.resourceAttachmentType?.displayText;
+        curedData.resourcesId = rawData?.resourcesId;
+        curedData.resourcesImage = 'data:' + rawData?.files?.fileMimeType + ';base64,' + rawData?.resourceAttachment?.files?.base64;
         return curedData;
 
       }
@@ -295,7 +299,7 @@ approve.comment="test";
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-       arr.push(dataFormatter(response.payload[key]));
+          arr.push(dataFormatter(response.payload[key]));
       }
 
       setResourceAttachmentses(arr);
@@ -356,55 +360,55 @@ approve.comment="test";
                 <div>
                   <div className="row m-t-5">
                     <div className="col-lg-6 ">
-                    <div className="col-lg-6 text-gred">
-                      <SearchBar {...props.searchProps} /><ClearSearchButton {...props.searchProps} />
-                    </div>
-                    <div className="col-md-6">
-                    <div className="row">
-            <div className="col-md-6">
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Approve Status<span className="required">*</span></Form.Label>
-                <Dropdown
-                  name="approveStatusId"
-                  placeholder='Select  Status'
-                  fluid
-                  search
-                  selection
-                  options={approveStatusOptions}
-                  value={approve?.approveStatusId}
-                  onChange={dropdownHandler}
-                />
-              </Form.Group>
-            </div>
+                      <div className="col-lg-6 text-gred">
+                        <SearchBar {...props.searchProps} /><ClearSearchButton {...props.searchProps} />
+                      </div>
+                      <div className="col-md-6">
+                        <div className="row">
+                          <div className="col-md-6">
+                            <Form.Group className="mb-3" controlId="formBasicPassword">
+                              <Form.Label>Approve Status<span className="required">*</span></Form.Label>
+                              <Dropdown
+                                name="approveStatusId"
+                                placeholder='Select  Status'
+                                fluid
+                                search
+                                selection
+                                options={approveStatusOptions}
+                                value={approve?.approveStatusId}
+                                onChange={dropdownHandler}
+                              />
+                            </Form.Group>
+                          </div>
 
-            <div className="col-md-6">
-              <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Comment</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="comment"
-                  placeholder="Comment"
-                  value={approve?.comment}
-                  onChange={changeHandler}
-                />
-              </Form.Group>
-            </div>
-            </div>
-           
-            </div>
+                          <div className="col-md-6">
+                            <Form.Group className="mb-3" controlId="formBasicPassword">
+                              <Form.Label>Comment</Form.Label>
+                              <Form.Control
+                                type="text"
+                                name="comment"
+                                placeholder="Comment"
+                                value={approve?.comment}
+                                onChange={changeHandler}
+                              />
+                            </Form.Group>
+                          </div>
+                        </div>
+
+                      </div>
                     </div>
                     <div className="col-lg-6">
                       <div className="row">
                         <div className="app-right col-lg-12">
-                        <div className="app-float-right p-1">
-              <Button variant="primary" onClick={handleSubmit}>Submit</Button>
-            </div>
+                          <div className="app-float-right p-1">
+                            <Button variant="primary" onClick={handleSubmit}>Submit</Button>
+                          </div>
                           {/* <div className="app-float-right p-1">
                           <MyExportCSV {...props.csvProps} /></div> */}
                           <div className="app-float-right p-1">
-                          <Button variant="primary" onClick={handleShow}>
-                            Add Resource Attachments
-                          </Button>
+                            <Button variant="primary" onClick={handleShow}>
+                              Add Resource Attachments
+                            </Button>
                           </div>
                         </div>
                       </div>
