@@ -125,10 +125,8 @@ export default function ResourceAttachments() {
     { dataField: 'resourceAttachmentsId', text: 'ResourceAttachmentsId ', sort: true, hidden: true },
     { dataField: 'resourcesId', text: ' resourcesId', sort: true, hidden: true },
     { dataField: 'fileName', text: 'File Name', sort: true },
-    { dataField: 'attachmentStatusTypeId', text: 'AttachmentStatus Type', sort: true },
-    { dataField: 'documentType', text: 'Document Type', sort: true,headerStyle: () => {
-      return { width: "230px" };
-    } },
+    { dataField: 'attachmentStatusTypeId', text: 'Attachment Status Type', sort: true },
+    { dataField: 'documentType', text: 'Document Type', sort: true,headerStyle: () => {return { width: "230px" };} },
     // { dataField: 'description', text: 'Description', sort: true,headerStyle: () => {
     //   return { width: "200px" };
     // } },
@@ -282,10 +280,10 @@ approve.comment="test";
       })
       const dataFormatter = (rawData) => {
         const curedData = {};
-         curedData.resourceAttachmentsId = rawData?.resourceAttachmentsId;
+         curedData.resourceAttachmentsId = rawData?.resourceAttachments?.resourceAttachmentsId;
          curedData.fileName = rawData?.files?.fileName;
          curedData.attachmentStatusTypeId =rawData?.attachmentStatusType?.attachmentStatusTypeName;
-         curedData.documentType = rawData?.resourceAttachmentType?.displayText;
+         curedData.documentType = rawData?.resourceAttachments?.resourceAttachmentsId;
          curedData.resourcesId = rawData?.resourcesId;
          curedData.resourcesImage = 'data:'+ rawData?.files?.fileMimeType +';base64,'+ rawData?.resourceAttachment?.files?.base64;
         return curedData;

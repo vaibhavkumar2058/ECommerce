@@ -9,7 +9,6 @@ import Modal from 'react-bootstrap/Modal';
 import Select from 'react-select';
 
 
-
 export default function ProductModel({
   onAddProduct,
   onUpdateProduct,
@@ -75,11 +74,36 @@ export default function ProductModel({
     });
   };
 
+  const getBase64 = (file, cb) => {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+        cb(reader.result)
+    };
+    reader.onerror = function (error) { 
+        console.log('Error: ', error);
+    };
+}
 
+  const [previewImage, setPreviewImage] = useState('');
   const saveFileSelected = (e) => {
+    let idCardBase64 = '';
+getBase64(e.target.files[0], (result) => {
+     idCardBase64 = result;
+});
+const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      setPreviewImage(reader.result);
+    };
+    if (file) {
+      reader.readAsDataURL(file);
+    }
     //in case you wan to print the file selected
-    //console.log(e.target.files[0]);
+    console.log(idCardBase64);
+
     setFileSelected(e.target.files[0]);
+    debugger
   };
 
   const saveHandler = async () => {
@@ -100,6 +124,7 @@ export default function ProductModel({
 
       const response = await onAddProduct(newProduct);
       if (response.payload.title == "Success") {
+        debugger
         setMessageStatus({
           mode: 'success',
           message: 'Product Record Saved Succefully.'
@@ -163,6 +188,7 @@ export default function ProductModel({
     if (isEdit) {
       setButtonType("Update");
     }
+ 
     const isEnable =
       !newProduct?.productName
       || !newProduct?.categoryTypeId
@@ -232,8 +258,8 @@ export default function ProductModel({
                   <Form.Label>Product Image<span className="required">*</span></Form.Label>
                 </Form.Group>
                 <Form.Group>
-                  <input type="file" onChange={saveFileSelected} />
-                  <img className="product-view" src={newProduct?.productImage}>
+                  <input type="file" onChange={saveFileSelected} accept="image/*" />
+                  <img className="product-view" src={previewImage} alt="Preview Image">
                   </img>
                 </Form.Group>
               </div>

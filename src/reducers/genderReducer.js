@@ -63,9 +63,7 @@ import {
               data: action.payload,
             },
           };
-  
-  
-  
+          
       default:
         return state;
     }

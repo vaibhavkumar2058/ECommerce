@@ -51,7 +51,7 @@ export default function CartModel({
       text: product.productName,
       value: product.productId,
     })).filter((item) => item));
- 
+
   const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus, item) => (
     {
       key: item,
@@ -151,7 +151,7 @@ export default function CartModel({
       })).filter((item) => item));
   }, [productList]);
 
-  
+
   useEffect(() => {
     setRecordStatusOptions(recordStatusList.map((recordStatus, item) => (
       {
@@ -204,7 +204,7 @@ export default function CartModel({
                 controlId="formCart"
               >
 
-<Form.Label>Resources<span className="required">*</span></Form.Label>
+                <Form.Label>Resources<span className="required">*</span></Form.Label>
                 <Form.Control
                   type="resourceId"
                   name="resourcesId"

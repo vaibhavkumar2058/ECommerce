@@ -10,7 +10,7 @@ import {
     getGMTSuccessAction,
     getGMTFailureAction,
     GTMAction,
-  } from "../actions/GMTActions";
+  } from "../actions/gmtActions";
 
   export default function useFetchGMTs() {
     const dispatch = useDispatch();

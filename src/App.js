@@ -6,16 +6,8 @@ import { store } from "./actions/store";
 import { Provider } from "react-redux";
 import { ToastProvider } from "react-toast-notifications";
 import './volt.css';
-import { useNavigate } from "react-router-dom";
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import { Navbar, Nav, Container } from 'react-bootstrap';
-import Button from "react-bootstrap/Button";
-import Dropdown from 'react-bootstrap/Dropdown';
-import Badge from 'react-bootstrap/Badge';
 import useFetchNotifications from "./hooks/useFetchNotification";
 import useFetchCart from "./hooks/useFetchCart";
-import TopBanner from "./pages/TopBanner"; 
-
 
 import 'semantic-ui-css/semantic.min.css'
 

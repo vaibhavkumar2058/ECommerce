@@ -7,22 +7,14 @@ import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
 
-export default function ResourcesModel({
-  onAddResources,
-  onUpdateResources,
-  onDeleteResources,
+export default function ViewDetailsModel({
   isEdit,
-  isDelete,
-  onGetResources,
-  id,
-  onClose,
   resourcesData,
   roleList = [],
   genderList = [],
   recordStatusList = [],
-
 }) {
-  const [newResources, setNewResources] = useState({
+  const [details, setNewResources] = useState({
     firstName: "",
     middleName: "",
     lastName: "",
@@ -35,7 +27,7 @@ export default function ResourcesModel({
     isEmailVerified: true,
     isMobileVerified: true,
     recordStatusId: 1,
-   attachment: null,
+    attachment: null,
     resourcesAttachmentTypeId: 1003,
     resourcesImage:"",
   });
@@ -83,7 +75,7 @@ export default function ResourcesModel({
 
   const changeHandler = (e) => {
     setNewResources({
-      ...newResources,
+      ...details,
       [e.target.name]: e.target.value,
     });
   };
@@ -118,60 +110,6 @@ const file = e.target.files[0];
 
     setFileSelected(e.target.files[0]);
     debugger
-  };
-
-  const saveHandler = async () => {
-
-    newResources.attachment = fileSelected;
-
-    if (isEdit) {
-      const response = await onUpdateResources(id, newResources);
-      if (response.payload.title == "Success") {
-        onClose(true);
-      }
-      else {
-        setMessageStatus({
-          mode: 'danger',
-          message: 'Un-Known Error Occured.'
-        })
-      }
-    }
-    else {
-      navigator.geolocation.getCurrentPosition((position) => {
-        newResources.latitude = position.coords.latitude;
-        newResources.longitude = position.coords.longitude;
-                
-            });
-
-      const response = await onAddResources(newResources);
-      if (response.payload.title == "Success") {
-        setMessageStatus({
-          mode: 'success',
-          message: 'Resources Record Saved Succefully.'
-        })
-        onClose(true);
-        console.log(response.payload);
-      }
-      else {
-        setMessageStatus({
-          mode: 'danger',
-          message: 'Resources Save Failed.'
-        })
-      }
-    }
-  };
-
-  const deleteHandler = async () => {
-    const response = await onDeleteResources(id);
-    if (response.payload.title == "Success") {
-      onClose(true);
-    }
-    else {
-      setMessageStatus({
-        mode: 'danger',
-        message: 'Resources Delete Failed.'
-      })
-    }
   };
 
   const dropdownHandler = (event, { name, value }) => {
@@ -217,36 +155,17 @@ const file = e.target.files[0];
     }
     debugger
     const isEnable =
-      !newResources?.firstName
-      || !newResources?.roleId || !newResources?.genderId
-      || !newResources?.mobileNumber
-      || !newResources?.email
-      || !newResources?.password
-      || !newResources?.recordStatusId;
+      !details?.firstName
+      || !details?.roleId || !details?.genderId
+      || !details?.mobileNumber
+      || !details?.email
+      || !details?.password
+      || !details?.recordStatusId;
     setSaveDisabled(isEnable);
-  }, [newResources]);
+  }, [details]);
 
   return (
     <>
-      {(messageStatus.message && <Alert key={messageStatus.mode} variant={messageStatus.mode}>
-        {messageStatus.message}
-      </Alert>)}
-      {isDelete && (
-        <>
-          <Modal.Body>
-            <p>Are you sure you want to delete?.</p>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={onClose}>
-              Cancel
-            </Button>
-            <Button variant="primary" onClick={deleteHandler}>
-              Delete
-            </Button>
-          </Modal.Footer>
-        </>
-      )}
-      {!isDelete && (
         <div className="">
           <Form>
             <div className="row">
@@ -259,7 +178,7 @@ const file = e.target.files[0];
                     type="text"
                     name="firstName"
                     placeholder="First Name"
-                    value={newResources?.firstName}
+                    value={details?.firstName}
                     onChange={changeHandler}
                   />
                 </Form.Group>
@@ -271,13 +190,11 @@ const file = e.target.files[0];
                     type="text"
                     name="middleName"
                     placeholder="Middle Name"
-                    value={newResources?.middleName}
+                    value={details?.middleName}
                     onChange={changeHandler}
                   />
                 </Form.Group>
               </div>
-         
-           
               <div className="col-md-3">
                 <Form.Group className="mb-3" controlId="lastName">
                   <Form.Label>Last Name</Form.Label>
@@ -285,7 +202,7 @@ const file = e.target.files[0];
                     type="text"
                     name="lastName"
                     placeholder="Last Name"
-                    value={newResources?.lastName}
+                    value={details?.lastName}
                     onChange={changeHandler}
                   />
                 </Form.Group>
@@ -295,11 +212,8 @@ const file = e.target.files[0];
                   <Form.Label>Photo</Form.Label>
                 </Form.Group>
                 <Form.Group>
-                <img className="product-view" src={previewImage} alt="Preview Image">
+                <img className="product-view" src={details?.resourcesImage} alt="Preview Image">
                 </img>
-                  <input type="file" onChange={saveFileSelected} 
-                   encType="multipart/form-data" accept="image/*"
-                  />
                 </Form.Group>
               </div>
               
@@ -312,12 +226,12 @@ const file = e.target.files[0];
                   <Form.Label>Gender</Form.Label>
                   <Dropdown
                     name="genderId"
-                    placeholder='Select Gender'
+                    // placeholder='Select Gender'
                     fluid
                     search
                     selection
                     options={genderOptions}
-                    value={newResources?.genderId}
+                    value={details?.genderId}
                     onChange={dropdownHandler}
                   />
                 </Form.Group>
@@ -330,7 +244,7 @@ const file = e.target.files[0];
                     type="text"
                     name="mobileNumber"
                     placeholder="Mobile Number"
-                    value={newResources?.mobileNumber}
+                    value={details?.mobileNumber}
                     onChange={changeHandler}
                   />
                 </Form.Group>
@@ -342,7 +256,7 @@ const file = e.target.files[0];
                     type="text"
                     name="email"
                     placeholder="Email"
-                    value={newResources?.email}
+                    value={details?.email}
                     onChange={changeHandler}
                   />
                 </Form.Group>
@@ -355,7 +269,7 @@ const file = e.target.files[0];
                     type="text"
                     name="password"
                     placeholder="Password"
-                    value={newResources?.password}
+                    value={details?.password}
                     onChange={changeHandler}
                   />
                 </Form.Group>
@@ -372,7 +286,7 @@ const file = e.target.files[0];
                     search
                     selection
                     options={roleOptions}
-                    value={newResources?.roleId}
+                    value={details?.roleId}
                     onChange={dropdownHandler}
                   />
                 </Form.Group>
@@ -388,100 +302,15 @@ const file = e.target.files[0];
                     search
                     selection
                     options={recordStatusOptions}
-                    value={newResources?.recordStatusId}
+                    value={details?.recordStatusId}
                     onChange={dropdownHandler}
                   />
                 </Form.Group>
               </div>
             </div>
             
-              
-      
-            {/* <div className="row">
-              <div className="col-md-6"> */}
-                <Modal.Footer>
-                  <Button variant="secondary" onClick={onClose}>
-                    Cancel
-                  </Button>
-                  <Button variant="primary" onClick={saveHandler}
-                    disabled={saveDisabled}>
-                    {buttonType}
-                  </Button>
-                </Modal.Footer>
-              {/* </div>
-            </div> */}
           </Form>
         </div>
-      )}
     </>
   );
 }
-
-ResourcesModel.propTypes = {
-  /**
-   * Callback function for Add Resources
-   */
-  onAddResources: PropTypes.func,
-  /**
-   * Callback function for Update Resources
-   */
-  onUpdateResources: PropTypes.func,
-  /**
-   * Callback function for Delete Resources
-   */
-  onDeleteResources: PropTypes.func,
-  /**
-   * Callback function for Get Resources
-   */
-  onGetResources: PropTypes.func,
-  /**
-   * isEdit for bool type
-   */
-  isEdit: PropTypes.bool,
-  /**
-   * isDelete for bool type
-   */
-  isDelete: PropTypes.bool,
-  /**
-   * Callback function for GetPResources
-   */
-  onClose: PropTypes.func,
-  /**
-   * id for number type
-   */
-  id: PropTypes.number,
-  /**
- * resourcesData for object type
- */
-  resourcesData: PropTypes.any,
-  /**
-* roleList for object type
-*/
-  roleList: PropTypes.any,
-  /**
-  * genderList for object type
-  */
-  genderList: PropTypes.any,
-  /**
- * recordStatusData for object type
- */
-  recordStatusList: PropTypes.any,
-
-
-};
-
-ResourcesModel.defaultProps = {
-  onAddResources: null,
-  onUpdateResources: null,
-  onDeleteResources: null,
-  onGetResources: null,
-  isEdit: false,
-  isDelete: false,
-  onClose: null,
-  id: null,
-  resourcesData: null,
-  roleList: null,
-  genderList: null,
-  recordStatusList: null,
-
-};

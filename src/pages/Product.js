@@ -405,7 +405,6 @@ export default function Products() {
                 productData={product}
                 recordStatusList={recordStatusList}
                 categoryList={categoryList}
-
               />
             </Modal.Body>
 

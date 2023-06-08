@@ -42,6 +42,7 @@ export default () => {
    updateAddress,
     getAddresses,
     addressById,
+    getAddressByResourceId,
   } = useFetchAddress();
   const {
     getRoles,
@@ -62,13 +63,49 @@ export default () => {
     getAddressTypes,
   } = useFetchAddressType();
 
+  // const saveHandler = async () => {
+  //   newResources.attachment = fileSelected;
+  //   if (isEdit) {
+  //     const response = await onUpdateResources(id, newResources);
+  //     if (response.payload.title == "Success") {
+  //       onClose(true);
+  //     }
+  //     else {
+  //       setMessageStatus({
+  //         mode: 'danger',
+  //         message: 'Un-Known Error Occured.'
+  //       })
+  //     }
+  //   }
+  //   else {
+  //     navigator.geolocation.getCurrentPosition((position) => {
+  //       newResources.latitude = position.coords.latitude;
+  //       newResources.longitude = position.coords.longitude;
+                
+  //           });
+
+  //     const response = await onAddResources(newResources);
+  //     if (response.payload.title == "Success") {
+  //       setMessageStatus({
+  //         mode: 'success',
+  //         message: 'Resources Record Saved Succefully.'
+  //       })
+  //       onClose(true);
+  //       console.log(response.payload);
+  //     }
+  //     else {
+  //       setMessageStatus({
+  //         mode: 'danger',
+  //         message: 'Resources Save Failed.'
+  //       })
+  //     }
+  //   }
+  // };
+
   const UpdateResource = () => {
     const saveHandler = async () => {
-
-
       const response = await updateResources(resourceId, resource);
       if (response.payload.title == "Success") {
-
       }
       else {
 
@@ -88,8 +125,6 @@ export default () => {
       getResourcesById(resourceId);
       getAddressById(resourceId);
     }
-
-
   }, [resource]);
 
   const getResourcesById = async (id) => {
@@ -102,8 +137,8 @@ export default () => {
     }
   };
 
-  const getAddressById = async (id) => {
-    const response = await addressById(1);
+  const getAddressById = async (resourceId) => {
+    const response = await getAddressByResourceId(resourceId);
     if (response.payload.title == "Success") {
       debugger
       setAddress(response.payload);
@@ -298,7 +333,6 @@ export default () => {
   };
 
 
-
   return (
     <Tabs
       defaultActiveKey="profile"
@@ -386,8 +420,6 @@ export default () => {
                   onChange={dropdownHandler}
                 /></div>
             </Form.Group>
-
-
           </div>
          
           <div class="row">
@@ -574,7 +606,12 @@ export default () => {
 
           </Form>
         </div>
-
+        <div class="row">
+            <div class="col-md-8 col-lg-8"></div>
+            <div class="col-md-4 col-lg-4"><Button variant="secondary" onClick={() => UpdateResource()}>
+              Update Profile </Button></div>
+            <div class="col-md-2 col-lg-2"></div>
+        </div>
 
       </Tab>
 

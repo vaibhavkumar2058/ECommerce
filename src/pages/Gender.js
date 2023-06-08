@@ -76,7 +76,7 @@ export default function Gender() {
      { dataField: 'genderName', text: ' GenderName', sort: true },
      { dataField: 'recordStatusId', text: 'RecordStatusId',hidden:true, sort: true},
      { dataField: 'recordStatus', text: 'Status', sort: true},
-      { dataField: 'description', text: 'Description', sort: true },
+     { dataField: 'description', text: 'Description', sort: true },
     
     // columns follow dataField and text structure
     {

@@ -1,4 +1,4 @@
-import React from "react";
+ import React from "react";
 import {
   Navbar,
   NavDropdown,
@@ -138,7 +138,7 @@ const NavbarComp = () => {
           <Route path="/" element={<Navigate replace to="/signin" />} />
           {(admin && <Route exact path="/orderItem" element={<ProtectedRoute><Sidebar/><Topbar/> <OrderItem /></ProtectedRoute>} />)}
           {(admin && <Route exact path="/customType" element={<ProtectedRoute><Sidebar/><Topbar/> <CustomType /></ProtectedRoute>} />)}
-          {((admin||agent||dealer||customer) &&<Route exact path="/changepassword" element={<ProtectedRoute><Sidebar/><Topbar/><ChangePassword/></ProtectedRoute>}/>)}
+          {((admin||agent||dealer||customer) &&<Route exact path="/changepassword" element={<ProtectedRoute><ChangePassword/></ProtectedRoute>}/>)}
           <Route exact path="/forgotpassword" element={<ForgotPassword/>}/>
           <Route exact path="/emailverification" element={<Emailverification/>}/>
           {((admin||agent||dealer||customer) &&<Route exact path="/myProfile" element={<ProtectedRoute><Sidebar/><Topbar/><MyProfile /></ProtectedRoute>}/>)}

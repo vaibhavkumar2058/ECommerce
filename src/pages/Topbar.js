@@ -9,6 +9,7 @@ import { Routes } from "./routes";
 import TopBanner from "./TopBanner";
 import logo from "../logo.png";
 import useFetchLead from "../hooks/useFetchLead";
+import useFetchFiles from "../hooks/useFetchFile";
 
 export default (props = {}) => {
   const location = "";

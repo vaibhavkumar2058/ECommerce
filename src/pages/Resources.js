@@ -15,6 +15,8 @@ import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit/dist/rea
 import Enquiry from "../pages/Enquiry";
 import MyProfile from "./MyProfile";
 import ResourceAttachments from "./ResourceAttachments";
+import ViewDetailsModel from "../components/ViewDetailsModel";
+
 
 const { SearchBar, ClearSearchButton } = Search;
 
@@ -172,7 +174,7 @@ export default function Resourcess() {
             </button>
             <button
              className="btn btn-primary btn-xs"
-              onClick={()=> handleviewDetails()}
+              onClick={()=> handleviewDetails(row.resourcesId, row)}
              >
               ViewDetails
              
@@ -230,9 +232,12 @@ export default function Resourcess() {
     setShow(true);
   };
  
-const handleviewDetails =(rowId, name)=>{
+const handleviewDetails =(rowId, row)=>{
+    setResources(row);
     setId(rowId);
     setViewDetails(true);
+    getResourcesById(rowId);
+    setIsEdit(true);
  }
  const handleDocuments =(rowId, name)=>{
     setId(rowId);
@@ -467,7 +472,6 @@ const handleviewDetails =(rowId, name)=>{
                 roleList={roleList}
                 genderList={genderList}
                 recordStatusList={recordStatusList}
-
               />
             </Modal.Body>
 
@@ -501,10 +505,20 @@ const handleviewDetails =(rowId, name)=>{
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title>My Profile</Modal.Title>
+              <Modal.Title>Details</Modal.Title>
             </Modal.Header>
             <Modal.Body  >
-            <MyProfile></MyProfile>
+            <ViewDetailsModel
+                onGetResources={resourcesById}
+                onClose={handleClose}
+                isEdit={isEdit}
+                isDelete={isDelete}
+                id={id}
+                resourcesData={resources}
+                roleList={roleList}
+                genderList={genderList}
+                recordStatusList={recordStatusList}
+              />
             </Modal.Body>
 
           </Modal>
