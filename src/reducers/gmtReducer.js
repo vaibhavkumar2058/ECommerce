@@ -14,7 +14,7 @@ import {
     data: null,
   };
   
-  export function GMTReducer(state = initialState, action) {
+  export function gmtReducer(state = initialState, action) {
     switch (action.type) {
   
       case FETCH_GMT_SUCCESS:

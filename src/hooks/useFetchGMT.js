@@ -9,7 +9,7 @@ import {
     getGMTBeginAction,
     getGMTSuccessAction,
     getGMTFailureAction,
-    GTMAction,
+    GMTAction,
   } from "../actions/gmtActions";
 
   export default function useFetchGMTs() {
@@ -166,7 +166,7 @@ import {
       }) =>
 
         dispatch(
-          GTMAction({
+          GMTAction({
             ...data,
             title: SUCCESS,
           })
@@ -179,7 +179,7 @@ import {
           errorMsg = errors;
         }
         dispatch(
-          GTMAction({
+          GMTAction({
             ...errorMsg,
             title: ERROR,
             errorMsg,

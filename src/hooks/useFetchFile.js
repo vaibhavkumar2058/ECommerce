@@ -199,13 +199,8 @@ import {
       null,
       { suppressErrors: [400] }
     )
-      .then(({ data }) =>
-        dispatch(
-          getFileSuccessAction({
-            ...data,
-            title: SUCCESS,
-          })
-        )
+      .then(
+
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
