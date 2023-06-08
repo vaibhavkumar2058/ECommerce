@@ -24,6 +24,7 @@ export default function LeadModel({
   const [newLead, setNewLead] = useState({
     leadCount:null,
     resourcesId:null,
+    orderCount:null,
     orderValue:null,
     recordStatusId: null,
   });
@@ -130,7 +131,7 @@ export default function LeadModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newLead?.leadCount||!newLead?.resourcesId  || !newLead?.recordStatusId ;
+      !newLead?.leadCount||!newLead?.resourcesId||!newLead?.orderCount ||newLead?.orderValue || !newLead?.recordStatusId ;
     setSaveDisabled(isEnable);
   }, [newLead]);
 
@@ -195,6 +196,22 @@ export default function LeadModel({
             className={styles.stFormContainer}
             controlId="formLead"
           >
+          <Form.Label>Order Count<span className="required">*</span></Form.Label>
+            <Form.Control
+              type="text" 
+              name="orderCount"                                                                                                                                   
+              placeholder="Order Count"
+              value={newLead?.orderCount}
+              onChange={changeHandler}
+            />
+          </Form.Group>
+          </div>
+          <div className="col-md-6">
+
+          <Form.Group
+            className={styles.stFormContainer}
+            controlId="formLead"
+          >
             <Form.Label>Order Value<span className="required">*</span></Form.Label>
             <Form.Control
               type="text" 
@@ -204,10 +221,10 @@ export default function LeadModel({
               onChange={changeHandler}
             />
           </Form.Group>
-
           </div>
+          </div>
+          <div className="row">
           <div className="col-md-6">
-
           <Form.Group className="mb-3" controlId="recordStatus">
             <Form.Label>Status<span className="required">*</span></Form.Label>
             <Dropdown

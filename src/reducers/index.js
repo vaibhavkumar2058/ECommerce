@@ -9,7 +9,7 @@ import { categoryTypeReducer } from "./categoryTypeReducer";
 import { productReducer } from "./productReducer";
 import{ folderReducer} from "./folderReducer"
 import { fileReducer } from "./fileReducer";
-import{GMTReducer}from "./GMTReducer";
+import{gmtReducer}from "./gmtReducer";
 import{orderTrackingReducer}from "./orderTrackingReducer";
 import { resourcesReducer } from "./resourcesReducer";
 import{orderStatusReducer}from "./orderStatusReducer";
@@ -26,7 +26,7 @@ export const reducers = combineReducers({
     fileReducer,
     categoryTypeReducer,
     folderReducer,
-    GMTReducer,
+    gmtReducer,
     orderTrackingReducer,
    loginReducer,
     resourcesReducer,
