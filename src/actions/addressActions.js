@@ -34,16 +34,3 @@ export const deleteAddressAction = (data) => ({
     type: DELETE_ADDRESS,
     payload: data,
 })
-
-
-
-
-
-
-
-
-
-
-
-
-

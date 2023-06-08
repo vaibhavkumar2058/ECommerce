@@ -127,6 +127,8 @@ export default function ResourceAttachments() {
     { dataField: 'resourcesId', text: ' resourcesId', sort: true, hidden: true },
     { dataField: 'filesId', text: 'filesId', sort: true ,hidden: true},
     { dataField: 'fileName', text: 'File Name', sort: true },
+    { dataField: 'attachmentStatusTypeId', text: 'Attachment Status Type', sort: true },
+    { dataField: 'documentType', text: 'Document Type', sort: true,headerStyle: () => {return { width: "230px" };} },
     { dataField: 'attachmentStatusTypeId', text: 'AttachmentStatus Type', sort: true },
     {
       dataField: 'documentType', text: 'Document Type', sort: true, headerStyle: () => {

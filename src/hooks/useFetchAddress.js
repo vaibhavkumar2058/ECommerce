@@ -187,9 +187,9 @@ import {
       });
       
   };
-  const getAddressByResourceId = (resourceId) => {
+  const getAddressByResourceId = (resourcesId) => {
     dispatch(getAddressBeginAction());
-    return API.get(`${hapyCarURL}/resource/${resourceId}`,
+    return API.get(`${hapyCarURL}/list/${resourcesId}`,
       null,
       { suppressErrors: [400] }
     )

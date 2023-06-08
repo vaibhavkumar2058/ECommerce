@@ -53,8 +53,7 @@ export default function Carts() {
     quantity:"",
     description:"",
     recordStatusId:null,
-
-      });
+  });
 
   const [id, setId] = useState(null);
 
@@ -80,9 +79,6 @@ export default function Carts() {
     getRecordStatuss,
   } = useFetchRecordStatus();
   
-
-
-
   const columns = [
     { dataField: 'cartId', text: 'Cart ', sort: true, hidden: true },
     { dataField: 'resourcesId', text: 'resourcesId', sort: true, hidden: true },
@@ -355,9 +351,7 @@ export default function Carts() {
                 id={id}
                 cartData={cart}
                 productList={productList}
-    
                 recordStatusList={recordStatusList}
-               
               />
             </Modal.Body>
 

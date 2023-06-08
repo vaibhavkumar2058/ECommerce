@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { css } from "@emotion/react";
-
+import { Dropdown } from 'semantic-ui-react'
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
@@ -20,7 +20,7 @@ export default function ResourceAttachmentsModel({
 }) {
   const [newResourceAttachments, setNewResourceAttachments] = useState({
     resourcesId: null,
-    attachment:null,
+    filesId:null,
     resourceAttachmentTypeId: null,
     //visibleToCustomer: true,
     description: "",
@@ -115,7 +115,10 @@ export default function ResourceAttachmentsModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newResourceAttachments?.resourcesId || !newResourceAttachments?.resourceAttachmentTypeId|| !newResourceAttachments?.description;
+      !newResourceAttachments?.resourcesId
+      || !newResourceAttachments?.filesId
+      || !newResourceAttachments?.resourceAttachmentTypeId
+      || !newResourceAttachments?.description;
     setSaveDisabled(isEnable);
   }, [newResourceAttachments]);
 

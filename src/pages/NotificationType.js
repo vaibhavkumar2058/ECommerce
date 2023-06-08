@@ -72,9 +72,9 @@ export default function NotificationType() {
 
   const columns = [
 
-     { dataField: 'notificationTypeId', text: 'NotificationTypeId', sort: true,hidden:true },
-     { dataField: 'notificationTypeName', text: 'NotificationTypeName', sort: true },
-     { dataField: 'recordStatusId', text: 'RecordStatusId',hidden:true, sort: true},
+     { dataField: 'notificationTypeId', text: 'NotificationTypeId', sort: true, hidden:true },
+     { dataField: 'notificationTypeName', text: 'Notification Type Name', sort: true },
+     { dataField: 'recordStatusId', text: 'recordStatusId', hidden:true, sort: true},
      { dataField: 'recordStatus', text: 'Status', sort: true},
       { dataField: 'description', text: 'Description', sort: true },
     
@@ -162,6 +162,7 @@ export default function NotificationType() {
       console.log('sizePerPage', sizePerPage);
     }
   });
+
   const getRecordStatusList = async () => {
     const response = await getRecordStatuss();
     if (response.payload.title == "Success") {
@@ -250,7 +251,7 @@ export default function NotificationType() {
     <>
       <div className="m-t-40">
         {loading && <div>A moment please...</div>}
-        {notificationType && (<div>
+        {notificationTypes && (<div>
           <ToolkitProvider
             bootstrap4
             keyField='notificationTypeId'
