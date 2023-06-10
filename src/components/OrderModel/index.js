@@ -45,7 +45,7 @@ export default function OrderModel({
     productId: null,
     measurementTypeId: null,
     measurementValueId: null,
-    customTypeId: null,
+    // customTypeId: null,
   });
 
 
@@ -82,30 +82,23 @@ export default function OrderModel({
   } = useFetchItemCosts();
 
   const getPrice = async () => {
-    debugger
-    itemCost.categoryTypeId = 1;
-    itemCost.productId = 1;
-    itemCost.measurementTypeId =1;
-    itemCost.measurementValueId = 1;
-    itemCost.customTypeId = 1;
-
+if(placeOrder?.categoryTypeId !== null && placeOrder?.productId !== null 
+  && placeOrder?.measurementValueId !== null && placeOrder?.measurementTypeId !== null)
+{
+    itemCost.categoryTypeId = placeOrder?.categoryTypeId;
+    itemCost.productId = placeOrder?.productId;
+    itemCost.measurementTypeId =placeOrder?.measurementValueId;
+    itemCost.measurementValueId = placeOrder?.measurementTypeId;
     const response = await getItemPrice(itemCost);
+    debugger;
     if (response.payload.title == "Success") {
-      
-      setPlaceOrder({
-        ...placeOrder,
-        ["cost"]: response.payload.price,
-      });
-
+      setPlaceOrder((currentPlaceOrder) => ({ ...currentPlaceOrder, ["cost"]: response.payload.price }));
     }
     else {
-
+      setPlaceOrder((currentPlaceOrder) => ({ ...currentPlaceOrder, ["cost"]: '' }));
     }
+  }
   };
-
-  useEffect(() => {
-    
-  }, [placeOrder]);
 
   const getDiscoutPrice = async () => {
     const response = await getRecordByName(discount.discountCode);
@@ -114,7 +107,6 @@ export default function OrderModel({
       // Logic for Discount Price
 
       if (response.payload.discountType.discountTypeName == "Percentage") {
-        debugger
         discount.discountPrice = placeOrder?.quantity * (placeOrder?.cost - (placeOrder?.cost * response.payload.discountValue) / 100);
         console.log('discount price : ', discount.discountPrice);
       }
