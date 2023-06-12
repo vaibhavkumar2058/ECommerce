@@ -53,6 +53,39 @@ import {
 
   };
 
+  // Product GET  ACTIONS
+  const getProductsByCategoryId = (categoryTypeId) => {
+    dispatch(getProductBeginAction());
+    return API.get(`${hapyCarURL}/all/${categoryTypeId}`,
+      null,
+      { suppressErrors: [400] }
+    )
+      .then(({ data }) =>
+        dispatch(
+          getProductSuccessAction({
+            ...data,
+            title: SUCCESS,
+          })
+        )
+      )
+      .catch((error) => {
+        let errorMsg = "error msg from copy file";
+        if (error.response.data.Product) {
+          const [errors] = error.response.data.product;
+          errorMsg = errors;
+        }
+        dispatch(
+          getProductFailureAction({
+            ...errorMsg,
+            title: ERROR,
+            errorMsg,
+          })
+        );
+      });
+
+  };
+
+
   // Product ADD  ACTIONS
 
   const addProduct = (product ,attachment) => {
@@ -231,5 +264,7 @@ import {
     getProducts,
     productById,
     productSalesList,
+    getProductBeginAction,
+    getProductsByCategoryId,
   };
 }

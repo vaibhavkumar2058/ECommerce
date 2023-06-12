@@ -10,7 +10,7 @@ import useFetchOrders from "../../hooks/useFetchOrder";
 import useFetchDiscounts from "../../hooks/useFetchDiscount";
 import useFetchItemCosts from "../../hooks/useFetchItemCost";
 import useFetchBoxes from "../../hooks/useFetchBox";
-
+import useFetchProduct from "../../hooks/useFetchProduct";
 
 export default function OrderModel({
   onAddOrder,
@@ -31,6 +31,10 @@ export default function OrderModel({
 }) {
 
   const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
+
+  const {
+    getProductsByCategoryId,
+  } = useFetchProduct();
 
   const [newOrder, setNewOrder] = useState({
     resourcesId: userInfo.resourcesId,
@@ -151,12 +155,7 @@ if(placeOrder?.categoryTypeId !== null && placeOrder?.productId !== null
       value: categoryType.categoryTypeId,
     })).filter((item) => item));
 
-  const [productOptions, setProductOptions] = useState(productList.map((product, item) => (
-    {
-      key: item,
-      text: product.productName,
-      value: product.productId,
-    })).filter((item) => item));
+    const [productOptions, setProductOptions] = useState(null)
 
   const [measurementTypeOptions, setMeasurementTypeOptions] = useState(measurementTypeList.map((measurementType, item) => (
     {
@@ -261,9 +260,37 @@ if(placeOrder?.categoryTypeId !== null && placeOrder?.productId !== null
   };
 
   const dropdownHandler = (event, { name, value }) => {
+    getProductByCategoryId(value);
     setPlaceOrder((currentPlaceOrder) => ({ ...currentPlaceOrder, [name]: value }));
     getPrice();
-  }
+  };
+
+  const getProductByCategoryId = async (id) => {
+    const response = await getProductsByCategoryId(id);
+    debugger;
+    if (response.payload.title == "Success") {
+      var productList1 = [];
+      for (var key in response.payload) {
+        debugger;
+        if (key !== 'title')
+        productList1.push(response[key]);
+      }
+
+      debugger;
+      setProductOptions(productList1.map((product, item) => (
+        {
+          key: item,
+          text: product.productName,
+          value: product.productId,
+        })).filter((item) => item));
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'Product Get Failed.'
+      })
+    }
+  };
 
   useEffect(() => {
     if (isEdit) {
@@ -387,7 +414,7 @@ if(placeOrder?.categoryTypeId !== null && placeOrder?.productId !== null
                   search
                   selection
                   options={productOptions}
-                  value={placeOrder?.productId}
+                  value={placeOrder?.categoryTypeId}
                   onChange={dropdownHandler}
                 />
               </Form.Group>
