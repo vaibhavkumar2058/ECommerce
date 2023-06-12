@@ -28,7 +28,6 @@ export default function OrderModel({
   productList = [],
   measurementTypeList = [],
   measurementValueList = [],
-  customTypeList=[],
 }) {
 
   const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
@@ -45,9 +44,7 @@ export default function OrderModel({
     productId: null,
     measurementTypeId: null,
     measurementValueId: null,
-    // customTypeId: null,
   });
-
 
   const [discount, setDiscount] = useState({
     discountId: null,
@@ -65,7 +62,6 @@ export default function OrderModel({
     productId: null,
     measurementTypeId: null,
     measurementValueId: null,
-    customTypeId: null,
     cost: null,
     quantity: null,
     description: "",
@@ -89,6 +85,7 @@ if(placeOrder?.categoryTypeId !== null && placeOrder?.productId !== null
     itemCost.productId = placeOrder?.productId;
     itemCost.measurementTypeId =placeOrder?.measurementValueId;
     itemCost.measurementValueId = placeOrder?.measurementTypeId;
+    
     const response = await getItemPrice(itemCost);
     debugger;
     if (response.payload.title == "Success") {
@@ -138,12 +135,7 @@ if(placeOrder?.categoryTypeId !== null && placeOrder?.productId !== null
     message: "",
   });
 
-  const [customTypeOptions, setCustomTypeOptions] = useState(customTypeList.map((customType,item) =>(
-    {
-    key: item,
-    text: customType.customTypeName,
-    value: customType.customTypeId,
-  })).filter((item) => item));
+  
 
   const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus, item) => (
     {
@@ -282,14 +274,6 @@ if(placeOrder?.categoryTypeId !== null && placeOrder?.productId !== null
   useEffect(() => {
   }, [discount]);
 
-  useEffect(() => { 
-    setCustomTypeOptions(customTypeList.map((customType,item) =>(
-      {
-      key: item,
-      text: customType.customTypeName,
-      value: customType.customTypeId,
-    })).filter((item) => item));
-    }, [customTypeList]);
 
   useEffect(() => {
     setRecordStatusOptions(recordStatusList.map((recordStatus, item) => (
@@ -443,19 +427,7 @@ if(placeOrder?.categoryTypeId !== null && placeOrder?.productId !== null
               </div>
             </div>
             <div className="col-md-6">
-          <Form.Group className="mb-3" controlId="customTypeId">
-            <Form.Label>Custom Type<span className="required">*</span></Form.Label>
-            <Dropdown
-              name="customTypeId"
-              placeholder="Select Custom Type"
-              fluid
-              search
-              selection
-              options={customTypeOptions}
-              value={placeOrder?.customTypeId}
-              onChange={dropdownHandler}
-            />
-          </Form.Group>
+         
           </div>
            
           </div>
@@ -629,10 +601,7 @@ OrderModel.propTypes = {
   * measurementValueData for object type
   */
   measurementValueList: PropTypes.any,
-   /**
- * customTypeList for object type
- */
-   customTypeList: PropTypes.any,
+   
 };
 
 OrderModel.defaultProps = {
@@ -651,6 +620,5 @@ OrderModel.defaultProps = {
   productList: null,
   measurementTypeList: null,
   measurementValueList: null,
-  customTypeList:null,
 };
 
