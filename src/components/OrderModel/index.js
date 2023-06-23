@@ -267,16 +267,12 @@ if(placeOrder?.categoryTypeId !== null && placeOrder?.productId !== null
 
   const getProductByCategoryId = async (id) => {
     const response = await getProductsByCategoryId(id);
-    debugger;
     if (response.payload.title == "Success") {
       var productList1 = [];
       for (var key in response.payload) {
-        debugger;
         if (key !== 'title')
-        productList1.push(response[key]);
+        productList1.push(response.payload[key]);
       }
-
-      debugger;
       setProductOptions(productList1.map((product, item) => (
         {
           key: item,
@@ -285,10 +281,7 @@ if(placeOrder?.categoryTypeId !== null && placeOrder?.productId !== null
         })).filter((item) => item));
     }
     else {
-      setMessageStatus({
-        mode: 'danger',
-        message: 'Product Get Failed.'
-      })
+      setProductOptions(null);
     }
   };
 
