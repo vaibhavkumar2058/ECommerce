@@ -29,7 +29,7 @@ import {
   
   
       case ADD_LOGIN:
-        debugger
+        
         return {
           ...state,
           login: {

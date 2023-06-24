@@ -192,7 +192,7 @@ export default function MeasurementTypes() {
         mode: 'success',
         message: 'MeasurementTypes Record Fetch Succefully.'
       })
-      debugger;
+      ;
       const dataFormatter = (rawData) => {
         const curedData = {};
         curedData.measurementTypeId=rawData?.measurementTypeId;

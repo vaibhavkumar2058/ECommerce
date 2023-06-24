@@ -239,7 +239,7 @@ export default function Banners() {
         mode: 'success',
         message: 'Banner Record Fetch Succefully.'
       })
-      debugger
+      
       const dataFormatter = (rawData) => {
         const curedData = {};
         curedData.bannerId=rawData?.bannerId;

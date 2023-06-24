@@ -54,7 +54,7 @@ import {
 
   // Resources ADD  ACTIONS
   const addResources = (resources) => {
-    debugger
+    
 
     const formData = new FormData();
     Object.keys(resources).forEach((key) => formData.append(key,resources[key]));

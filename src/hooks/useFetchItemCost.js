@@ -53,7 +53,6 @@ import {
   };
   // ItemCost GET  ACTIONS
   const getItemsCosts = () => {
-    debugger
     dispatch(getItemCostBeginAction());
     return API.get(hapyCarURL,
       null,

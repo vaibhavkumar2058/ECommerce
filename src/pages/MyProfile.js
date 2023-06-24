@@ -140,7 +140,7 @@ export default () => {
   const getAddressById = async (resourceId) => {
     const response = await getAddressByResourceId(resourceId);
     if (response.payload.title == "Success") {
-      debugger
+      
       setAddress(response.payload);
     }
     else {

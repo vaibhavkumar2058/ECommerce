@@ -467,7 +467,6 @@ export default function Orders() {
                 onPlaceOrder={placeOrder}
                 recordStatusList={recordStatusList}
                 categoryTypeList={categoryTypeList}
-                productList={productList}
                 measurementTypeList={measurementTypeList}
                 measurementValueList={measurementValueList}
                 customTypeList={customTypeList}

@@ -40,7 +40,7 @@ export default function CustomMap({ google, locations = [] }) {
             }
 
             setLocationList(arr);
-            debugger;
+            ;
         }
         else {
         }

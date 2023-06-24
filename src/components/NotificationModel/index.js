@@ -150,7 +150,7 @@ export default function NotificationModel({
     if (isEdit) {
       setButtonType("Update");
     }
-    debugger
+  
     const isEnable =
       !newNotification?.notificationName|| !newNotification?.description||!newNotification?.notificationTypeId || !newNotification?.recordStatusId;
     setSaveDisabled(isEnable);

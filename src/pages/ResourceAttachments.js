@@ -217,7 +217,7 @@ export default function ResourceAttachments() {
 
 
   const handleFunction = async (filesId) => {
-    debugger
+    
     const response = await downloadFileById(5050);
 
   }

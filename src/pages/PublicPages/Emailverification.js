@@ -15,7 +15,7 @@ export default () => {
   emailToken.emailToken = queryParams.get('token');
   const saveHandler = async () => {
     const response = await  emailverification(emailToken.emailToken);
-    debugger
+    
     if (response.payload.title == "Success") {
    setHide(true);
     }

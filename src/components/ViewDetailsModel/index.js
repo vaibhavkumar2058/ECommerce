@@ -109,7 +109,7 @@ const file = e.target.files[0];
     console.log(idCardBase64);
 
     setFileSelected(e.target.files[0]);
-    debugger
+    
   };
 
   const dropdownHandler = (event, { name, value }) => {
@@ -153,7 +153,7 @@ const file = e.target.files[0];
     if (isEdit) {
       setButtonType("Update");
     }
-    debugger
+    
     const isEnable =
       !details?.firstName
       || !details?.roleId || !details?.genderId

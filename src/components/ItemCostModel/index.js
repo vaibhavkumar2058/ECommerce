@@ -7,8 +7,7 @@ import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
 import { propTypes } from "react-bootstrap/esm/Image";
-
-
+import useFetchProduct from "../../hooks/useFetchProduct";
 
 export default function ItemCostModel({
   onAddItemCost,
@@ -21,12 +20,13 @@ export default function ItemCostModel({
   onClose,
   itemCostData,
   recordStatusList = [],
-  productList = [],
   measurementValueList = [],
   measurementTypeList =[],
   customTypeList=[],
   categoryTypeList=[],
-}) {
+})
+
+{
   const [newItemCost, setNewItemCost] = useState({
     productId: null,
     measurementTypeId: null,
@@ -36,8 +36,11 @@ export default function ItemCostModel({
     description: "",
     categoryTypeId: null,
     recordStatusId:null,
-
   });
+
+  const {
+    getProductsByCategoryId,
+  } = useFetchProduct();
 
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
@@ -52,18 +55,16 @@ export default function ItemCostModel({
     text: recordStatus.actionName,
     value: recordStatus.recordStatusId,
   })).filter((item) => item));
-  const [productOptions, setProductOptions] = useState(productList.map((product,item) =>(
-    {
-    key: item,
-    text: product.productName,
-    value: product.productId,
-  })).filter((item) => item));
+
+  const [productOptions, setProductOptions] = useState(null);
+
   const [measurementValueOptions, setMeasurementValueOptions] = useState(measurementValueList.map((measurementValue,item) =>(
     {
     key: item,
     text: measurementValue.Value,
     value: measurementValue.measurementValueId,
   })).filter((item) => item));
+
   const [measurementTypeOptions, setMeasurementTypeOptions] = useState(measurementTypeList.map((measurementType,item) =>(
     {
     key: item,
@@ -77,13 +78,16 @@ export default function ItemCostModel({
     text: customType.customTypeName,
     value: customType.customTypeId,
   })).filter((item) => item));
+
   const [categoryTypeOptions, setCategoryTypeOptions] = useState(categoryTypeList.map((categoryType, item) => (
     {
       key: item,
       text: categoryType.categoryTypeName,
       value: categoryType.categoryTypeId,
     })).filter((item) => item));
+
   const [saveDisabled, setSaveDisabled] = useState(true);
+  
   const [buttonType, setButtonType] = useState("Save");
 
   const styles = {
@@ -100,9 +104,7 @@ export default function ItemCostModel({
     });
   };
 
- 
   const saveHandler = async () => {
-   
     if (isEdit) {
       const response = await onUpdateItemCost(id, newItemCost);
       if (response.payload.title == "Success") {
@@ -147,11 +149,34 @@ export default function ItemCostModel({
     }
   };
 
+  const categoryDropdownHandler = (event,{name,value}) => {
+    getProductByCategoryId(value);
+    setNewItemCost((currentItemCost) => ({...currentItemCost,[name]: value}));
+  }
+  
   const dropdownHandler = (event,{name,value}) => {
     setNewItemCost((currentItemCost) => ({...currentItemCost,[name]: value}));
-    
   }
 
+  const getProductByCategoryId = async (id) => {
+    const response = await getProductsByCategoryId(id);
+    if (response.payload.title == "Success") {
+      var productList = [];
+      for (var key in response.payload) {
+        if (key !== 'title')
+        productList.push(response.payload[key]);
+      }
+      setProductOptions(productList.map((product, item) => (
+        {
+          key: item,
+          text: product.productName,
+          value: product.productId,
+        })).filter((item) => item));
+    } 
+    else {
+      setProductOptions(null);
+    }
+  };
 
   useEffect(() => {
     if (isEdit) {
@@ -167,15 +192,8 @@ export default function ItemCostModel({
       value: recordStatus.recordStatusId,
     })).filter((item) => item));
     }, [recordStatusList]);
-    useEffect(() => { 
-      setProductOptions(productList.map((product,item) =>(
-        {
-        key: item,
-        text: product.productName,
-        value: product.productId,
-      })).filter((item) => item));
-      }, [productList]);
 
+    
       useEffect(() => { 
         setMeasurementValueOptions(measurementValueList.map((measurementValue,item) =>(
           {
@@ -193,6 +211,7 @@ export default function ItemCostModel({
             value: measurementType.measurementTypeId,
           })).filter((item) => item));
           }, [measurementTypeList]);
+
           useEffect(() => { 
             setCustomTypeOptions(customTypeList.map((customType,item) =>(
               {
@@ -201,6 +220,7 @@ export default function ItemCostModel({
               value: customType.customTypeId,
             })).filter((item) => item));
             }, [customTypeList]);
+
             useEffect(() => {
               setCategoryTypeOptions(categoryTypeList.map((categoryType, item) => (
                 {
@@ -212,8 +232,6 @@ export default function ItemCostModel({
             }, [categoryTypeList]);
     
   
-  
-
   useEffect(() => {
     if (isEdit) {
       setButtonType("Update");
@@ -258,7 +276,7 @@ export default function ItemCostModel({
                       selection
                       options={categoryTypeOptions}
                       value={newItemCost?.categoryTypeId}
-                      onChange={dropdownHandler}
+                      onChange={categoryDropdownHandler}
                     />
                   </Form.Group>
           
@@ -440,10 +458,6 @@ ItemCostModel.propTypes = {
  */
     recordStatusList: PropTypes.any,
     
-    /**
- * productList for object type
- */
-    productList: PropTypes.any,
      /**
  * measurementValueList for object type
  */
@@ -473,7 +487,6 @@ ItemCostModel.defaultProps = {
   id: null,
   itemCostData: null,
   recordStatusList:null,
-  productList:null,
   measurementTypeList:null,
   measurementValueList:null,
   customTypeList:null,

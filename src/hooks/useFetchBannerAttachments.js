@@ -93,7 +93,7 @@ import {
 
   // BannerAttachments update  ACTIONS
   const updateBannerAttachments = (bannerAttachmentsId, bannerAttachments) => {
-debugger
+
     return API.put(`${hapyCarURL}/${bannerAttachmentsId}`,
       { data: bannerAttachments},
       { suppressErrors: [400] }

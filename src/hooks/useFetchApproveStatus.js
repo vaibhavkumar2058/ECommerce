@@ -54,7 +54,7 @@ import {
 
   // ApproveStatus ADD  ACTIONS
   const addApproveStatus = (approveStatus) => {
-    debugger
+    
     return API.post(
       hapyCarURL,
       { data: approveStatus },

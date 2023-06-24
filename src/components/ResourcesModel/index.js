@@ -117,7 +117,7 @@ const file = e.target.files[0];
     console.log(idCardBase64);
 
     setFileSelected(e.target.files[0]);
-    debugger
+    
   };
 
   const saveHandler = async () => {
@@ -215,7 +215,7 @@ const file = e.target.files[0];
     if (isEdit) {
       setButtonType("Update");
     }
-    debugger
+    
     const isEnable =
       !newResources?.firstName
       || !newResources?.roleId || !newResources?.genderId

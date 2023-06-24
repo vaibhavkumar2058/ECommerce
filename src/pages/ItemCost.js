@@ -500,7 +500,6 @@ export default function ItemCosts() {
                 id={id}
                 itemcostData={itemcost}
                 recordStatusList={recordStatusList}
-                productList={productList}
                 measurementTypeList={measurementTypeList}
                 measurementValueList={measurementValueList}
                 customTypeList={customTypeList}

@@ -225,7 +225,7 @@ export default function Notifications() {
         message: 'Notifications Record Fetch Succefully.'
       })
       const dataFormatter = (rawData) => {
-        debugger
+        
         const curedData = {};
         curedData.notificationId=rawData?.notificationId;
         curedData.notificationName=rawData?.notificationName;

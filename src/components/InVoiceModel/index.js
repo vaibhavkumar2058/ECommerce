@@ -138,7 +138,7 @@ export default function InvoiceModel({
     if (isEdit) {
       setButtonType("Update");
     }
-    debugger
+    
     const isEnable = !newInvoice?.resourcesId || !newInvoice?.orderId    ||  !newInvoice?.total   || !newInvoice?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newInvoice]);

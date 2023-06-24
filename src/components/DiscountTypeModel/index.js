@@ -131,7 +131,7 @@ export default function DiscountTypeModel({
     if (isEdit) {
       setButtonType("Update");
     }
-    debugger
+    
     const isEnable = !newDiscountType?.discountTypeName
       || !newDiscountType?.description
       || !newDiscountType?.recordStatusId;

@@ -25,7 +25,6 @@ export default function OrderModel({
   onPlaceOrder,
   recordStatusList = [],
   categoryTypeList = [],
-  productList = [],
   measurementTypeList = [],
   measurementValueList = [],
 }) {
@@ -74,9 +73,11 @@ export default function OrderModel({
   const {
     getRecordByName,
   } = useFetchDiscounts();
+
   const {
     getBoxes,
   } = useFetchBoxes();
+
   const {
     getItemPrice,
   } = useFetchItemCosts();
@@ -91,7 +92,6 @@ if(placeOrder?.categoryTypeId !== null && placeOrder?.productId !== null
     itemCost.measurementValueId = placeOrder?.measurementTypeId;
     
     const response = await getItemPrice(itemCost);
-    debugger;
     if (response.payload.title == "Success") {
       setPlaceOrder((currentPlaceOrder) => ({ ...currentPlaceOrder, ["cost"]: response.payload.price }));
     }
@@ -123,6 +123,7 @@ if(placeOrder?.categoryTypeId !== null && placeOrder?.productId !== null
     else {
     }
   };
+
   const clearDiscoutPrice = () => {
     setDiscount({
       ...discount,
@@ -131,15 +132,12 @@ if(placeOrder?.categoryTypeId !== null && placeOrder?.productId !== null
     });
   }
 
-
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
     title: "",
     status: false,
     message: "",
   });
-
-  
 
   const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus, item) => (
     {
@@ -172,6 +170,7 @@ if(placeOrder?.categoryTypeId !== null && placeOrder?.productId !== null
     })).filter((item) => item));
 
   const [saveDisabled, setSaveDisabled] = useState(true);
+  
   const [buttonType, setButtonType] = useState("Place Order");
 
   const styles = {
@@ -241,6 +240,7 @@ if(placeOrder?.categoryTypeId !== null && placeOrder?.productId !== null
       })
     }
   };
+
   const placeOrderHandler = async () => {
     const response = await onAddOrder(newOrder);
     if (response.payload.title == "Success") {
@@ -259,21 +259,25 @@ if(placeOrder?.categoryTypeId !== null && placeOrder?.productId !== null
     }
   };
 
-  const dropdownHandler = (event, { name, value }) => {
+  const categoryDropdownHandler = (event,{name,value}) => {
     getProductByCategoryId(value);
+    setPlaceOrder((currentPlaceOrder) => ({ ...currentPlaceOrder, [name]: value })); 
+  }
+  
+  const dropdownHandler = (event,{name,value}) => {
     setPlaceOrder((currentPlaceOrder) => ({ ...currentPlaceOrder, [name]: value }));
     getPrice();
-  };
+  }
 
   const getProductByCategoryId = async (id) => {
     const response = await getProductsByCategoryId(id);
     if (response.payload.title == "Success") {
-      var productList1 = [];
+      const productList = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        productList1.push(response.payload[key]);
+        productList.push(response.payload[key]);
       }
-      setProductOptions(productList1.map((product, item) => (
+      setProductOptions(productList.map((product, item) => (
         {
           key: item,
           text: product.productName,
@@ -303,6 +307,7 @@ if(placeOrder?.categoryTypeId !== null && placeOrder?.productId !== null
         value: recordStatus.recordStatusId,
       })).filter((item) => item));
   }, [recordStatusList]);
+
   useEffect(() => {
     setCategoryTypeOptions(categoryTypeList.map((categoryType, item) => (
       {
@@ -311,14 +316,7 @@ if(placeOrder?.categoryTypeId !== null && placeOrder?.productId !== null
         value: categoryType.categoryTypeId,
       })).filter((item) => item));
   }, [categoryTypeList]);
-  useEffect(() => {
-    setProductOptions(productList.map((product, item) => (
-      {
-        key: item,
-        text: product.productName,
-        value: product.productId,
-      })).filter((item) => item));
-  }, [productList]);
+
   useEffect(() => {
     setMeasurementTypeOptions(measurementTypeList.map((measurementType, item) => (
       {
@@ -327,6 +325,7 @@ if(placeOrder?.categoryTypeId !== null && placeOrder?.productId !== null
         value: measurementType.measurementTypeId,
       })).filter((item) => item));
   }, [measurementTypeList]);
+
   useEffect(() => {
     setMeasurementValueOptions(measurementValueList.map((measurementValue, item) => (
       {
@@ -391,7 +390,7 @@ if(placeOrder?.categoryTypeId !== null && placeOrder?.productId !== null
                   selection
                   options={categoryTypeOptions}
                   value={placeOrder?.categoryTypeId}
-                  onChange={dropdownHandler}
+                  onChange={categoryDropdownHandler}
                 />
               </Form.Group>
 
@@ -407,7 +406,7 @@ if(placeOrder?.categoryTypeId !== null && placeOrder?.productId !== null
                   search
                   selection
                   options={productOptions}
-                  value={placeOrder?.categoryTypeId}
+                  value={placeOrder?.productId}
                   onChange={dropdownHandler}
                 />
               </Form.Group>
@@ -637,7 +636,6 @@ OrderModel.defaultProps = {
   onPlaceOrder: null,
   recordStatusList: null,
   categoryTypeList: null,
-  productList: null,
   measurementTypeList: null,
   measurementValueList: null,
 };

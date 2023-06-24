@@ -103,7 +103,7 @@ const file = e.target.files[0];
     console.log(idCardBase64);
 
     setFileSelected(e.target.files[0]);
-    debugger
+    
   };
 
   const saveHandler = async () => {
@@ -124,7 +124,7 @@ const file = e.target.files[0];
 
       const response = await onAddProduct(newProduct);
       if (response.payload.title == "Success") {
-        debugger
+        
         setMessageStatus({
           mode: 'success',
           message: 'Product Record Saved Succefully.'
@@ -155,6 +155,7 @@ const file = e.target.files[0];
   };
 
   const dropdownHandler = (event, { name, value }) => {
+    debugger;
     setNewProduct((currentProduct) => ({ ...currentProduct, [name]: value }));
   }
 

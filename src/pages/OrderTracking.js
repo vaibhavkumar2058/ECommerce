@@ -229,7 +229,7 @@ export default function OrderTracking() {
         mode: 'success',
         message: 'OrderTracking Record Fetch Succefully.'
       })
-      debugger
+      
       const dataFormatter = (rawData) => {
         const curedData = {};
         curedData.orderTrackingId=rawData.orderTrackingId;

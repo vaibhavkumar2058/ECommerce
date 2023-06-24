@@ -190,7 +190,7 @@ export default function CustomTypes() {
         mode: 'success',
         message: 'CustomTypes Record Fetch Succefully.'
       })
-      debugger
+      
       const dataFormatter = (rawData) => {
         const curedData = {};
         curedData.customTypeId=rawData?.customTypeId;
