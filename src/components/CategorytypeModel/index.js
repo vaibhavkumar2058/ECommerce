@@ -42,6 +42,7 @@ export default function CategorytypeModel({
   })).filter((item) => item));
 
   const [saveDisabled, setSaveDisabled] = useState(true);
+  
   const [buttonType, setButtonType] = useState("Save");
 
   const styles = {
@@ -122,7 +123,7 @@ export default function CategorytypeModel({
     value: recordStatus.recordStatusId,
     })).filter((item) => item));
     }, [recordStatusList]);
-  
+    
 
   useEffect(() => {
     if (isEdit) {

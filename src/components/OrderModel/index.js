@@ -51,7 +51,7 @@ export default function OrderModel({
 
   const [discount, setDiscount] = useState({
     discountId: null,
-    discountCode: "",
+    discountCode: null,
     discountTypeId: null,
     discountValue: 0,
     discountPrice: 0,
@@ -83,22 +83,21 @@ export default function OrderModel({
   } = useFetchItemCosts();
 
   const getPrice = async () => {
-if(placeOrder?.categoryTypeId !== null && placeOrder?.productId !== null 
-  && placeOrder?.measurementValueId !== null && placeOrder?.measurementTypeId !== null)
-{
-    itemCost.categoryTypeId = placeOrder?.categoryTypeId;
-    itemCost.productId = placeOrder?.productId;
-    itemCost.measurementTypeId =placeOrder?.measurementValueId;
-    itemCost.measurementValueId = placeOrder?.measurementTypeId;
-    
-    const response = await getItemPrice(itemCost);
-    if (response.payload.title == "Success") {
-      setPlaceOrder((currentPlaceOrder) => ({ ...currentPlaceOrder, ["cost"]: response.payload.price }));
+    if (placeOrder?.productId !== null
+      && placeOrder?.measurementValueId !== null && placeOrder?.measurementTypeId !== null) {
+      itemCost.categoryTypeId = placeOrder?.categoryTypeId;
+      itemCost.productId = placeOrder?.productId;
+      itemCost.measurementTypeId = placeOrder?.measurementValueId;
+      itemCost.measurementValueId = placeOrder?.measurementTypeId;
+
+      const response = await getItemPrice(itemCost);
+      if (response.payload.title == "Success") {
+        setPlaceOrder((currentPlaceOrder) => ({ ...currentPlaceOrder, ["cost"]: response.payload.price }));
+      }
+      else {
+        setPlaceOrder((currentPlaceOrder) => ({ ...currentPlaceOrder, ["cost"]: '' }));
+      }
     }
-    else {
-      setPlaceOrder((currentPlaceOrder) => ({ ...currentPlaceOrder, ["cost"]: '' }));
-    }
-  }
   };
 
   const getDiscoutPrice = async () => {
@@ -153,7 +152,7 @@ if(placeOrder?.categoryTypeId !== null && placeOrder?.productId !== null
       value: categoryType.categoryTypeId,
     })).filter((item) => item));
 
-    const [productOptions, setProductOptions] = useState(null)
+  const [productOptions, setProductOptions] = useState(null)
 
   const [measurementTypeOptions, setMeasurementTypeOptions] = useState(measurementTypeList.map((measurementType, item) => (
     {
@@ -170,7 +169,8 @@ if(placeOrder?.categoryTypeId !== null && placeOrder?.productId !== null
     })).filter((item) => item));
 
   const [saveDisabled, setSaveDisabled] = useState(true);
-  
+  const [isApply, setIsApply] = useState(true)
+  const [isClear, setIsClear] = useState(false)
   const [buttonType, setButtonType] = useState("Place Order");
 
   const styles = {
@@ -259,12 +259,12 @@ if(placeOrder?.categoryTypeId !== null && placeOrder?.productId !== null
     }
   };
 
-  const categoryDropdownHandler = (event,{name,value}) => {
+  const categoryDropdownHandler = (event, { name, value }) => {
     getProductByCategoryId(value);
-    setPlaceOrder((currentPlaceOrder) => ({ ...currentPlaceOrder, [name]: value })); 
+    setPlaceOrder((currentPlaceOrder) => ({ ...currentPlaceOrder, [name]: value }));
   }
-  
-  const dropdownHandler = (event,{name,value}) => {
+
+  const dropdownHandler = (event, { name, value }) => {
     setPlaceOrder((currentPlaceOrder) => ({ ...currentPlaceOrder, [name]: value }));
     getPrice();
   }
@@ -275,7 +275,7 @@ if(placeOrder?.categoryTypeId !== null && placeOrder?.productId !== null
       const productList = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        productList.push(response.payload[key]);
+          productList.push(response.payload[key]);
       }
       setProductOptions(productList.map((product, item) => (
         {
@@ -288,15 +288,6 @@ if(placeOrder?.categoryTypeId !== null && placeOrder?.productId !== null
       setProductOptions(null);
     }
   };
-
-  useEffect(() => {
-    if (isEdit) {
-      setNewOrder(orderData);
-    }
-  }, []);
-
-  useEffect(() => {
-  }, [discount]);
 
 
   useEffect(() => {
@@ -348,6 +339,12 @@ if(placeOrder?.categoryTypeId !== null && placeOrder?.productId !== null
       || !placeOrder?.measurementValueId
 
     setSaveDisabled(isEnable);
+
+    if (placeOrder.quantity != null)
+      setIsApply(false);
+    else
+      setIsApply(true);
+
   }, [placeOrder]);
 
   return (
@@ -446,9 +443,9 @@ if(placeOrder?.categoryTypeId !== null && placeOrder?.productId !== null
               </div>
             </div>
             <div className="col-md-6">
-         
-          </div>
-           
+
+            </div>
+
           </div>
 
           <div className="row">
@@ -495,16 +492,19 @@ if(placeOrder?.categoryTypeId !== null && placeOrder?.productId !== null
                   <div className="row btn-apply">
                     <div className="col-md-5">
                       <Button
+                        disabled={isApply}
                         onClick={() => getDiscoutPrice()}
                       >
                         Apply
                       </Button>
+                      {isClear &&
+                        <Button onClick={() => clearDiscoutPrice()}
+                        >
+                          Clear
+                        </Button>}
                     </div>
                     <div className="col-md-6">
-                      <Button onClick={() => clearDiscoutPrice()}
-                      >
-                        Clear
-                      </Button>
+
                     </div>
                   </div>
                 </div>
@@ -514,12 +514,13 @@ if(placeOrder?.categoryTypeId !== null && placeOrder?.productId !== null
           </div>
 
           <div className="row">
-          <div className="col-md-6">
+            <div className="col-md-6">
               <Form.Group className="mb-3 " controlId="price">
                 <Form.Label>Price</Form.Label>
                 <Form.Control
                   type="text"
                   name="cost"
+                  disabled
                   placeholder="Price"
                   value={placeOrder?.cost}
                   onChange={changeHandler}
@@ -539,7 +540,7 @@ if(placeOrder?.categoryTypeId !== null && placeOrder?.productId !== null
               </Form.Group>
 
             </div>
-            
+
           </div>
 
 
@@ -620,7 +621,7 @@ OrderModel.propTypes = {
   * measurementValueData for object type
   */
   measurementValueList: PropTypes.any,
-   
+
 };
 
 OrderModel.defaultProps = {

@@ -155,7 +155,6 @@ const file = e.target.files[0];
   };
 
   const dropdownHandler = (event, { name, value }) => {
-    debugger;
     setNewProduct((currentProduct) => ({ ...currentProduct, [name]: value }));
   }
 
