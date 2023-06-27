@@ -49,6 +49,13 @@ export default function OrderModel({
     measurementValueId: null,
   });
 
+  const [boxes, setBoxes] = useState({
+    boxId: null,
+    boxName: null,
+    piecesCount: null,
+    boxLimit: null,
+  });
+
   const [discount, setDiscount] = useState({
     discountId: null,
     discountCode: null,
@@ -75,12 +82,18 @@ export default function OrderModel({
   } = useFetchDiscounts();
 
   const {
-    getBoxes,
+    getBoxByName,
   } = useFetchBoxes();
 
   const {
     getItemPrice,
   } = useFetchItemCosts();
+
+  const [isDefault, setIsDefault] = useState(false);
+  const [saveDisabled, setSaveDisabled] = useState(true);
+  const [isApply, setIsApply] = useState(true)
+  const [isClear, setIsClear] = useState(false)
+  const [buttonType, setButtonType] = useState("Place Order");
 
   const getPrice = async () => {
     if (placeOrder?.productId !== null
@@ -93,12 +106,24 @@ export default function OrderModel({
       const response = await getItemPrice(itemCost);
       if (response.payload.title == "Success") {
         setPlaceOrder((currentPlaceOrder) => ({ ...currentPlaceOrder, ["cost"]: response.payload.price }));
+        getBoxesByName();
       }
       else {
         setPlaceOrder((currentPlaceOrder) => ({ ...currentPlaceOrder, ["cost"]: '' }));
       }
     }
   };
+
+
+  const getBoxesByName = async () => {
+    boxes.boxName ="TestBox";
+    const response = await getBoxByName(boxes.boxName);
+    debugger;
+    if(response.payload.title == "Success") {
+      setBoxes(response.payload);
+    }
+  }
+
 
   const getDiscoutPrice = async () => {
     const response = await getRecordByName(discount.discountCode);
@@ -118,17 +143,21 @@ export default function OrderModel({
         ...discount,
         ["discountPrice"]: discount.discountPrice,
       });
+
+      setIsClear(true);
     }
     else {
+      setIsClear(false);
     }
   };
 
-  const clearDiscoutPrice = () => {
+  const clearDiscountPrice = () => {
     setDiscount({
       ...discount,
       discountPrice: '',
       discountCode: '',
     });
+    setIsClear(false);
   }
 
   const [messageStatus, setMessageStatus] = useState({
@@ -168,11 +197,6 @@ export default function OrderModel({
       value: measurementValue.measurementValueId,
     })).filter((item) => item));
 
-  const [saveDisabled, setSaveDisabled] = useState(true);
-  const [isApply, setIsApply] = useState(true)
-  const [isClear, setIsClear] = useState(false)
-  const [buttonType, setButtonType] = useState("Place Order");
-
   const styles = {
     stFormContainer: css`
       width: 400px !important;
@@ -185,6 +209,10 @@ export default function OrderModel({
       ...placeOrder,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const checkBoxChangeHandler = (e, name, value) => {
+    setIsDefault((currentState) => ({ ...currentState, [name]: value}));
   };
 
   const changeDiscountHandler = (e) => {
@@ -339,13 +367,14 @@ export default function OrderModel({
       || !placeOrder?.measurementValueId
 
     setSaveDisabled(isEnable);
+    const apply =
+      !placeOrder?.quantity
+      || !discount?.discountCode
+      || !placeOrder?.cost
 
-    if (placeOrder.quantity != null)
-      setIsApply(false);
-    else
-      setIsApply(true);
+    setIsApply(apply);
 
-  }, [placeOrder]);
+  }, [placeOrder, discount]);
 
   return (
     <>
@@ -454,22 +483,25 @@ export default function OrderModel({
                 <Form.Label>Quantity</Form.Label>
                 <Checkbox
                   label='Boxes'
-                  checked={false}
-                // name="isDefault"
-                //onChange={changeHandler}
+                  checked={!isDefault}
+                  name="Boxes"
+                  onChange={checkBoxChangeHandler}
                 />
                 <Checkbox
                   label='Individual'
-                  checked={false}
-                // name="isDefault"
-                //onChange={changeHandler}
+                  checked={isDefault}
+                  name="Individual"
+                  onChange={checkBoxChangeHandler}
                 />
+                {boxes.piecesCount} -
+                {boxes.boxLimit}
                 <Form.Control
                   type="text"
                   name="quantity"
                   placeholder="Quantity"
                   value={placeOrder?.quantity}
                   onChange={changeHandler}
+                  onBlur={() => getDiscoutPrice()}
                 />
               </Form.Group>
 
@@ -485,20 +517,23 @@ export default function OrderModel({
                       placeholder="Discount Code"
                       value={discount?.discountCode}
                       onChange={changeDiscountHandler}
+                      onBlur={() => getDiscoutPrice()}
                     />
                   </Form.Group>
                 </div>
                 <div className="col-md-7">
                   <div className="row btn-apply">
                     <div className="col-md-5">
-                      <Button
-                        disabled={isApply}
-                        onClick={() => getDiscoutPrice()}
-                      >
-                        Apply
-                      </Button>
+                      {!isClear &&
+                        <Button
+                          disabled={isApply}
+                          onClick={() => getDiscoutPrice()}
+                        >
+                          Apply
+                        </Button>
+                      }
                       {isClear &&
-                        <Button onClick={() => clearDiscoutPrice()}
+                        <Button onClick={() => clearDiscountPrice()}
                         >
                           Clear
                         </Button>}
@@ -534,6 +569,7 @@ export default function OrderModel({
                   type="text"
                   name="discountPrice"
                   placeholder="Discount Price"
+                  disabled
                   value={discount?.discountPrice}
                   onChange={changeDiscountHandler}
                 />

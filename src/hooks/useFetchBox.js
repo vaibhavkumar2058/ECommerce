@@ -82,10 +82,6 @@ import {
           })
         );
       });
-
-
-
-
   };
 
   // Box UPDATE  ACTIONS
@@ -188,7 +184,7 @@ import {
       
   };
 
-  const getRecordByName = (boxName) => {
+  const getBoxByName = (boxName) => {
     return API.get(`${hapyCarURL}/boxName/${boxName}`,
       null,
       { suppressErrors: [400] }
@@ -226,7 +222,6 @@ import {
     deleteBox,
     getBoxes,
     boxById,
-    getRecordByName,
-    
+    getBoxByName,
   };
 }
