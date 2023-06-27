@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { css } from "@emotion/react";
-import { Dropdown, Checkbox } from 'semantic-ui-react'
+import { Dropdown, Checkbox,Input } from 'semantic-ui-react'
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from 'react-bootstrap/Alert';
@@ -40,6 +40,11 @@ export default function OrderModel({
     orderItems: [],
     description: "Test",
     discountId: null,
+  });
+
+  const [quantityType, setQuantityType] = useState({
+    isBox: false,
+    isIndividual: true
   });
 
   const [itemCost, setItemCost] = useState({
@@ -94,6 +99,7 @@ export default function OrderModel({
   const [isApply, setIsApply] = useState(true)
   const [isClear, setIsClear] = useState(false)
   const [buttonType, setButtonType] = useState("Place Order");
+  const isOverLimit = (value = "", limit) => value.length > limit;
 
   const getPrice = async () => {
     if (placeOrder?.productId !== null
@@ -107,6 +113,7 @@ export default function OrderModel({
       if (response.payload.title == "Success") {
         setPlaceOrder((currentPlaceOrder) => ({ ...currentPlaceOrder, ["cost"]: response.payload.price }));
         getBoxesByName();
+
       }
       else {
         setPlaceOrder((currentPlaceOrder) => ({ ...currentPlaceOrder, ["cost"]: '' }));
@@ -114,163 +121,178 @@ export default function OrderModel({
     }
   };
 
-
   const getBoxesByName = async () => {
-    boxes.boxName ="TestBox";
+    boxes.boxName = "TestBox";
     const response = await getBoxByName(boxes.boxName);
     debugger;
-    if(response.payload.title == "Success") {
+    if (response.payload.title == "Success") {
       setBoxes(response.payload);
     }
   }
 
 
   const getDiscoutPrice = async () => {
-    const response = await getRecordByName(discount.discountCode);
-    if (response.payload.title == "Success") {
-      setDiscount(response.payload);
-      // Logic for Discount Price
 
-      if (response.payload.discountType.discountTypeName == "Percentage") {
-        discount.discountPrice = placeOrder?.quantity * (placeOrder?.cost - (placeOrder?.cost * response.payload.discountValue) / 100);
-        console.log('discount price : ', discount.discountPrice);
+    if (discount?.discountCode) {
+      const response = await getRecordByName(discount.discountCode);
+      if (response.payload.title == "Success") {
+        setDiscount(response.payload);
+        // Logic for Discount Price
+        //Boxes 
+        if (quantityType.isBox) {
+          if (response.payload.discountType.discountTypeName == "Percentage") {
+            discount.discountPrice = placeOrder?.quantity * boxes.piecesCount * (placeOrder?.cost - (placeOrder?.cost * response.payload.discountValue) / 100);
+            console.log('discount price : ', discount.discountPrice);
+          }
+          else
+            if (response.payload.discountType.discountTypeName == "Amount") {
+              discount.discountPrice = (placeOrder?.quantity * boxes.piecesCount * placeOrder?.cost) - response.payload.discountValue;
+            }
+        }
+
+        // Individual 
+        if (quantityType.isIndividual) {
+          if (response.payload.discountType.discountTypeName == "Percentage") {
+            discount.discountPrice = placeOrder?.quantity * (placeOrder?.cost - (placeOrder?.cost * response.payload.discountValue) / 100);
+            console.log('discount price : ', discount.discountPrice);
+          }
+          else
+            if (response.payload.discountType.discountTypeName == "Amount") {
+              discount.discountPrice = (placeOrder?.quantity * placeOrder?.cost) - response.payload.discountValue;
+            }
+        }
+
+        setDiscount({
+          ...discount,
+          ["discountPrice"]: discount.discountPrice,
+        });
+
+        setIsClear(true);
+      }
+      else {
+        setIsClear(false);
+      }
+    }
+    else {
+      // Individual 
+      if (quantityType.isIndividual) {
+        discount.discountPrice = placeOrder?.quantity * placeOrder?.cost;
       }
       else
-        if (response.payload.discountType.discountTypeName == "Amount") {
-          discount.discountPrice = (placeOrder?.quantity * placeOrder?.cost) - response.payload.discountValue;
-        }
-      setDiscount({
-        ...discount,
-        ["discountPrice"]: discount.discountPrice,
-      });
-
-      setIsClear(true);
+       // Boxes 
+       if (quantityType.isBox) {
+          discount.discountPrice = placeOrder?.quantity * boxes.piecesCount * placeOrder?.cost;
     }
-    else {
-      setIsClear(false);
-    }
-  };
-
-  const clearDiscountPrice = () => {
     setDiscount({
       ...discount,
-      discountPrice: '',
-      discountCode: '',
+      ["discountPrice"]: discount.discountPrice,
     });
-    setIsClear(false);
   }
+};
 
-  const [messageStatus, setMessageStatus] = useState({
-    mode: "",
-    title: "",
-    status: false,
-    message: "",
+const clearDiscountPrice = () => {
+  setDiscount({
+    ...discount,
+    discountPrice: '',
+    discountCode: '',
   });
+  setIsClear(false);
+}
 
-  const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus, item) => (
-    {
-      key: item,
-      text: recordStatus.actionName,
-      value: recordStatus.recordStatusId,
-    })).filter((item) => item));
+const [messageStatus, setMessageStatus] = useState({
+  mode: "",
+  title: "",
+  status: false,
+  message: "",
+});
 
-  const [categoryTypeOptions, setCategoryTypeOptions] = useState(categoryTypeList.map((categoryType, item) => (
-    {
-      key: item,
-      text: categoryType.categoryTypeName,
-      value: categoryType.categoryTypeId,
-    })).filter((item) => item));
+const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus, item) => (
+  {
+    key: item,
+    text: recordStatus.actionName,
+    value: recordStatus.recordStatusId,
+  })).filter((item) => item));
 
-  const [productOptions, setProductOptions] = useState(null)
+const [categoryTypeOptions, setCategoryTypeOptions] = useState(categoryTypeList.map((categoryType, item) => (
+  {
+    key: item,
+    text: categoryType.categoryTypeName,
+    value: categoryType.categoryTypeId,
+  })).filter((item) => item));
 
-  const [measurementTypeOptions, setMeasurementTypeOptions] = useState(measurementTypeList.map((measurementType, item) => (
-    {
-      key: item,
-      text: measurementType.name,
-      value: measurementType.measurementTypeId,
-    })).filter((item) => item));
+const [productOptions, setProductOptions] = useState(null)
 
-  const [measurementValueOptions, setMeasurementValueOptions] = useState(measurementValueList.map((measurementValue, item) => (
-    {
-      key: item,
-      text: measurementValue.value,
-      value: measurementValue.measurementValueId,
-    })).filter((item) => item));
+const [measurementTypeOptions, setMeasurementTypeOptions] = useState(measurementTypeList.map((measurementType, item) => (
+  {
+    key: item,
+    text: measurementType.name,
+    value: measurementType.measurementTypeId,
+  })).filter((item) => item));
 
-  const styles = {
-    stFormContainer: css`
+const [measurementValueOptions, setMeasurementValueOptions] = useState(measurementValueList.map((measurementValue, item) => (
+  {
+    key: item,
+    text: measurementValue.value,
+    value: measurementValue.measurementValueId,
+  })).filter((item) => item));
+
+const styles = {
+  stFormContainer: css`
       width: 400px !important;
     `,
-    stFormControl: css``,
-  };
+  stFormControl: css``,
+};
 
-  const changeHandler = (e) => {
-    setPlaceOrder({
-      ...placeOrder,
-      [e.target.name]: e.target.value,
-    });
-  };
+const changeHandler = (e) => {
+  setPlaceOrder({
+    ...placeOrder,
+    [e.target.name]: e.target.value,
+  });
+};
 
-  const checkBoxChangeHandler = (e, name, value) => {
-    setIsDefault((currentState) => ({ ...currentState, [name]: value}));
-  };
+const changeQuanityHandler = (e, { name, value }) => {
+ const valid = new RegExp(/^\d*$/)
+ if (valid.test(value)){
+  setPlaceOrder((currentState) => ({
+    ...currentState,
+    quantity:value
+  }));
+}
+};
 
-  const changeDiscountHandler = (e) => {
-    setDiscount({
-      ...discount,
-      [e.target.name]: e.target.value,
-    });
-  };
+const checkBoxChangeHandler = (e, { name, value }) => {
+  setQuantityType((currentState) => ({ ...currentState, [name]: !value }));
+  if (name == "isBox") {
+    quantityType.isIndividual = !quantityType.isIndividual;
+  }
+  else {
+    quantityType.isBox = !quantityType.isBox;
+  }
+};
 
-  const saveHandler = async () => {
-    if (isEdit) {
-      const response = await onUpdateOrder(id, newOrder);
-      if (response.payload.title == "Success") {
-        onClose(true);
-      }
-      else {
-        setMessageStatus({
-          mode: 'danger',
-          message: 'Un-Known Error Occured.'
-        })
-      }
-    }
-    else {
-      newOrder.orderItems.push(placeOrder)
-      const response = await onPlaceOrder(newOrder);
-      if (response.payload.title == "Success") {
-        setMessageStatus({
-          mode: 'success',
-          message: 'Order Record Saved Succefully.'
-        })
-        onClose(true);
-        console.log(response.payload);
-      }
-      else {
-        setMessageStatus({
-          mode: 'danger',
-          message: 'Order Save Failed.'
-        })
-      }
-    }
-  };
+const changeDiscountHandler = (e) => {
+  setDiscount({
+    ...discount,
+    [e.target.name]: e.target.value,
+  });
+};
 
-
-  const deleteHandler = async () => {
-    const response = await onDeleteOrder(id);
+const saveHandler = async () => {
+  if (isEdit) {
+    const response = await onUpdateOrder(id, newOrder);
     if (response.payload.title == "Success") {
       onClose(true);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Order Delete Failed.'
+        message: 'Un-Known Error Occured.'
       })
     }
-  };
-
-  const placeOrderHandler = async () => {
-    const response = await onAddOrder(newOrder);
+  }
+  else {
+    newOrder.orderItems.push(placeOrder)
+    const response = await onPlaceOrder(newOrder);
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',
@@ -285,314 +307,347 @@ export default function OrderModel({
         message: 'Order Save Failed.'
       })
     }
-  };
-
-  const categoryDropdownHandler = (event, { name, value }) => {
-    getProductByCategoryId(value);
-    setPlaceOrder((currentPlaceOrder) => ({ ...currentPlaceOrder, [name]: value }));
   }
+};
 
-  const dropdownHandler = (event, { name, value }) => {
-    setPlaceOrder((currentPlaceOrder) => ({ ...currentPlaceOrder, [name]: value }));
-    getPrice();
+
+const deleteHandler = async () => {
+  const response = await onDeleteOrder(id);
+  if (response.payload.title == "Success") {
+    onClose(true);
   }
+  else {
+    setMessageStatus({
+      mode: 'danger',
+      message: 'Order Delete Failed.'
+    })
+  }
+};
 
-  const getProductByCategoryId = async (id) => {
-    const response = await getProductsByCategoryId(id);
-    if (response.payload.title == "Success") {
-      const productList = [];
-      for (var key in response.payload) {
-        if (key !== 'title')
-          productList.push(response.payload[key]);
-      }
-      setProductOptions(productList.map((product, item) => (
-        {
-          key: item,
-          text: product.productName,
-          value: product.productId,
-        })).filter((item) => item));
+const placeOrderHandler = async () => {
+  const response = await onAddOrder(newOrder);
+  if (response.payload.title == "Success") {
+    setMessageStatus({
+      mode: 'success',
+      message: 'Order Record Saved Succefully.'
+    })
+    onClose(true);
+    console.log(response.payload);
+  }
+  else {
+    setMessageStatus({
+      mode: 'danger',
+      message: 'Order Save Failed.'
+    })
+  }
+};
+
+const categoryDropdownHandler = (event, { name, value }) => {
+  getProductByCategoryId(value);
+  setPlaceOrder((currentPlaceOrder) => ({ ...currentPlaceOrder, [name]: value }));
+}
+
+const dropdownHandler = (event, { name, value }) => {
+  setPlaceOrder((currentPlaceOrder) => ({ ...currentPlaceOrder, [name]: value }));
+  getPrice();
+}
+
+const getProductByCategoryId = async (id) => {
+  const response = await getProductsByCategoryId(id);
+  if (response.payload.title == "Success") {
+    const productList = [];
+    for (var key in response.payload) {
+      if (key !== 'title')
+        productList.push(response.payload[key]);
     }
-    else {
-      setProductOptions(null);
-    }
-  };
-
-
-  useEffect(() => {
-    setRecordStatusOptions(recordStatusList.map((recordStatus, item) => (
+    setProductOptions(productList.map((product, item) => (
       {
         key: item,
-        text: recordStatus.actionName,
-        value: recordStatus.recordStatusId,
+        text: product.productName,
+        value: product.productId,
       })).filter((item) => item));
-  }, [recordStatusList]);
-
-  useEffect(() => {
-    setCategoryTypeOptions(categoryTypeList.map((categoryType, item) => (
-      {
-        key: item,
-        text: categoryType.categoryTypeName,
-        value: categoryType.categoryTypeId,
-      })).filter((item) => item));
-  }, [categoryTypeList]);
-
-  useEffect(() => {
-    setMeasurementTypeOptions(measurementTypeList.map((measurementType, item) => (
-      {
-        key: item,
-        text: measurementType.name,
-        value: measurementType.measurementTypeId,
-      })).filter((item) => item));
-  }, [measurementTypeList]);
-
-  useEffect(() => {
-    setMeasurementValueOptions(measurementValueList.map((measurementValue, item) => (
-      {
-        key: item,
-        text: measurementValue.value,
-        value: measurementValue.measurementValueId,
-      })).filter((item) => item));
-  }, [measurementValueList]);
+  }
+  else {
+    setProductOptions(null);
+  }
+};
 
 
-  useEffect(() => {
-    if (isEdit) {
-      setButtonType("Update");
-    }
-    const isEnable =
-      !placeOrder?.productId
-      || !placeOrder?.cost
-      || !placeOrder?.quantity
-      || !placeOrder?.measurementTypeId
-      || !placeOrder?.measurementValueId
+useEffect(() => {
+  setRecordStatusOptions(recordStatusList.map((recordStatus, item) => (
+    {
+      key: item,
+      text: recordStatus.actionName,
+      value: recordStatus.recordStatusId,
+    })).filter((item) => item));
+}, [recordStatusList]);
 
-    setSaveDisabled(isEnable);
-    const apply =
-      !placeOrder?.quantity
-      || !discount?.discountCode
-      || !placeOrder?.cost
+useEffect(() => {
+  setCategoryTypeOptions(categoryTypeList.map((categoryType, item) => (
+    {
+      key: item,
+      text: categoryType.categoryTypeName,
+      value: categoryType.categoryTypeId,
+    })).filter((item) => item));
+}, [categoryTypeList]);
 
-    setIsApply(apply);
+useEffect(() => {
+  setMeasurementTypeOptions(measurementTypeList.map((measurementType, item) => (
+    {
+      key: item,
+      text: measurementType.name,
+      value: measurementType.measurementTypeId,
+    })).filter((item) => item));
+}, [measurementTypeList]);
 
-  }, [placeOrder, discount]);
+useEffect(() => {
+  setMeasurementValueOptions(measurementValueList.map((measurementValue, item) => (
+    {
+      key: item,
+      text: measurementValue.value,
+      value: measurementValue.measurementValueId,
+    })).filter((item) => item));
+}, [measurementValueList]);
 
-  return (
-    <>
-      {(messageStatus.message && <Alert key={messageStatus.mode} variant={messageStatus.mode}>
-        {messageStatus.message}
-      </Alert>)}
-      {isDelete && (
-        <>
-          <Modal.Body>
-            <p>Are you sure you want to delete?.</p>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={onClose}>
-              Cancel
-            </Button>
-            <Button variant="primary" onClick={deleteHandler}>
-              Delete
-            </Button>
-          </Modal.Footer>
-        </>
-      )}
-      {!isDelete && (
-        <Form>
-          <div className="row">
-            <div className="col-md-6">
-              <Form.Group
-                className={styles.stFormContainer}
-                controlId="formOrder"
-              >
-              </Form.Group>
 
-              <Form.Group className="mb-3" controlId="categoryTypeId">
-                <Form.Label>Category Type<span className="required">*</span></Form.Label>
-                <Dropdown
-                  name="categoryTypeId"
-                  placeholder='Select CategoryType'
-                  fluid
-                  search
-                  selection
-                  options={categoryTypeOptions}
-                  value={placeOrder?.categoryTypeId}
-                  onChange={categoryDropdownHandler}
-                />
-              </Form.Group>
+useEffect(() => {
+  if (isEdit) {
+    setButtonType("Update");
+  }
+  const isEnable =
+    !placeOrder?.productId
+    || !placeOrder?.cost
+    || !placeOrder?.quantity
+    || !placeOrder?.measurementTypeId
+    || !placeOrder?.measurementValueId
 
-            </div>
+  setSaveDisabled(isEnable);
+  const apply =
+    !placeOrder?.quantity
+    || !discount?.discountCode
+    || !placeOrder?.cost
 
-            <div className="col-md-6">
-              <Form.Group className="mb-3" controlId="productId">
-                <Form.Label>Product<span className="required">*</span></Form.Label>
-                <Dropdown
-                  name="productId"
-                  placeholder='Select Product'
-                  fluid
-                  search
-                  selection
-                  options={productOptions}
-                  value={placeOrder?.productId}
-                  onChange={dropdownHandler}
-                />
-              </Form.Group>
-            </div>
+  setIsApply(apply);
+
+}, [placeOrder, discount]);
+
+return (
+  <>
+    {(messageStatus.message && <Alert key={messageStatus.mode} variant={messageStatus.mode}>
+      {messageStatus.message}
+    </Alert>)}
+    {isDelete && (
+      <>
+        <Modal.Body>
+          <p>Are you sure you want to delete?.</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={onClose}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={deleteHandler}>
+            Delete
+          </Button>
+        </Modal.Footer>
+      </>
+    )}
+    {!isDelete && (
+      <Form>
+        <div className="row">
+          <div className="col-md-6">
+            <Form.Group
+              className={styles.stFormContainer}
+              controlId="formOrder"
+            >
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="categoryTypeId">
+              <Form.Label>Category Type<span className="required">*</span></Form.Label>
+              <Dropdown
+                name="categoryTypeId"
+                placeholder='Select CategoryType'
+                fluid
+                search
+                selection
+                options={categoryTypeOptions}
+                value={placeOrder?.categoryTypeId}
+                onChange={categoryDropdownHandler}
+              />
+            </Form.Group>
+
           </div>
-          <div className="row">
-            <div className="col-md-6">
-              <Form.Label>Measurement<span className="required">*</span></Form.Label>
-              <div className="row">
-                <div class="col-md-4 ">
-                  <Form.Group className="mb-3 measures" controlId="measurementValueId">
-                    <Dropdown
-                      name="measurementValueId"
-                      placeholder=""
-                      fluid
-                      search
-                      selection
-                      options={measurementValueOptions}
-                      value={placeOrder?.measurementValueId}
-                      onChange={dropdownHandler}
-                    />
-                  </Form.Group>
-                </div>
-                <div class="col-md-3 ">
-                  <Form.Group className="mb-3  measures" controlId="measurementValueId">
-                    <Dropdown
-                      name="measurementTypeId"
-                      placeholder=""
-                      fluid
-                      search
-                      selection
-                      options={measurementTypeOptions}
-                      value={placeOrder?.measurementTypeId}
-                      onChange={dropdownHandler}
-                    /> </Form.Group>
-                </div>
+
+          <div className="col-md-6">
+            <Form.Group className="mb-3" controlId="productId">
+              <Form.Label>Product<span className="required">*</span></Form.Label>
+              <Dropdown
+                name="productId"
+                placeholder='Select Product'
+                fluid
+                search
+                selection
+                options={productOptions}
+                value={placeOrder?.productId}
+                onChange={dropdownHandler}
+              />
+            </Form.Group>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-6">
+            <Form.Label>Measurement<span className="required">*</span></Form.Label>
+            <div className="row">
+              <div class="col-md-4 ">
+                <Form.Group className="mb-3 measures" controlId="measurementValueId">
+                  <Dropdown
+                    name="measurementValueId"
+                    placeholder=""
+                    fluid
+                    search
+                    selection
+                    options={measurementValueOptions}
+                    value={placeOrder?.measurementValueId}
+                    onChange={dropdownHandler}
+                  />
+                </Form.Group>
+              </div>
+              <div class="col-md-3 ">
+                <Form.Group className="mb-3  measures" controlId="measurementValueId">
+                  <Dropdown
+                    name="measurementTypeId"
+                    placeholder=""
+                    fluid
+                    search
+                    selection
+                    options={measurementTypeOptions}
+                    value={placeOrder?.measurementTypeId}
+                    onChange={dropdownHandler}
+                  /> </Form.Group>
               </div>
             </div>
-            <div className="col-md-6">
-
-            </div>
+          </div>
+          <div className="col-md-6">
 
           </div>
 
-          <div className="row">
-            <div className="col-md-6">
-              <Form.Group className="mb-3" >
-                <Form.Label>Quantity</Form.Label>
-                <Checkbox
-                  label='Boxes'
-                  checked={!isDefault}
-                  name="Boxes"
-                  onChange={checkBoxChangeHandler}
-                />
-                <Checkbox
-                  label='Individual'
-                  checked={isDefault}
-                  name="Individual"
-                  onChange={checkBoxChangeHandler}
-                />
-                {boxes.piecesCount} -
-                {boxes.boxLimit}
-                <Form.Control
-                  type="text"
-                  name="quantity"
-                  placeholder="Quantity"
-                  value={placeOrder?.quantity}
-                  onChange={changeHandler}
-                  onBlur={() => getDiscoutPrice()}
-                />
-              </Form.Group>
+        </div>
 
-            </div>
-            <div className="col-md-6">
-              <div className="row">
-                <div className="col-md-5">
-                  <Form.Group >
-                    <Form.Label>Discount</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="discountCode"
-                      placeholder="Discount Code"
-                      value={discount?.discountCode}
-                      onChange={changeDiscountHandler}
-                      onBlur={() => getDiscoutPrice()}
-                    />
-                  </Form.Group>
-                </div>
-                <div className="col-md-7">
-                  <div className="row btn-apply">
-                    <div className="col-md-5">
-                      {!isClear &&
-                        <Button
-                          disabled={isApply}
-                          onClick={() => getDiscoutPrice()}
-                        >
-                          Apply
-                        </Button>
-                      }
-                      {isClear &&
-                        <Button onClick={() => clearDiscountPrice()}
-                        >
-                          Clear
-                        </Button>}
-                    </div>
-                    <div className="col-md-6">
+        <div className="row">
+          <div className="col-md-6">
+            <Form.Group className="mb-3" >
+              <Form.Label>Quantity</Form.Label>
+              <Checkbox
+                label='Boxes'
+                checked={quantityType.isBox}
+                name="isBox"
+                value={quantityType.isBox}
+                onChange={checkBoxChangeHandler}
+              />
+              <Checkbox
+                label='Individual'
+                checked={quantityType.isIndividual}
+                name="isIndividual"
+                value={quantityType.isIndividual}
+                onChange={checkBoxChangeHandler}
+              />
+              <Input
+                type="text"
+                name="quantity"
+                placeholder="Quantity"
+                value={placeOrder?.quantity}
+                onChange={changeQuanityHandler}
+                onBlur={() => getDiscoutPrice()}
+              />
+            </Form.Group>
 
-                    </div>
+          </div>
+          <div className="col-md-6">
+            <div className="row">
+              <div className="col-md-5">
+                <Form.Group >
+                  <Form.Label>Discount</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="discountCode"
+                    placeholder="Discount Code"
+                    value={discount?.discountCode}
+                    onChange={changeDiscountHandler}
+                    onBlur={() => getDiscoutPrice()}
+                  />
+                </Form.Group>
+              </div>
+              <div className="col-md-7">
+                <div className="row btn-apply">
+                  <div className="col-md-5">
+                    {!isClear &&
+                      <Button
+                        disabled={isApply}
+                        onClick={() => getDiscoutPrice()}
+                      >
+                        Apply
+                      </Button>
+                    }
+                    {isClear &&
+                      <Button onClick={() => clearDiscountPrice()}
+                      >
+                        Clear
+                      </Button>}
+                  </div>
+                  <div className="col-md-6">
+
                   </div>
                 </div>
-
               </div>
+
             </div>
           </div>
+        </div>
 
-          <div className="row">
-            <div className="col-md-6">
-              <Form.Group className="mb-3 " controlId="price">
-                <Form.Label>Price</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="cost"
-                  disabled
-                  placeholder="Price"
-                  value={placeOrder?.cost}
-                  onChange={changeHandler}
-                />
-              </Form.Group>
-            </div>
-            <div className="col-md-6">
-              <Form.Group className="mb-3" >
-                <Form.Label>Discounted Price</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="discountPrice"
-                  placeholder="Discount Price"
-                  disabled
-                  value={discount?.discountPrice}
-                  onChange={changeDiscountHandler}
-                />
-              </Form.Group>
-
-            </div>
+        <div className="row">
+          <div className="col-md-6">
+            <Form.Group className="mb-3 " controlId="price">
+              <Form.Label>Price</Form.Label>
+              <Form.Control
+                type="text"
+                name="cost"
+                disabled
+                placeholder="Price"
+                value={placeOrder?.cost}
+                onChange={changeHandler}
+              />
+            </Form.Group>
+          </div>
+          <div className="col-md-6">
+            <Form.Group className="mb-3" >
+              <Form.Label>Total Price</Form.Label>
+              <Form.Control
+                type="text"
+                name="discountPrice"
+                placeholder="Discount Price"
+                disabled
+                value={discount?.discountPrice}
+                onChange={changeDiscountHandler}
+              />
+            </Form.Group>
 
           </div>
 
+        </div>
 
-          <Modal.Footer>
-            <Button variant="secondary" onClick={onClose}>
-              Cancel
-            </Button>
-            <Button variant="primary" onClick={saveHandler}
-              disabled={saveDisabled}>
-              {buttonType}
-            </Button>
-          </Modal.Footer>
-        </Form>
-      )}
-    </>
-  );
+
+        <Modal.Footer>
+          <Button variant="secondary" onClick={onClose}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={saveHandler}
+            disabled={saveDisabled}>
+            {buttonType}
+          </Button>
+        </Modal.Footer>
+      </Form>
+    )}
+  </>
+);
 }
 
 OrderModel.propTypes = {
