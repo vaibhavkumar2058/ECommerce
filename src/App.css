@@ -10,6 +10,10 @@
   float: left;
 }
 
+.info{
+color:chocolate;
+}
+
 .ftr {
   height: 28px;
   /* position: fixed;

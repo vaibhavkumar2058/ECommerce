@@ -8,6 +8,7 @@ import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
 import { propTypes } from "react-bootstrap/esm/Image";
 import useFetchProduct from "../../hooks/useFetchProduct";
+import useFetchItemCosts from "../../hooks/useFetchItemCost";
 
 export default function ItemCostModel({
   onAddItemCost,
@@ -38,9 +39,33 @@ export default function ItemCostModel({
     recordStatusId:null,
   });
 
+  const [itemCost, setItemCost] = useState({
+    categoryTypeId: null,
+    productId: null,
+    measurementTypeId: null,
+    measurementValueId: null,
+  });
+
   const {
     getProductsByCategoryId,
   } = useFetchProduct();
+
+  const {
+    getItemPrice,
+  } = useFetchItemCosts();
+
+  const getPrice = async () => {
+    itemCost.productId = newItemCost?.productId;
+    itemCost.measurementTypeId = newItemCost?.measurementValueId;
+    itemCost.measurementValueId = newItemCost?.measurementTypeId;
+    const response = await getItemPrice(itemCost);
+    if (response?.payload?.title == "Success") {
+      setNewItemCost((currentNewItemCost) => ({ ...currentNewItemCost, ["cost"]: response.payload.price }));
+    }
+    else {
+      setNewItemCost((currentNewItemCost) => ({ ...currentNewItemCost, ["cost"]: '' }));
+    }
+  };
 
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
@@ -155,7 +180,7 @@ export default function ItemCostModel({
   }
   
   const dropdownHandler = (event,{name,value}) => {
-    setNewItemCost((currentItemCost) => ({...currentItemCost,[name]: value}));
+    setNewItemCost((currentNewItemCost) => ({...currentNewItemCost,[name]: value}));
   }
 
   const getProductByCategoryId = async (id) => {

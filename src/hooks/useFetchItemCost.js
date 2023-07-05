@@ -234,7 +234,6 @@ import {
           })
         )
       )
-
       .catch((error) => {
         let errorMsg = "error msg from copy file";
         if (error.response.data.itemCost) {
@@ -242,10 +241,9 @@ import {
           errorMsg = errors;
         }
         dispatch(
-          addItemCostAction({
-            ...itemPice,
+          getItemCostSuccessAction({
+            ...error,
             title: ERROR,
-            errorMsg,
           })
         );
       });
