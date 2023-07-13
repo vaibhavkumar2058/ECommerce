@@ -18,8 +18,7 @@ import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit/dist/rea
 
 
 export default function ItemCosts() {
-
-  // To bind the grid data for Item Cost 
+  // #region To bind the grid data for Item Cost 
   const [itemcosts, setItemCosts] = useState([]);
 
   // To bind the Category list for Category Dropdown
@@ -28,25 +27,32 @@ export default function ItemCosts() {
   // To bind the Product list for Product Dropdown
   const [productList, setProductList] = useState([]);
 
+  // To bind the MeasurementValue list in Dropdown
   const [measurementValueList, setMeasurementValueList] = useState([]);
 
+  // To bind MeasurementType list in Dropdown
   const [measurementTypeList, setMeasurementTypeList] = useState([]);
 
+  // To bind CustomType list in Dropdown
   const [customTypeList, setCustomTypeList] = useState([]);
 
   // To bind the Record Status for Status Dropdown
   const [recordStatusList, setRecordStatusList] = useState([]);
 
+  // For Loading the page
   const [loading, setLoading] = useState(true);
 
-  const [error, setError] = useState(null);
-
+  // To Hide and Show the Model popups
   const [show, setShow] = useState(false);
 
+  // used to unable and able the Edit Model popups
   const [isEdit, setIsEdit] = useState(false);
 
+  // used to unable and able Delete Button
   const [isDelete, setIsDelete] = useState(false);
+  // #endregion
 
+  // #region Object of Itemcost with its Properties
   const [itemcost, setItemCost] = useState({
     productId: null,
     measurementTypeId: null,
@@ -66,8 +72,9 @@ export default function ItemCosts() {
     status: false,
     message: "",
   });
+  // #endregion
 
-  // Hooks 
+  // #region Hooks 
 
   const {
     // write description
@@ -79,30 +86,38 @@ export default function ItemCosts() {
     itemCostById,
   } = useFetchItemCost();
 
+  // To get categoryTypes from hooks
   const {
     getCategoryTypes,
   } = useFetchCategoryType();
 
+  // To get Products from hooks
   const {
     getProducts,
   } = useFetchProduct();
 
+  // To get MeasurementValues from hooks
   const {
     getMeasurementValues,
   } = useFetchMeasurementValue();
 
+  // To get MeasurementTypes from hooks
   const {
     getMeasurementTypes,
   } = useFetchMeasurementType();
 
+  // To get CustomTypes from hooks
   const {
     getCustomTypes,
   } = useFetchCustomType();
 
+  // To get RecordStatuss from hooks
   const {
     getRecordStatuss,
   } = useFetchRecordStatus();
+  // #endregion
 
+  // Function for Open and Close Model popup
   const handleClose = () => {
     getAllItemCosts();
     setIsEdit(false);
@@ -110,8 +125,10 @@ export default function ItemCosts() {
     setShow(false);
   };
 
+  // Function For Model popup set to visible
   const handleShow = () => setShow(true);
 
+  // #region Display Columns in the Pages
   const columns = [
     // columns follow dataField and text structure
     {
@@ -208,7 +225,9 @@ export default function ItemCosts() {
       }
     },
   ];
+  // #endregion
 
+  // useEffect Hook for ItemCosts
   useEffect(() => {
     getRecordStatusList();
     getProductList();
@@ -222,7 +241,7 @@ export default function ItemCosts() {
     }
   }, [itemcosts]);
 
-  // API calls - Start
+  // #region API calls - Start
 
   // API Call - To get the list of Itemcost for Grid 
   const getAllItemCosts = async () => {
@@ -287,6 +306,7 @@ export default function ItemCosts() {
     }
   };  
   
+  // API Call - To get the list of Products for Dropdown
   const getProductList = async () => {
     const response = await getProducts();
     if (response.payload.title == "Success") {
@@ -306,6 +326,7 @@ export default function ItemCosts() {
     }
   };
 
+  // API Call - To get the list of MeasurementValues for Dropdown
   const getMeasurementValueList = async () => {
     const response = await getMeasurementValues();
     if (response.payload.title == "Success") {
@@ -325,6 +346,7 @@ export default function ItemCosts() {
     }
   };
 
+  // API Call - To get the list of MeasurementTypes for Dropdown
   const getMeasurementTypeList = async () => {
     const response = await getMeasurementTypes();
     if (response.payload.title == "Success") {
@@ -344,6 +366,7 @@ export default function ItemCosts() {
     }
   };
 
+  // API Call - To get the list of CustomTypes for Dropdown
   const getCustomTypeList = async () => {
     const response = await getCustomTypes();
     if (response.payload.title == "Success") {
@@ -363,6 +386,7 @@ export default function ItemCosts() {
     }
   };
 
+  // API Call - To get the list of RecordStatus for Dropdown
   const getRecordStatusList = async () => {
     const response = await getRecordStatuss();
     if (response.payload.title == "Success") {
@@ -382,6 +406,7 @@ export default function ItemCosts() {
     }
   };
 
+  // API Call - To get the list of Itemcost by Id for the Price
   const getItemCostById = async (id) => {
     const response = await itemCostById(id);
     if (response.payload.title == "Success") {
@@ -395,9 +420,9 @@ export default function ItemCosts() {
     }
   };
 
-  // API calls - End
+  // #endregion API calls - End
 
-  // Boostrap Table Functinality - Start
+  // #region Boostrap Table Functinality - Start
   const pagination = paginationFactory({
     page: 1,
     sizePerPage: 5,
@@ -452,12 +477,16 @@ export default function ItemCosts() {
     order: 'desc'
   }];
 
+  // Message to Display in the Table when No Data is Present
   const emptyDataMessage = () => { return 'No Data to Display'; }
 
+  // #region Buttons - Start
+  // View Handle Function for ItemCost
   const handleView = (rowId, name) => {
     console.log(rowId, name);
   };
 
+  // Edit Handle Function for ItemCost
   const handleEdit = (rowId, row) => {
     setItemCost(row);
     setId(rowId);
@@ -465,13 +494,17 @@ export default function ItemCosts() {
     setShow(true);
   };
 
+  // Delete Handle Function for ItemCost
   const handleDelete = (rowId, name) => {
     setId(rowId);
     setIsDelete(true);
     setShow(true);
   };
+  // #endregion - End
 
-  // Boostrap Table Functinality - End
+  // #endregion Boostrap Table Functinality - End
+
+  //  HTML Code - Start
 
   return (
     <>
@@ -560,3 +593,5 @@ export default function ItemCosts() {
     </>
   );
 };
+
+//  HTML Code - End

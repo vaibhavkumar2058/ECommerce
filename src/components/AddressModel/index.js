@@ -193,7 +193,8 @@ export default function AddressModel({
       || !newAddress?.addressTypeId
       || !newAddress?.addressLine
       || !newAddress?.town
-      || !newAddress?.pincode || !newAddress?.landMark
+      || !newAddress?.pincode 
+      || !newAddress?.landMark
       || !newAddress?.recordStatusId;
     setSaveDisabled(isEnable);
   }, [newAddress]);

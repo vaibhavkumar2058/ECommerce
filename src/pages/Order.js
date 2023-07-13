@@ -16,19 +16,6 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit';
 
-const { SearchBar, ClearSearchButton } = Search;
-
-const MyExportCSV = (props) => {
-  const handleClick = () => {
-    props.onExport();
-  };
-  return (
-    <div>
-      <button className="btn btn-success" onClick={handleClick}>Export to CSV</button>
-    </div>
-  );
-};
-
 export default function Orders() {
   const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
   const admin = userInfo?.role?.admin;
@@ -36,94 +23,133 @@ export default function Orders() {
   const dealer = userInfo?.role?.dealer;
   const customer = userInfo?.role?.customer;
 
-
-  const [recordStatusList, setRecordStatusList] = useState([]);
+  // #region To bind the Griddata for Categorytype list
   const [categoryTypeList, setcategoryTypeList] = useState([]);
+
+  // To bind the Griddata for Product
   const [productList, setproductList] = useState([]);
-  const [customTypeList, setCustomTypeList] = useState([]);
-  const [measurementTypeList, setmeasurementTypeList] = useState([]);
+
+  // To bind the Griddata for MeasurementValue
   const [measurementValueList, setmeasurementValueList] = useState([]);
+
+  // To bind the Griddata for MeasurementType
+  const [measurementTypeList, setmeasurementTypeList] = useState([]);
+
+  // Never used
+  const [recordStatusList, setRecordStatusList] = useState([]);
+
+  //  Used to Display Data by using Dataformatter 
   const [orders, setOrders] = useState([]);
+
+  // To Load the Required Object
   const [loading, setLoading] = useState(true);
+
+  // Never used
   const [error, setError] = useState(null);
 
+  // Never used
+  const [customTypeList, setCustomTypeList] = useState([]);
+
+  // To show or Hide the Model popup 
   const [show, setShow] = useState(false);
-  // const handleClose = () => setShow(false);
+
+  // To Edit the Model popup
+  const [isEdit, setIsEdit] = useState(false);
+
+  // To Delete data
+  const [isDelete, setIsDelete] = useState(false);
+
+  // To set Id of row
+  const [id, setId] = useState(null);
+  // #endregion
+
+  // Function for open and Close Model popup
   const handleClose = () => {
     getAllOrders();
     setIsEdit(false);
     setIsDelete(false);
     setShow(false);
   };
+
   const handleShow = () => setShow(true);
-  const [isEdit, setIsEdit] = useState(false);
-  const [isDelete, setIsDelete] = useState(false);
+
+  // #region Hooks
+
+  const {
+    // To add order
+    addOrder,
+    // To update order
+    updateOrder,
+    // to delete order
+    deleteOrder,
+    // to get All orders
+    getOrder,
+    // get order by Id
+    orderById,
+    // to get order
+    placeOrder,
+  } = useFetchOrder();
+
+  // To get Recordstatuss from hooks
+  const {
+    getRecordStatuss,
+  } = useFetchRecordStatus();
+
+  // To get CategoryTypes from hooks
+  const {
+    getCategoryTypes,
+  } = useFetchCategoryType();
+
+  // To get Products from hooks
+  const {
+    getProducts,
+  } = useFetchProduct();
+
+  // To get MeasurementTypes from hooks
+  const {
+    getMeasurementTypes,
+  } = useFetchMeasurementType();
+
+  // To get MeasurementValues from hooks
+  const {
+    getMeasurementValues,
+  } = useFetchMeasurementValue();
+
+  // To get CustomTypes from hooks
+  const {
+    getCustomTypes,
+  } = useFetchCustomType();
+
+  // #endregion
+
+  // #region Order Object and its Properties
   const [order, setOrder] = useState({
+    productId: null,
     orderItemId: null,
     resourcesId: null,
     orderDate: null,
     recordStatusId: null,
     description: "",
+    dicountId:null,
+    discountCode: null,
   });
 
-  const [id, setId] = useState(null);
-
+  // MessageStatus object And its Properties
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
     title: "",
     status: false,
     message: "",
   });
+  // #endregion
 
-  const {
-    addOrder,
-    updateOrder,
-    deleteOrder,
-    getOrder,
-    orderById,
-    placeOrder,
-  } = useFetchOrder();
-  const {
-    getRecordStatuss,
-  } = useFetchRecordStatus();
-  const {
-    getCategoryTypes,
-  } = useFetchCategoryType();
-  const {
-    getProducts,
-  } = useFetchProduct();
-  const {
-    getMeasurementTypes,
-  } = useFetchMeasurementType();
-  const {
-    getMeasurementValues,
-  } = useFetchMeasurementValue();
-  const { 
-    getCustomTypes,
-  } = useFetchCustomType();
-
+  // #region Display Columns in the pages 
   const columns = [
-    { dataField: 'orderItemId', text: ' OrderItemId', sort: true, hidden: true, },
-    { dataField: 'orderId', text: 'Order Id', sort: true,hidden: true, },
-    { dataField: 'orderName', text: 'Order', sort: true},
-    { dataField: 'productId', text: 'productId', sort: true, hidden: true, },
-    { dataField: 'productName', text: 'product', sort: true ,hidden: true, },
-    { dataField: 'quantity', text: 'quantity', sort: true , hidden: true,},
-    { dataField: 'cost', text: ' cost', sort: true, hidden: true, },
-    { dataField: 'description', text: 'Description', sort: true },
-    { dataField: 'orderDate', text: 'Order Date', sort: true ,headerStyle: () => {
-      return { width: "250px" };
-    }},
-    { dataField: 'orderStatusId', text: 'orderStatusId', sort: true, hidden: true },
-    { dataField: 'orderStatusName', text: 'OrderStatus', sort: true },
-    { dataField: 'recordStatusId', text: 'recordStatusId', sort: true, hidden: true },
-    { dataField: 'recordStatus', text: 'Status', sort: true, hidden: true },
-
-
-
     // columns follow dataField and text structure
     {
-      dataField: "Actions",
+      dataField: "Actions", headerStyle: () => {
+        return { width: "110px" };
+      },
       // text: "Actions",
       formatter: (cellContent, row) => {
         return (
@@ -147,9 +173,37 @@ export default function Orders() {
             </button>}</>
         );
       },
-    }
+    },
+    { dataField: 'orderItemId', text: ' OrderItemId', sort: true, hidden: true, },
+    { dataField: 'orderId', text: 'Order Id', sort: true, hidden: true},
+    { dataField: 'orderName', text: 'Order', sort: true,headerStyle: () => {
+      return { width: "120px" };
+    } },
+    { dataField: 'productId', text: 'productId', sort: true, hidden: true, },
+    { dataField: 'productName', text: 'product', sort: true, hidden: true, },
+    { dataField: 'discountId', text: 'discountId', sort: true, hidden: true, },
+    { dataField: 'discountCode', text: 'discountCode', sort: true, hidden: true,},
+    { dataField: 'quantity', text: 'quantity', sort: true, hidden: true, },
+    { dataField: 'cost', text: ' cost', sort: true, hidden: true, },
+    { dataField: 'description', text: 'Description', sort: true,headerStyle: () => {
+      return { width: "150px" };
+    } },
+    {
+      dataField: 'orderDate', text: 'Order Date', sort: true, headerStyle: () => {
+        return { width: "160px" };
+      }
+    },
+    { dataField: 'orderStatusId', text: 'orderStatusId', sort: true, hidden: true,
+    } ,
+    { dataField: 'orderStatusName', text: 'OrderStatus', sort: true,headerStyle: () => {
+      return { width: "120px" };
+    } },
+    { dataField: 'recordStatusId', text: 'recordStatusId', sort: true, hidden: true },
+    { dataField: 'recordStatus', text: 'Status', sort: true, hidden: true },
   ];
+  // #endregion
 
+  // useEffect Hook for Orders
   useEffect(() => {
     getRecordStatusList();
     getCategoryTypeList();
@@ -163,51 +217,7 @@ export default function Orders() {
     }
   }, [orders]);
 
-  const defaultSorted = [{
-    dataField: 'orderId',
-    order: 'desc'
-  }];
-
-  const emptyDataMessage = () => { return 'No Data to Display'; }
-
-  const handleView = (rowId, name) => {
-    console.log(rowId, name);
-    //1 YourCellName
-  };
-
-  const handleEdit = (rowId, row) => {
-    setOrder(row);
-    //getOrdersById(rowId);
-    setId(rowId);
-    setIsEdit(true);
-    setShow(true);
-  };
-
-  const handleDelete = (rowId, name) => {
-    setId(rowId);
-    setIsDelete(true);
-    setShow(true);
-  };
-
-  const pagination = paginationFactory({
-    page: 1,
-    sizePerPage: 5,
-    lastPageText: '>>',
-    firstPageText: '<<',
-    nextPageText: '>',
-    prePageText: '<',
-    showTotal: true,
-    alwaysShowAllBtns: true,
-    onPageChange: function (page, sizePerPage) {
-      console.log('page', page);
-      console.log('sizePerPage', sizePerPage);
-    },
-    onSizePerPageChange: function (page, sizePerPage) {
-      console.log('page', page);
-      console.log('sizePerPage', sizePerPage);
-    }
-  });
-
+  // Never Used
   const getRecordStatusList = async () => {
     const response = await getRecordStatuss();
     if (response.payload.title == "Success") {
@@ -227,6 +237,7 @@ export default function Orders() {
     }
   };
 
+  // Never Used
   const getCustomTypeList = async () => {
     const response = await getCustomTypes();
     if (response.payload.title == "Success") {
@@ -234,7 +245,7 @@ export default function Orders() {
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+          arr.push(response.payload[key]);
       }
       setCustomTypeList(arr);
     }
@@ -246,6 +257,61 @@ export default function Orders() {
     }
   };
 
+
+  // #region  API Calls  
+
+  // API Call - To get the list of Orders in Grid
+  async function getAllOrders() {
+    const response = await getOrder();
+    if (response.payload.title == "Success") {
+      setMessageStatus({
+        mode: 'success',
+        message: 'Orders Record Fetch Succefully.'
+      });
+
+      const dataFormatter = (rawData) => {
+        const curedData = {};
+        curedData.orderId = rawData?.orderId;
+        curedData.orderName = 'MSO-' + rawData?.orderId;
+        curedData.orderItemId = rawData?.orderItemId;
+        curedData.orderDate = rawData?.orderDate;
+        curedData.orderStatusId = rawData?.orderStatusId;
+        curedData.orderStatusName = rawData?.orderStatus?.orderStatusName;
+        curedData.categoryTypeId = rawData?.orderItemList[0]?.categoryTypeId;
+        curedData.productId = rawData?.orderItemList[0]?.productId;
+        curedData.measurementTypeId = rawData?.orderItemList[0]?.measurementTypeId;
+        curedData.measurementValueId = rawData?.orderItemList[0]?.measurementValueId;
+        curedData.productName = rawData?.product?.productName;
+        curedData.description = rawData?.description;
+        curedData.quantity = rawData?.orderItemList[0]?.quantity;
+        curedData.cost = rawData?.orderItemList[0]?.cost;
+        curedData.isIndividual = rawData?.orderItemList[0]?.isIndividual;
+        curedData.totalCost = rawData?.orderItemList[0]?.totalCost;
+        curedData.discountId = rawData?.discount?.discountId;
+        curedData.discountCode = rawData?.discount?.discountCode;
+        curedData.recordStatusId = rawData?.recordStatusId;
+        curedData.recordStatus = rawData?.recordStatus.actionName;
+        // curedData.orderDate = rawData?.createdDate;
+        return curedData;
+      };
+
+      var arr = [];
+      for (var key in response.payload) {
+        if (key !== 'title')
+          arr.push(dataFormatter(response.payload[key]));
+      }
+
+      setOrders(arr);
+    }
+    else {
+      setMessageStatus({
+        mode: 'danger',
+        message: 'Order Fetch Failed.'
+      });
+    }
+  }
+
+  // API CAll - To get the list of CategoryTypes for Dropdown
   const getCategoryTypeList = async () => {
     const response = await getCategoryTypes();
     if (response.payload.title == "Success") {
@@ -264,6 +330,8 @@ export default function Orders() {
       })
     }
   };
+
+  // API CAll - To get the list of Products for Dropdown
   const getProductList = async () => {
     const response = await getProducts();
     if (response.payload.title == "Success") {
@@ -282,24 +350,8 @@ export default function Orders() {
       })
     }
   };
-  const getMeasurementTypeList = async () => {
-    const response = await getMeasurementTypes();
-    if (response.payload.title == "Success") {
 
-      var arr = [];
-      for (var key in response.payload) {
-        if (key !== 'title')
-          arr.push(response.payload[key]);
-      }
-      setmeasurementTypeList(arr);
-    }
-    else {
-      setMessageStatus({
-        mode: 'danger',
-        message: 'MeasurementType Fetch Failed.'
-      })
-    }
-  };
+  // API CAll - To get the list of MeasurementValues for Dropdown
   const getMeasurementValueList = async () => {
     const response = await getMeasurementValues();
     if (response.payload.title == "Success") {
@@ -319,51 +371,27 @@ export default function Orders() {
     }
   };
 
-
-  const getAllOrders = async () => {
-    const response = await getOrder();
+  // API Call - To get the list of MeasurementValues for Dropdown
+  const getMeasurementTypeList = async () => {
+    const response = await getMeasurementTypes();
     if (response.payload.title == "Success") {
-      setMessageStatus({
-        mode: 'success',
-        message: 'Orders Record Fetch Succefully.'
-      })
-
-      const dataFormatter = (rawData) => {
-        const curedData = {};
-        curedData.orderId = rawData?.orderId;
-        curedData.orderName = 'MSO-' + rawData?.orderId;
-        curedData.orderItemId = rawData?.orderItemId;
-        curedData.orderDate = rawData?.orderDate;
-        curedData.orderStatusId = rawData?.orderStatusId;
-        curedData.orderStatusName = rawData?.orderStatus?.orderStatusName;
-        curedData.productId = rawData?.productId;
-        curedData.productName = rawData?.product?.productName;
-        curedData.description = rawData?.description;
-        curedData.quantity = rawData?.quantity;
-        curedData.cost = rawData?.cost;
-        curedData.recordStatusId = rawData?.recordStatusId;
-        curedData.recordStatus = rawData?.recordStatus.actionName;
-        // curedData.orderDate = rawData?.createdDate;
-
-        return curedData;
-      }
 
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-          arr.push(dataFormatter(response.payload[key]));
+          arr.push(response.payload[key]);
       }
-
-      setOrders(arr);
+      setmeasurementTypeList(arr);
     }
     else {
       setMessageStatus({
         mode: 'danger',
-        message: 'Order Fetch Failed.'
+        message: 'MeasurementType Fetch Failed.'
       })
     }
   };
 
+  // To get Order by Id 
   const getOrderById = async (id) => {
     const response = await orderById(id);
     if (response.payload.title == "Success") {
@@ -376,6 +404,28 @@ export default function Orders() {
       })
     }
   };
+
+  // #endregion 
+
+ // #region Bootstrap Table Functionality  - Start
+  const pagination = paginationFactory({
+    page: 1,
+    sizePerPage: 5,
+    lastPageText: '>>',
+    firstPageText: '<<',
+    nextPageText: '>',
+    prePageText: '<',
+    showTotal: true,
+    alwaysShowAllBtns: true,
+    onPageChange: function (page, sizePerPage) {
+      console.log('page', page);
+      console.log('sizePerPage', sizePerPage);
+    },
+    onSizePerPageChange: function (page, sizePerPage) {
+      console.log('page', page);
+      console.log('sizePerPage', sizePerPage);
+    }
+  });
 
   const selectRow = {
     mode: 'checkbox',
@@ -394,7 +444,55 @@ export default function Orders() {
     )
   };
 
+  const { SearchBar, ClearSearchButton } = Search;
 
+  const MyExportCSV = (props) => {
+    const handleClick = () => {
+      props.onExport();
+    };
+    return (
+      <div>
+        <button className="btn btn-success" onClick={handleClick}>Export to CSV</button>
+      </div>
+    );
+  };
+
+  const defaultSorted = [{
+    dataField: 'OrderId',
+    order: 'desc'
+  }];
+
+  // Message to Display in Table when no data is present
+  const emptyDataMessage = () => { return 'No Data to Display'; }
+
+ // #region Button - Start
+ 
+  // View handle Functionality for Orders
+  const handleView = (rowId, name) => {
+    console.log(rowId, name);
+    //1 YourCellName
+  };
+
+  // Edit handle Functionality for Orders
+  const handleEdit = (rowId, row) => {
+    setOrder(row);
+    //getOrdersById(rowId);
+    setId(rowId);
+    setIsEdit(true);
+    setShow(true);
+  };
+
+  // Delete handle Functionality for Orders
+  const handleDelete = (rowId, name) => {
+    setId(rowId);
+    setIsDelete(true);
+    setShow(true);
+  };
+  // #endregion Button  - End
+
+  // #endregion Boostrap Table Functionality - End
+
+  //  HTML Code - start
   return (
     <>
       <div className="m-t-40">
@@ -460,11 +558,11 @@ export default function Orders() {
                 onDeleteOrder={deleteOrder}
                 onGetOrder={orderById}
                 onClose={handleClose}
+                onPlaceOrder={placeOrder}
                 isEdit={isEdit}
                 isDelete={isDelete}
                 id={id}
                 orderData={order}
-                onPlaceOrder={placeOrder}
                 recordStatusList={recordStatusList}
                 categoryTypeList={categoryTypeList}
                 measurementTypeList={measurementTypeList}
@@ -480,3 +578,5 @@ export default function Orders() {
     </>
   );
 };
+
+//  HTML Code  - End

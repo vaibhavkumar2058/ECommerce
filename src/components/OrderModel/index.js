@@ -28,13 +28,31 @@ export default function OrderModel({
   measurementTypeList = [],
   measurementValueList = [],
 }) {
+  debugger;
+  // Never Used
+  const [isDefault, setIsDefault] = useState(false);
+
+  // useState for Cancel Button
+  const [saveDisabled, setSaveDisabled] = useState(true);
+
+  // useState for Apply Button
+  const [isApply, setIsApply] = useState(true)
+
+  // useState for Clear Button
+  const [isClear, setIsClear] = useState(false)
+
+  //
+  const [buttonType, setButtonType] = useState("Place Order");
+
+  // Used for Not Allowing Alphabets in Quantity Field
+  const isOverLimit = (value = "", limit) => value.length > limit;
+
 
   const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
 
-  const {
-    getProductsByCategoryId,
-  } = useFetchProduct();
+  // #region Objects - Start
 
+  // NewOrder Object and Its Properties
   const [newOrder, setNewOrder] = useState({
     resourcesId: userInfo.resourcesId,
     orderItems: [],
@@ -42,11 +60,13 @@ export default function OrderModel({
     discountId: null,
   });
 
+  // Quantity Object and Its Properties
   const [quantityType, setQuantityType] = useState({
     isBox: false,
     isIndividual: true
   });
 
+  // ItemCost Object and Its Properties
   const [itemCost, setItemCost] = useState({
     categoryTypeId: null,
     productId: null,
@@ -54,6 +74,7 @@ export default function OrderModel({
     measurementValueId: null,
   });
 
+  // Boxes Object and Its Properties
   const [boxes, setBoxes] = useState({
     boxId: null,
     boxName: null,
@@ -61,6 +82,7 @@ export default function OrderModel({
     boxLimit: null,
   });
 
+  // Discount Objects and Its Properties
   const [discount, setDiscount] = useState({
     discountId: null,
     discountCode: null,
@@ -72,6 +94,7 @@ export default function OrderModel({
     recordStatusId: null,
   });
 
+  // Place Order Object and Its Properties
   const [placeOrder, setPlaceOrder] = useState({
     categoryTypeId: null,
     productId: null,
@@ -80,27 +103,38 @@ export default function OrderModel({
     cost: null,
     quantity: null,
     description: "",
+    isIndividual: true,
+    totalCost: null,
+    discountId:null,
   });
 
+  // #endregion Objects - End
+
+  // #region Hooks - Start
+
+  // Get Products by CategoryId from hooks
+  const {
+    getProductsByCategoryId,
+  } = useFetchProduct();
+
+  // Get Records by Name from hooks
   const {
     getRecordByName,
   } = useFetchDiscounts();
 
+  // Get Box by Name from hooks
   const {
     getBoxByName,
   } = useFetchBoxes();
 
+  // Get ItemPrice from hooks
   const {
     getItemPrice,
   } = useFetchItemCosts();
 
-  const [isDefault, setIsDefault] = useState(false);
-  const [saveDisabled, setSaveDisabled] = useState(true);
-  const [isApply, setIsApply] = useState(true)
-  const [isClear, setIsClear] = useState(false)
-  const [buttonType, setButtonType] = useState("Place Order");
-  const isOverLimit = (value = "", limit) => value.length > limit;
+  // #endregion Hooks - End
 
+  // Functionality to get NormalPrice And Price based on Boxes
   const getPrice = async () => {
     itemCost.productId = placeOrder?.productId;
     itemCost.measurementTypeId = placeOrder?.measurementValueId;
@@ -116,6 +150,7 @@ export default function OrderModel({
     }
   };
 
+  // Functionality to set Boxes 
   const getBoxesByName = async () => {
     boxes.boxName = "TestBox";
     const response = await getBoxByName(boxes.boxName);
@@ -124,11 +159,13 @@ export default function OrderModel({
     }
   }
 
+  // Functionality to get the discount Price 
   const getDiscoutPrice = async () => {
     if (discount?.discountCode) {
       const response = await getRecordByName(discount.discountCode);
       if (response.payload.title == "Success") {
         setDiscount(response.payload);
+        newOrder.discountId = response.payload.discountId;
         // Logic for Discount Price
         //Boxes 
         if (quantityType.isBox) {
@@ -182,6 +219,7 @@ export default function OrderModel({
     }
   };
 
+  // Functionality to Clear the Discount
   const clearDiscountPrice = () => {
     setDiscount({
       ...discount,
@@ -198,6 +236,7 @@ export default function OrderModel({
     message: "",
   });
 
+  // used to map RecordStatusList in Dropdown
   const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus, item) => (
     {
       key: item,
@@ -205,6 +244,7 @@ export default function OrderModel({
       value: recordStatus.recordStatusId,
     })).filter((item) => item));
 
+  // used to map CategoryTypeList in DropDown
   const [categoryTypeOptions, setCategoryTypeOptions] = useState(categoryTypeList.map((categoryType, item) => (
     {
       key: item,
@@ -214,6 +254,7 @@ export default function OrderModel({
 
   const [productOptions, setProductOptions] = useState(null)
 
+  // used to map MeasurementTypeList in Dropdown
   const [measurementTypeOptions, setMeasurementTypeOptions] = useState(measurementTypeList.map((measurementType, item) => (
     {
       key: item,
@@ -221,6 +262,7 @@ export default function OrderModel({
       value: measurementType.measurementTypeId,
     })).filter((item) => item));
 
+  // used to map MeasurementValue in Dropdown
   const [measurementValueOptions, setMeasurementValueOptions] = useState(measurementValueList.map((measurementValue, item) => (
     {
       key: item,
@@ -228,6 +270,7 @@ export default function OrderModel({
       value: measurementValue.measurementValueId,
     })).filter((item) => item));
 
+  // CSS Styling 
   const styles = {
     stFormContainer: css`
       width: 400px !important;
@@ -242,6 +285,7 @@ export default function OrderModel({
     });
   };
 
+  // Functionality to not allow the Alphabets in QuantityType
   const changeQuanityHandler = (e, { name, value }) => {
     const valid = new RegExp(/^\d*$/)
     if (valid.test(value)) {
@@ -252,6 +296,7 @@ export default function OrderModel({
     }
   };
 
+  // Functionality to set the Boxes
   const checkBoxChangeHandler = (e, { name, value }) => {
     if (name == "isBox") {
       quantityType.isIndividual = false;
@@ -270,8 +315,8 @@ export default function OrderModel({
     });
   };
 
+  // Functionality to Update Order 
   const saveHandler = async () => {
-    newOrder.discountId = discount.discountId
     if (isEdit) {
       const response = await onUpdateOrder(id, newOrder);
       if (response.payload.title == "Success") {
@@ -304,7 +349,7 @@ export default function OrderModel({
     }
   };
 
-
+  // Functionality to Delete Order
   const deleteHandler = async () => {
     const response = await onDeleteOrder(id);
     if (response.payload.title == "Success") {
@@ -318,6 +363,7 @@ export default function OrderModel({
     }
   };
 
+  // Functionality to PlaceOrder
   const placeOrderHandler = async () => {
     const response = await onAddOrder(newOrder);
     if (response.payload.title == "Success") {
@@ -336,11 +382,13 @@ export default function OrderModel({
     }
   };
 
+  // Functionality to bind CategoryType and PlaceOrder
   const categoryDropdownHandler = (event, { name, value }) => {
     getProductByCategoryId(value);
     setPlaceOrder((currentPlaceOrder) => ({ ...currentPlaceOrder, [name]: value }));
   }
 
+  // Functionality to get Price
   const dropdownHandler = (event, { name, value }) => {
     setPlaceOrder((currentPlaceOrder) => ({ ...currentPlaceOrder, [name]: value }));
     if (placeOrder?.productId
@@ -350,6 +398,7 @@ export default function OrderModel({
     }
   }
 
+  // Functionality to bind the Products based on CategoryId
   const getProductByCategoryId = async (id) => {
     const response = await getProductsByCategoryId(id);
     if (response.payload.title == "Success") {
@@ -370,7 +419,7 @@ export default function OrderModel({
     }
   };
 
-
+  // useEffect hook to map RecordStatusList in Dropdown
   useEffect(() => {
     setRecordStatusOptions(recordStatusList.map((recordStatus, item) => (
       {
@@ -380,6 +429,7 @@ export default function OrderModel({
       })).filter((item) => item));
   }, [recordStatusList]);
 
+  // useEffect hook to map CategoryTypeList in Dropdown
   useEffect(() => {
     setCategoryTypeOptions(categoryTypeList.map((categoryType, item) => (
       {
@@ -389,6 +439,7 @@ export default function OrderModel({
       })).filter((item) => item));
   }, [categoryTypeList]);
 
+  // useEffect hook to map MeasurementTypeList in Dropdown
   useEffect(() => {
     setMeasurementTypeOptions(measurementTypeList.map((measurementType, item) => (
       {
@@ -398,6 +449,7 @@ export default function OrderModel({
       })).filter((item) => item));
   }, [measurementTypeList]);
 
+  // useEffect hook to map MeasurementValueList in Dropdown
   useEffect(() => {
     setMeasurementValueOptions(measurementValueList.map((measurementValue, item) => (
       {
@@ -407,9 +459,23 @@ export default function OrderModel({
       })).filter((item) => item));
   }, [measurementValueList]);
 
-
+  // useEffect hook and Functionality for Edit and setting Apply Button
+  
   useEffect(() => {
     if (isEdit) {
+      debugger;
+      setNewOrder(orderData)
+      placeOrder.categoryTypeId = orderData?.categoryTypeId;
+      getProductByCategoryId(orderData?.categoryTypeId);
+      placeOrder.productId = orderData?.productId;
+      placeOrder.measurementTypeId = orderData?.measurementTypeId;
+      placeOrder.measurementValueId = orderData?.measurementValueId;
+      placeOrder.quantity = orderData?.quantity;
+      placeOrder.cost = orderData?.cost;
+      discount.discountPrice = orderData?.totalCost;
+      placeOrder.isIndividual = orderData?.isIndividual;
+      placeOrder.totalCost = orderData?.totalCost;
+      discount.discountCode = orderData?.discountCode;
       setButtonType("Update");
     }
     const isEnable =
@@ -431,6 +497,7 @@ export default function OrderModel({
 
   }, [placeOrder, discount, boxes, quantityType]);
 
+  // HTML Code - Start
   return (
     <>
       {(messageStatus.message && <Alert key={messageStatus.mode} variant={messageStatus.mode}>
@@ -564,7 +631,7 @@ export default function OrderModel({
             </div>
             <div className="col-md-6">
               <div className="row">
-                <div className="col-md-5">
+                <div className="col-md-7">
                   <Form.Group >
                     <Form.Label>Discount</Form.Label>
                     <Form.Control
@@ -577,7 +644,7 @@ export default function OrderModel({
                     />
                   </Form.Group>
                 </div>
-                <div className="col-md-7">
+                <div className="col-md-4">
                   <div className="row btn-apply">
                     <div className="col-md-5">
                       {!isClear &&
@@ -595,11 +662,9 @@ export default function OrderModel({
                         </Button>}
                     </div>
                     <div className="col-md-6">
-
                     </div>
                   </div>
                 </div>
-
               </div>
             </div>
           </div>
@@ -651,6 +716,9 @@ export default function OrderModel({
   );
 }
 
+// HTML Code - Ends
+
+// Order Model Properties
 OrderModel.propTypes = {
   /**
    * Callback function for Add Order
@@ -715,7 +783,6 @@ OrderModel.propTypes = {
   measurementValueList: PropTypes.any,
 
 };
-
 OrderModel.defaultProps = {
   onAddOrder: null,
   onUpdateOrder: null,
