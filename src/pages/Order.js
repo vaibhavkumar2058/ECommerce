@@ -132,6 +132,7 @@ export default function Orders() {
     description: "",
     dicountId:null,
     discountCode: null,
+    totalCost: null,
   });
 
   // MessageStatus object And its Properties
@@ -181,9 +182,13 @@ export default function Orders() {
     } },
     { dataField: 'productId', text: 'productId', sort: true, hidden: true, },
     { dataField: 'productName', text: 'product', sort: true, hidden: true, },
+    { dataField: 'productId', text: 'productId', sort: true, hidden: true, },
+    { dataField: 'productName', text: 'product', sort: true, hidden: true, },
     { dataField: 'discountId', text: 'discountId', sort: true, hidden: true, },
     { dataField: 'discountCode', text: 'discountCode', sort: true, hidden: true,},
     { dataField: 'quantity', text: 'quantity', sort: true, hidden: true, },
+    { dataField: 'isIndividual', text: 'isIndividual', sort: true, hidden: true,},
+    { dataField: 'isBox', text: 'isBox', sort: true, hidden: true,},
     { dataField: 'cost', text: ' cost', sort: true, hidden: true, },
     { dataField: 'description', text: 'Description', sort: true,headerStyle: () => {
       return { width: "150px" };
@@ -286,6 +291,7 @@ export default function Orders() {
         curedData.quantity = rawData?.orderItemList[0]?.quantity;
         curedData.cost = rawData?.orderItemList[0]?.cost;
         curedData.isIndividual = rawData?.orderItemList[0]?.isIndividual;
+        curedData.isBox = rawData?.orderItemList[0]?.isBox;
         curedData.totalCost = rawData?.orderItemList[0]?.totalCost;
         curedData.discountId = rawData?.discount?.discountId;
         curedData.discountCode = rawData?.discount?.discountCode;

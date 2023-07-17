@@ -49,6 +49,7 @@ export default () => {
         },
         loggedIn: true,
         resourcesId:response?.payload?.result?.resourcesId,
+        roleId:response?.payload?.result?.roleId,
       };
       localStorage.setItem("loggedIn", JSON.stringify(resource))
       navigate('/dashboard');

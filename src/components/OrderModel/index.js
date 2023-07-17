@@ -55,6 +55,7 @@ export default function OrderModel({
   // NewOrder Object and Its Properties
   const [newOrder, setNewOrder] = useState({
     resourcesId: userInfo.resourcesId,
+    roleId : userInfo.roleId,
     orderItems: [],
     description: "Test",
     discountId: null,
@@ -104,6 +105,7 @@ export default function OrderModel({
     quantity: null,
     description: "",
     isIndividual: true,
+    isBox: false,
     totalCost: null,
     discountId:null,
   });
@@ -330,6 +332,7 @@ export default function OrderModel({
       }
     }
     else {
+      placeOrder.totalCost = discount?.discountPrice
       newOrder.orderItems.push(placeOrder)
       const response = await onPlaceOrder(newOrder);
       if (response.payload.title == "Success") {
@@ -463,7 +466,7 @@ export default function OrderModel({
   
   useEffect(() => {
     if (isEdit) {
-      debugger;
+
       setNewOrder(orderData)
       placeOrder.categoryTypeId = orderData?.categoryTypeId;
       getProductByCategoryId(orderData?.categoryTypeId);
@@ -476,6 +479,8 @@ export default function OrderModel({
       placeOrder.isIndividual = orderData?.isIndividual;
       placeOrder.totalCost = orderData?.totalCost;
       discount.discountCode = orderData?.discountCode;
+      quantityType.isIndividual = orderData?.isIndividual;
+      quantityType.isBox = orderData?.isBox;
       setButtonType("Update");
     }
     const isEnable =

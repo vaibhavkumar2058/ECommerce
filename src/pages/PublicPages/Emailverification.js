@@ -51,7 +51,6 @@ export default () => {
   });
 
   useEffect(() => {
-   
   }, [hide]);
 
   return (

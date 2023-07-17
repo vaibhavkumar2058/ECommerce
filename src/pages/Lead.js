@@ -73,20 +73,8 @@ export default function Lead() {
   } = useFetchRecordStatus();
 
   const columns = [
-
-     { dataField: 'leadId', text: 'leadId', sort: true,hidden:true },
-     { dataField: 'leadCount', text: 'Lead Count', sort: true },
-     { dataField: 'orderCount', text: 'Order Count', sort: true },
-     { dataField: 'orderValue', text: 'Order Value', sort: true },
-     { dataField: 'resourcesId', text: 'resourcesId', sort: true,hidden:true },
-     { dataField: 'resourceName', text: 'Resource', sort: true},
-     { dataField: 'recordStatusId', text: 'RecordStatusId',hidden:true, sort: true},
-     { dataField: 'recordStatus', text: 'Status', sort: true},
-      
-    
-    // columns follow dataField and text structure
     {
-      dataField: "Actions",
+      dataField: "Actions", 
       // text: "Actions",
       formatter: (cellContent, row) => {
         return (
@@ -110,6 +98,15 @@ export default function Lead() {
         );
       },
     },
+     { dataField: 'leadId', text: 'leadId', sort: true,hidden:true },
+     { dataField: 'leadCount', text: 'Lead Count', sort: true },
+     { dataField: 'orderCount', text: 'Order Count', sort: true },
+     { dataField: 'orderValue', text: 'Order Value', sort: true },
+     { dataField: 'resourcesId', text: 'resourcesId', sort: true,hidden:true },
+     { dataField: 'resourceName', text: 'Resource', sort: true},
+     { dataField: 'recordStatusId', text: 'RecordStatusId',hidden:true, sort: true},
+     { dataField: 'recordStatus', text: 'Status', sort: true},
+    // columns follow dataField and text structure
   ];
 
   useEffect(() => {
@@ -204,7 +201,6 @@ export default function Lead() {
         curedData.resourceName=rawData?.resources?.firstName+rawData?.resources?.middleName+rawData?.resources?.lastName;
        curedData.recordStatusId=rawData?.recordStatusId;
         curedData.recordStatus=rawData?.recordStatus.actionName;
-
         return curedData;
       }
       var arr = [];
@@ -212,7 +208,6 @@ export default function Lead() {
         if (key !== 'title')
         arr.push(dataFormatter(response.payload[key]));
       }
-
       setLeads(arr);
     }
     else {

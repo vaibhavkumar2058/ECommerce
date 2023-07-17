@@ -29,7 +29,6 @@ export default function LeadModel({
     recordStatusId: null,
   });
   
-
     const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus,item) =>(
       {
       key: item,
@@ -77,7 +76,6 @@ export default function LeadModel({
       }
     }
     else {
-     
       const response = await onAddLead(newLead);
       if (response.payload.title == "Success") {
         setMessageStatus({
@@ -108,9 +106,11 @@ export default function LeadModel({
       })
     }
   };
+
   const dropdownHandler = (event,{value}) => {
     setNewLead((currentLead) => ({...currentLead, recordStatusId: value}));
   }
+  
   useEffect(() => { 
     setRecordStatusOptions(recordStatusList.map((recordStatus,item) =>(
       {
@@ -131,7 +131,11 @@ export default function LeadModel({
       setButtonType("Update");
     }
     const isEnable =
-      !newLead?.leadCount||!newLead?.resourcesId||!newLead?.orderCount ||newLead?.orderValue || !newLead?.recordStatusId ;
+      !newLead?.leadCount
+      ||!newLead?.resourcesId
+      ||!newLead?.orderCount 
+      ||!newLead?.orderValue 
+      ||!newLead?.recordStatusId ;
     setSaveDisabled(isEnable);
   }, [newLead]);
 

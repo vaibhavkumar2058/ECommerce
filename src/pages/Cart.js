@@ -79,7 +79,31 @@ export default function Carts() {
     getRecordStatuss,
   } = useFetchRecordStatus();
   
-  const columns = [
+  const columns = [ {
+    dataField: "Actions",
+    // text: "Actions",
+    formatter: (cellContent, row) => {
+      return (
+        <><button
+          className="btn btn-primary btn-xs"
+          onClick={() => handleView(row.cartId, row.name)}
+        >
+          View
+        </button>
+          <button
+            className="btn btn-primary btn-xs"
+            onClick={() => handleEdit(row.cartId, row)}
+          >
+            Edit
+          </button><button
+            className="btn btn-danger btn-xs"
+            onClick={() => handleDelete(row.cartId, row.name)}
+          >
+            Delete
+          </button></>
+      );
+    },
+  },
     { dataField: 'cartId', text: 'Cart ', sort: true, hidden: true },
     { dataField: 'resourcesId', text: 'resourcesId', sort: true, hidden: true },
     { dataField: 'resourceName', text: 'Resource', sort: true, },
@@ -91,31 +115,6 @@ export default function Carts() {
     { dataField: 'recordStatusId', text: 'recordStatusId', sort: true, hidden: true },
     { dataField: 'recordStatus', text: 'Status', sort: true },
     // columns follow dataField and text structure
-    {
-      dataField: "Actions",
-      // text: "Actions",
-      formatter: (cellContent, row) => {
-        return (
-          <><button
-            className="btn btn-primary btn-xs"
-            onClick={() => handleView(row.cartId, row.name)}
-          >
-            View
-          </button>
-            <button
-              className="btn btn-primary btn-xs"
-              onClick={() => handleEdit(row.cartId, row)}
-            >
-              Edit
-            </button><button
-              className="btn btn-danger btn-xs"
-              onClick={() => handleDelete(row.cartId, row.name)}
-            >
-              Delete
-            </button></>
-        );
-      },
-    },
   ];
 
   useEffect(() => {
