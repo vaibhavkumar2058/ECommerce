@@ -28,7 +28,6 @@ export default function OrderModel({
   measurementTypeList = [],
   measurementValueList = [],
 }) {
-  debugger;
   // Never Used
   const [isDefault, setIsDefault] = useState(false);
 
@@ -231,6 +230,7 @@ export default function OrderModel({
     setIsClear(false);
   }
 
+  // Functionality to Set Message in Console 
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
     title: "",

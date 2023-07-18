@@ -12,20 +12,6 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit';
 
-
-const { SearchBar, ClearSearchButton } = Search;
-
-const MyExportCSV = (props) => {
-  const handleClick = () => {
-    props.onExport();
-  };
-  return (
-    <div>
-      <button className="btn btn-success" onClick={handleClick}>Export to CSV</button>
-    </div>
-  );
-};
-
 export default function Carts() {
 
   const [carts, setCarts] = useState([]);
@@ -43,6 +29,7 @@ export default function Carts() {
     setIsDelete(false);
     setShow(false);
   };
+  
   const handleShow = () => setShow(true);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
@@ -71,6 +58,7 @@ export default function Carts() {
     getCarts,
     cartById,
   } = useFetchCart();
+  
   const {
     getProducts,
   } = useFetchProduct();
@@ -208,7 +196,6 @@ export default function Carts() {
     }
   };
 
-
   const getAllCarts = async () => {
     const response = await getCarts();
     if (response.payload.title == "Success") {
@@ -219,19 +206,18 @@ export default function Carts() {
       })
       const dataFormatter = (rawData) => {
         const curedData = {};
-        curedData.cartId=rawData?.cartId;
-        curedData.resourcesId=rawData?.resourcesId;
-        curedData.resourceName=rawData?.resources?.firstName+rawData?.resources?.middleName+rawData?.resources?.lastName;
-        curedData.productId=rawData?.productId;
-        curedData.productName=rawData?.product?.productName;
-        curedData.cost=rawData?.cost;
-        curedData.quantity=rawData?.quantity;
-        curedData.description=rawData?.description;
-        curedData.recordStatusId=rawData?.recordStatusId;
-        curedData.recordStatus=rawData?.recordStatus.actionName;
+        curedData.cartId = rawData?.cartId;
+        curedData.resourcesId = rawData?.resourcesId;
+        curedData.resourceName = rawData?.resources?.firstName+rawData?.resources?.middleName+rawData?.resources?.lastName;
+        curedData.productId = rawData?.productId;
+        curedData.productName = rawData?.product?.productName;
+        curedData.cost = rawData?.cost;
+        curedData.quantity = rawData?.quantity;
+        curedData.description = rawData?.description;
+        curedData.recordStatusId = rawData?.recordStatusId;
+        curedData.recordStatus = rawData?.recordStatus.actionName;
         return curedData;
       }
-
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
@@ -278,6 +264,18 @@ export default function Carts() {
     )
   };
 
+  const { SearchBar, ClearSearchButton } = Search;
+
+  const MyExportCSV = (props) => {
+    const handleClick = () => {
+      props.onExport();
+    };
+    return (
+      <div>
+        <button className="btn btn-success" onClick={handleClick}>Export to CSV</button>
+      </div>
+    );
+  };
 
   return (
     <>

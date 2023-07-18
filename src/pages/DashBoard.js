@@ -160,7 +160,7 @@ export default function Dashboard() {
             <div className="row">
                 <div className="col-md-6">
                     <div className="col-md-12 pro-sales">
-                        <span>Product Sales</span>
+                        <span>Product Orders</span>
                     </div>
                     <PieChart width={500} height={320}>
                         <Pie
@@ -190,16 +190,39 @@ export default function Dashboard() {
                     <div className="col-md-12 pro-sales">
                         <span>Product Orders</span>
                     </div>
-                    <LineChart width={500} height={300} data={productOrders}>
-                        <Line type="monotone" dataKey="orderCount" stroke="#8884d8"
-                            strokeWidth={4} activeDot={{ r: 8 }} />
+                    <PieChart width={500} height={320}>
+                        <Pie
+                            data={productSales}
+                            color="#000000"
+                            dataKey="ordersCount"
+                            nameKey="productName"
+                            cx="50%"
+                            cy="50%"
+                            labelLine={false}
+                            outerRadius={120}
+                            fill="#8884d8"
+                            label={renderCustomizedLabel}
+                        >
+                            {productSales.map((entry, index) => (
+                                <Cell
+                                    key={`cell-${index}`}
+                                    fill={COLORS[index % COLORS.length]}
+                                />
+                            ))}
+                        </Pie>
+                        <Tooltip />
+                        <Legend />
+                    </PieChart> 
+                    {/* <LineChart width={500} height={300} data={productOrders}>
                         <Line type="monotone" dataKey="orderDate" stroke="orange"
+                            strokeWidth={4} activeDot={{ r: 8 }} />
+                        <Line type="monotone" dataKey="orderCount" stroke="#8884d8"
                             strokeWidth={4} activeDot={{ r: 8 }} />
                         <XAxis />
                         <YAxis />
                         <Tooltip contentStyle={{ backgroundColor: 'maroon' }} />
                         <Legend />
-                    </LineChart>
+                    </LineChart> */}
                 </div>
 
             </div>
@@ -211,7 +234,7 @@ export default function Dashboard() {
                     <Product></Product>
                 </div>
                 <div className="col-md-6">
-                <div className="col-md-12 pro-sales">
+                    <div className="col-md-12 pro-sales">
                         <span>Users </span>
                     </div>
                     <Resources></Resources>

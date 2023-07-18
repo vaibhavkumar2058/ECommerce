@@ -130,7 +130,7 @@ export default function Orders() {
     orderDate: null,
     recordStatusId: null,
     description: "",
-    dicountId:null,
+    dicountId: null,
     discountCode: null,
     totalCost: null,
   });
@@ -143,6 +143,92 @@ export default function Orders() {
     message: "",
   });
   // #endregion
+
+  // #region Bootstrap Table Functionality  - Start
+  const pagination = paginationFactory({
+    page: 1,
+    sizePerPage: 5,
+    lastPageText: '>>',
+    firstPageText: '<<',
+    nextPageText: '>',
+    prePageText: '<',
+    showTotal: true,
+    alwaysShowAllBtns: true,
+    onPageChange: function (page, sizePerPage) {
+      console.log('page', page);
+      console.log('sizePerPage', sizePerPage);
+    },
+    onSizePerPageChange: function (page, sizePerPage) {
+      console.log('page', page);
+      console.log('sizePerPage', sizePerPage);
+    }
+  });
+
+  const selectRow = {
+    mode: 'checkbox',
+    clickToSelect: true,
+    clickToExpand: true,
+  };
+
+  const expandRow = {
+    showExpandColumn: true,
+    renderer: row => (
+      <div>
+        <p>{`This Expand row is belong to rowKey ${row.id}`}</p>
+        <p>You can render anything here, also you can add additional data on every row object</p>
+        <p>expandRow.renderer callback will pass the origin row object to you</p>
+      </div>
+    )
+  };
+
+  const { SearchBar, ClearSearchButton } = Search;
+
+  const MyExportCSV = (props) => {
+    const handleClick = () => {
+      props.onExport();
+    };
+    return (
+      <div>
+        <button className="btn btn-success" onClick={handleClick}>Export to CSV</button>
+      </div>
+    );
+  };
+
+  const defaultSorted = [{
+    dataField: 'OrderId',
+    order: 'desc'
+  }];
+
+  // Message to Display in Table when no data is present
+  const emptyDataMessage = () => { return 'No Data to Display'; }
+
+  // #region Button - Start
+
+  // View handle Functionality for Orders
+  const handleView = (rowId, name) => {
+    console.log(rowId, name);
+    //1 YourCellName
+  };
+
+  // Edit handle Functionality for Orders
+  const handleEdit = (rowId, row) => {
+    setOrder(row);
+    //getOrdersById(rowId);
+    setId(rowId);
+    setIsEdit(true);
+    setShow(true);
+  };
+
+  // Delete handle Functionality for Orders
+  const handleDelete = (rowId, name) => {
+    setId(rowId);
+    setIsDelete(true);
+    setShow(true);
+  };
+  // #endregion Button  - End
+
+  // #endregion Boostrap Table Functionality - End
+
 
   // #region Display Columns in the pages 
   const columns = [
@@ -176,33 +262,40 @@ export default function Orders() {
       },
     },
     { dataField: 'orderItemId', text: ' OrderItemId', sort: true, hidden: true, },
-    { dataField: 'orderId', text: 'Order Id', sort: true, hidden: true},
-    { dataField: 'orderName', text: 'Order', sort: true,headerStyle: () => {
-      return { width: "120px" };
-    } },
+    { dataField: 'orderId', text: 'Order Id', sort: true, hidden: true },
+    {
+      dataField: 'orderName', text: 'Order', sort: true, headerStyle: () => {
+        return { width: "120px" };
+      }
+    },
     { dataField: 'productId', text: 'productId', sort: true, hidden: true, },
     { dataField: 'productName', text: 'product', sort: true, hidden: true, },
     { dataField: 'productId', text: 'productId', sort: true, hidden: true, },
     { dataField: 'productName', text: 'product', sort: true, hidden: true, },
     { dataField: 'discountId', text: 'discountId', sort: true, hidden: true, },
-    { dataField: 'discountCode', text: 'discountCode', sort: true, hidden: true,},
+    { dataField: 'discountCode', text: 'discountCode', sort: true, hidden: true, },
     { dataField: 'quantity', text: 'quantity', sort: true, hidden: true, },
-    { dataField: 'isIndividual', text: 'isIndividual', sort: true, hidden: true,},
-    { dataField: 'isBox', text: 'isBox', sort: true, hidden: true,},
+    { dataField: 'isIndividual', text: 'isIndividual', sort: true, hidden: true, },
+    { dataField: 'isBox', text: 'isBox', sort: true, hidden: true, },
     { dataField: 'cost', text: ' cost', sort: true, hidden: true, },
-    { dataField: 'description', text: 'Description', sort: true,headerStyle: () => {
-      return { width: "150px" };
-    } },
+    {
+      dataField: 'description', text: 'Description', sort: true, headerStyle: () => {
+        return { width: "150px" };
+      }
+    },
     {
       dataField: 'orderDate', text: 'Order Date', sort: true, headerStyle: () => {
         return { width: "160px" };
       }
     },
-    { dataField: 'orderStatusId', text: 'orderStatusId', sort: true, hidden: true,
-    } ,
-    { dataField: 'orderStatusName', text: 'OrderStatus', sort: true,headerStyle: () => {
-      return { width: "120px" };
-    } },
+    {
+      dataField: 'orderStatusId', text: 'orderStatusId', sort: true, hidden: true,
+    },
+    {
+      dataField: 'orderStatusName', text: 'OrderStatus', sort: true, headerStyle: () => {
+        return { width: "120px" };
+      }
+    },
     { dataField: 'recordStatusId', text: 'recordStatusId', sort: true, hidden: true },
     { dataField: 'recordStatus', text: 'Status', sort: true, hidden: true },
   ];
@@ -306,7 +399,6 @@ export default function Orders() {
         if (key !== 'title')
           arr.push(dataFormatter(response.payload[key]));
       }
-
       setOrders(arr);
     }
     else {
@@ -413,90 +505,6 @@ export default function Orders() {
 
   // #endregion 
 
- // #region Bootstrap Table Functionality  - Start
-  const pagination = paginationFactory({
-    page: 1,
-    sizePerPage: 5,
-    lastPageText: '>>',
-    firstPageText: '<<',
-    nextPageText: '>',
-    prePageText: '<',
-    showTotal: true,
-    alwaysShowAllBtns: true,
-    onPageChange: function (page, sizePerPage) {
-      console.log('page', page);
-      console.log('sizePerPage', sizePerPage);
-    },
-    onSizePerPageChange: function (page, sizePerPage) {
-      console.log('page', page);
-      console.log('sizePerPage', sizePerPage);
-    }
-  });
-
-  const selectRow = {
-    mode: 'checkbox',
-    clickToSelect: true,
-    clickToExpand: true,
-  };
-
-  const expandRow = {
-    showExpandColumn: true,
-    renderer: row => (
-      <div>
-        <p>{`This Expand row is belong to rowKey ${row.id}`}</p>
-        <p>You can render anything here, also you can add additional data on every row object</p>
-        <p>expandRow.renderer callback will pass the origin row object to you</p>
-      </div>
-    )
-  };
-
-  const { SearchBar, ClearSearchButton } = Search;
-
-  const MyExportCSV = (props) => {
-    const handleClick = () => {
-      props.onExport();
-    };
-    return (
-      <div>
-        <button className="btn btn-success" onClick={handleClick}>Export to CSV</button>
-      </div>
-    );
-  };
-
-  const defaultSorted = [{
-    dataField: 'OrderId',
-    order: 'desc'
-  }];
-
-  // Message to Display in Table when no data is present
-  const emptyDataMessage = () => { return 'No Data to Display'; }
-
- // #region Button - Start
- 
-  // View handle Functionality for Orders
-  const handleView = (rowId, name) => {
-    console.log(rowId, name);
-    //1 YourCellName
-  };
-
-  // Edit handle Functionality for Orders
-  const handleEdit = (rowId, row) => {
-    setOrder(row);
-    //getOrdersById(rowId);
-    setId(rowId);
-    setIsEdit(true);
-    setShow(true);
-  };
-
-  // Delete handle Functionality for Orders
-  const handleDelete = (rowId, name) => {
-    setId(rowId);
-    setIsDelete(true);
-    setShow(true);
-  };
-  // #endregion Button  - End
-
-  // #endregion Boostrap Table Functionality - End
 
   //  HTML Code - start
   return (

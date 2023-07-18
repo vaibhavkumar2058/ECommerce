@@ -10,14 +10,13 @@ import TopBanner from "./TopBanner";
 import logo from "../logo.png";
 import useFetchLead from "../hooks/useFetchLead";
 import useFetchFiles from "../hooks/useFetchFile";
+import Marquee from "react-fast-marquee";
 
 export default (props = {}) => {
   const location = "";
   const { pathname } = location;
   const [show, setShow] = useState(false);
   const showClass = show ? "show" : "";
-
-
 
   const Signout = () => {
     const resource = {
@@ -43,6 +42,7 @@ export default (props = {}) => {
 
     }
   }, [notifications]);
+
   const {
     getLeads
   } = useFetchLead();
@@ -93,21 +93,27 @@ export default (props = {}) => {
     }
   };
 
+  const gameLines = (ld) => {
+    debugger
+    return (
+      <div className="row">
+        <div className="col-md-10">Name:{ld[0].resources?.firstName}</div>
+        <div className="col-md-2">Leads:{ld[0].leadCount}</div>
+      </div>
+    )
+  };
+
   const getAllLead = async () => {
     const response = await getLeads();
     if (response.payload.title == "Success") {
-      
-
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
           arr.push(response.payload[key]);
       }
-
       setLead(arr);
     }
     else {
-
     }
   };
 
@@ -121,6 +127,13 @@ export default (props = {}) => {
           <ul className="navbar-nav align-items-center">
             <li className="nav-item dropdown">
               <div> <TopBanner></TopBanner></div>
+              <div className="row">
+                <Marquee>
+                  <div className = "marquee">
+                    {lead.length > 0 && (gameLines(lead))}
+                  </div>
+                </Marquee>
+              </div>
               {/* <div id="_desktop_contact_link" class="header-cms-block">
 							<div class="wdicon"></div>
 							<span class="content">

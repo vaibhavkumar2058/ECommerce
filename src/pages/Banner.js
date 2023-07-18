@@ -31,7 +31,7 @@ export default function Banners() {
   const [banners, setBanners] = useState([]);
   const [recordStatusList, setRecordStatusList] = useState([]);
   const [bannerTypeList, setBannerTypeList] = useState([]);
- const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [show, setShow] = useState(false);
@@ -42,6 +42,7 @@ export default function Banners() {
     setIsDelete(false);
     setShow(false);
   };
+  
   const handleShow = () => setShow(true);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
@@ -52,7 +53,7 @@ export default function Banners() {
     recordStatusId: null,
     filesId: null,
 
-      });
+  });
 
   const [id, setId] = useState(null);
 
@@ -63,7 +64,7 @@ export default function Banners() {
     message: "",
   });
 
-  const { 
+  const {
     addBanner,
     updateBanner,
     deleteBanner,
@@ -71,48 +72,21 @@ export default function Banners() {
     bannerById,
   } = useFetchBanner();
 
-  const { 
+  const {
     getRecordStatuss,
   } = useFetchRecordStatus();
-  
-  const { 
+
+  const {
     getBannerTypes,
   } = useFetchBannerType();
-  
+
 
   const columns = [
-    { dataField: 'bannerId', text: 'Banner Id', sort: true, hidden: true },
-    {
-      dataField: "bannerImage",
-      text: "Photo",
-      headerStyle: () => {
-        return { width: "60px" };
+     // columns follow dataField and text structure
+     {
+      dataField: "Actions", headerStyle: () => {
+        return { width: "100px" };
       },
-      formatter: (cellContent, row) => {
-
-        return (
-          <>
-            <img className="banner-image" src={row.bannerImage}>
-            </img>
-          </>
-        );
-      },
-    },
-    { dataField: 'bannerId', text: 'Banner Id', sort: true, hidden: true },
-    { dataField: 'bannerTypeId', text: 'Banner Type Id', sort: true, hidden: true },
-    { dataField: 'title', text: 'Title', sort: true, },
-    { dataField: 'description', text: 'Description', sort: true },
-    { dataField: 'recordStatusId', text: 'recordStatusId',hidden:true, sort: true,headerStyle: () => {
-      return { width: "100px" };
-    } },
-    { dataField: 'recordStatus', text: 'Status', sort: true,headerStyle: () => {
-      return { width: "100px" };
-    } },
-    
-    
-    // columns follow dataField and text structure
-    {
-      dataField: "Actions",
       // text: "Actions",
       formatter: (cellContent, row) => {
         return (
@@ -135,6 +109,37 @@ export default function Banners() {
             </button></>
         );
       },
+    },
+    { dataField: 'bannerId', text: 'Banner Id', sort: true, hidden: true },
+    {
+      dataField: "bannerImage",
+      text: "Photo",
+      headerStyle: () => {
+        return { width: "60px" };
+      },
+      formatter: (cellContent, row) => {
+
+        return (
+          <>
+            <img className="banner-image" src={row.bannerImage}>
+            </img>
+          </>
+        );
+      },
+    },
+    { dataField: 'bannerId', text: 'Banner Id', sort: true, hidden: true },
+    { dataField: 'bannerTypeId', text: 'Banner Type Id', sort: true, hidden: true },
+    { dataField: 'title', text: 'Title', sort: true, },
+    { dataField: 'description', text: 'Description', sort: true },
+    {
+      dataField: 'recordStatusId', text: 'recordStatusId', hidden: true, sort: true, headerStyle: () => {
+        return { width: "100px" };
+      }
+    },
+    {
+      dataField: 'recordStatus', text: 'Status', sort: true, headerStyle: () => {
+        return { width: "100px" };
+      }
     },
   ];
 
@@ -201,7 +206,7 @@ export default function Banners() {
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+          arr.push(response.payload[key]);
       }
       setRecordStatusList(arr);
     }
@@ -219,7 +224,7 @@ export default function Banners() {
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+          arr.push(response.payload[key]);
       }
       setBannerTypeList(arr);
     }
@@ -230,7 +235,7 @@ export default function Banners() {
       })
     }
   };
-  
+
 
   const getAllBanners = async () => {
     const response = await getBanners();
@@ -239,24 +244,24 @@ export default function Banners() {
         mode: 'success',
         message: 'Banner Record Fetch Succefully.'
       })
-      
+
       const dataFormatter = (rawData) => {
         const curedData = {};
-        curedData.bannerId=rawData?.bannerId;
-        curedData.bannerTypeId=rawData?.bannerType.bannerTypeId;
-        curedData.title=rawData?.title;
-        curedData.description=rawData?.description;
-        curedData.recordStatusId=rawData?.recordStatus.recordStatusId;
-        curedData.recordStatus=rawData?.recordStatus.actionName;
-        curedData.bannerImage ='data:'+ rawData?.bannerAttachments?.files.fileMimeType +';base64,'+ rawData?.bannerAttachments?.files?.base64;
-        curedData.filesId = rawData?.bannerAttachments?.files?.filesId?? 0;
-        
+        curedData.bannerId = rawData?.bannerId;
+        curedData.bannerTypeId = rawData?.bannerType.bannerTypeId;
+        curedData.title = rawData?.title;
+        curedData.description = rawData?.description;
+        curedData.recordStatusId = rawData?.recordStatus.recordStatusId;
+        curedData.recordStatus = rawData?.recordStatus.actionName;
+        curedData.bannerImage = 'data:' + rawData?.bannerAttachments?.files.fileMimeType + ';base64,' + rawData?.bannerAttachments?.files?.base64;
+        curedData.filesId = rawData?.bannerAttachments?.files?.filesId ?? 0;
+
         return curedData;
       }
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(dataFormatter(response.payload[key]));
+          arr.push(dataFormatter(response.payload[key]));
       }
 
       setBanners(arr);
@@ -323,11 +328,11 @@ export default function Banners() {
                       <div className="row">
                         <div className="app-right col-lg-12">
                           <div className="app-float-right p-1">
-                          <MyExportCSV {...props.csvProps} /></div>
+                            <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
-                          <Button variant="primary" onClick={handleShow}>
-                            Add Banner
-                          </Button>
+                            <Button variant="primary" onClick={handleShow}>
+                              Add Banner
+                            </Button>
                           </div>
                         </div>
                       </div>
@@ -350,7 +355,7 @@ export default function Banners() {
         </div>)}
         {/* <!--- Model Box ---> */}
         <div className="model_box">
-          <Modal dialogClassName="my-modal" 
+          <Modal dialogClassName="my-modal"
             show={show}
             onHide={handleClose}
             backdrop="static"

@@ -14,6 +14,13 @@
 color:chocolate;
 }
 
+.marquee{
+  color:#7d05c3;
+  font-weight: bold;
+}
+
+
+
 .ftr {
   height: 28px;
   /* position: fixed;
