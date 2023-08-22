@@ -10,11 +10,11 @@ export default function CustomMap({ google, locations = [] }) {
         scale: 0.015, //to reduce the size of icons
     };
 
+    const [locationList, setLocationList] = useState([]);
+
     const {
         getRecordByResourcesId
     } = useFetchGMTs();
-
-    const [locationList, setLocationList] = useState([]);
 
     useEffect(() => {
         if (locationList.length == 0) {
@@ -23,7 +23,7 @@ export default function CustomMap({ google, locations = [] }) {
     }, [locationList]);
 
     const getLocationList = async () => {
-        const response = await getRecordByResourcesId(11);
+        const response = await getRecordByResourcesId(4155);
         if (response.payload.title == "Success") {
             const dataFormatter = (rawData) => {
 
@@ -32,15 +32,13 @@ export default function CustomMap({ google, locations = [] }) {
                 curedData.lng = rawData?.longitude;
                 return curedData;
             }
-
+            
             var arr = [];
             for (var key in response.payload) {
                 if (key !== 'title')
                     arr.push(dataFormatter(response.payload[key]));
             }
-
             setLocationList(arr);
-            ;
         }
         else {
         }

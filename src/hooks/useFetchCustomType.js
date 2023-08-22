@@ -14,7 +14,7 @@ import {
 
   export default function useFetchCustomTypes() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/customType";
+  const hapyCarURL = "https://jarksapi.azurewebsites.net/customType";
 
   const API = useAPI();
   const SUCCESS = "Success";

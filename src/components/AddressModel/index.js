@@ -22,7 +22,12 @@ export default function AddressModel({
   countryList = [],
   stateList = [],
   //recordStatus,
-}) {
+}) 
+{ 
+
+  const [saveDisabled, setSaveDisabled] = useState(true);
+  const [buttonType, setButtonType] = useState("Save");
+
   const [newAddress, setNewAddress] = useState({
     resourcesId: null,
     countryId: null,
@@ -38,18 +43,21 @@ export default function AddressModel({
     defaultAddressTypeId: null,
     recordStatusId: null,
   });
+
   const [countryOptions, setCountryOptions] = useState(countryList.map((country, item) => (
     {
       key: item,
       text: country.countryName,
       value: country.countryId,
     })).filter((item) => item));
+
   const [stateOptions, setStateOptions] = useState(stateList.map((state, item) => (
     {
       key: item,
       text: state.stateName,
       value: state.stateId,
     })).filter((item) => item));
+
   const [addressTypeOptions, setAddressTypeOptions] = useState(addressTypeList.map((addressType, item) => (
     {
       key: item,
@@ -71,9 +79,6 @@ export default function AddressModel({
     message: "",
   });
 
-  const [saveDisabled, setSaveDisabled] = useState(true);
-  const [buttonType, setButtonType] = useState("Save");
-
   const styles = {
     stFormContainer: css`
       width: 400px !important;
@@ -88,12 +93,11 @@ export default function AddressModel({
     });
   };
 
-
   const saveHandler = async () => {
-
     if (isEdit) {
+      debugger;
       const response = await onUpdateAddress(id, newAddress);
-      if (response.payload.title == "Success") {
+      if (response.payload.title == "success") {
         onClose(true);
       }
       else {
@@ -134,9 +138,9 @@ export default function AddressModel({
       })
     }
   };
+
   const dropdownHandler = (event, { name, value }) => {
     setNewAddress((currentAddress) => ({ ...currentAddress, [name]: value }));
-
   }
 
   useEffect(() => {
@@ -146,8 +150,8 @@ export default function AddressModel({
         text: country.countryName,
         value: country.countryId,
       })).filter((item) => item));
-
   }, [countryList]);
+  
   useEffect(() => {
     setStateOptions(stateList.map((state, item) => (
       {
@@ -155,8 +159,8 @@ export default function AddressModel({
         text: state.stateName,
         value: state.stateId,
       })).filter((item) => item));
-
   }, [stateList]);
+
   useEffect(() => {
     setAddressTypeOptions(addressTypeList.map((addressType, item) => (
       {
@@ -164,7 +168,6 @@ export default function AddressModel({
         text: addressType.addressTypeName,
         value: addressType.addressTypeId,
       })).filter((item) => item));
-
   }, [addressTypeList]);
 
   useEffect(() => {
@@ -199,7 +202,6 @@ export default function AddressModel({
     setSaveDisabled(isEnable);
   }, [newAddress]);
 
-
   return (
     <>
       {(messageStatus.message && <Alert key={messageStatus.mode} variant={messageStatus.mode}>
@@ -208,7 +210,7 @@ export default function AddressModel({
       {isDelete && (
         <>
           <Modal.Body>
-            <p>Are you sure you want to delete?.</p>
+            <p>Are you sure you want to delete?.</p> 
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>

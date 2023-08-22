@@ -65,6 +65,7 @@ export default function EnquiryModel({
       const response = await onUpdateEnquiry(id, newEnquiry);
       if (response.payload.title == "Success") {
         onClose(true);
+        
       }
       else {
         setMessageStatus({

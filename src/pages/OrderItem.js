@@ -14,19 +14,6 @@ import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit/dist/rea
 import Geocode from "react-geocode";
 
 
-const { SearchBar, ClearSearchButton } = Search;
-
-const MyExportCSV = (props) => {
-  const handleClick = () => {
-    props.onExport();
-  };
-  return (
-    <div>
-      <button className="btn btn-success" onClick={handleClick}>Export to CSV</button>
-    </div>
-  );
-};
-
 export default function OrderItems() {
   const [productList, setProductList] = useState([]);
   const [recordStatusList, setRecordStatusList] = useState([]);
@@ -46,11 +33,11 @@ export default function OrderItems() {
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [orderItem, setOrderItem] = useState({
-    productId:null,
-    orderId:null,
-    cost:"",
-    quantity:"",
-    recordStatusId:null,
+    productId: null,
+    orderId: null,
+    cost: "",
+    quantity: "",
+    recordStatusId: null,
   });
 
   const [id, setId] = useState(null);
@@ -62,7 +49,7 @@ export default function OrderItems() {
     message: "",
   });
 
-  const { 
+  const {
     addOrderItem,
     updateOrderItem,
     deleteOrderItem,
@@ -70,26 +57,19 @@ export default function OrderItems() {
     orderItemById,
   } = useFetchOrderItem();
 
-  const { 
+  const {
     getRecordStatuss,
   } = useFetchRecordStatus();
-  const { 
+
+  const {
     getProducts,
   } = useFetchProduct();
 
   const columns = [
-
-    { dataField: 'productId', text: 'productId',hidden:true, sort: true,},
-    { dataField: 'productName', text: 'productName', sort: true,},
-    { dataField: 'orderId', text: ' orderId', sort: true,hidden:true},
-    { dataField: 'cost', text: 'Cost', sort: true },
-    { dataField: 'quantity', text: 'Quantity', sort: true },
-    { dataField: 'recordStatusId', text: 'RecordStatusId',hidden:true, sort: true, },
-    { dataField: 'recordStatus', text: 'Status', sort: true, },
-
-    // columns follow dataField and text structure
     {
-      dataField: "Actions",
+      dataField: "Actions", headerstyle:() => {
+        return {width:""}
+      },
       // text: "Actions",
       formatter: (cellContent, row) => {
         return (
@@ -113,11 +93,20 @@ export default function OrderItems() {
         );
       },
     },
+    { dataField: 'productId', text: 'productId', hidden: true, sort: true, },
+    { dataField: 'productName', text: 'productName', sort: true, },
+    { dataField: 'orderId', text: ' orderId', sort: true, hidden: true },
+    { dataField: 'cost', text: 'Cost', sort: true },
+    { dataField: 'quantity', text: 'Quantity', sort: true },
+    { dataField: 'recordStatusId', text: 'RecordStatusId', hidden: true, sort: true, },
+    { dataField: 'recordStatus', text: 'Status', sort: true, },
+    // columns follow dataField and text structure
   ];
+
   useEffect(() => {
     getRecordStatusList();
     getProductList();
-    
+
     if (orderItems.length == 0) {
       getAllOrderItems();
       setLoading(false)
@@ -186,7 +175,7 @@ export default function OrderItems() {
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+          arr.push(response.payload[key]);
       }
       setRecordStatusList(arr);
     }
@@ -204,7 +193,7 @@ export default function OrderItems() {
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+          arr.push(response.payload[key]);
       }
       setProductList(arr);
     }
@@ -226,21 +215,21 @@ export default function OrderItems() {
       })
       const dataFormatter = (rawData) => {
         const curedData = {};
-        curedData.orderItemId=rawData?.orderItemId;
-        curedData.productId=rawData?.productId;
-        curedData.productName=rawData?.product.productName;
-         curedData.orderId=rawData?.orderId;
-         curedData.cost=rawData?.cost;
-        curedData.quantity=rawData?.quantity;
-        curedData.recordStatusId=rawData?.recordStatusId;
-        curedData.recordStatus=rawData?.recordStatus.actionName;
+        curedData.orderItemId = rawData?.orderItemId;
+        curedData.productId = rawData?.productId;
+        curedData.productName = rawData?.product.productName;
+        curedData.orderId = rawData?.orderId;
+        curedData.cost = rawData?.cost;
+        curedData.quantity = rawData?.quantity;
+        curedData.recordStatusId = rawData?.recordStatusId;
+        curedData.recordStatus = rawData?.recordStatus.actionName;
         return curedData;
       }
 
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(dataFormatter(response.payload[key]));    
+          arr.push(dataFormatter(response.payload[key]));
       }
 
       setOrderItems(arr);
@@ -283,6 +272,19 @@ export default function OrderItems() {
     )
   };
 
+  const { SearchBar, ClearSearchButton } = Search;
+
+  const MyExportCSV = (props) => {
+    const handleClick = () => {
+      props.onExport();
+    };
+    return (
+      <div>
+        <button className="btn btn-success" onClick={handleClick}>Export to CSV</button>
+      </div>
+    );
+  };
+
 
   return (
     <>
@@ -307,11 +309,11 @@ export default function OrderItems() {
                       <div className="row">
                         <div className="app-right col-lg-12">
                           <div className="app-float-right p-1">
-                          <MyExportCSV {...props.csvProps} /></div>
+                            <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
-                          <Button variant="primary" onClick={handleShow}>
-                            Add OrderItem
-                          </Button>
+                            <Button variant="primary" onClick={handleShow}>
+                              Add OrderItem
+                            </Button>
                           </div>
                         </div>
                       </div>

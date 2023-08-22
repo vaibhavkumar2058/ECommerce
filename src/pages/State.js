@@ -75,16 +75,6 @@ export default function States() {
   } = useFetchRecordStatus();
 
   const columns = [
- 
-    { dataField: 'stateId', text: 'stateId', sort: true, hidden: true } ,
-    { dataField: 'stateName', text: 'State', sort: true  },
-    { dataField: 'countryId', text: 'CountryId',hidden:true, sort: true },
-    { dataField: 'countryName', text: 'Country', sort: true },
-    { dataField: 'description', text: 'Description', sort: true },
-    { dataField: 'recordStatusId', text: 'RecordStatusId',hidden:true, sort: true  },
-    { dataField: 'recordStatus', text: 'Status', sort: true  },
-
-     // columns follow dataField and text structure
     {
       dataField: "Actions",
       // text: "Actions",
@@ -110,6 +100,14 @@ export default function States() {
         );
       },
     },
+    { dataField: 'stateId', text: 'stateId', sort: true, hidden: true } ,
+    { dataField: 'stateName', text: 'State', sort: true  },
+    { dataField: 'countryId', text: 'CountryId',hidden:true, sort: true },
+    { dataField: 'countryName', text: 'Country', sort: true },
+    { dataField: 'description', text: 'Description', sort: true },
+    { dataField: 'recordStatusId', text: 'RecordStatusId',hidden:true, sort: true  },
+    { dataField: 'recordStatus', text: 'Status', sort: true  },
+     // columns follow dataField and text structure
   ];
 
   useEffect(() => {
@@ -222,8 +220,7 @@ export default function States() {
         curedData.description=rawData?.description;
         curedData.recordStatusId=rawData?.recordStatusId;
         curedData.recordStatus=rawData?.recordStatus.actionName;
-
-
+        
         return curedData;
       }
       var arr = [];

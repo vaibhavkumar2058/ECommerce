@@ -14,7 +14,7 @@ import {
 
   export default function useFetchRole() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/role";
+  const hapyCarURL = "https://jarksapi.azurewebsites.net/role";
 
   const API = useAPI();
   const SUCCESS = "Success";

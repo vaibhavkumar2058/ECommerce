@@ -14,7 +14,7 @@ import {
 
   export default function useFetchGender() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/gender";
+  const hapyCarURL = "https://jarksapi.azurewebsites.net/gender";
 
   const API = useAPI();
   const SUCCESS = "Success";

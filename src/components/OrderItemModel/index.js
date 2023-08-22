@@ -20,7 +20,7 @@ export default function OrderItemModel({
   recordStatusList = [],
   productList = [],
 }) 
-{
+{ 
   const [newOrderItem, setNewOrderItem] = useState({
     productId:null,
     orderId:null,
@@ -36,6 +36,7 @@ const [productOptions, setProductOptions] = useState(productList.map((product,it
   text: product.productName,
   value: product.productId,
 })).filter((item) => item));
+
 const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus,item) =>(
   {
   key: item,

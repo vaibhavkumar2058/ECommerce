@@ -14,7 +14,7 @@ import {
 
   export default function useFetchResouceAttachmentType() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/resourceAttachmentType";
+  const hapyCarURL = "https://jarksapi.azurewebsites.net/resourceAttachmentType";
 
   const API = useAPI();
   const SUCCESS = "Success";

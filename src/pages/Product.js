@@ -48,6 +48,7 @@ export default function Products() {
     setIsDelete(false);
     setShow(false);
   };
+
   const handleShow = () => setShow(true);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
@@ -86,6 +87,36 @@ export default function Products() {
   } = useFetchRecordStatus();
 
   const columns = [
+    {
+      dataField: "Actions",
+      // text: "Actions",
+      headerStyle: () => {
+        return { width: "80px" };
+      },
+      formatter: (cellContent, row) => {
+        return (
+          <><button
+            className="btn btn-primary btn-xs"
+            onClick={() => handleView(row.productId, row)}
+          >
+            View
+          </button>
+            { admin && <button
+              className="btn btn-primary btn-xs"
+              onClick={() => handleEdit(row.productId, row)}
+            >
+              Edit
+            </button>}
+            { admin && <button
+              className="btn btn-danger btn-xs"
+              onClick={() => handleDelete(row.productId, row)}
+            >
+              Delete
+            </button>}
+            </>
+        );
+      },
+    },
 
 
     { dataField: 'productId', text: 'Product Id', sort: true, hidden: true },
@@ -135,36 +166,6 @@ export default function Products() {
       }, text: ' Product', sort: true
     },
     // columns follow dataField and text structure
-    {
-      dataField: "Actions",
-      // text: "Actions",
-      headerStyle: () => {
-        return { width: "80px" };
-      },
-      formatter: (cellContent, row) => {
-        return (
-          <><button
-            className="btn btn-primary btn-xs"
-            onClick={() => handleView(row.productId, row)}
-          >
-            View
-          </button>
-            { admin && <button
-              className="btn btn-primary btn-xs"
-              onClick={() => handleEdit(row.productId, row)}
-            >
-              Edit
-            </button>}
-            { admin && <button
-              className="btn btn-danger btn-xs"
-              onClick={() => handleDelete(row.productId, row)}
-            >
-              Delete
-            </button>}
-            </>
-        );
-      },
-    },
   ];
 
   useEffect(() => {

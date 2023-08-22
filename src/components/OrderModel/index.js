@@ -46,6 +46,8 @@ export default function OrderModel({
   // Used for Not Allowing Alphabets in Quantity Field
   const isOverLimit = (value = "", limit) => value.length > limit;
 
+  const [productOptions, setProductOptions] = useState(null)
+
 
   const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
 
@@ -253,8 +255,6 @@ export default function OrderModel({
       text: categoryType.categoryTypeName,
       value: categoryType.categoryTypeId,
     })).filter((item) => item));
-
-  const [productOptions, setProductOptions] = useState(null)
 
   // used to map MeasurementTypeList in Dropdown
   const [measurementTypeOptions, setMeasurementTypeOptions] = useState(measurementTypeList.map((measurementType, item) => (
@@ -466,7 +466,6 @@ export default function OrderModel({
   
   useEffect(() => {
     if (isEdit) {
-
       setNewOrder(orderData)
       placeOrder.categoryTypeId = orderData?.categoryTypeId;
       getProductByCategoryId(orderData?.categoryTypeId);
@@ -494,7 +493,7 @@ export default function OrderModel({
 
     setSaveDisabled(isEnable);
     const apply =
-      !placeOrder?.quantity
+     !placeOrder?.quantity
       || !discount?.discountCode
       || !placeOrder?.cost
 
@@ -546,7 +545,7 @@ export default function OrderModel({
                   onChange={categoryDropdownHandler}
                 />
               </Form.Group>
-
+              
             </div>
 
             <div className="col-md-6">
@@ -599,9 +598,7 @@ export default function OrderModel({
               </div>
             </div>
             <div className="col-md-6">
-
             </div>
-
           </div>
 
           <div className="row">

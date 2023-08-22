@@ -21,6 +21,12 @@ export default function ApproveModel({
   approveStatusList = [],
   //recordStatus,
 }) {
+
+  const [saveDisabled, setSaveDisabled] = useState(true);
+  const [buttonType, setButtonType] = useState("Save");
+
+
+
   const [newApprove, setNewApprove] = useState({
     resourcesId: null,
     approverId: null,
@@ -29,14 +35,13 @@ export default function ApproveModel({
     recordStatusId: null,
   });
   
- 
-
   const [recordStatusOptions, setRecordStatusOptions] = useState(recordStatusList.map((recordStatus, item) => (
     {
       key: item,
       text: recordStatus.actionName,
       value: recordStatus.recordStatusId,
     })).filter((item) => item));
+
     const [approveStatusOptions, setApproveStatusOptions] = useState(approveStatusList.map((approveStatus, item) => (
       {
         key: item,
@@ -51,9 +56,6 @@ export default function ApproveModel({
     status: false,
     message: "",
   });
-
-  const [saveDisabled, setSaveDisabled] = useState(true);
-  const [buttonType, setButtonType] = useState("Save");
 
   const styles = {
     stFormContainer: css`
@@ -117,11 +119,9 @@ export default function ApproveModel({
   };
   const dropdownHandler = (event, { name, value }) => {
     setNewApprove((currentApprove) => ({ ...currentApprove, [name]: value }));
-
   }
 
   
-
   useEffect(() => {
     if (isEdit) {
       setNewApprove(approveData);
@@ -136,6 +136,7 @@ export default function ApproveModel({
         value: recordStatus.recordStatusId,
       })).filter((item) => item));
   }, [recordStatusList]);
+  
   useEffect(() => {
     setApproveStatusOptions(approveStatusList.map((approveStatus, item) => (
       {

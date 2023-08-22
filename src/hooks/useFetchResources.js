@@ -14,7 +14,7 @@ import {
 
   export default function useFetchResources() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/resources";
+  const hapyCarURL = "https://jarksapi.azurewebsites.net/resources";
 
   const API = useAPI();
   const SUCCESS = "Success";
@@ -54,11 +54,8 @@ import {
 
   // Resources ADD  ACTIONS
   const addResources = (resources) => {
-    
-
     const formData = new FormData();
     Object.keys(resources).forEach((key) => formData.append(key,resources[key]));
-
     return API.post(
       hapyCarURL,
       { data: formData },
@@ -87,10 +84,6 @@ import {
           })
         );
       });
-
-
-
-
   };
 
   // Resources UPDATE  ACTIONS

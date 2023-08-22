@@ -14,20 +14,6 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit';
 
-
-const { SearchBar, ClearSearchButton } = Search;
-
-const MyExportCSV = (props) => {
-  const handleClick = () => {
-    props.onExport();
-  };
-  return (
-    <div>
-      <button className="btn btn-success" onClick={handleClick}>Export to CSV</button>
-    </div>
-  );
-};
-
 export default function Addresses() {
 
   const [addresses, setAddresses] = useState([]);
@@ -46,26 +32,27 @@ export default function Addresses() {
     setIsDelete(false);
     setShow(false);
   };
+
   const handleShow = () => setShow(true);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
   const [address, setAddress] = useState({
-    resourcesId:userInfo?.resourcesId,
-    countryId:null,
-    stateId:null,
-    city:"",
-    town:"",
-    locality:"",
-    pincode:null,
-    addressTypeId:null,
-    addressLine:"",
-    landMark:"",
-    isDefault:"",
-    defaultAddressTypeId:null,
-    recordStatusId:null,
-    
-      });
+    resourcesId: userInfo?.resourcesId,
+    countryId: null,
+    stateId: null,
+    city: "",
+    town: "",
+    locality: "",
+    pincode: null,
+    addressTypeId: null,
+    addressLine: "",
+    landMark: "",
+    isDefault: "",
+    defaultAddressTypeId: null,
+    recordStatusId: null,
+
+  });
 
   const [id, setId] = useState(null);
 
@@ -76,7 +63,7 @@ export default function Addresses() {
     message: "",
   });
 
-  const { 
+  const {
     addAddress,
     updateAddress,
     deleteAddress,
@@ -84,76 +71,28 @@ export default function Addresses() {
     addressById,
   } = useFetchAddress();
 
-  const { 
+  const {
     getRecordStatuss,
   } = useFetchRecordStatus();
-  const { 
+
+  const {
     getStates,
   } = useFetchState();
-  const { 
+
+  const {
     getCountries,
   } = useFetchCountry();
-  const { 
+
+  const {
     getAddressTypes,
   } = useFetchAddressType();
 
 
   const columns = [
-    { dataField: 'addressId', text: 'Address Id', sort: true, hidden: true },
-    { dataField: 'countryId', text: 'Country Id', sort: true, hidden: true,headerStyle: () => {
-      return { width: "120px" };
-    }  },
-    { dataField: 'countryName', text: 'Country', sort: true,headerStyle: () => {
-      return { width: "120px" };
-    }  },
-    { dataField: 'stateId', text: 'State Id', hidden: true, sort: true ,headerStyle: () => {
-      return { width: "100px" };
-    }},
-    { dataField: 'stateName', text: 'State',  sort: true ,headerStyle: () => {
-      return { width: "100px" };
-    }},
-     { dataField: 'resourcesId', text: 'Resources', sort: true, hidden: true,headerStyle: () => {
-      return { width: "100px" };
-   
-    } },
-    { dataField: 'town', text: 'Town', sort: true,headerStyle: () => {
-      return { width: "100px" };
-    } },
-    { dataField: 'locality', text: 'Locality', sort: true,headerStyle: () => {
-      return { width: "120px" };
-    } },
-    { dataField: 'addressLine', text: 'Address Line', sort: true,headerStyle: () => {
-      return { width: "120px" };
-    } },
-    { dataField: 'pincode', text: 'Pincode', sort: true,headerStyle: () => {
-      return { width: "120px" };
-    } },
-    { dataField: 'addressTypeId', text: 'AddressType Id',hidden:true, sort: true,headerStyle: () => {
-      return { width: "150px" };
-    } },
-    { dataField: 'addressTypename', text: 'AddressType',hidden:true, sort: true,headerStyle: () => {
-      return { width: "150px" };
-    } },
-    { dataField: 'isDefault', text: 'IsDefault', sort: true ,headerStyle: () => {
-      return { width: "120px" };
-    }},
-    { dataField: 'defaultAddressTypeId', text: 'Default Address Type', sort: true ,headerStyle: () => {
-      return { width: "200px" };
-    }},
-    { dataField: 'landMark', text: 'LandMark', sort: true,headerStyle: () => {
-      return { width: "120px" };
-    } },
-    { dataField: 'recordStatusId', text: 'recordStatusId',hidden:true, sort: true,headerStyle: () => {
-      return { width: "100px" };
-    } },
-    { dataField: 'recordStatus', text: 'Status', sort: true,headerStyle: () => {
-      return { width: "100px" };
-    } },
-    
-    
-    // columns follow dataField and text structure
     {
-      dataField: "Actions",
+      dataField: "Actions", headerStyle: () => {
+        return { width: "120px" }
+      },
       // text: "Actions",
       formatter: (cellContent, row) => {
         return (
@@ -177,6 +116,89 @@ export default function Addresses() {
         );
       },
     },
+    { dataField: 'addressId', text: 'Address Id', sort: true, hidden: true },
+    {
+      dataField: 'countryId', text: 'Country Id', sort: true, hidden: true, headerStyle: () => {
+        return { width: "120px" };
+      }
+    },
+    {
+      dataField: 'countryName', text: 'Country', sort: true, headerStyle: () => {
+        return { width: "120px" };
+      }
+    },
+    {
+      dataField: 'stateId', text: 'State Id', hidden: true, sort: true, headerStyle: () => {
+        return { width: "100px" };
+      }
+    },
+    {
+      dataField: 'stateName', text: 'State', sort: true, headerStyle: () => {
+        return { width: "100px" };
+      }
+    },
+    {
+      dataField: 'resourcesId', text: 'Resources', sort: true, hidden: true, headerStyle: () => {
+        return { width: "100px" };
+
+      }
+    },
+    {
+      dataField: 'town', text: 'Town', sort: true, headerStyle: () => {
+        return { width: "100px" };
+      }
+    },
+    {
+      dataField: 'locality', text: 'Locality', sort: true, headerStyle: () => {
+        return { width: "120px" };
+      }
+    },
+    {
+      dataField: 'addressLine', text: 'Address Line', sort: true, headerStyle: () => {
+        return { width: "120px" };
+      }
+    },
+    {
+      dataField: 'pincode', text: 'Pincode', sort: true, headerStyle: () => {
+        return { width: "120px" };
+      }
+    },
+    {
+      dataField: 'addressTypeId', text: 'AddressTypeId', hidden: true, sort: true, headerStyle: () => {
+        return { width: "150px" };
+      }
+    },
+    {
+      dataField: 'addressTypename', text: 'AddressType', hidden: true, sort: true, headerStyle: () => {
+        return { width: "150px" };
+      }
+    },
+    {
+      dataField: 'isDefault', text: 'IsDefault', sort: true, headerStyle: () => {
+        return { width: "120px" };
+      }
+    },
+    {
+      dataField: 'defaultAddressTypeId', text: 'Default Address Type', sort: true, headerStyle: () => {
+        return { width: "200px" };
+      }
+    },
+    {
+      dataField: 'landMark', text: 'LandMark', sort: true, headerStyle: () => {
+        return { width: "120px" };
+      }
+    },
+    {
+      dataField: 'recordStatusId', text: 'recordStatusId', hidden: true, sort: true, headerStyle: () => {
+        return { width: "100px" };
+      }
+    },
+    {
+      dataField: 'recordStatus', text: 'Status', sort: true, headerStyle: () => {
+        return { width: "100px" };
+      }
+    },
+    // columns follow dataField and text structure
   ];
 
   useEffect(() => {
@@ -190,22 +212,19 @@ export default function Addresses() {
     }
   }, [addresses]);
 
-  
-
 
   const defaultSorted = [{
     dataField: 'addressId',
     order: 'desc'
   }];
 
-
   const emptyDataMessage = () => { return 'No Data to Display'; }
-
 
   const handleView = (rowId, name) => {
     console.log(rowId, name);
     //1 YourCellName
   };
+
 
   const handleEdit = (rowId, row) => {
     setAddress(row);
@@ -246,7 +265,7 @@ export default function Addresses() {
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+          arr.push(response.payload[key]);
       }
       setRecordStatusList(arr);
     }
@@ -257,6 +276,7 @@ export default function Addresses() {
       })
     }
   };
+  
   const getCountryList = async () => {
     const response = await getCountries();
     if (response.payload.title == "Success") {
@@ -264,7 +284,7 @@ export default function Addresses() {
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+          arr.push(response.payload[key]);
       }
       setCountryList(arr);
     }
@@ -283,7 +303,7 @@ export default function Addresses() {
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+          arr.push(response.payload[key]);
       }
       setStateList(arr);
     }
@@ -302,7 +322,7 @@ export default function Addresses() {
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(response.payload[key]);
+          arr.push(response.payload[key]);
       }
       setAddressTypeList(arr);
     }
@@ -314,8 +334,6 @@ export default function Addresses() {
     }
   };
 
-
-
   const getAllAddresses = async () => {
     const response = await getAddresses();
     if (response.payload.title == "Success") {
@@ -325,32 +343,30 @@ export default function Addresses() {
       })
       const dataFormatter = (rawData) => {
         const curedData = {};
-        curedData.addressId=rawData?.addressId;
-        curedData.countryId=rawData?.country.countryId;
-        curedData.countryName=rawData?.country.countryName;
-        curedData.stateId=rawData?.state.stateId;
-        curedData.stateName=rawData?.state.stateName;
-        curedData.resourcesId=rawData?.resourcesId
-        curedData.city=rawData?.city;
-        curedData.town=rawData?.town;
-        curedData.locality=rawData?.locality;
-        curedData.addressLine=rawData?.addressLine;
-        curedData.pincode=rawData?.pincode;
-        curedData.addressTypeId=rawData?.addressType.addressTypeName;
-        curedData.isDefault=rawData?.isDefault;
-        curedData.defaultAddressTypeId=rawData?.defaultAddressTypeId;
-        curedData.landMark=rawData?.landMark;
-        curedData.recordStatusId=rawData?.recordStatus.recordStatusId;
-        curedData.recordStatus=rawData?.recordStatus.actionName;
-        
+        curedData.addressId = rawData?.addressId;
+        curedData.countryId = rawData?.country.countryId;
+        curedData.countryName = rawData?.country.countryName;
+        curedData.stateId = rawData?.state.stateId;
+        curedData.stateName = rawData?.state.stateName;
+        curedData.resourcesId = rawData?.resourcesId
+        curedData.city = rawData?.city;
+        curedData.town = rawData?.town;
+        curedData.locality = rawData?.locality;
+        curedData.addressLine = rawData?.addressLine;
+        curedData.pincode = rawData?.pincode;
+        curedData.addressTypeId = rawData?.addressType.addressTypeName;
+        curedData.isDefault = rawData?.isDefault;
+        curedData.defaultAddressTypeId = rawData?.defaultAddressTypeId;
+        curedData.landMark = rawData?.landMark;
+        curedData.recordStatusId = rawData?.recordStatus.recordStatusId;
+        curedData.recordStatus = rawData?.recordStatus.actionName;
         return curedData;
       }
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
-        arr.push(dataFormatter(response.payload[key]));
+          arr.push(dataFormatter(response.payload[key]));
       }
-
       setAddresses(arr);
     }
     else {
@@ -391,6 +407,19 @@ export default function Addresses() {
     )
   };
 
+  const { SearchBar, ClearSearchButton } = Search;
+
+  const MyExportCSV = (props) => {
+    const handleClick = () => {
+      props.onExport();
+    };
+    return (
+      <div>
+        <button className="btn btn-success" onClick={handleClick}>Export to CSV</button>
+      </div>
+    );
+  };
+
 
   return (
     <>
@@ -415,11 +444,11 @@ export default function Addresses() {
                       <div className="row">
                         <div className="app-right col-lg-12">
                           <div className="app-float-right p-1">
-                          <MyExportCSV {...props.csvProps} /></div>
+                            <MyExportCSV {...props.csvProps} /></div>
                           <div className="app-float-right p-1">
-                          <Button variant="primary" onClick={handleShow}>
-                            Add Address
-                          </Button>
+                            <Button variant="primary" onClick={handleShow}>
+                              Add Address
+                            </Button>
                           </div>
                         </div>
                       </div>
@@ -442,7 +471,7 @@ export default function Addresses() {
         </div>)}
         {/* <!--- Model Box ---> */}
         <div className="model_box">
-          <Modal dialogClassName="my-modal" 
+          <Modal dialogClassName="my-modal"
             show={show}
             onHide={handleClose}
             backdrop="static"

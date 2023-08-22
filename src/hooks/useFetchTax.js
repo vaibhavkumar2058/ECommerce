@@ -14,7 +14,7 @@ import {
 
   export default function useFetchTax() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/tax";
+  const hapyCarURL = "https://jarksapi.azurewebsites.net/tax";
 
   const API = useAPI();
   const SUCCESS = "Success";

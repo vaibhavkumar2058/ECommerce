@@ -14,14 +14,14 @@ import {
 
   export default function useFetchBanners() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/banner";
+  const hapyCarURL = "https://jarksapi.azurewebsites.net/banner";
 
   const API = useAPI();
   const SUCCESS = "Success";
   const ERROR = "Error";
 
   // Banner GET  ACTIONS
-  const getBanners = () => {
+  const getBanners = () => { 
     dispatch(getBannerBeginAction());
     return API.get(hapyCarURL,
       null,
@@ -85,6 +85,7 @@ import {
           })
         );
       });
+      
 
 
 
@@ -93,8 +94,6 @@ import {
 
   // Banner UPDATE  ACTIONS
   const updateBanner = (bannerId, banner) => {
-
-
     return API.put(`${hapyCarURL}/${bannerId}`,
       { data: banner},
       { suppressErrors: [400] }
@@ -124,7 +123,6 @@ import {
           })
         );
       });
-
   };
 
   // Banner DELETE  ACTIONS
@@ -199,3 +197,5 @@ import {
     bannerById,
   };
 }
+
+

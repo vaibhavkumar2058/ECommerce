@@ -15,10 +15,10 @@ import {
 
   export default function useFetchOrders() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/order";
-  const placeOrdersURL = "https://localhost:7062/placeorders";
-  const productOrderListURL = "https://localhost:7062/productorderlist";
-  const orderReportsURL = "https://localhost:7062/order/reports";
+  const hapyCarURL = "https://jarksapi.azurewebsites.net/order";
+  const placeOrdersURL = "https://jarksapi.azurewebsites.net/placeorders";
+  const productOrderListURL = "https://jarksapi.azurewebsites.net/productorderlist";
+  const orderReportsURL = "https://jarksapi.azurewebsites.net/order/reports";
   const API = useAPI();
   const SUCCESS = "Success";
   const ERROR = "Error";

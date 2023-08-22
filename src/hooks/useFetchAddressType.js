@@ -14,7 +14,7 @@ import {
 
   export default function useFetchAddressTypes() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/addressType";
+  const hapyCarURL = "https://jarksapi.azurewebsites.net/addressType";
 
   const API = useAPI();
   const SUCCESS = "Success";

@@ -75,19 +75,6 @@ export default function Boxes() {
   
 
   const columns = [
-    { dataField: 'boxId', text: 'Box Id', sort: true, hidden: true },
-    { dataField: 'BoxName', text: 'BoxName', sort: true, hidden: true },
-    { dataField: 'PiecesCount', text: 'Pieces Count', sort: true, },
-    { dataField: 'Box Limit', text: 'Box Limit', sort: true},
-    { dataField: 'recordStatusId', text: 'recordStatusId',hidden:true, sort: true,headerStyle: () => {
-      return { width: "100px" };
-    } },
-    { dataField: 'recordStatus', text: 'Status', sort: true,headerStyle: () => {
-      return { width: "100px" };
-    } },
-    
-    
-    // columns follow dataField and text structure
     {
       dataField: "Actions",
       // text: "Actions",
@@ -113,6 +100,17 @@ export default function Boxes() {
         );
       },
     },
+    { dataField: 'boxId', text: 'Box Id', sort: true, hidden: true },
+    { dataField: 'BoxName', text: 'BoxName', sort: true, hidden: true },
+    { dataField: 'PiecesCount', text: 'Pieces Count', sort: true, },
+    { dataField: 'Box Limit', text: 'Box Limit', sort: true},
+    { dataField: 'recordStatusId', text: 'recordStatusId',hidden:true, sort: true,headerStyle: () => {
+      return { width: "100px" };
+    } },
+    { dataField: 'recordStatus', text: 'Status', sort: true,headerStyle: () => {
+      return { width: "100px" };
+    } },
+    // columns follow dataField and text structure
   ];
 
   useEffect(() => {
@@ -190,7 +188,6 @@ export default function Boxes() {
   };
   
   
-
   const getAllBoxes = async () => {
     const response = await getBoxes();
     if (response.payload.title == "Success") {

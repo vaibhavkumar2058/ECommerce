@@ -14,7 +14,7 @@ import {
 
   export default function useFetchFolders() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/folder";
+  const hapyCarURL = "https://jarksapi.azurewebsites.net/folder";
 
   const API = useAPI();
   const SUCCESS = "Success";

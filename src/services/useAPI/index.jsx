@@ -20,7 +20,7 @@ export default function useAPI() {
   const dispatch = useDispatch();
 
   const HTTP = axios.create({
-    baseURL: "https://localhost:7062/order",
+    baseURL: "https://jarksapi.azurewebsites.net/order",
   });
 
   /**

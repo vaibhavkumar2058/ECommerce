@@ -111,11 +111,11 @@ export default function Lead() {
   ];
 
   useEffect(() => {
-    getRecordStatusList();
-    if (leads.length == 0) {
-      getAllLead();
-      setLoading(false)
-    }
+    // getRecordStatusList();
+    // if (leads.length == 0) {
+    //   getAllLead();
+    //   setLoading(false)
+    // }
   }, [leads]);
 
 

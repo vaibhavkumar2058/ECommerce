@@ -14,7 +14,7 @@ import {
 
   export default function useFetchMeasurementValues() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/measurementValue";
+  const hapyCarURL = "https://jarksapi.azurewebsites.net/measurementValue";
 
   const API = useAPI();
   const SUCCESS = "Success";

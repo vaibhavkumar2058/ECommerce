@@ -25,7 +25,6 @@ export const addressAction = (data) => ({
     type: ADDRESS,
     payload: data,
 })
-
 export const updateAddressAction = (data) => ({
     type: UPDATE_ADDRESS,
     payload: data,

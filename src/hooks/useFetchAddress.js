@@ -12,9 +12,10 @@ import {
     addressAction,
   } from "../actions/addressActions";
 
+
   export default function useFetchAddresses() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/address";
+  const hapyCarURL = "https://jarksapi.azurewebsites.net/address";
 
   const API = useAPI();
   const SUCCESS = "Success";
@@ -90,15 +91,11 @@ import {
 
   // Address UPDATE  ACTIONS
   const updateAddress = (addressId, address) => {
-
     return API.put(`${hapyCarURL}/${addressId}`,
       { data: address},
       { suppressErrors: [400] }
     )
-      .then(({ data
-
-      }) =>
-
+      .then(({ data }) =>
         dispatch(
           updateAddressAction({
             ...data,
@@ -120,7 +117,6 @@ import {
           })
         );
       });
-
   };
 
   // Address DELETE  ACTIONS
@@ -154,7 +150,7 @@ import {
 
   };
 
-  // Address BY ID ACTIONS
+  // Address by Id Actions
   const addressById = (addressId) => {
     return API.get(`${hapyCarURL}/${addressId}`,
       null,

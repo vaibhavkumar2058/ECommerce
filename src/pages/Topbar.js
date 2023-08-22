@@ -46,12 +46,13 @@ export default (props = {}) => {
   const {
     getLeads
   } = useFetchLead();
-  useEffect(() => {
+  
+  // useEffect(() => {
 
-    if (lead.length == 0) {
-      getAllLead();
-    }
-  }, [lead]);
+  //   if (lead.length == 0) {
+  //     getAllLead();
+  //   }
+  // }, [lead]);
 
   const getNotificationsByResourcesId = async (id) => {
     const response = await getNotificationListByResourcesId(id);
@@ -94,7 +95,6 @@ export default (props = {}) => {
   };
 
   const gameLines = (ld) => {
-    debugger
     return (
       <div className="row">
         <div className="col-md-10">Name:{ld[0].resources?.firstName}</div>

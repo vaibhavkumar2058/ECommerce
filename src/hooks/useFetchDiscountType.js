@@ -14,7 +14,7 @@ import {
 
   export default function useFetchDiscountTypes() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/discountType";
+  const hapyCarURL = "https://jarksapi.azurewebsites.net/discountType";
 
   const API = useAPI();
   const SUCCESS = "Success";

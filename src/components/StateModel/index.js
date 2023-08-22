@@ -202,7 +202,6 @@ export default function StateModel({
               value = {newState?.countryId}
               onChange={dropdownHandler}
             />
-           
           </Form.Group>
           </div>
           </div>

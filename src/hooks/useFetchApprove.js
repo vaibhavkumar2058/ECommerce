@@ -14,7 +14,7 @@ import {
 
   export default function useFetchApproves() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/approve";
+  const hapyCarURL = "https://jarksapi.azurewebsites.net/approve";
 
   const API = useAPI();
   const SUCCESS = "Success";

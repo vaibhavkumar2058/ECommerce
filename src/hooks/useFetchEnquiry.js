@@ -14,7 +14,7 @@ import {
 
   export default function useFetchEnquirys() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/enquiry";
+  const hapyCarURL = "https://jarksapi.azurewebsites.net/enquiry";
 
   const API = useAPI();
   const SUCCESS = "Success";
