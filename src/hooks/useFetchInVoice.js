@@ -14,7 +14,7 @@ import {
 
   export default function useFetchInvoices() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://jarksapi.azurewebsites.net/invoice";
+  const hapyCarURL = "https://localhost:7062/invoice";
 
   const API = useAPI();
   const SUCCESS = "Success";

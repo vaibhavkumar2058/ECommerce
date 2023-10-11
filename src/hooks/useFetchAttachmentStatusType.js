@@ -14,7 +14,7 @@ import {
 
   export default function useFetchAttachmentStatusTypes() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://jarksapi.azurewebsites.net/attachmentStatusType";
+  const hapyCarURL = "https://localhost:7062/attachmentStatusType";
 
   const API = useAPI();
   const SUCCESS = "Success";

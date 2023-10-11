@@ -45,7 +45,7 @@ export default function ResourceAttachments() {
     setIsDelete(false);
     setShow(false);
   };
-  const hapyCarURL = "https://jarksapi.azurewebsites.net/files";
+  const hapyCarURL = "https://localhost:7062/files";
   const handleShow = () => setShow(true);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);

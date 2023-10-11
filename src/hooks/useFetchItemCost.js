@@ -14,7 +14,7 @@ import {
 
   export default function useFetchItemCosts() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://jarksapi.azurewebsites.net/itemCost";
+  const hapyCarURL = "https://localhost:7062/itemCost";
 
   const API = useAPI();
   const SUCCESS = "Success";

@@ -14,7 +14,7 @@ import {
 
   export default function useFetchBannerAttachments() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://jarksapi.azurewebsites.net/bannerAttachments";
+  const hapyCarURL = "https://localhost:7062/bannerAttachments";
 
   const API = useAPI();
   const SUCCESS = "Success";

@@ -24,7 +24,6 @@ export default function AddressModel({
   //recordStatus,
 }) 
 { 
-
   const [saveDisabled, setSaveDisabled] = useState(true);
   const [buttonType, setButtonType] = useState("Save");
 
@@ -95,7 +94,6 @@ export default function AddressModel({
 
   const saveHandler = async () => {
     if (isEdit) {
-      debugger;
       const response = await onUpdateAddress(id, newAddress);
       if (response.payload.title == "success") {
         onClose(true);

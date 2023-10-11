@@ -14,7 +14,7 @@ import {
 
   export default function useFetchCategorytype() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://jarksapi.azurewebsites.net/categoryType";
+  const hapyCarURL = "https://localhost:7062/categoryType";
 
   const API = useAPI();
   const SUCCESS = "Success";

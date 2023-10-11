@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useAPI } from "../services";
 
+
 import {
     addAddressAction,
     updateAddressAction,   
@@ -15,7 +16,7 @@ import {
 
   export default function useFetchAddresses() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://jarksapi.azurewebsites.net/address";
+  const hapyCarURL = "https://localhost:7062/address";
 
   const API = useAPI();
   const SUCCESS = "Success";
@@ -213,6 +214,7 @@ import {
       });
 
   };
+  
   
   return {
     addAddress,

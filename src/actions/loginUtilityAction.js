@@ -25,7 +25,6 @@ export const loginAction = (data) => ({
     type: LOGIN,
     payload: data,
 })
-
 export const updateLoginAction = (data) => ({
     type: UPDATE_LOGIN,
     payload: data,

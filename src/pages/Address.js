@@ -299,7 +299,6 @@ export default function Addresses() {
   const getStateList = async () => {
     const response = await getStates();
     if (response.payload.title == "Success") {
-
       var arr = [];
       for (var key in response.payload) {
         if (key !== 'title')
@@ -499,7 +498,7 @@ export default function Addresses() {
             </Modal.Body>
 
           </Modal>
-          {/* Model Box Finsihs */}
+          {/* Model Box Finish */}
         </div>
       </div>
     </>

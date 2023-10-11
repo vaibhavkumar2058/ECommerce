@@ -14,7 +14,7 @@ import {
 
   export default function useFetchStates() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://jarksapi.azurewebsites.net/state";
+  const hapyCarURL = "https://localhost:7062/state";
 
   const API = useAPI();
   const SUCCESS = "Success";

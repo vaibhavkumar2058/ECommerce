@@ -26,7 +26,7 @@ export default (props = {}) => {
     const customer = userInfo?.role?.customer;
 
     return (
-
+      
       <nav id="sidebarMenu" className="sidebar d-lg-block bg-gray-800 text-white collapse" data-simplebar>
         <div className="sidebar-inner px-4 pt-3">
           <div className="user-card d-flex d-md-none justify-content-between justify-content-md-center pb-4">
@@ -39,9 +39,13 @@ export default (props = {}) => {
             <div className="collapse-close d-md-none"><a href="#sidebarMenu" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="true" aria-label="Toggle navigation"></a></div>
           </div>
           <ul className="nav flex-column pt-3 pt-md-0">
-            <li className="nav-item"><a href="http://manthrasoaps.co.in/" target="_blank" className="nav-link d-flex align-items-center">
+            <li className="nav-item">
+              <a href="https://manthrasoaps.co.in/" target="_blank" className="nav-link d-flex align-items-center">
               <span className="sidebar-text msapp">
-              Manthra Software</span></a></li>
+              Manthra Software
+              </span>
+              </a>
+              </li>
               
               <Dropdown>
               <Dropdown.Toggle className="w-p-100" variant="secondary">
@@ -119,17 +123,35 @@ export default (props = {}) => {
             </span><span className="sidebar-text">orderItem </span></span></a></li>)} */}
             {/* {(admin && <li className="nav-item active"><a href="GMT" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
              </span><span className="sidebar-text">GMT </span></span></a></li>)} */}
-            <li className="nav-item active"><a href="#" className="nav-link">
+             
+            <li className="nav-item active">
+              <a href="#" className="nav-link">
+              <span className="sidebar-icon">
+              <svg className="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+              <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd" />
+            </svg> 
+            </span>
+            <span className="sidebar-text">Agent Track/User</span>
+            </a>
+            </li>
+            <li className="nav-item active">
+              <a href="agentTracking" className="nav-link">
               <span className="sidebar-icon">
               <svg className="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
               <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
               <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd" />
-            </svg> </span><span className="sidebar-text">Track Agent/User</span></a></li>
+            </svg>
+             </span>
+             <span className="sidebar-text">AgentTracking</span>
+             </a>
+             </li>
           </ul>
         </div>
       </nav>
     );
   };
+
 
   return (
     <>

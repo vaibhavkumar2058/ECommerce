@@ -14,7 +14,7 @@ import {
 
 export default function useFetchRecordStatus() {
   const dispatch = useDispatch();
-  const hapyCarURL = "https://jarksapi.azurewebsites.net/orderItem";
+  const hapyCarURL = "https://localhost:7062/orderItem";
 
   const API = useAPI();
   const SUCCESS = "Success";

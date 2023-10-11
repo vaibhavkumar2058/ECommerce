@@ -14,7 +14,7 @@ import {
 
   export default function useFetchNotificationTYpe() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://jarksapi.azurewebsites.net/notification";
+  const hapyCarURL = "https://localhost:7062/notification";
 
   const API = useAPI();
   const SUCCESS = "Success";

@@ -14,7 +14,7 @@ import {
 
   export default function useFetchCarts() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://jarksapi.azurewebsites.net/cart";
+  const hapyCarURL = "https://localhost:7062/cart";
 
   const API = useAPI();
   const SUCCESS = "Success";

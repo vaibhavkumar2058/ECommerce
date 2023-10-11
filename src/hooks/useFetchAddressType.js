@@ -14,7 +14,7 @@ import {
 
   export default function useFetchAddressTypes() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://jarksapi.azurewebsites.net/addressType";
+  const hapyCarURL = "https://localhost:7062/addressType";
 
   const API = useAPI();
   const SUCCESS = "Success";
@@ -82,10 +82,6 @@ import {
           })
         );
       });
-
-
-
-
   };
 
   // AddressType UPDATE  ACTIONS
@@ -161,7 +157,6 @@ import {
       { suppressErrors: [400] }
     )
       .then(({ data
-
       }) =>
 
         dispatch(

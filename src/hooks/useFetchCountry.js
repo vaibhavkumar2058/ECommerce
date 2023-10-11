@@ -14,7 +14,7 @@ import {
 
   export default function useFetchCountry() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://jarksapi.azurewebsites.net/country";
+  const hapyCarURL = "https://localhost:7062/country";
 
   const API = useAPI();
   const SUCCESS = "Success";

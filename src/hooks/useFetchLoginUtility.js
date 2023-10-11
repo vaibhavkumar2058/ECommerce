@@ -10,10 +10,10 @@ import {
 
 export default function useFetchLogins() {
   const dispatch = useDispatch();
-  const changePasswordURL = "https://jarksapi.azurewebsites.net/changepassword";
-  const forgotPasswordURL = "https://jarksapi.azurewebsites.net/forgotPassword?emails=";
-  const loginURL = "https://jarksapi.azurewebsites.net/login";
-  const emailverificationURL = "https://jarksapi.azurewebsites.net/email";
+  const changePasswordURL = "https://localhost:7062/changepassword";
+  const forgotPasswordURL = "https://localhost:7062/forgotPassword?emails=";
+  const loginURL = "https://localhost:7062/login";
+  const emailverificationURL = "https://localhost:7062/email";
   const API = useAPI();
   const SUCCESS = "Success";
   const ERROR = "Error";
@@ -78,6 +78,7 @@ export default function useFetchLogins() {
         );
       });
   };
+
   const login = (login) => {
     return API.post(
       loginURL,
@@ -139,8 +140,6 @@ export default function useFetchLogins() {
       });
 
   };
-
-
 
   return {
     forgotPassword,

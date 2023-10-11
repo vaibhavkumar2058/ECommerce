@@ -23,7 +23,7 @@ export default function CustomMap({ google, locations = [] }) {
     }, [locationList]);
 
     const getLocationList = async () => {
-        const response = await getRecordByResourcesId(4155);
+        const response = await getRecordByResourcesId(4164);
         if (response.payload.title == "Success") {
             const dataFormatter = (rawData) => {
 

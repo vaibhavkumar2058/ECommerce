@@ -36,10 +36,12 @@ export default () => {
     // setShowNavbar(!showNavbar)
 
     const response = await login(newLogin);
-    if (response.payload.success) {
+    debugger;
+    if (response.payload.title == "Success") {
+
       setError({ status: true, msg: "Login Success", type: 'success' })
       const role = response?.payload?.result?.role?.roleName;
-
+      
       const resource = {
         role: { 
           admin: (role =='SuperAdmin' ? true:false), 

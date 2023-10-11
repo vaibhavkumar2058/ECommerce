@@ -6,6 +6,7 @@ export const UPDATE_ADDRESS = "UPDATE_ADDRESS";
 export const DELETE_ADDRESS = "DELETE_ADDRESS";
 export const ADDRESS = "ADDRESS";
 
+
 export const getAddressBeginAction = () => ({
     type: FETCH_ADDRESS,
 })

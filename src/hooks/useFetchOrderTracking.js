@@ -14,7 +14,7 @@ import {
 
   export default function useFetchOrderTrackinges() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://jarksapi.azurewebsites.net/orderTracking";
+  const hapyCarURL = "https://localhost:7062/orderTracking";
 
   const API = useAPI();
   const SUCCESS = "Success";

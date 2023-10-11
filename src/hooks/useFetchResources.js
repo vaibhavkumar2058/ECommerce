@@ -14,7 +14,7 @@ import {
 
   export default function useFetchResources() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://jarksapi.azurewebsites.net/resources";
+  const hapyCarURL = "https://localhost:7062/resources";
 
   const API = useAPI();
   const SUCCESS = "Success";

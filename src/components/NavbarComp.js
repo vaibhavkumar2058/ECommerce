@@ -68,8 +68,8 @@ import CustomType from "../pages/CustomType";
 import Emailverification from "../pages/PublicPages/Emailverification";
 import Topbar from "../pages/Topbar";
 import DiscountTypes from "../pages/DiscountType";
+import AgentTracking from "../pages/AgentTracking";
 // import { Box } from "react-bootstrap-icons";
-
 
 
 const NavbarComp = () => {
@@ -109,15 +109,15 @@ const NavbarComp = () => {
           {(admin && <Route exact path="/bannerAttachments" element={<ProtectedRoute><Sidebar/><Topbar/><BannerAttachments/></ProtectedRoute>}/>)}
 
           {((admin||agent||dealer||customer) && <Route exact path="/orderPlacedList" element={<ProtectedRoute><Sidebar/><Topbar/><OrderPlacedList/></ProtectedRoute>}/>)}
-         {((admin||agent||dealer||customer) && <Route exact path="/itemList" element={<ProtectedRoute><Sidebar/><Topbar/><ItemList/></ProtectedRoute>}/>)}
-         {(admin && <Route exact path="/approve" element={<ProtectedRoute><Sidebar/><Topbar/> <Approve /></ProtectedRoute>} />)}
-         {(admin && <Route exact path="/approveStatus" element={<ProtectedRoute><Sidebar/><Topbar/> <ApproveStatus/></ProtectedRoute>}/>)}
-         {(admin && <Route exact path="/discountType" element={<ProtectedRoute><Sidebar/><Topbar/> <DiscountType /></ProtectedRoute>} />)}
-         {((admin||agent||dealer||customer) && <Route exact path="/discount" element={<ProtectedRoute><Sidebar/><Topbar/> <Discount/></ProtectedRoute>}/>)}
-         {((admin||agent||dealer||customer) && <Route exact path="/banner" element={<ProtectedRoute><Sidebar/><Topbar/> <Banner/></ProtectedRoute>}/>)}
-         {(admin && <Route exact path="/bannerType" element={<ProtectedRoute><Sidebar/><Topbar/> <BannerType/></ProtectedRoute>}/>)}
-         {((admin||dealer)  && <Route exact path="/box" element={<ProtectedRoute><Sidebar/><Topbar/> <Box/></ProtectedRoute>}/>)}
-
+          {((admin||agent||dealer||customer) && <Route exact path="/itemList" element={<ProtectedRoute><Sidebar/><Topbar/><ItemList/></ProtectedRoute>}/>)}
+          {(admin && <Route exact path="/approve" element={<ProtectedRoute><Sidebar/><Topbar/> <Approve /></ProtectedRoute>} />)}
+          {(admin && <Route exact path="/approveStatus" element={<ProtectedRoute><Sidebar/><Topbar/> <ApproveStatus/></ProtectedRoute>}/>)}
+          {(admin && <Route exact path="/discountType" element={<ProtectedRoute><Sidebar/><Topbar/> <DiscountType /></ProtectedRoute>} />)}
+          {((admin||agent||dealer||customer) && <Route exact path="/discount" element={<ProtectedRoute><Sidebar/><Topbar/> <Discount/></ProtectedRoute>}/>)}
+          {((admin||agent||dealer||customer) && <Route exact path="/banner" element={<ProtectedRoute><Sidebar/><Topbar/> <Banner/></ProtectedRoute>}/>)}
+          {(admin && <Route exact path="/bannerType" element={<ProtectedRoute><Sidebar/><Topbar/> <BannerType/></ProtectedRoute>}/>)}
+          {((admin||dealer)  && <Route exact path="/box" element={<ProtectedRoute><Sidebar/><Topbar/> <Box/></ProtectedRoute>}/>)}
+          {((agent) && <Route exact path = "/agentTracking" element = {<ProtectedRoute><Sidebar/><Topbar/><Banner/></ProtectedRoute>}/>)}
 
           {(admin && <Route exact path="/role" element={<ProtectedRoute><Sidebar/><Topbar/> <Role /></ProtectedRoute>} />)}
           {(admin && <Route exact path="/file" element={<ProtectedRoute><Sidebar/><Topbar/><File /></ProtectedRoute>} />)}

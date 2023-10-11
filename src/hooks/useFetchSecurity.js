@@ -14,7 +14,7 @@ import {
 
   export default function useFetchSecurities() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://jarksapi.azurewebsites.net/security";
+  const hapyCarURL = "https://localhost:7062/security";
 
   const API = useAPI();
   const SUCCESS = "Success";
