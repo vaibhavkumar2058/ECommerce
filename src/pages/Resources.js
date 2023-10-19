@@ -17,7 +17,6 @@ import MyProfile from "./MyProfile";
 import ResourceAttachments from "./ResourceAttachments";
 import ViewDetailsModel from "../components/ViewDetailsModel";
 
-
 const { SearchBar, ClearSearchButton } = Search;
 
 const MyExportCSV = (props) => {

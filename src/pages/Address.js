@@ -6,7 +6,7 @@ import useFetchRecordStatus from "../hooks/useFetchRecordStatus";
 import useFetchCountry from "../hooks/useFetchCountry";
 import useFetchState from "../hooks/useFetchState";
 import useFetchAddressType from "../hooks/useFetchAddressType";
-import AddressModel from "../components/AddressModel";
+import AddressModel from "../components/AddressModel";  
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
@@ -15,6 +15,7 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit';
 
 export default function Addresses() {
+
 
   const [addresses, setAddresses] = useState([]);
   const [recordStatusList, setRecordStatusList] = useState([]);
@@ -338,7 +339,7 @@ export default function Addresses() {
     if (response.payload.title == "Success") {
       setMessageStatus({
         mode: 'success',
-        message: 'Address Record Fetch Succefully.'
+        message: 'Address Record Fetch Successfully.'
       })
       const dataFormatter = (rawData) => {
         const curedData = {};
@@ -470,7 +471,7 @@ export default function Addresses() {
         </div>)}
         {/* <!--- Model Box ---> */}
         <div className="model_box">
-          <Modal dialogClassName="my-modal"
+          <Modal dialogClassName="my-m al"
             show={show}
             onHide={handleClose}
             backdrop="static"

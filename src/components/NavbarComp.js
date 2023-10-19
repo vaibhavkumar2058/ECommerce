@@ -117,7 +117,7 @@ const NavbarComp = () => {
           {((admin||agent||dealer||customer) && <Route exact path="/banner" element={<ProtectedRoute><Sidebar/><Topbar/> <Banner/></ProtectedRoute>}/>)}
           {(admin && <Route exact path="/bannerType" element={<ProtectedRoute><Sidebar/><Topbar/> <BannerType/></ProtectedRoute>}/>)}
           {((admin||dealer)  && <Route exact path="/box" element={<ProtectedRoute><Sidebar/><Topbar/> <Box/></ProtectedRoute>}/>)}
-          {((agent) && <Route exact path = "/agentTracking" element = {<ProtectedRoute><Sidebar/><Topbar/><Banner/></ProtectedRoute>}/>)}
+          {((admin||agent||dealer) && <Route exact path = "/agentTracking" element = {<ProtectedRoute><Sidebar/><Topbar/> <AgentTracking/></ProtectedRoute>}/>)}
 
           {(admin && <Route exact path="/role" element={<ProtectedRoute><Sidebar/><Topbar/> <Role /></ProtectedRoute>} />)}
           {(admin && <Route exact path="/file" element={<ProtectedRoute><Sidebar/><Topbar/><File /></ProtectedRoute>} />)}

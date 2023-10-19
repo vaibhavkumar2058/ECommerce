@@ -40,7 +40,7 @@ export default () => {
     if (response.payload.title == "Success") {
 
       setError({ status: true, msg: "Login Success", type: 'success' })
-      const role = response?.payload?.result?.role?.roleName;
+      const role = response?.payload?.role?.roleName;
       
       const resource = {
         role: { 
@@ -50,8 +50,8 @@ export default () => {
           customer: (role =='Customer' ? true:false) 
         },
         loggedIn: true,
-        resourcesId:response?.payload?.result?.resourcesId,
-        roleId:response?.payload?.result?.roleId,
+        resourcesId:response?.payload?.resourcesId,
+        roleId:response?.payload?.roleId,
       };
       localStorage.setItem("loggedIn", JSON.stringify(resource))
       navigate('/dashboard');

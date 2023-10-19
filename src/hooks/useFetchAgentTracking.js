@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useAPI } from "../services";
 import {
+    addAgentTrackingAction,
+    updateAgentTrackingAction,
+    deleteAgentTrackingAction,
     getAgentTrackingBeginAction,
     getAgentTrackingSuccessAction,
     getAgentTrackingFailureAction,
@@ -15,7 +18,7 @@ import {
   const SUCCESS = "Success";
   const ERROR = "Error";
 
-  const getAgentTracking = () => {
+  const getAgentTrackings = () => {
     dispatch(getAgentTrackingBeginAction());
     return API.get(AgentTrackingURL,
       null,
@@ -31,8 +34,8 @@ import {
       )
       .catch((error) => {
         let errorMsg = "error msg from copy file";
-        if (error.response.data.address) {
-          const [errors] = error.response.data.address;
+        if (error.response.data.agentTracking) {
+          const [errors] = error.response.data.agentTracking;
           errorMsg = errors;
         }
         dispatch(
@@ -45,13 +48,109 @@ import {
       }); 
   };
 
-  const agentTrackingById = (agentId) => {
-    return API.get(`${AgentTrackingURL}/${agentId}`,
-      null,
+  // AgentTracking Add Actions
+  const addagentTracking = (agentTracking) => {
+    return API.post(
+      AgentTrackingURL,
+      { data: agentTracking},
       { suppressErrors: [400] }
     )
       .then(({ data
       }) =>
+        dispatch(
+           addAgentTrackingAction({
+            ...data,
+            title: SUCCESS,
+          })
+        )
+      )
+      .catch((error) => {
+        let errorMsg = "error msg from copy file";
+        if (error.response.data.agentTracking) {
+          const [errors] = error.response.data.agentTracking;
+          errorMsg = errors;
+        }
+        dispatch(
+          addAgentTrackingAction({
+            ...errorMsg,
+            title: ERROR,
+            errorMsg,
+          })
+        );
+      });
+      
+  };
+
+  // AgentTracking UPDATE Actions
+  const updateAgentTracking = (agentTrackingId, agentTracking) => {
+    return API.put(`${AgentTrackingURL}/${agentTrackingId}`,
+      { data: agentTracking},
+      { suppressErrors: [400] }
+    )
+      .then(({ data }) =>
+        dispatch(
+          updateAgentTrackingAction({
+            ...data,
+            title: SUCCESS,
+          })
+        )
+      )
+      .catch((error) => {
+        let errorMsg = "error msg from copy file";
+        if (error.response.data.agentTracking) {
+          const [errors] = error.response.data.agentTracking;
+          errorMsg = errors;
+        }
+        dispatch(
+          updateAgentTrackingAction({
+            ...agentTracking,
+            title: ERROR,
+            errorMsg,
+          })
+        );
+      });
+  };
+
+  // AgentTracking DELETE  ACTIONS
+  const deleteAgentTracking = (agentTrackingId) => {
+    return API.delete(`${AgentTrackingURL}/${agentTrackingId}`,
+      null,
+      { suppressErrors: [400] }
+    )
+      .then(({ data }) =>
+        dispatch(
+          deleteAgentTrackingAction({
+            ...data,
+            title: SUCCESS,
+          })
+        )
+      )
+      .catch((error) => {
+        let errorMsg = "error msg from copy file";
+        if (error.response.data.agentTracking) {
+          const [errors] = error.response.data.agentTracking;
+          errorMsg = errors;
+        }
+        dispatch(
+          deleteAgentTrackingAction({
+            ...agentTrackingId,
+            title: ERROR,
+            errorMsg,
+          })
+        );
+      });
+  };
+
+  // AgentTracking by Id Actions
+  const agentTrackingById = (agentTrackingId) => {
+    return API.get(`${AgentTrackingURL}/${agentTrackingId}`,
+      null,
+      { suppressErrors: [400] }
+    )
+      .then(({ data
+
+      }) =>
+
         dispatch(
            agentTrackingAction({
             ...data,
@@ -66,18 +165,22 @@ import {
           errorMsg = errors;
         }
         dispatch(
-          agentTrackingAction({
+            agentTrackingAction({
             ...errorMsg,
             title: ERROR,
             errorMsg,
           })
         );
       });
-      
   };
 
+
+
   return {
-    getAgentTracking,
+    addagentTracking,
+    updateAgentTracking,
+    deleteAgentTracking,
+    getAgentTrackings,
     agentTrackingById,
   };
 }

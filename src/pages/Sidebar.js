@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import SimpleBar from 'simplebar-react';
 import { CSSTransition } from 'react-transition-group';
@@ -26,7 +25,7 @@ export default (props = {}) => {
     const customer = userInfo?.role?.customer;
 
     return (
-      
+
       <nav id="sidebarMenu" className="sidebar d-lg-block bg-gray-800 text-white collapse" data-simplebar>
         <div className="sidebar-inner px-4 pt-3">
           <div className="user-card d-flex d-md-none justify-content-between justify-content-md-center pb-4">
@@ -117,7 +116,9 @@ export default (props = {}) => {
             {/* {/* {(admin && <li className="nav-item active"><a href="productAttachments" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
             </span><span className="sidebar-text">ProductAttachments </span></span></a></li>)} */}
             {(admin && <li className="nav-item active"><a href="resourceAttachments" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
-                </span><span className="sidebar-text">ResourceAttachments </span></span></a></li>)} 
+            </span><span className="sidebar-text">ResourceAttachments </span></span></a></li>)} 
+            {(agent && <li className="nav-item active"><a href="agentTracking" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
+            </span><span className="sidebar-text">AgentTracking </span></span></a></li>)} 
             {/* {(admin && <li className="nav-item active"><a href="tax" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> </span><span className="sidebar-text">Tax</span></span></a></li>)} */}
             {/* {((admin || agent || dealer || customer) && <li className="nav-item active"><a href="orderItem" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
             </span><span className="sidebar-text">orderItem </span></span></a></li>)} */}
@@ -135,23 +136,11 @@ export default (props = {}) => {
             <span className="sidebar-text">Agent Track/User</span>
             </a>
             </li>
-            <li className="nav-item active">
-              <a href="agentTracking" className="nav-link">
-              <span className="sidebar-icon">
-              <svg className="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
-              <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd" />
-            </svg>
-             </span>
-             <span className="sidebar-text">AgentTracking</span>
-             </a>
-             </li>
           </ul>
         </div>
       </nav>
     );
   };
-
 
   return (
     <>
