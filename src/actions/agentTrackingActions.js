@@ -22,7 +22,7 @@ export const agentTrackingAction = (data) => ({
     payload: data,
 })
 export const addAgentTrackingAction = (data) => ({
-    type: ADD_AgentTracking,
+    type: ADD_AGENTTRACKING,
     payload: data,
 })
 export const updateAgentTrackingAction = (data) => ({

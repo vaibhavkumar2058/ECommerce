@@ -67,7 +67,7 @@ export default () => {
             </p> */}
             <Col xs={12} className="d-flex align-items-center justify-content-center">
               <div className="bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
-                <h3 className="mb-4">Change password</h3>
+                <h3 className="app-center">Change password</h3>
                 <Form>
                   {/* <Form.Group id="resourcesId" className="mb-4">
                     <Form.Label>ResourcesId</Form.Label>
@@ -82,46 +82,46 @@ export default () => {
                       />
                     </InputGroup>
                   </Form.Group> */}
-                  <Form.Group id="oldPassword" className="mb-4">
-                    <Form.Label>oldPassword</Form.Label>
+                  <Form.Group id="oldPassword">
+                    <Form.Label>Old Password</Form.Label>
                     <InputGroup>
 
                       <Form.Control
                         type="text"
                         name="oldPassword"
-                        placeholder="oldPassword"
+                        placeholder="Old Password"
                         value={newPassword?.oldPassword}
                         onChange={changeHandler}
                       />
                     </InputGroup>
                   </Form.Group>
-                  <Form.Group id="newPassword" className="mb-4">
+                  <Form.Group id="newPassword" >
                     <Form.Label>New Password</Form.Label>
                     <InputGroup>
 
                       <Form.Control
                         type="text"
                         name="newPassword"
-                        placeholder="newPassword"
+                        placeholder="New Password"
                         value={newPassword?.newPassword}
                         onChange={changeHandler}
                       />
                     </InputGroup>
                   </Form.Group>
                   <Form.Group id="confirmPassword" className="mb-4">
-                    <Form.Label>Confirm Password</Form.Label>
+                    <Form.Label>Confirm New Password</Form.Label>
                     <InputGroup>
 
                       <Form.Control
                         type="text"
                         name="newConfirmPassword"
-                        placeholder="newConfirmPassword"
+                        placeholder="Confirm New Password"
                         value={newPassword?.newConfirmPassword}
                         onChange={changeHandler}
                       />
                     </InputGroup>
                   </Form.Group>
-                  <Button variant="primary" onClick={saveHandler}>
+                  <Button variant="primary" onClick={saveHandler} className="app-right">
                     Change Password
                   </Button>
                 </Form>

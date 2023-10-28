@@ -6,6 +6,10 @@
   text-align: right;
 }
 
+.app-center
+{
+  text-align: center;
+}
 
 .app-float-left {
   float: left;
