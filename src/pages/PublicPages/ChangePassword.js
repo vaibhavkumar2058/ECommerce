@@ -108,7 +108,6 @@ export default () => {
                         type="text"
                         name="oldPassword"
                         placeholder="Old Password"
-                        placeholder="Old Password"
                         value={newPassword?.oldPassword}
                         onChange={changeHandler}
                       />
@@ -121,7 +120,6 @@ export default () => {
                       <Form.Control
                         type="text"
                         name="newPassword"
-                        placeholder="New Password"
                         placeholder="New Password"
                         value={newPassword?.newPassword}
                         onChange={changeHandler}
