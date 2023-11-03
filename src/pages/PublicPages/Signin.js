@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import { Col, Row, Form, Card, Button, FormCheck, Container, InputGroup } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import useFetchLogins from "../../hooks/useFetchLoginUtility";
-
+import '../../../src/Outside.css';                                     
 
 export default () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);        
   const [error, setError] = useState(null);
   const [message, setMessage] = useState("");
 
