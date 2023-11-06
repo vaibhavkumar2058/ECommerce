@@ -127,9 +127,6 @@ export default () => {
                   <Form.Group id="firstName" className="mb-4">
                     <Form.Label>Name</Form.Label>
                     <InputGroup>
-                      <InputGroup.Text>
-
-                      </InputGroup.Text>
                       <Form.Control
                         type="text"
                         name="firstName"
@@ -142,31 +139,25 @@ export default () => {
                   <Form.Group id="role" className="mb-4">
                     <Form.Label>Role</Form.Label>
                     <InputGroup>
-                      <InputGroup.Text>
-
-                      </InputGroup.Text>
                       <Dropdown
-              name="roleId"
-              placeholder='Select Role'
-              fluid
-              search
-              selection
-              options={roleOptions}
-              value = {newSignup?.roleId}
-              onChange={dropdownHandler}
+                        name="roleId"
+                        placeholder='Select Role'
+                        fluid
+                        search
+                        selection
+                        options={roleOptions}
+                        value = {newSignup?.roleId}
+                        onChange={dropdownHandler}
             />
                     </InputGroup>
                   </Form.Group>
                   <Form.Group id="mobileNumber" className="mb-4">
                     <Form.Label>MobileNumber</Form.Label>
                     <InputGroup>
-                      <InputGroup.Text>
-
-                      </InputGroup.Text>
                       <Form.Control
                         type="text"
                         name="mobileNumber"
-                        placeholder="mobileNumber"
+                        placeholder="MobileNumber"
                         value={newSignup?.mobileNumber}
                         onChange={changeHandler}
                       />
@@ -175,8 +166,6 @@ export default () => {
                   <Form.Group id="email" className="mb-4">
                     <Form.Label>Email</Form.Label>
                     <InputGroup>
-                      <InputGroup.Text>
-                      </InputGroup.Text>
                       <Form.Control
                         type="text"
                         name="email"
@@ -190,9 +179,6 @@ export default () => {
                   <Form.Group id="password" className="mb-4">
                     <Form.Label>Password</Form.Label>
                     <InputGroup>
-                      <InputGroup.Text>
-
-                      </InputGroup.Text>
                       <Form.Control
                         type="text"
                         name="password"

@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^1.2.3",
     "bootstrap": "^5.2.3",
+    "formik": "^2.4.5",
     "fortawesome": "^0.0.1-security",
     "google-maps-react": "^2.0.6",
     "query-string": "^8.1.0",

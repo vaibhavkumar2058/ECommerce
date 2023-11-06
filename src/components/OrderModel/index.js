@@ -140,8 +140,8 @@ export default function OrderModel({
   // Functionality to get NormalPrice And Price based on Boxes
   const getPrice = async () => {
     itemCost.productId = placeOrder?.productId;
-    itemCost.measurementTypeId = placeOrder?.measurementValueId;
-    itemCost.measurementValueId = placeOrder?.measurementTypeId;
+    itemCost.measurementTypeId = placeOrder?.measurementTypeId;
+    itemCost.measurementValueId = placeOrder?.measurementValueId;
     const response = await getItemPrice(itemCost);
     if (response?.payload?.title == "Success") {
       setPlaceOrder((currentPlaceOrder) => ({ ...currentPlaceOrder, ["cost"]: response.payload.price }));
@@ -171,6 +171,7 @@ export default function OrderModel({
         newOrder.discountId = response.payload.discountId;
         // Logic for Discount Price
         //Boxes 
+        debugger;
         if (quantityType.isBox) {
           if (response.payload.discountType.discountTypeName == "Percentage") {
             discount.discountPrice = placeOrder?.quantity * boxes.piecesCount * (placeOrder?.cost - (placeOrder?.cost * response.payload.discountValue) / 100);
@@ -300,11 +301,14 @@ export default function OrderModel({
 
   // Functionality to set the Boxes
   const checkBoxChangeHandler = (e, { name, value }) => {
+    debugger;
     if (name == "isBox") {
       quantityType.isIndividual = false;
+      quantityType.isBox = true;
     }
     if (name == "isIndividual") {
       quantityType.isBox = false;
+      quantityType.isIndividual = true;
     }
     setQuantityType((currentState) => ({ ...currentState, [name]: !value }));
     getDiscoutPrice();
@@ -319,6 +323,7 @@ export default function OrderModel({
 
   // Functionality to Update Order 
   const saveHandler = async () => {
+    debugger;
     if (isEdit) {
       const response = await onUpdateOrder(id, newOrder);
       if (response.payload.title == "Success") {
@@ -466,6 +471,7 @@ export default function OrderModel({
   
   useEffect(() => {
     if (isEdit) {
+      debugger;
       setNewOrder(orderData)
       placeOrder.categoryTypeId = orderData?.categoryTypeId;
       getProductByCategoryId(orderData?.categoryTypeId);
@@ -598,14 +604,10 @@ export default function OrderModel({
               </div>
             </div>
             <div className="col-md-6">
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col-md-6">
               <Form.Group className="mb-3" >
                 <Form.Label>Quantity</Form.Label>
                 <Checkbox
+                  id="isBox"
                   label='Boxes'
                   checked={quantityType.isBox}
                   name="isBox"
@@ -613,6 +615,7 @@ export default function OrderModel({
                   onChange={checkBoxChangeHandler}
                 />
                 <Checkbox
+                  id="isIndividual"
                   label='Individual'
                   checked={quantityType.isIndividual}
                   name="isIndividual"
@@ -630,6 +633,11 @@ export default function OrderModel({
                 {boxes.boxLimit && (<div className="info">{boxes.boxLimit} boxes limit per order</div>)}
               </Form.Group>
 
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-md-6">
             </div>
             <div className="col-md-6">
               <div className="row">
@@ -704,10 +712,10 @@ export default function OrderModel({
 
 
           <Modal.Footer>
-            <Button variant="secondary" onClick={onClose}>
+            <Button variant="secondary" name="cancel" onClick={onClose}>
               Cancel
             </Button>
-            <Button variant="primary" onClick={saveHandler}
+            <Button variant="primary" name="btnSave" onClick={saveHandler}
               disabled={saveDisabled}>
               {buttonType}
             </Button>
