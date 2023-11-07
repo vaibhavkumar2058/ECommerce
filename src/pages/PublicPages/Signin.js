@@ -1,26 +1,27 @@
-
 import React, { useState } from "react";
-import { Col, Row, Form, Card, Button, FormCheck, Container, InputGroup } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import {
+  Col,
+  Row,
+  Form,
+  Card,
+  Button,
+  FormCheck,
+  Container,
+  InputGroup,
+} from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import useFetchLogins from "../../hooks/useFetchLoginUtility";
-import '../../../src/Outside.css';                                     
+import "../../../src/Outside.css";
 
 export default () => {
-  const [isLoading, setIsLoading] = useState(false);        
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState("");
-  
+
   const navigate = useNavigate();
-  const {
-    login,
-  } = useFetchLogins();
+  const { login } = useFetchLogins();
 
   const [newLogin, setNewLogin] = useState({
-    email: "",
-    password: "",
-  });
-
-  const [validationErrors, setValidationErrors] = useState({
     email: "",
     password: "",
   });
@@ -32,59 +33,36 @@ export default () => {
     message: "",
   });
 
-  // const isSignInDisabled = 
-  // !newLogin.email || 
-  // !newLogin.password;
+  const isSignInDisabled = !newLogin.email || !newLogin.password;
 
   const changeHandler = (e) => {
     setNewLogin({
       ...newLogin,
       [e.target.name]: e.target.value,
     });
-     // Clear the validation error message when the user types in the field.
-     setValidationErrors({ ...validationErrors, [e.target.name]: "" });
   };
 
   const saveHandler = async () => {
     // setShowNavbar(!showNavbar)
-
-     // Check for empty fields
-     if (!newLogin.email) {
-      setValidationErrors({ ...validationErrors, email: "Email is required" });
-      return;
-    }
-
-    if (!newLogin.password) {
-      setValidationErrors({ ...validationErrors, password: "Password is required" });
-      return;
-    }
-
     const response = await login(newLogin);
-    // if (response.payload.title != "Success") {
-    //   setValidationErrors({ ...validationErrors, password: "Please enter correct password" });
-    // } else {
-    //   setMessageStatus({
-    //     mode: 'danger',
-    //     message: 'Un-Known Error Occurred.',
-    //   });
-    // }
+
     if (response.payload.title == "Success") {
-      setError({ status: true, msg: "Login Success", type: 'success' });
+      setError({ status: true, msg: "Login Success", type: "success" });
       const role = response?.payload?.role?.roleName;
 
       const resource = {
         role: {
-          admin: role == 'SuperAdmin',
-          agent: role == 'Agent',
-          dealer: role == 'Dealer',
-          customer: role == 'Customer',
+          admin: role == "SuperAdmin",
+          agent: role == "Agent",
+          dealer: role == "Dealer",
+          customer: role == "Customer",
         },
         loggedIn: true,
         resourcesId: response?.payload?.resourcesId,
         roleId: response?.payload?.roleId,
       };
       localStorage.setItem("loggedIn", JSON.stringify(resource));
-      navigate('/dashboard');
+      navigate("/dashboard");
     }
   };
 
@@ -94,7 +72,10 @@ export default () => {
         <Container>
           <p className="text-center"></p>
           <Row className="justify-content-center form-bg-image" style={{}}>
-            <Col xs={12} className="d-flex align-items-center justify-content-center">
+            <Col
+              xs={12}
+              className="d-flex align-items-center justify-content-center"
+            >
               <div className="bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
                 <div className="text-center text-md-center mb-4 mt-md-0">
                   <h3 className="mb-0">Sign in to our platform</h3>
@@ -103,7 +84,6 @@ export default () => {
                   <Form.Group id="email" className="mb-4">
                     <Form.Label> Email</Form.Label>
                     <InputGroup>
-                      <InputGroup.Text></InputGroup.Text>
                       <Form.Control
                         type="text"
                         name="email"
@@ -112,13 +92,12 @@ export default () => {
                         onChange={changeHandler}
                       />
                     </InputGroup>
-                    <p className="text-danger">{validationErrors.email}</p>
+                    <p className="text-danger"></p>
                   </Form.Group>
                   <Form.Group>
                     <Form.Group id="password" className="mb-4">
                       <Form.Label> Password</Form.Label>
                       <InputGroup>
-                        <InputGroup.Text></InputGroup.Text>
                         <Form.Control
                           type="password"
                           name="password"
@@ -127,21 +106,29 @@ export default () => {
                           onChange={changeHandler}
                         />
                       </InputGroup>
-                      <p className="text-danger">{validationErrors.password}</p>
+                      <p className="text-danger"></p>
                     </Form.Group>
                     <div className="d-flex justify-content-between align-items-center mb-4">
                       <Form.Check type="checkbox">
                         <FormCheck.Input id="defaultCheck5" className="me-2" />
-                        <FormCheck.Label htmlFor="defaultCheck5" className="mb-0">
+                        <FormCheck.Label
+                          htmlFor="defaultCheck5"
+                          className="mb-0"
+                        >
                           Remember me
                         </FormCheck.Label>
                       </Form.Check>
-                      <Card.Link className="small text-end">Lost password?</Card.Link>
+                      <Card.Link className="small text-end">
+                        Lost password?
+                      </Card.Link>
                     </div>
                   </Form.Group>
+
                   <div>
-                    <Button variant="primary" onClick={saveHandler} 
-                    // disabled={isSignInDisabled}
+                    <Button
+                      variant="primary"
+                      onClick={saveHandler}
+                      disabled={isSignInDisabled}
                     >
                       Sign In
                     </Button>
@@ -152,9 +139,18 @@ export default () => {
                   <span className="fw-normal">or login with</span>
                 </div>
                 <div className="d-flex justify-content-center my-4">
-                  <Button variant="outline-light" className="btn-icon-only btn-pill text-facebook me-2"></Button>
-                  <Button variant="outline-light" className="btn-icon-only btn-pill text-twitter me-2"></Button>
-                  <Button variant="outline-light" className="btn-icon-only btn-pil text-dark"></Button>
+                  <Button
+                    variant="outline-light"
+                    className="btn-icon-only btn-pill text-facebook me-2"
+                  ></Button>
+                  <Button
+                    variant="outline-light"
+                    className="btn-icon-only btn-pill text-twitter me-2"
+                  ></Button>
+                  <Button
+                    variant="outline-light"
+                    className="btn-icon-only btn-pil text-dark"
+                  ></Button>
                 </div>
                 <div className="d-flex justify-content-center align-items-center mt-4">
                   <span className="fw-normal">Not registered?</span>
