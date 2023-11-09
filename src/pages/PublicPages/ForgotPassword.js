@@ -4,9 +4,11 @@ import {Button,Form,InputGroup,Container,Row,Card,Col} from 'react-bootstrap';
 import { SignIntersection } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
 import useFetchLogins from "../../hooks/useFetchLoginUtility";
+import Alert from 'react-bootstrap/Alert';
 export default () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [emailValidation, setEmailValidation] = useState("");
   const [message, setMessage] = useState("");
   const {
     forgotPassword,
@@ -53,6 +55,10 @@ export default () => {
 
   const saveHandler = async () => {
     const response = await forgotPassword(newReset.email);
+    if(response == undefined)
+    {
+      setEmailValidation("Invalid Credential.")
+    }
     if (response.payload.title == "Success") {
    setHide(false);
     }
@@ -77,6 +83,9 @@ export default () => {
               <div className="signin-inner my-3 my-lg-0 bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
                 <h3>Forgot your password?</h3>
                 <p className="mb-4">Don't fret! Just type in your email and we will send you a code to reset your password!</p>
+                <div className="text-center text-md-center mb-4 mt-md-0">
+                {emailValidation && <Alert variant="danger">{emailValidation}</Alert>}
+                </div>
                 <Form>
                   <div className="mb-4">
                     <Form.Label htmlFor="email">Your Email</Form.Label>

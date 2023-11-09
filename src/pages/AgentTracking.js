@@ -13,7 +13,7 @@ import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit/dist/rea
 export default function AgentTrackings() {
 
     const [agentTrackings, setAgentTrackings] = useState([]);
-    const [agentList, setAgentList] = ([])
+    const [agentList, setAgentList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
