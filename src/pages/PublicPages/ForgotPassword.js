@@ -20,6 +20,21 @@ export default () => {
       ...newReset,
       [e.target.name]: e.target.value,
     });
+
+    if (e.target.name == "email") {
+      if (e.target.value.trim() =="") {
+        setMessage("");
+      } 
+      else 
+      {
+        const emailRegex = /^[A-Z0-9._%+-]+@(gmail\.com|outlook\.com|\w+\.co\.in)$/i;
+        if (!emailRegex.test(e.target.value)) {
+          setMessage("Invalid email format.");
+        } else {
+          setMessage("");
+        }
+      }
+    }    
   };
   const navigate = useNavigate();
   const ClickHandler = (e) => {
@@ -73,7 +88,9 @@ export default () => {
                         value={newReset?.email}
                         onChange={changeHandler}
                       />
+                     
                     </InputGroup>
+                    {message &&<p className="text-danger">{message}</p>} 
                   </div>
                   <Button variant="primary" onClick={saveHandler}>
                     Reset Password
