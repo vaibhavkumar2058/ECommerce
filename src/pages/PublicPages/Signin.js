@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Alert from 'react-bootstrap/Alert';
 import {
   Col,
   Row,
@@ -26,6 +27,9 @@ export default () => {
     password: "",
   });
 
+  const [passwordError, setPasswordError] = useState("");
+  const [emailValidation, setEmailValidation] = useState("");
+
   const [messageStatus, setMessageStatus] = useState({
     mode: "",
     title: "",
@@ -40,11 +44,34 @@ export default () => {
       ...newLogin,
       [e.target.name]: e.target.value,
     });
+
+    // Email validation
+    if (e.target.name == "email") {
+      if (e.target.value.trim() =="") {
+        setPasswordError("");
+      } 
+      else 
+      {
+        const emailRegex = /^[A-Z0-9._%+-]+@(gmail\.com|outlook\.com|\w+\.co\.in)$/i;
+        if (!emailRegex.test(e.target.value)) {
+          setPasswordError("Invalid email format.");
+        } else {
+          setPasswordError("");
+        }
+      }
+    }      
   };
 
+ 
   const saveHandler = async () => {
     // setShowNavbar(!showNavbar)
+
     const response = await login(newLogin);
+
+    if(response == undefined)
+    {
+      setEmailValidation("Invalid Credentials");
+    }
 
     if (response.payload.title == "Success") {
       setError({ status: true, msg: "Login Success", type: "success" });
@@ -79,6 +106,7 @@ export default () => {
               <div className="bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
                 <div className="text-center text-md-center mb-4 mt-md-0">
                   <h3 className="mb-0">Sign in to our platform</h3>
+                  {emailValidation && <Alert variant="danger">{emailValidation}</Alert>}
                 </div>
                 <Form className="mt-4">
                   <Form.Group id="email" className="mb-4">
@@ -92,7 +120,7 @@ export default () => {
                         onChange={changeHandler}
                       />
                     </InputGroup>
-                    <p className="text-danger"></p>
+                     {passwordError &&<p className="text-danger">{passwordError}</p>} 
                   </Form.Group>
                   <Form.Group>
                     <Form.Group id="password" className="mb-4">
@@ -106,7 +134,6 @@ export default () => {
                           onChange={changeHandler}
                         />
                       </InputGroup>
-                      <p className="text-danger"></p>
                     </Form.Group>
                     <div className="d-flex justify-content-between align-items-center mb-4">
                       <Form.Check type="checkbox">
