@@ -31,16 +31,6 @@ export default function AgentTrackings() {
 
     const handleShow = () => setShow(true);
   const userInfo = JSON.parse(localStorage.getItem('loggedIn'));
-  const [agentTracking, setAgentTracking] = useState({
-    resourcesId: userInfo?.resourcesId,
-    agentId: null,
-    dealerId: null,
-    trackingDate: "",
-    gmtId: null,
-    description: "",
-    recordStatusId: null,
-  });
-  
     const [id, setId] = useState(null);
 
   const [messageStatus, setMessageStatus] = useState({
@@ -49,6 +39,23 @@ export default function AgentTrackings() {
     status: false,
     message: "",
   });
+
+  const [agentTrackingOptions, setAgentTrackingOptions] = useState(agentList.map((agentTracking, item) => (
+    {
+      key: item,
+      text: agentTracking.agentName,
+      value: agentTracking.agentId,
+    })).filter((item) => item));
+
+    useEffect(() => {
+      setAgentTrackingOptions(agentList.map((agentTracking, item) => (
+        {
+          key: item,
+          text: agentTracking.agentName,
+          value: agentTracking.agentId,
+        })).filter((item) => item));
+    }, [agentList]);
+
 
   const {
     getAgentTrackings,
@@ -101,6 +108,10 @@ export default function AgentTrackings() {
     dataField: 'agentTrackingId',
     order: 'desc'
   }];
+
+  const dropdownHandler = (event, { name, value }) => {
+    setAgentTrackingOptions((currentAgentTracking) => ({ ...currentAgentTracking, [name]: value }));
+  }
 
   useEffect(() => {
     getagentList();
@@ -158,7 +169,6 @@ export default function AgentTrackings() {
         message: 'AgentTracking Record Fetch Successfully.'
       })
       const dataFormatter = (rawData) => {
-        debugger;
         const curedData = {};
         curedData.agentTrackingId = rawData?.agentTrackingId;
         curedData.agentId = rawData?.agentId;
@@ -186,9 +196,10 @@ export default function AgentTrackings() {
   };
 
   const getAgentTrackingById = async (id) => {
+    debugger;
     const response = await agentTrackingById(id);
     if (response.payload.title == "Success") {
-      setAgentTracking(response.payload);
+      setAgentTrackingOptions(response.payload);
     }
     else {
       setMessageStatus({
@@ -232,9 +243,22 @@ export default function AgentTrackings() {
               props => (
                 <div>
                   <div className="row m-t-5">
-                    <div className="col-lg-6 text-gred">
+                    <div>
                     </div>
-                  
+                    <div className="col-md-6">
+              <Form.Group className="mb-3" controlId="agentId">
+                <Form.Label><b>Agent</b></Form.Label>
+                <Dropdown
+                  name="agentId"
+                  placeholder='Select Agent'
+                  search
+                  selection
+                  options={agentTrackingOptions}
+                  value={newAgentTracking.agentId}
+                  onChange={dropdownHandler}
+                />
+              </Form.Group>
+            </div>
                     <div className="col-lg-6">
                       <div className="row">
                         <div className="app-right col-lg-12">
