@@ -72,7 +72,8 @@ export default (props = {}) => {
                 </span><span className="sidebar-text">State </span></span></Dropdown.Item></li>)}
                 {(admin && <li className="nav-item active"><Dropdown.Item href="customType" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
                 </span><span className="sidebar-text">Custom Type </span></span></Dropdown.Item></li>)}
-                {(admin && <li className="nav-item"><a href="measurementType" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> </span><span className="sidebar-text">Measurement Type</span></span></a></li>)}
+                {(admin && <li className="nav-item active"><a href="measurementType" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> 
+                </span><span className="sidebar-text">Measurement Type</span></span></a></li>)}
                 {(admin && <li className="nav-item active"><Dropdown.Item href="measurementValue" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
                 </span><span className="sidebar-text">Measurement Value </span></span></Dropdown.Item></li>)}
                 {(admin && <li className="nav-item active"><a href="resourceAttachmentType" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
@@ -81,7 +82,7 @@ export default (props = {}) => {
                 </span><span className="sidebar-text">Attachment Status </span></span></a></li>)}
                 {(admin && <li className="nav-item active"><Dropdown.Item href="notificationType" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
                 </span><span className="sidebar-text">Notification Type </span></span></Dropdown.Item></li>)}
-                {(admin && <li className="nav-item "><Dropdown.Item href="recordStatus" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
+                {(admin && <li className="nav-item active"><Dropdown.Item href="recordStatus" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
                 </span><span className="sidebar-text">Record Status </span></span></Dropdown.Item></li>)}
               </Dropdown.Menu>
             </Dropdown>
@@ -90,8 +91,8 @@ export default (props = {}) => {
             {(admin && <li className="nav-item active"><a href="resources" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
             </span><span className="sidebar-text">Resources </span></span></a></li>)}
             {/* {(admin && <li className="nav-item active"><a href="address" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> </span><span className="sidebar-text">Address </span></span></a></li>)} */}
-            {(admin && <li className="nav-item"><Dropdown.Item href="categoryType" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> </span>
-                <span className="sidebar-text">Product Category</span></span></Dropdown.Item></li>)}
+            {(admin && <li className="nav-item active"><a href="categoryType" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon"> </span>
+                <span className="sidebar-text">Product Category</span></span></a></li>)}
             {((admin || agent || dealer) && <li className="nav-item active"><a href="product" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
             </span><span className="sidebar-text">Product </span></span></a></li>)}
             {(admin && <li className="nav-item active"><a href="itemCost" className="nav-link d-flex align-items-center justify-content-between"><span><span className="sidebar-icon">
