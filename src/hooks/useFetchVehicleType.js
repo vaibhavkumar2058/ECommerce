@@ -14,7 +14,7 @@ import {
 
   export default function useFetchVehicleTypes() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/vehicleType";
+  const hapyCarURL = "https://localhost:44320/vehicleType";
 
   const API = useAPI();
   const SUCCESS = "Success";

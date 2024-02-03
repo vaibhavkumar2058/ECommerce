@@ -14,7 +14,7 @@ import {
 
   export default function useFetchGMTs() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/GMT";
+  const hapyCarURL = "https://localhost:44320/GMT";
 
   const API = useAPI();
   const SUCCESS = "Success";

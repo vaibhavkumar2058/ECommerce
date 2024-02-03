@@ -14,7 +14,7 @@ import {
 
   export default function useFetchRecordStatuss() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/recordStatus";
+  const hapyCarURL = "https://localhost:44320/recordStatus";
 
 
   const API = useAPI();

@@ -14,7 +14,7 @@ import {
 
   export default function useFetchTax() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/tax";
+  const hapyCarURL = "https://localhost:44320/tax";
 
   const API = useAPI();
   const SUCCESS = "Success";

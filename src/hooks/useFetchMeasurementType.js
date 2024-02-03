@@ -14,7 +14,7 @@ import {
 
   export default function useFetchMeasurementTypes() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/measurementType";
+  const hapyCarURL = "https://localhost:44320/measurementType";
 
   const API = useAPI();
   const SUCCESS = "Success";

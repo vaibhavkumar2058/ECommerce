@@ -14,7 +14,7 @@ import {
 
   export default function useFetchNotificationTYpe() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/notification";
+  const hapyCarURL = "https://localhost:44320/notification";
 
   const API = useAPI();
   const SUCCESS = "Success";

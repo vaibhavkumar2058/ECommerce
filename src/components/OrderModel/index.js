@@ -38,7 +38,11 @@ export default function OrderModel({
   const [isApply, setIsApply] = useState(true)
 
   // useState for Clear Button
-  const [isClear, setIsClear] = useState(false)
+  const [isClear, setIsClear] = useState(true);
+
+  const [isDisabled, setIsDisabled] = useState(false);
+
+  const [isValidDiscountCode, setIsValidDiscountCode] = useState(true)
 
   //
   const [buttonType, setButtonType] = useState("Place Order");
@@ -82,6 +86,7 @@ export default function OrderModel({
     boxName: null,
     piecesCount: null,
     boxLimit: null,
+    individualLimit: null
   });
 
   // Discount Objects and Its Properties
@@ -166,31 +171,30 @@ export default function OrderModel({
   const getDiscoutPrice = async () => {
     if (discount?.discountCode) {
       const response = await getRecordByName(discount.discountCode);
-      if (response.payload.title == "Success") {
+      if (response?.payload?.title === "Success") {
         setDiscount(response.payload);
         newOrder.discountId = response.payload.discountId;
         // Logic for Discount Price
         //Boxes 
-        debugger;
         if (quantityType.isBox) {
-          if (response.payload.discountType.discountTypeName == "Percentage") {
+          if (response.payload.discountType.discountTypeName === "Percentage") {
             discount.discountPrice = placeOrder?.quantity * boxes.piecesCount * (placeOrder?.cost - (placeOrder?.cost * response.payload.discountValue) / 100);
             console.log('discount price : ', discount.discountPrice);
           }
           else
-            if (response.payload.discountType.discountTypeName == "Amount") {
+            if (response.payload.discountType.discountTypeName === "Amount") {
               discount.discountPrice = (placeOrder?.quantity * boxes.piecesCount * placeOrder?.cost) - response.payload.discountValue;
             }
         }
-
+        else
         // Individual 
         if (quantityType.isIndividual) {
-          if (response.payload.discountType.discountTypeName == "Percentage") {
+          if (response.payload.discountType.discountTypeName === "Percentage") {
             discount.discountPrice = placeOrder?.quantity * (placeOrder?.cost - (placeOrder?.cost * response.payload.discountValue) / 100);
             console.log('discount price : ', discount.discountPrice);
           }
           else
-            if (response.payload.discountType.discountTypeName == "Amount") {
+            if (response.payload.discountType.discountTypeName === "Amount") {
               discount.discountPrice = (placeOrder?.quantity * placeOrder?.cost) - response.payload.discountValue;
             }
         }
@@ -199,12 +203,13 @@ export default function OrderModel({
           ...discount,
           ["discountPrice"]: discount.discountPrice,
         });
-
-        setIsClear(true);
+        
       }
-      else {
-        setIsClear(false);
+      else
+      {
+        setIsValidDiscountCode(false);
       }
+      setIsClear(false);
     }
     else {
       // Individual 
@@ -221,16 +226,19 @@ export default function OrderModel({
         ["discountPrice"]: discount.discountPrice,
       });
     }
+    setIsApply(true);
   };
 
   // Functionality to Clear the Discount
   const clearDiscountPrice = () => {
+    debugger;
     setDiscount({
       ...discount,
-      discountPrice: '',
       discountCode: '',
     });
-    setIsClear(false);
+    setIsClear(true);
+    setIsDisabled(false);
+setIsValidDiscountCode(true);
   }
 
   // Functionality to Set Message in Console 
@@ -494,7 +502,8 @@ export default function OrderModel({
       || !placeOrder?.quantity
       || !placeOrder?.measurementTypeId
       || !placeOrder?.measurementValueId
-      || !(boxes?.boxLimit > placeOrder?.quantity)
+      || (quantityType?.isBox && !(boxes?.boxLimit >= placeOrder?.quantity))
+      || (quantityType?.isIndividual && !(boxes?.individualLimit >= placeOrder?.quantity))
       || !(quantityType?.isBox || quantityType?.isIndividual)
 
     setSaveDisabled(isEnable);
@@ -630,7 +639,8 @@ export default function OrderModel({
                   onChange={changeQuanityHandler}
                   onBlur={() => getDiscoutPrice()}
                 />
-                {boxes.boxLimit && (<div className="info">{boxes.boxLimit} boxes limit per order</div>)}
+                {(boxes.boxLimit && quantityType?.isBox) && (<div className="info">{boxes.boxLimit} boxes limit per order, each contains {boxes.piecesCount} pieces. </div>)}
+              {(boxes.individualLimit && quantityType?.isIndividual) && (<div className="info">{boxes.individualLimit} pieces limit per order. </div>)}
               </Form.Group>
 
             </div>
@@ -649,6 +659,7 @@ export default function OrderModel({
                       name="discountCode"
                       placeholder="Discount Code"
                       value={discount?.discountCode}
+                      disabled={isDisabled}
                       onChange={changeDiscountHandler}
                       onBlur={() => getDiscoutPrice()}
                     />
@@ -657,15 +668,15 @@ export default function OrderModel({
                 <div className="col-md-4">
                   <div className="row btn-apply">
                     <div className="col-md-5">
-                      {!isClear &&
+                      {isClear &&
                         <Button
                           disabled={isApply}
-                          onClick={() => getDiscoutPrice()}
+                          onClick={() => {getDiscoutPrice(); setIsDisabled(true);}}
                         >
                           Apply
                         </Button>
                       }
-                      {isClear &&
+                      {!isClear &&
                         <Button onClick={() => clearDiscountPrice()}
                         >
                           Clear
@@ -675,6 +686,8 @@ export default function OrderModel({
                     </div>
                   </div>
                 </div>
+                { !isValidDiscountCode && (<div className="info">Discount Code Invalid or Expired</div>)}
+                {/* { isValidDiscountCode && (<div className="info">Discount Applied</div>)} */}
               </div>
             </div>
           </div>

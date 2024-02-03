@@ -14,7 +14,7 @@ import {
 
   export default function useFetchItemCosts() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/itemCost";
+  const hapyCarURL = "https://localhost:44320/itemCost";
 
   const API = useAPI();
   const SUCCESS = "Success";

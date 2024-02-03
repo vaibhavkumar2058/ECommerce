@@ -14,8 +14,8 @@ import {
 
   export default function useFetchProducts() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/product";
-  const productSalesListURL = "https://localhost:7062/productsales";
+  const hapyCarURL = "https://localhost:44320/product";
+  const productSalesListURL = "https://localhost:44320/productsales";
 
   const API = useAPI();
   const SUCCESS = "Success";

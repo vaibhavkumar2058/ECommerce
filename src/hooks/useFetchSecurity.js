@@ -14,7 +14,7 @@ import {
 
   export default function useFetchSecurities() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/security";
+  const hapyCarURL = "https://localhost:44320/security";
 
   const API = useAPI();
   const SUCCESS = "Success";

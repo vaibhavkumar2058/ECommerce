@@ -15,10 +15,10 @@ import {
 
   export default function useFetchOrders() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/order";
-  const placeOrdersURL = "https://localhost:7062/placeorders";
-  const productOrderListURL = "https://localhost:7062/productorderlist";
-  const orderReportsURL = "https://localhost:7062/order/reports";
+  const hapyCarURL = "https://localhost:44320/order";
+  const placeOrdersURL = "https://localhost:44320/placeorders";
+  const productOrderListURL = "https://localhost:44320/productorderlist";
+  const orderReportsURL = "https://localhost:44320/order/reports";
   const API = useAPI();
   const SUCCESS = "Success";
   const ERROR = "Error";

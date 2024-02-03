@@ -14,7 +14,7 @@ import {
 
   export default function useFetchProductAttachments() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/productAttachments";
+  const hapyCarURL = "https://localhost:44320/productAttachments";
 
   const API = useAPI();
   const SUCCESS = "Success";

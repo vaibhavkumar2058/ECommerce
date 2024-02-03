@@ -14,7 +14,7 @@ import {
 
   export default function useFetchBanners() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/banner";
+  const hapyCarURL = "https://localhost:44320/banner";
 
   const API = useAPI();
   const SUCCESS = "Success";

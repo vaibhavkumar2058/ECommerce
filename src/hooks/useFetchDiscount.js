@@ -14,7 +14,7 @@ import {
 
   export default function useFetchDiscounts() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/discount";
+  const hapyCarURL = "https://localhost:44320/discount";
 
   const API = useAPI();
   const SUCCESS = "Success";

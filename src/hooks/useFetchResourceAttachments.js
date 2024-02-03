@@ -15,7 +15,7 @@ import {
 
   export default function useFetchResourceAttachments() {
     const dispatch = useDispatch();
-  const hapyCarURL = "https://localhost:7062/resourceAttachments";
+  const hapyCarURL = "https://localhost:44320/resourceAttachments";
 
   const API = useAPI();
   const SUCCESS = "Success";

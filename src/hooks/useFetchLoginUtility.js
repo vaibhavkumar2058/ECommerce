@@ -10,10 +10,10 @@ import {
 
 export default function useFetchLogins() {
   const dispatch = useDispatch();
-  const changePasswordURL = "https://localhost:7062/changepassword";
-  const forgotPasswordURL = "https://localhost:7062/forgotPassword?emails=";
-  const loginURL = "https://localhost:7062/login";
-  const emailverificationURL = "https://localhost:7062/email";
+  const changePasswordURL = "https://localhost:44320/changepassword";
+  const forgotPasswordURL = "https://localhost:44320/forgotPassword?emails=";
+  const loginURL = "https://localhost:44320/login";
+  const emailverificationURL = "https://localhost:44320/email";
   const API = useAPI();
   const SUCCESS = "Success";
   const ERROR = "Error";
