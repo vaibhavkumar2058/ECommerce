@@ -147,7 +147,9 @@ export default function OrderModel({
     itemCost.productId = placeOrder?.productId;
     itemCost.measurementTypeId = placeOrder?.measurementTypeId;
     itemCost.measurementValueId = placeOrder?.measurementValueId;
+
     const response = await getItemPrice(itemCost);
+    debugger;
     if (response?.payload?.title == "Success") {
       setPlaceOrder((currentPlaceOrder) => ({ ...currentPlaceOrder, ["cost"]: response.payload.price }));
       getBoxesByName();
@@ -407,11 +409,6 @@ setIsValidDiscountCode(true);
   // Functionality to get Price
   const dropdownHandler = (event, { name, value }) => {
     setPlaceOrder((currentPlaceOrder) => ({ ...currentPlaceOrder, [name]: value }));
-    if (placeOrder?.productId
-      && placeOrder?.measurementValueId
-      && placeOrder?.measurementTypeId) {
-      getPrice();
-    }
   }
 
   // Functionality to bind the Products based on CategoryId
@@ -445,6 +442,14 @@ setIsValidDiscountCode(true);
       })).filter((item) => item));
   }, [recordStatusList]);
 
+  useEffect(() => {
+    debugger;
+  if (placeOrder?.productId
+    && placeOrder?.measurementValueId
+    && placeOrder?.measurementTypeId) {
+    getPrice();
+  }
+  }, [placeOrder]);
   // useEffect hook to map CategoryTypeList in Dropdown
   useEffect(() => {
     setCategoryTypeOptions(categoryTypeList.map((categoryType, item) => (
